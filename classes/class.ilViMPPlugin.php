@@ -13,6 +13,38 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	const PLUGIN_NAME = 'ViMP';
 	const XVMP = 'xvmp';
 
+	/**
+	 * @var ilViMPPlugin
+	 */
+	protected static $instance;
+
+
+	/**
+	 * @return ilViMPPlugin
+	 */
+	public static function getInstance() {
+		if (!isset(self::$instance)) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	public function confTxt($lang_var) {
+		return $this->txt('conf_' . $lang_var);
+	}
+
+	public function hasConnection() {
+		try {
+			$version = xvmpRequest::version();
+			return ($version->getResponseStatus() == 200);
+		} catch (xvmpException $e) {
+			return false;
+		}
+	}
+
+
+
 	function getPluginName() {
 		return self::PLUGIN_NAME;
 	}

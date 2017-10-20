@@ -15,6 +15,12 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'ilViMPPlugin' => __DIR__ . '/../..' . '/classes/class.ilViMPPlugin.php',
         'xvmpConf' => __DIR__ . '/../..' . '/classes/Conf/class.xvmpConf.php',
         'xvmpConfFormGUI' => __DIR__ . '/../..' . '/classes/Conf/class.xvmpConfFormGUI.php',
+        'xvmpCurl' => __DIR__ . '/../..' . '/classes/Request/class.xvmpCurl.php',
+        'xvmpCurlError' => __DIR__ . '/../..' . '/classes/Request/class.xvmpCurlError.php',
+        'xvmpException' => __DIR__ . '/../..' . '/classes/Exception/class.xvmpException.php',
+        'xvmpLog' => __DIR__ . '/../..' . '/classes/Util/class.xvmpLog.php',
+        'xvmpRequest' => __DIR__ . '/../..' . '/classes/Request/class.xvmpRequest.php',
+        'xvmpUploadFile' => __DIR__ . '/../..' . '/classes/Request/class.xvmpUploadFile.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

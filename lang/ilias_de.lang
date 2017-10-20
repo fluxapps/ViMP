@@ -1,0 +1,25 @@
+conf_object_title#:#Objektbezeichnung im Magazin
+conf_object_title_info#:#
+conf_api_key#:#API-Key
+conf_api_key_info#:#
+conf_api_user#:#API-Benutzername
+conf_api_user_info#:#
+conf_api_password#:#API-Passwort
+conf_api_password_info#:#
+conf_api_url#:#API-URL
+conf_api_url_info#:#
+conf_user_mapping_ext#:#User­Mapping (externe Benutzer)
+conf_user_mapping_ext_info#:#
+conf_user_mapping_local#:#User­Mapping (lokale Benutzer)
+conf_user_mapping_local_info#:#
+conf_allow_public_upload#:#Recht „Upload“ darf Videos öffentlich schalten
+conf_allow_public_upload_info#:#
+conf_required_metadata#:#Obligatorische Metadaten
+conf_required_metadata_info#:#
+conf_copyright#:#Copyright
+conf_media_permissions#:#Medienberechtigungen nutzen
+conf_media_permissions_info#:#MISSING
+conf_api_settings#:#API
+conf_general_settings#:#Allgemein
+msg_success#:#Änderungen erfolgreich gespeichert.
+all#:#Ja, alle

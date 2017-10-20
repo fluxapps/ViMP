@@ -1,0 +1,25 @@
+conf_object_title#:#Object Title in Repository
+conf_object_title_info#:#
+conf_api_key#:#API Key
+conf_api_key_info#:#
+conf_api_user#:#API User
+conf_api_user_info#:#
+conf_api_password#:#API Password
+conf_api_password_info#:#
+conf_api_url#:#API URL
+conf_api_url_info#:#
+conf_user_mapping_ext#:#User Mapping (external users)
+conf_user_mapping_ext_info#:#
+conf_user_mapping_local#:#User Mapping (local users)
+conf_user_mapping_local_info#:#
+conf_allow_public_upload#:#Permission „Upload“ can set Videos public
+conf_allow_public_upload_info#:#
+conf_required_metadata#:#Required Metadata
+conf_required_metadata_info#:#
+copyright#:#Copyright
+conf_media_permissions#:#Use Media Permissions
+conf_media_permissions_info#:#MISSING
+conf_api_settings#:#API
+conf_general_settings#:#General
+msg_success#:#Changes saved successfully.
+all#:#Yes, all

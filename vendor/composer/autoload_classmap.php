@@ -14,4 +14,10 @@ return array(
     'ilViMPPlugin' => $baseDir . '/classes/class.ilViMPPlugin.php',
     'xvmpConf' => $baseDir . '/classes/Conf/class.xvmpConf.php',
     'xvmpConfFormGUI' => $baseDir . '/classes/Conf/class.xvmpConfFormGUI.php',
+    'xvmpCurl' => $baseDir . '/classes/Request/class.xvmpCurl.php',
+    'xvmpCurlError' => $baseDir . '/classes/Request/class.xvmpCurlError.php',
+    'xvmpException' => $baseDir . '/classes/Exception/class.xvmpException.php',
+    'xvmpLog' => $baseDir . '/classes/Util/class.xvmpLog.php',
+    'xvmpRequest' => $baseDir . '/classes/Request/class.xvmpRequest.php',
+    'xvmpUploadFile' => $baseDir . '/classes/Request/class.xvmpUploadFile.php',
 );
