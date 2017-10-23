@@ -23,3 +23,10 @@ conf_api_settings#:#API
 conf_general_settings#:#Allgemein
 msg_success#:#Änderungen erfolgreich gespeichert.
 all#:#Ja, alle
+content#:#Inhalt
+info#:#Info
+videos#:#Videos
+settings#:#Einstellungen
+search_videos#:#Suchen
+selected_videos#:#Ausgewählte Videos
+own_videos#:#Eigene Videos

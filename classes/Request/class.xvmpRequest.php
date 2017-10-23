@@ -12,6 +12,7 @@ class xvmpRequest {
 	const VERSION = 'version';
 	const GET_USER_ROLES = 'getUserRoles';
 	const GET_CATEGORIES = 'getCategories';
+	const GET_CATEGORY = 'getCategory';
 
 
 	/**
@@ -31,6 +32,13 @@ class xvmpRequest {
 
 	public static function getCategories($parent_id = '', $filterbyname = '', $offset = '', $limit = '', $thumbsize = '', $language = '') {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORIES);
+		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
+
+	public static function getCategory($categoryid, $thumbsize = '', $language = '') {
+		$xvmpCurl = new xvmpCurl(self::GET_CATEGORY);
+		$xvmpCurl->addPostField('categoryid', $categoryid);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}

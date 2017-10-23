@@ -102,16 +102,16 @@ class xvmpCurl {
 
 		$i = 1000;
 
-		xvmpLog::getInstance()->write('CURLINFO_CONNECT_TIME: ' . round(curl_getinfo($ch, CURLINFO_CONNECT_TIME) * $i, 2) . ' ms', xvmpLog::DEBUG_LEVEL_1);
-		xvmpLog::getInstance()->write('CURLINFO_NAMELOOKUP_TIME: ' . round(curl_getinfo($ch, CURLINFO_NAMELOOKUP_TIME) * $i, 2) . ' ms', xvmpLog::DEBUG_LEVEL_1);
-		xvmpLog::getInstance()->write('CURLINFO_REDIRECT_TIME: ' . round(curl_getinfo($ch, CURLINFO_REDIRECT_TIME) * $i, 2) . ' ms', xvmpLog::DEBUG_LEVEL_1);
-		xvmpLog::getInstance()->write('CURLINFO_STARTTRANSFER_TIME: ' . round(curl_getinfo($ch, CURLINFO_STARTTRANSFER_TIME) * $i, 2) . ' ms', xvmpLog::DEBUG_LEVEL_1);
-		xvmpLog::getInstance()->write('CURLINFO_PRETRANSFER_TIME: ' . round(curl_getinfo($ch, CURLINFO_PRETRANSFER_TIME) * $i, 2) . ' ms', xvmpLog::DEBUG_LEVEL_1);
-		xvmpLog::getInstance()->write('CURLINFO_TOTAL_TIME: ' . round(curl_getinfo($ch, CURLINFO_TOTAL_TIME) * $i, 2) . ' ms', xvmpLog::DEBUG_LEVEL_1);
+		xvmpCurlLog::getInstance()->write('CURLINFO_CONNECT_TIME: ' . round(curl_getinfo($ch, CURLINFO_CONNECT_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCurlLog::getInstance()->write('CURLINFO_NAMELOOKUP_TIME: ' . round(curl_getinfo($ch, CURLINFO_NAMELOOKUP_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCurlLog::getInstance()->write('CURLINFO_REDIRECT_TIME: ' . round(curl_getinfo($ch, CURLINFO_REDIRECT_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCurlLog::getInstance()->write('CURLINFO_STARTTRANSFER_TIME: ' . round(curl_getinfo($ch, CURLINFO_STARTTRANSFER_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCurlLog::getInstance()->write('CURLINFO_PRETRANSFER_TIME: ' . round(curl_getinfo($ch, CURLINFO_PRETRANSFER_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCurlLog::getInstance()->write('CURLINFO_TOTAL_TIME: ' . round(curl_getinfo($ch, CURLINFO_TOTAL_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
 
 		if ($this->getResponseStatus() > 299) {
-			xvmpLog::getInstance()->write('ERROR ' . $this->getResponseStatus(), xvmpLog::DEBUG_LEVEL_1);
-			xvmpLog::getInstance()->write('Response:' . $resp_orig, xvmpLog::DEBUG_LEVEL_3);
+			xvmpCurlLog::getInstance()->write('ERROR ' . $this->getResponseStatus(), xvmpCurlLog::DEBUG_LEVEL_1);
+			xvmpCurlLog::getInstance()->write('Response:' . $resp_orig, xvmpCurlLog::DEBUG_LEVEL_3);
 
 			switch ($this->getResponseStatus()) {
 				case 403:
@@ -157,8 +157,8 @@ class xvmpCurl {
 
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getPostFields());
 
-		xvmpLog::getInstance()->write('POST-Body', xvmpLog::DEBUG_LEVEL_3);
-		xvmpLog::getInstance()->write(print_r($this->getPostFields(), true), xvmpLog::DEBUG_LEVEL_3);
+		xvmpCurlLog::getInstance()->write('POST-Body', xvmpCurlLog::DEBUG_LEVEL_3);
+		xvmpCurlLog::getInstance()->write(print_r($this->getPostFields(), true), xvmpCurlLog::DEBUG_LEVEL_3);
 	}
 
 
@@ -166,21 +166,21 @@ class xvmpCurl {
 	 * @param $ch
 	 */
 	protected function debug($ch) {
-		$xvmpLog = xvmpLog::getInstance();
-		$xvmpLog->write('execute *************************************************', xvmpLog::DEBUG_LEVEL_1);
-		$xvmpLog->write($this->getUrl(), xvmpLog::DEBUG_LEVEL_1);
-		$xvmpLog->write($this->getRequestType(), xvmpLog::DEBUG_LEVEL_1);
+		$xvmpCurlLog = xvmpCurlLog::getInstance();
+		$xvmpCurlLog->write('execute *************************************************', xvmpCurlLog::DEBUG_LEVEL_1);
+		$xvmpCurlLog->write($this->getUrl(), xvmpCurlLog::DEBUG_LEVEL_1);
+		$xvmpCurlLog->write($this->getRequestType(), xvmpCurlLog::DEBUG_LEVEL_1);
 		if ($this->getRequestType() == self::REQ_TYPE_POST) {
-			$xvmpLog->write(print_r($this->post_fields, true), xvmpLog::DEBUG_LEVEL_1);
+			$xvmpCurlLog->write(print_r($this->post_fields, true), xvmpCurlLog::DEBUG_LEVEL_1);
 		}
 		$backtrace = "Backtrace: \n";
 		foreach (debug_backtrace() as $b) {
 			$backtrace .= $b['file'] . ': ' . $b["function"] . "\n";
 		}
-		$xvmpLog->write($backtrace, xvmpLog::DEBUG_LEVEL_4);
-		if (xvmpLog::getLogLevel() >= xvmpLog::DEBUG_LEVEL_3) {
+		$xvmpCurlLog->write($backtrace, xvmpCurlLog::DEBUG_LEVEL_4);
+		if (xvmpCurlLog::getLogLevel() >= xvmpCurlLog::DEBUG_LEVEL_3) {
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
-			curl_setopt($ch, CURLOPT_STDERR, fopen(xvmpLog::getFullPath(), 'a'));
+			curl_setopt($ch, CURLOPT_STDERR, fopen(xvmpCurlLog::getFullPath(), 'a'));
 		}
 	}
 

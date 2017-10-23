@@ -31,6 +31,8 @@ class xvmpConfFormGUI extends ilPropertyFormGUI {
 	 * xvmpConfFormGUI constructor.
 	 */
 	public function __construct(ilViMPConfigGUI $parent_gui) {
+		$categories = xvmpRequest::getCategory(1)->getResponseArray();
+
 		global $ilCtrl, $lng, $tpl;
 		$this->parent_gui = $parent_gui;
 		$this->pl = ilViMPPlugin::getInstance();
@@ -145,17 +147,14 @@ class xvmpConfFormGUI extends ilPropertyFormGUI {
 
 
 	protected function getMediaPermissionOptions() {
-		// TODO: if 'has connection', fetch roles in vimp, else no options
 		$options = array();
 		if ($this->pl->hasConnection()) {
-			$roles = xvmpRequest::getUserRoles()->getResponseArray();
-			foreach ($roles['roles']['role'] as $role) {
-				$options[$role['id']] = $role['name'];
+			$roles = xvmpUserRoles::getAll();
+			foreach ($roles as $role) {
+				$options[$role->getId()] = $role->getName();
 			}
 		}
-//		foreach (xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION) as $selection) {
-//
-//		}
+
 		return $options;
 	}
 
@@ -182,6 +181,13 @@ class xvmpConfFormGUI extends ilPropertyFormGUI {
 				foreach ($item->getSubItems() as $subitem) {
 					$this->getValuesForItem($subitem, $array);
 				}
+				if ($item instanceof ilRadioGroupInputGUI) {
+					foreach ($item->getOptions() as $option) {
+						foreach ($option->getSubItems() as $subitem) {
+							$this->getValuesForItem($subitem, $array);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -197,6 +203,13 @@ class xvmpConfFormGUI extends ilPropertyFormGUI {
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {
 					$this->saveValueForItem($subitem);
+				}
+				if ($item instanceof ilRadioGroupInputGUI) {
+					foreach ($item->getOptions() as $option) {
+						foreach ($option->getSubItems() as $subitem) {
+							$this->saveValueForItem($subitem);
+						}
+					}
 				}
 			}
 		}
