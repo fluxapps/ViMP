@@ -20,7 +20,14 @@
     "php" : "^5.5.9 || ^7.0"
   },
   "autoload": {
-    "classmap": ["./classes/"]
+    "classmap": [
+      "./classes/",
+      "../../../../../../../Services/Table",
+      "../../../../../../../Services/Form",
+      "../../../../../../../Services/Repository",
+      "../../../../../../../Services/Component",
+      "../../../../../../../Services/ActiveRecord"
+    ]
   },
   "config": {
     "optimize-autoloader": true,

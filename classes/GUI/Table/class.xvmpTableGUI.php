@@ -2,10 +2,10 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 /**
- * Class xvmpSettingsFormGUI
+ * Class xvmpTableGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpSettingsFormGUI extends ilPropertyFormGUI {
+class xvmpTableGUI {
 
 }
