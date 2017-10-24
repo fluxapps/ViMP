@@ -12,6 +12,8 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	const PLUGIN_NAME = 'ViMP';
 	const XVMP = 'xvmp';
 
+	const DEV = true;
+
 	/**
 	 * @var ilViMPPlugin
 	 */

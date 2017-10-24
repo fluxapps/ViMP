@@ -26,13 +26,16 @@ class xvmpObject {
 	 */
 	public static function find($id) {
 		$class_name = get_called_class();
-		$key = $class_name . '-' . $id;
-		if (!isset(self::$cache[$key])) {
+		if (!isset(self::$cache[$class_name][$id])) {
+			if (!isset(self::$cache[$class_name])) {
+				self::$cache[$class_name] = array();
+			}
 			/** @var xvmpObject $xvmpObject */
 			$xvmpObject = new $class_name();
-			$xvmpObject->buildFromArray($class_name::fetchObject($id));
+			$xvmpObject->buildObjectFromArray($class_name::getObjectAsArray($id));
+			self::$cache[$class_name][$id] = $xvmpObject;
 		}
-		return self::$cache[$id];
+		return self::$cache[$class_name][$id];
 	}
 
 
@@ -44,18 +47,30 @@ class xvmpObject {
 	public static function getAll() {
 		$class_name = get_called_class();
 		if (!self::$cache_initialized[$class_name]) {
-			self::buildAllFromArray($class_name::fetchAll());
+			self::buildAllFromArray($class_name::getAllAsArray());
 		}
-		return self::$cache;
+		return self::$cache[$class_name];
 	}
 
+	/**
+	 * @param array $filter
+	 *
+	 * @return array
+	 */
+	public static function getFiltered(array $filter) {
+		$class_name = get_called_class();
+		if (!self::$cache_initialized[$class_name]) {
+			self::buildFromArray($class_name::getFilteredAsArray($filter));
+		}
+		return self::$cache[$class_name];
+	}
 
 	/**
 	 * build object from data array
 	 *
 	 * @param array $array
 	 */
-	public function buildFromArray(array $array) {
+	public function buildObjectFromArray(array $array) {
 		foreach ($array as $key => $value) {
 			$this->{$key} = $value;
 		}
@@ -68,15 +83,128 @@ class xvmpObject {
 	 * @param array $array
 	 */
 	public static function buildAllFromArray(array $array) {
+		self::buildFromArray($array);
 		$class_name = get_called_class();
+		self::$cache_initialized[$class_name] = true;
+	}
+
+	/**
+	 * build all objects from data array
+	 *
+	 * @param array $array
+	 */
+	public static function buildFromArray(array $array) {
+		$class_name = get_called_class();
+		self::$cache[$class_name] = array();
 		foreach ($array as $item) {
 			/** @var xvmpObject $xvmpObject */
 			$xvmpObject = new $class_name();
-			$xvmpObject->buildFromArray($item);
+			$xvmpObject->buildObjectFromArray($item);
 			$key = $class_name . '-' . $xvmpObject->getId();
-			self::$cache[$key] = $xvmpObject;
+			self::$cache[$class_name][$key] = $xvmpObject;
 		}
-		self::$cache_initialized[$class_name] = true;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function __toArray() {
+		$data = $this->__toStdClass();
+		$array = (array)$data;
+
+		return $array;
+	}
+
+	/**
+	 * @return stdClass
+	 */
+	public function __toStdClass() {
+		$r = new ReflectionClass($this);
+		$stdClass = new stdClass();
+		foreach ($r->getProperties() as $name) {
+			$key = utf8_encode($name->getName());
+
+			if ($key == 'cache') {
+				continue;
+			}
+
+			$value = $this->sleep($key, $this->{$key});
+			switch (true) {
+				case ($value instanceof xoctObject):
+					$stdClass->{$key} = $value->__toStdClass();
+					break;
+				case (is_array($value)):
+					$a = array();
+					foreach ($value as $k => $v) {
+						if (is_array($v)) {
+							$a[$k] = array();
+							foreach ($v as $sk => $sv) {
+								$a[$k][$sk] = $sv;
+							}
+						} else {
+							$a[$k] = self::convertToUtf8($v);
+						}
+					}
+					$stdClass->{$key} = $a;
+					break;
+				case (is_bool($value)):
+					$stdClass->{$key} = $value;
+					break;
+				case ($value instanceof DateTime):
+					$stdClass->{$key} = $value->getTimestamp();
+					break;
+				case ($value instanceof stdClass):
+					$a = array();
+					$value = (array)$value;
+					foreach ($value as $k => $v) {
+						if ($v instanceof xoctObject) {
+							$a[$k] = $v->__toStdClass();
+						} else {
+							$a[$k] = self::convertToUtf8($v);
+						}
+					}
+					$stdClass->{$key} = $a;
+					break;
+				default:
+					$stdClass->{$key} = self::convertToUtf8($value);
+					break;
+			}
+		}
+
+		return $stdClass;
+	}
+
+	/**
+	 * @param $string
+	 *
+	 * @return string
+	 */
+	public static function convertToUtf8($string) {
+		if (is_object($string) || ilStr::isUtf8($string)) {
+			return $string;
+		}
+
+		return utf8_encode($string);
+	}
+
+	/**
+	 * @param $fieldname
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	protected function sleep($fieldname, $value) {
+		return $value;
+	}
+
+
+	/**
+	 * @param array $filter
+	 *
+	 * @return array
+	 */
+	public static function getFilteredAsArray(array $filter) {
+		return array();
 	}
 
 
@@ -85,7 +213,7 @@ class xvmpObject {
 	 *
 	 * @return array()
 	 */
-	protected static function fetchAll() {
+	public static function getAllAsArray() {
 		return array();
 	}
 
@@ -97,7 +225,7 @@ class xvmpObject {
 	 *
 	 * @return array
 	 */
-	protected static function fetchObject($id) {
+	public static function getObjectAsArray($id) {
 		return array();
 	}
 

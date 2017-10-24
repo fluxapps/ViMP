@@ -13,6 +13,8 @@ class xvmpRequest {
 	const GET_USER_ROLES = 'getUserRoles';
 	const GET_CATEGORIES = 'getCategories';
 	const GET_CATEGORY = 'getCategory';
+	const GET_MEDIA = 'getMedia';
+	const GET_MEDIUM = 'getMedium';
 
 
 	/**
@@ -39,6 +41,60 @@ class xvmpRequest {
 	public static function getCategory($categoryid, $thumbsize = '', $language = '') {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORY);
 		$xvmpCurl->addPostField('categoryid', $categoryid);
+		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * possible parameters:
+	 *
+	 * $filterbyname
+	 * $filterbytype
+	 * $filterbycategory
+	 * $filterbyfilter
+	 * $offset
+	 * $limit
+	 * $thumbsize
+	 * $hidden
+	 * $chapters
+	 * $responsive
+	 * $language
+	 *
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function getMedia($params = array()) {
+		$xvmpCurl = new xvmpCurl(self::GET_MEDIA);
+		$params['filterbytype'] = 'video';         // only fetch videos
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * possible parameters:
+	 *
+	 * $thumbsize
+	 * $chapters
+	 * $responsive
+	 * $language
+	 *
+	 * @param       $mediumid
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function getMedium($mediumid, $params = array()) {
+		$xvmpCurl = new xvmpCurl(self::GET_MEDIUM);
+		$xvmpCurl->addPostField('mediumid', $mediumid);
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}

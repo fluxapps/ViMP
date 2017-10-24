@@ -51,8 +51,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 				case 'xvmpsettingsgui':
 					$this->initHeader();
 					$this->setTabs();
-					$xvmpContentGUI = new $next_class($this);
-					$this->ctrl->forwardCommand($xvmpContentGUI);
+					$xvmpGUI = new $next_class($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
 					$this->tpl->show();
 					break;
 				case 'ilpermissiongui':

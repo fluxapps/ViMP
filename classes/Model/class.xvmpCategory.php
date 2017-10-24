@@ -8,12 +8,12 @@
  */
 class xvmpCategory extends xvmpObject {
 
-	protected static function fetchObject($id) {
+	public static function getObjectAsArray($id) {
 		$response = xvmpRequest::getCategory($id)->getResponseArray();
 		return $response['category'];
 	}
 
-	protected static function fetchAll() {
+	public static function getAllAsArray() {
 		$response = xvmpRequest::getCategories()->getResponseArray();
 		return $response['categories']['category'];
 	}
@@ -64,6 +64,13 @@ class xvmpCategory extends xvmpObject {
 	 */
 	protected $updated_at;
 
+
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->cid;
+	}
 
 	/**
 	 * @return int

@@ -29,7 +29,7 @@ class xvmpConfFormGUI extends ilPropertyFormGUI {
 	 * xvmpConfFormGUI constructor.
 	 */
 	public function __construct(ilViMPConfigGUI $parent_gui) {
-		$categories = xvmpRequest::getCategory(1)->getResponseArray();
+		$media = xvmpRequest::getMedia(array('filterbyname' => 'How-To'))->getResponseArray();
 
 		global $ilCtrl, $lng, $tpl;
 		$this->parent_gui = $parent_gui;

@@ -14,7 +14,7 @@ class xvmpUserRoles extends xvmpObject {
 	public static function find($id) {
 		$key = self::class . '-' . $id;
 		if (!isset(xvmpObject::$cache[$key])) {
-			xvmpObject::buildAllFromArray(self::fetchAll());
+			xvmpObject::buildAllFromArray(self::getAllAsArray());
 		}
 		return xvmpObject::$cache[$id];
 	}
@@ -22,7 +22,7 @@ class xvmpUserRoles extends xvmpObject {
 	/**
 	 * @inheritdoc
 	 */
-	protected static function fetchAll() {
+	public static function getAllAsArray() {
 		$response = xvmpRequest::getUserRoles()->getResponseArray();
 		return $response['roles']['role'];
 	}
