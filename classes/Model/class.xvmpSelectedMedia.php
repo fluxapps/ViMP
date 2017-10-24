@@ -10,6 +10,12 @@ class xvmpSelectedMedia extends ActiveRecord {
 
 	const DB_TABLE_NAME = 'xvmp_selected_media';
 
+
+	public static function returnDbTableName() {
+		return self::DB_TABLE_NAME;
+	}
+
+
 	/**
 	 * @var int
 	 *
@@ -27,7 +33,6 @@ class xvmpSelectedMedia extends ActiveRecord {
 	 * @db_has_field        true
 	 * @db_fieldtype        integer
 	 * @db_length           8
-	 * @db_not_null         true
 	 */
 	protected $obj_id;
 	/**
@@ -36,7 +41,6 @@ class xvmpSelectedMedia extends ActiveRecord {
 	 * @db_has_field        true
 	 * @db_fieldtype        integer
 	 * @db_length           8
-	 * @db_not_null         true
 	 */
 	protected $mid;
 	/**
@@ -46,16 +50,64 @@ class xvmpSelectedMedia extends ActiveRecord {
 	 * @db_fieldtype        integer
 	 * @db_length           1
 	 */
-	protected $visible;
+	protected $visible = 1;
 	/**
 	 * @var int
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        integer
-	 * @db_not_null         true
 	 * @db_length           8
 	 */
 	protected $sort;
+
+
+	/**
+	 * @param $mid
+	 * @param $obj_id
+	 *
+	 * @return bool
+	 */
+	public static function isSelected($mid, $obj_id) {
+		return self::where(array('mid' => $mid, 'obj_id' => $obj_id))->hasSets();
+	}
+
+
+	/**
+	 * @param $mid
+	 * @param $obj_id
+	 *
+	 * @return bool
+	 */
+	public static function addVideo($mid, $obj_id) {
+		$set = self::where(array('mid' => $mid, 'obj_id' => $obj_id))->first();
+		if ($set) {
+			return false; // already added
+		}
+
+		$set = new self();
+		$set->setMid($mid);
+		$set->setObjId($obj_id);
+		$sort = self::where(array('obj_id' => $obj_id))->count() + 1;
+		$set->setSort($sort);
+		$set->create();
+		return true;
+	}
+
+	/**
+	 * @param $mid
+	 * @param $obj_id
+	 *
+	 * @return bool
+	 */
+	public static function removeVideo($mid, $obj_id) {
+		$set = self::where(array('mid' => $mid, 'obj_id' => $obj_id))->first();
+		if (!$set) {
+			return false; // already added
+		}
+
+		$set->delete();
+		return true;
+	}
 
 
 	/**
@@ -136,5 +188,5 @@ class xvmpSelectedMedia extends ActiveRecord {
 	public function setSort($sort) {
 		$this->sort = $sort;
 	}
-	
+
 }

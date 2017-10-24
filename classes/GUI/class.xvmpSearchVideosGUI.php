@@ -15,6 +15,8 @@ class xvmpSearchVideosGUI extends xvmpVideosGUI {
 	const CMD_SHOW_FILTERED = 'showFiltered';
 	const CMD_APPLY_FILTER = 'applyFilter';
 	const CMD_RESET_FILTER = 'resetFilter';
+	const CMD_ADD_VIDEO = 'addVideo';
+	const CMD_REMOVE_VIDEO = 'removeVideo';
 
 	protected function index() {
 		$xvmpSearchVideosTableGUI = new xvmpSearchVideosTableGUI($this, self::CMD_STANDARD);
@@ -39,6 +41,25 @@ class xvmpSearchVideosGUI extends xvmpVideosGUI {
 		$xvmpSearchVideosTableGUI->resetOffset();
 		$xvmpSearchVideosTableGUI->resetFilter();
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
+	}
+
+
+	/**
+	 * ajax
+	 */
+	public function addVideo() {
+		$mid = $_GET['mid'];
+		xvmpSelectedMedia::addVideo($mid, $this->getObjId());
+		exit;
+	}
+
+	/**
+	 * ajax
+	 */
+	public function removeVideo() {
+		$mid = $_GET['mid'];
+		xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
+		exit;
 	}
 
 }

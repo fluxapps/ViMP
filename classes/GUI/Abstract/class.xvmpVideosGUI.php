@@ -30,4 +30,12 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$this->tabs->addSubTab(self::SUBTAB_SELECTED, $this->pl->txt(self::SUBTAB_SELECTED), $this->ctrl->getLinkTargetByClass(xvmpSelectedVideosGUI::class, xvmpSelectedVideosGUI::CMD_STANDARD));
 		$this->tabs->addSubTab(self::SUBTAB_OWN, $this->pl->txt(self::SUBTAB_OWN), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
 	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getObjId() {
+		return $this->parent_gui->obj_id;
+	}
 }

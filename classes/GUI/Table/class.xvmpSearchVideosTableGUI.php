@@ -51,10 +51,13 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
+		global $tpl;
 		$this->addColumn('', '', 20, true);
 		$this->addColumn('', '', 20, true);
 		parent::__construct($parent_gui, $parent_cmd);
 		$this->setExternalSorting(true);
+		$tpl->addCss($this->pl->getDirectory() . '/templates/default/xvmp_search_videos.css');
+		$tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_search_videos.js');
 	}
 
 
@@ -81,6 +84,15 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 				$a_set[$title] = str_replace('10.0.2.2', 'localhost', $a_set[$title]);
 			}
 			// DEV
+
+			$this->tpl->setVariable('VAL_MID', $a_set['mid']);
+
+			$hide_button = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId()) ? 'ADD' : 'REMOVE';
+			$this->tpl->setVariable('VAL_ACTION_' . $hide_button, 'hidden');
+
+			$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
+			$this->tpl->setVariable('VAL_LINK_ADD', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSearchVideosGUI::CMD_ADD_VIDEO, '', true));
+			$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSearchVideosGUI::CMD_REMOVE_VIDEO, '', true));
 
 			$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 		}

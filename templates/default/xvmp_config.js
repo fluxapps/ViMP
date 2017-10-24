@@ -9,11 +9,6 @@ var VimpConfig = {
 		api_url = $('input#api_url').val();
 		url = api_url.replace(/\/+$/,'') + '/version';
 
-		console.log('ajax go');
-		console.log('api_key: ' + api_key);
-		console.log('url: ' + url);
-		console.log('data: ' + "Content-Type=application/x-www-form-urlencoded&apikey=" + api_key);
-		console.log('ajax_url: ' + ajax_url);
 		$.ajax({
 			url: ajax_url,
 			type: "GET",
