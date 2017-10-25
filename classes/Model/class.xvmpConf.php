@@ -25,6 +25,7 @@ class xvmpConf extends ActiveRecord {
 	const F_REQUIRED_METADATA = 'required_metadata';
 	const F_MEDIA_PERMISSIONS = 'media_permissions';
 	const F_MEDIA_PERMISSIONS_SELECTION = 'media_permissions_selection';
+	const F_TOKEN = 'token';
 
 	/**
 	 * @var array

@@ -8,6 +8,17 @@
  */
 class xvmpMedium extends xvmpObject {
 
+	public static function getSelectedAsArray($obj_id) {
+		$selected = xvmpSelectedMedia::getSelected($obj_id);
+		$videos = array();
+		foreach ($selected as $rec) {
+			$item = self::getObjectAsArray($rec->getMid());
+			$item['visible'] = $rec->getVisible();
+			$videos[] = $item;
+		}
+		return $videos;
+	}
+
 	public static function getFilteredAsArray(array $filter) {
 		$response = xvmpRequest::getMedia($filter)->getResponseArray();
 		if ($response['media']['count'] <= 1) {
@@ -25,6 +36,19 @@ class xvmpMedium extends xvmpObject {
 	public static function getAllAsArray() {
 		$response = xvmpRequest::getMedia()->getResponseArray();
 		return $response['media']['medium'];
+	}
+
+	public function update() {
+		$params = array(
+			'title' => $this->getTitle(),
+			'description' => $this->getDescription(),
+			'categories' => implode(',', $this->getCategories())
+		);
+		xvmpRequest::editMedium($this->getId(), $params);
+	}
+
+	public static function upload($video) {
+		$response = xvmpRequest::uploadMedium($video);
 	}
 
 	/**

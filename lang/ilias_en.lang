@@ -24,9 +24,21 @@ conf_general_settings#:#General
 msg_success#:#Changes saved successfully.
 all#:#Yes, all
 content#:#Content
-info#:#Info
+info_short#:#Info
 videos#:#Videos
 Settings#:#Settings
 search_videos#:#Search
 selected_videos#:#Selected Videos
 own_videos#:#Own Videos
+title#:#Title
+description#:#Description
+username#:#Username
+created_at#:#Created At
+visible#:#Visible
+selected_videos#:#Selected Videos
+published#:#Access
+status#:#Status
+upload_video#:#Upload Video
+edit_video#:#Edit Video
+tags#:#Tags
+private#:#Private

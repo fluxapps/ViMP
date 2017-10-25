@@ -24,9 +24,21 @@ conf_general_settings#:#Allgemein
 msg_success#:#Änderungen erfolgreich gespeichert.
 all#:#Ja, alle
 content#:#Inhalt
-info#:#Info
+info_short#:#Info
 videos#:#Videos
 settings#:#Einstellungen
 search_videos#:#Suchen
 selected_videos#:#Ausgewählte Videos
 own_videos#:#Eigene Videos
+title#:#Titel
+description#:#Beschreibung
+username#:#Benutzername
+created_at#:#Erstellungsdatum
+visible#:#Sichtbar
+selected_videos#:#Ausgewählte Videos
+published#:#Zugriff
+status#:#Status
+upload_video#:#Video Hochladen
+edit_video#:#Video Bearbeiten
+tags#:#Tags
+private#:#Privat

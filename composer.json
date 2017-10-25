@@ -26,7 +26,8 @@
       "../../../../../../../Services/Form",
       "../../../../../../../Services/Repository",
       "../../../../../../../Services/Component",
-      "../../../../../../../Services/ActiveRecord"
+      "../../../../../../../Services/ActiveRecord",
+      "../../../../../../../Services/UIComponent"
     ]
   },
   "config": {

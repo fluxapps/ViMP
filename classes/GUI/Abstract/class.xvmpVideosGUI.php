@@ -15,12 +15,35 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	const SUBTAB_SELECTED = 'selected_videos';
 	const SUBTAB_OWN = 'own_videos';
 
+	const CMD_SHOW_FILTERED = 'showFiltered';
+	const CMD_APPLY_FILTER = 'applyFilter';
+	const CMD_RESET_FILTER = 'resetFilter';
+	const CMD_ADD_VIDEO = 'addVideo';
+	const CMD_REMOVE_VIDEO = 'removeVideo';
 
-	public function executeCommand() {
-		$this->setSubTabs();
-		$this->tabs->activateSubTab(static::SUBTAB_ACTIVE);
-		parent::executeCommand();
-	}
+	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
+
+	const TABLE_CLASS = '';
+
+
+
+	/**
+	 * @param $cmd
+	 */
+	protected function performCommand($cmd) {
+		switch ($cmd) {
+			case self::CMD_STANDARD:
+			case self::CMD_SHOW_FILTERED:
+				$this->initUploadButton();
+				$this->setSubTabs();
+				$this->tabs->activateSubTab(static::SUBTAB_ACTIVE);
+				$this->{$cmd}();
+				break;
+			default:
+				$this->{$cmd}();
+				break;
+		}
+ 	}
 
 	/**
 	 *
@@ -33,9 +56,87 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 
 
 	/**
+	 *
+	 */
+	protected function index() {
+		$class_name = static::TABLE_CLASS;
+		/** @var xvmpTableGUI $table_gui */
+		$table_gui = new $class_name($this, self::CMD_STANDARD);
+		$this->tpl->setContent($table_gui->getHTML());
+	}
+
+
+	/**
+	 *
+	 */
+	protected function showFiltered() {
+		$class_name = static::TABLE_CLASS;
+		/** @var xvmpTableGUI $table_gui */
+		$table_gui = new $class_name($this, self::CMD_STANDARD);
+		$table_gui->parseData();
+		$this->tpl->setContent($table_gui->getHTML());
+	}
+
+
+	/**
+	 *
+	 */
+	public function applyFilter() {
+		$class_name = static::TABLE_CLASS;
+		/** @var xvmpTableGUI $table_gui */
+		$table_gui = new $class_name($this, self::CMD_STANDARD);
+		$table_gui->resetOffset();
+		$table_gui->writeFilterToSession();
+		$this->ctrl->redirect($this, self::CMD_SHOW_FILTERED);
+	}
+
+
+	/**
+	 *
+	 */
+	public function resetFilter() {
+		$class_name = static::TABLE_CLASS;
+		/** @var xvmpTableGUI $table_gui */
+		$table_gui = new $class_name($this, self::CMD_STANDARD);
+		$table_gui->resetOffset();
+		$table_gui->resetFilter();
+		$this->ctrl->redirect($this, self::CMD_STANDARD);
+	}
+
+	/**
+	 * ajax
+	 */
+	public function addVideo() {
+		$mid = $_GET['mid'];
+		xvmpSelectedMedia::addVideo($mid, $this->getObjId());
+		exit;
+	}
+
+	/**
+	 * ajax
+	 */
+	public function removeVideo() {
+		$mid = $_GET['mid'];
+		xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
+		exit;
+	}
+
+
+	/**
 	 * @return int
 	 */
 	public function getObjId() {
 		return $this->parent_gui->obj_id;
+	}
+
+
+	/**
+	 *
+	 */
+	protected function initUploadButton() {
+		$upload_button = ilLinkButton::getInstance();
+		$upload_button->setCaption($this->pl->txt('upload_video'), false);
+		$upload_button->setUrl($this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO_FORM));
+		$this->toolbar->addButtonInstance($upload_button);
 	}
 }

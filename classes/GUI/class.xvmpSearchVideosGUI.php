@@ -12,54 +12,6 @@ class xvmpSearchVideosGUI extends xvmpVideosGUI {
 
 	const SUBTAB_ACTIVE = xvmpVideosGUI::SUBTAB_SEARCH;
 
-	const CMD_SHOW_FILTERED = 'showFiltered';
-	const CMD_APPLY_FILTER = 'applyFilter';
-	const CMD_RESET_FILTER = 'resetFilter';
-	const CMD_ADD_VIDEO = 'addVideo';
-	const CMD_REMOVE_VIDEO = 'removeVideo';
-
-	protected function index() {
-		$xvmpSearchVideosTableGUI = new xvmpSearchVideosTableGUI($this, self::CMD_STANDARD);
-		$this->tpl->setContent($xvmpSearchVideosTableGUI->getHTML());
-	}
-
-	protected function showFiltered() {
-		$xvmpSearchVideosTableGUI = new xvmpSearchVideosTableGUI($this, self::CMD_STANDARD);
-		$xvmpSearchVideosTableGUI->parseData();
-		$this->tpl->setContent($xvmpSearchVideosTableGUI->getHTML());
-	}
-
-	public function applyFilter() {
-		$xvmpSearchVideosTableGUI = new xvmpSearchVideosTableGUI($this, self::CMD_STANDARD);
-		$xvmpSearchVideosTableGUI->resetOffset();
-		$xvmpSearchVideosTableGUI->writeFilterToSession();
-		$this->ctrl->redirect($this, self::CMD_SHOW_FILTERED);
-	}
-
-	public function resetFilter() {
-		$xvmpSearchVideosTableGUI = new xvmpSearchVideosTableGUI($this, self::CMD_STANDARD);
-		$xvmpSearchVideosTableGUI->resetOffset();
-		$xvmpSearchVideosTableGUI->resetFilter();
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
-	}
-
-
-	/**
-	 * ajax
-	 */
-	public function addVideo() {
-		$mid = $_GET['mid'];
-		xvmpSelectedMedia::addVideo($mid, $this->getObjId());
-		exit;
-	}
-
-	/**
-	 * ajax
-	 */
-	public function removeVideo() {
-		$mid = $_GET['mid'];
-		xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
-		exit;
-	}
+	const TABLE_CLASS = 'xvmpSearchVideosTableGUI';
 
 }

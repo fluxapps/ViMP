@@ -88,7 +88,7 @@ class xvmpSelectedMedia extends ActiveRecord {
 		$set->setMid($mid);
 		$set->setObjId($obj_id);
 		$sort = self::where(array('obj_id' => $obj_id))->count() + 1;
-		$set->setSort($sort);
+		$set->setSort($sort * 10);
 		$set->create();
 		return true;
 	}
@@ -106,7 +106,52 @@ class xvmpSelectedMedia extends ActiveRecord {
 		}
 
 		$set->delete();
+		self::reSort($obj_id);
 		return true;
+	}
+
+
+	/**
+	 * @param $obj_id
+	 *
+	 * @return self[]
+	 */
+	public static function getSelected($obj_id) {
+		return self::where(array('obj_id' => $obj_id))->orderBy('sort')->get();
+	}
+
+
+	/**
+	 *
+	 */
+	public static function reSort($obj_id) {
+		$i = 1;
+		foreach (self::getSelected($obj_id) as $item) {
+			$item->setSort($i*10);
+			$item->update();
+			$i++;
+		}
+	}
+
+
+	/**
+	 * @param $mid
+	 * @param $obj_Id
+	 */
+	public static function moveUp($mid, $obj_Id) {
+		/** @var self $medium */
+		$medium = self::where(array('mid' => $mid, 'obj_id' => $obj_Id))->first();
+		$medium->setSort($medium->getSort() - 15);
+		$medium->update();
+		self::reSort($obj_Id);
+	}
+
+	public static function moveDown($mid, $obj_Id) {
+		/** @var self $medium */
+		$medium = self::where(array('mid' => $mid, 'obj_id' => $obj_Id))->first();
+		$medium->setSort($medium->getSort() + 15);
+		$medium->update();
+		self::reSort($obj_Id);
 	}
 
 

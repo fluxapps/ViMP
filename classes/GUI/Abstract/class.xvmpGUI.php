@@ -9,6 +9,8 @@
 abstract class xvmpGUI {
 
 	const CMD_STANDARD = 'index';
+	const CMD_CANCEL = 'cancel';
+
 	const TAB_ACTIVE = ''; // overwrite in subclass
 	/**
 	 * @var ilObjViMPGUI

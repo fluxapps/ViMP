@@ -50,15 +50,15 @@ class xvmpConfFormGUI extends ilPropertyFormGUI {
 		$header->setTitle($this->pl->confTxt('api_settings'));
 		$this->addItem($header);
 
-//		// API User
-//		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_USER), xvmpConf::F_API_USER);
-//		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_USER . '_info'));
-//		$this->addItem($input);
-//
-//		// API Password
-//		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_PASSWORD), xvmpConf::F_API_PASSWORD);
-//		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_PASSWORD . '_info'));
-//		$this->addItem($input);
+		// API User
+		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_USER), xvmpConf::F_API_USER);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_USER . '_info'));
+		$this->addItem($input);
+
+		// API Password
+		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_PASSWORD), xvmpConf::F_API_PASSWORD);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_PASSWORD . '_info'));
+		$this->addItem($input);
 
 		// API Key
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_KEY), xvmpConf::F_API_KEY);

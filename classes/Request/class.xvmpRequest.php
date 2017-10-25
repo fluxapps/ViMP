@@ -15,6 +15,9 @@ class xvmpRequest {
 	const GET_CATEGORY = 'getCategory';
 	const GET_MEDIA = 'getMedia';
 	const GET_MEDIUM = 'getMedium';
+	const EDIT_MEDIUM = 'editMedium';
+	const UPLOAD_MEDIUM = 'uploadMedium';
+	const LOGIN_USER = 'loginUser';
 
 
 	/**
@@ -91,10 +94,85 @@ class xvmpRequest {
 	 */
 	public static function getMedium($mediumid, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_MEDIUM);
-		$xvmpCurl->addPostField('mediumid', $mediumid);
+		$params['mediumid'] = $mediumid;
+		if (!isset($params['thumbsize'])) {
+			$params['thumbsize'] = '170x108';
+		}
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}
+		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
+
+	/**
+	 * possible parameters:
+	 *
+	 * $title
+	 * $description
+	 * $tags
+	 * $categories
+	 * $mediapermissions
+	 *
+	 * @param       $mediumid
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function editMedium($mediumid, $params) {
+		$xvmpCurl = new xvmpCurl(self::EDIT_MEDIUM);
+		$params['mediumid'] = $mediumid;
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * possible parameters:
+	 *
+	 * $title
+	 * $description
+	 * $tags
+	 * $categories
+	 * $mediapermissions
+	 *
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 * @internal param $mediumid
+	 */
+	public static function uploadMedium($params) {
+		$xvmpCurl = new xvmpCurl(self::UPLOAD_MEDIUM);
+		$params['token'] = xvmp::getToken();
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		try {
+			$xvmpCurl->post();
+		} catch (xvmpException $e) {
+			if ($e->getCode() == 401) {
+				xvmp::resetToken();
+				$params['token'] = xvmp::getToken();
+				$xvmpCurl->post();
+			}
+		}
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * @param $username
+	 * @param $password
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function loginUser($username, $password) {
+		$xvmpCurl = new xvmpCurl(self::LOGIN_USER);
+		$xvmpCurl->addPostField('username', $username);
+		$xvmpCurl->addPostField('password', $password);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}

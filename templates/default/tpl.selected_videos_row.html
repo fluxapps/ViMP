@@ -1,0 +1,38 @@
+<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
+	<td class="std small xvmp_action">
+		<div class="xvmp_sort_container">
+			<a id="xvmp_up_{VAL_MID}" onclick="VimpSelected.up(event, {VAL_MID});">
+				<img width="30px" src="./templates/default/images/arrow_up.svg">
+			</a>
+			<a id="xvmp_down_{VAL_MID}" onclick="VimpSelected.down(event, {VAL_MID});">
+				<img width="30px" src="./templates/default/images/arrow_down.svg">
+			</a>
+		</div>
+	</td>
+	<td class="std small">
+		<div class="xvmp_image_container">
+			<img class="xvmp_preview_image" src="{VAL_THUMBNAIL}">
+		</div>
+	</td>
+	<td class="std small">
+		<input id="xvmp_visible_{VAL_MID}" onclick="VimpSelected.setVisibility(event, {VAL_MID});" type="checkbox" {VAL_VISIBLE}>
+	</td>
+	<td class="std small">
+		{VAL_TITLE}
+	</td>
+	<td class="std small">
+		{VAL_DESCRIPTION}
+	</td>
+	<td class="std small">
+		{VAL_USERNAME}
+	</td>
+	<td class="std small">
+		{VAL_CREATED_AT}
+	</td>
+	<td class="std small xvmp_action">
+		<img id="xvmp_spinner_{VAL_MID}" hidden width="50px" src="/Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/spinner.gif">
+		<a id="xvmp_remove_{VAL_MID}" onclick="VimpSelected.remove(event, {VAL_MID});" class="xvmp_action_remove">
+			<img width="50px" src="/Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/remove_icon.jpg">
+		</a>
+	</td>
+</tr>

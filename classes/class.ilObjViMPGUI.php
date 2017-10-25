@@ -16,7 +16,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	const CMD_SEARCH_VIDEOS = 'searchVideos';
 
 	const TAB_CONTENT = 'content';
-	const TAB_INFO = 'info';
+	const TAB_INFO = 'info_short';
 	const TAB_VIDEOS = 'videos';
 	const TAB_SETTINGS = 'settings';
 	const TAB_PERMISSION = 'permissions';
@@ -45,14 +45,33 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		try {
 			switch ($next_class) {
 				case 'xvmpcontentgui':
-				case 'xvmpownvideosgui':
 				case 'xvmpsearchvideosgui':
-				case 'xvmpselectedvideosgui':
 				case 'xvmpsettingsgui':
 					$this->initHeader();
 					$this->setTabs();
 					$xvmpGUI = new $next_class($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
+				case 'xvmpselectedvideosgui':
+					$this->initHeader();
+					$this->setTabs();
+					$xvmpGUI = new xvmpSelectedVideosGUI($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
+				case 'xvmpownvideosgui':
+					$this->initHeader();
+					$this->setTabs();
+					$xvmpGUI = new xvmpOwnVideosGUI($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
+				case "ilinfoscreengui":
+					$this->initHeader();
+					$this->setTabs();
+					$this->checkPermission("visible");
+					$this->infoScreen();	// forwards command
 					$this->tpl->show();
 					break;
 				case 'ilpermissiongui':

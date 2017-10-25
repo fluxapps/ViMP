@@ -1,13 +1,14 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
 /**
- * Class xvmpSearchVideosTableGUI
+ * Class xvmpOwnVideosTableGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpSearchVideosTableGUI extends xvmpTableGUI {
+class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
-	const ROW_TEMPLATE = 'tpl.search_videos_row.html';
+	const ROW_TEMPLATE = 'tpl.own_videos_row.html';
 
 	protected $js_files = array('xvmp_search_videos.js');
 	protected $css_files = array('xvmp_video_table.css');
@@ -22,14 +23,11 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		'title' => array(
 			'sort_field' => 'title'
 		),
-		'description' => array(
-			'sort_field' => 'description'
+		'published' => array(
+			'sort_field' => 'published'
 		),
-		'username' => array(
-			'sort_field' => 'user'
-		),
-		'copyright' => array(
-			'sort_field' => 'copyright'
+		'status' => array(
+			'sort_field' => 'status'
 		),
 		'created_at' => array(
 			'sort_field' => 'unix_time'
@@ -44,34 +42,35 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	);
 
 	/**
-	 * @var xvmpSearchVideosGUI
+	 * @var xvmpOwnVideosGUI
 	 */
 	protected $parent_obj;
 
 
 	/**
-	 * xvmpSearchVideosTableGUI constructor.
+	 * xvmpOwnVideosTableGUI constructor.
 	 *
 	 * @param int    $parent_gui
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
+		global $tpl;
 		parent::__construct($parent_gui, $parent_cmd);
-		$this->setExternalSorting(true);
+		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
+		$tpl->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
+		$this->parseData();
 	}
-
 
 	protected function initColumns() {
 		$this->addColumn('', '', 75, true);
 		$this->addColumn('', '', 210, true);
 
 		parent::initColumns();
+
+		$this->addColumn('', '', 75, true);
 	}
 
 
-	/**
-	 *
-	 */
 	public function parseData() {
 		$filter = array('thumbsize' => self::THUMBSIZE);
 		foreach ($this->filters as $filter_item) {
@@ -79,7 +78,6 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		}
 		$this->setData(xvmpMedium::getFilteredAsArray($filter));
 	}
-
 
 	/**
 	 * @param xvmpObject $a_set
@@ -105,5 +103,22 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 			$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 		}
+
+		$this->tpl->setVariable('VAL_ACTIONS', $this->buildActionList($a_set));
+	}
+
+
+	/**
+	 * @param $a_set
+	 *
+	 * @return string
+	 */
+	protected function buildActionList($a_set) {
+		$actions = new ilAdvancedSelectionListGUI();
+		$actions->setListTitle($this->lng->txt('actions'));
+		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
+		$actions->addItem($this->lng->txt('edit'), 'edit', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_EDIT_VIDEO));
+		$actions->addItem($this->lng->txt('delete'), 'delete', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_DELETE_VIDEO));
+		return $actions->getHTML();
 	}
 }
