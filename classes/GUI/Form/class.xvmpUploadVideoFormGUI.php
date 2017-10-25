@@ -49,8 +49,15 @@ class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
 		$this->addItem($input);
 
 		// FILE
-		$input = new ilFileInputGUI($this->pl->txt('file'), 'source_url');
+		$input = new ilFileInputGUI($this->lng->txt('file'), 'source_url');
+		$this->addItem($input);
 
+		// ADD AUTOMATICALLY
+		$input = new ilCheckboxInputGUI($this->pl->txt('add_automatically'), 'add_automatically');
+		$this->addItem($input);
+
+		// NOTIFICATION
+		$input = new ilCheckboxInputGUI($this->pl->txt('notification'), 'notification');
 		$this->addItem($input);
 
 		// TITLE
@@ -87,11 +94,6 @@ class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
 		//		if ($media_permissions )
 		// TODO: media permissions
 
-		// ADD AUTOMATICALLY
-		if (!$this->video) {
-			// TODO: automatisch hinzufügen
-		}
-
 		// CATEGORIES
 		$input = new ilMultiSelectInputGUI($this->lng->txt('categories'), 'categories');
 		$categories = xvmpCategory::getAll();
@@ -120,15 +122,51 @@ class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
 	 *
 	 */
 	public function uploadVideo() {
-		$this->checkInput();
+		if (!$this->checkInput()) {
+			return false;
+		}
 		$video = array();
 		/** @var ilFormPropertyGUI $item */
 		foreach ($this->getItems() as $item) {
 			$value = $this->getInput($item->getPostVar());
 
-			if ($item instanceof ilFileInputGUI) {
-				$tmp_id = ilUtil::randomhash();
+			switch ($item->getPostVar()) {
+				case 'source_url':
+					$tmp_id = ilUtil::randomhash();
+					$dir = $this->pl->getDirectory() . '/transfer/' . $tmp_id;
+					if (!is_dir($dir)) {
+						ilUtil::makeDir($dir);
+					}
+					$target_path = $dir . '/' . $value['name'];
+					ilUtil::moveUploadedFile($value['tmp_name'], $value['name'], $target_path);
+					$value = htmlentities(ILIAS_HTTP_PATH . '/' . ltrim($target_path, '.'));
 
+					$video[$item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
+					break;
+				case 'add_automatically':
+					$add_automatically = (int) $value;
+					break;
+				case 'notification':
+					$notification = (int) $value;
+					break;
+				default:
+					if ($value) {
+						$video[$item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
+					}
+					break;
+			}
+
+
+		}
+
+		try {
+			xvmpMedium::upload($video, $this->parent_gui->getObjId(), $add_automatically, $notification);
+		} catch (xvmpException $e) {
+			ilUtil::sendFailure($e->getMessage(), true);
+			return false;
+		}
+
+		return true;
 				// indirect file download via ViMP/transfer.php
 //				if (!is_dir(CLIENT_DATA_DIR . '/vimp_upload')) {
 //					ilUtil::makeDir(CLIENT_DATA_DIR . '/vimp_upload');
@@ -141,21 +179,6 @@ class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
 //				$value = htmlentities($value);
 
 				// direct file download via ViMP/transfer folder
-				$dir = $this->pl->getDirectory() . '/transfer/' . $tmp_id;
-				if (!is_dir($dir)) {
-					ilUtil::makeDir($dir);
-				}
-				$target_path = $dir . '/' . $value['name'];
-				ilUtil::moveUploadedFile($value['tmp_name'], $value['name'], $target_path);
-				$value = htmlentities(ILIAS_HTTP_PATH . '/' . ltrim($target_path, '.'));
-			}
 
-			if ($value) {
-				$video[$item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
-			}
-
-		}
-
-		xvmpMedium::upload($video);
 	}
 }

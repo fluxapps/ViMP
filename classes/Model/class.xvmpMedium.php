@@ -12,7 +12,11 @@ class xvmpMedium extends xvmpObject {
 		$selected = xvmpSelectedMedia::getSelected($obj_id);
 		$videos = array();
 		foreach ($selected as $rec) {
-			$item = self::getObjectAsArray($rec->getMid());
+			try {
+				$item = self::getObjectAsArray($rec->getMid());
+			} catch (xvmpException $e) {
+				continue;
+			}
 			$item['visible'] = $rec->getVisible();
 			$videos[] = $item;
 		}
@@ -47,8 +51,28 @@ class xvmpMedium extends xvmpObject {
 		xvmpRequest::editMedium($this->getId(), $params);
 	}
 
-	public static function upload($video) {
+	public static function upload($video, $obj_id, $add_automatically, $notification) {
+		global $ilUser;
 		$response = xvmpRequest::uploadMedium($video);
+		$medium = $response->getResponseArray()['medium'];
+
+		if ($add_automatically) {
+			xvmpSelectedMedia::addVideo($medium['mid'],$obj_id);
+		}
+
+		$uploaded_media = new xvmpUploadedMedia();
+		$uploaded_media->setMid($medium['mid']);
+		$uploaded_media->setNotification($notification);
+		$uploaded_media->setUserId($ilUser->getId());
+		$uploaded_media->create();
+	}
+
+	public static function deleteObject($mid) {
+		xvmpRequest::deleteMedium($mid);
+		xvmpSelectedMedia::deleteVideo($mid);
+		if ($uploaded_media = xvmpUploadedMedia::find($mid)) {
+			$uploaded_media->delete();
+		}
 	}
 
 	/**

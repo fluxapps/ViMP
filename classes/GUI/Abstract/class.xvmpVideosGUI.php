@@ -21,7 +21,6 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	const CMD_ADD_VIDEO = 'addVideo';
 	const CMD_REMOVE_VIDEO = 'removeVideo';
 
-	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
 
 	const TABLE_CLASS = '';
 

@@ -18,7 +18,7 @@ abstract class xvmpGUI {
 	protected $parent_gui;
 
 	public function __construct(ilObjViMPGUI $parent_gui) {
-		global $tpl, $ilCtrl, $ilTabs, $ilToolbar, $ilUser;
+		global $tpl, $ilCtrl, $ilTabs, $ilToolbar, $ilUser, $lng;
 		/**
 		 * @var $ilCtrl    ilCtrl
 		 * @var $ilTabs    ilTabsGUI
@@ -31,6 +31,7 @@ abstract class xvmpGUI {
 		$this->toolbar = $ilToolbar;
 		$this->user = $ilUser;
 		$this->pl = ilViMPPlugin::getInstance();
+		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
 	}
 

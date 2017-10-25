@@ -19,6 +19,8 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const CMD_DELETE_VIDEO = 'deleteVideo';
 	const CMD_UPLOAD_VIDEO_FORM = 'uploadVideoForm';
 	const CMD_UPLOAD_VIDEO = 'uploadVideo';
+	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
+
 
 	/**
 	 *
@@ -57,8 +59,33 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	public function uploadVideo() {
 		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpEditVideoFormGUI->setValuesByPost();
-		$xvmpEditVideoFormGUI->uploadVideo();
+		if ($xvmpEditVideoFormGUI->uploadVideo()) {
+			ilUtil::sendSuccess($this->pl->txt('video_uploaded'), true);
+			$this->ctrl->redirect($this, self::CMD_STANDARD);
+		}
+
+		ilUtil::sendFailure($this->pl->txt('form_incomplete'));
+		$xvmpEditVideoFormGUI->setValuesByPost();
 		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
+	}
+
+	public function deleteVideo() {
+		$mid = $_GET['mid'];
+		$video = xvmpMedium::find($mid);
+		$confirmation_gui = new ilConfirmationGUI();
+		$confirmation_gui->setFormAction($this->ctrl->getFormAction($this));
+		$confirmation_gui->setHeaderText($this->pl->txt('confirm_delete_text'));
+		$confirmation_gui->addItem('mid', $mid, $video->getTitle());
+		$confirmation_gui->setConfirm($this->lng->txt('delete'),self::CMD_CONFIRMED_DELETE_VIDEO);
+		$confirmation_gui->setCancel($this->lng->txt('cancel'), self::CMD_STANDARD);
+		$this->tpl->setContent($confirmation_gui->getHTML());
+	}
+
+	public function confirmedDeleteVideo() {
+		$mid = $_POST['mid'];
+		xvmpMedium::deleteObject($mid);
+		ilUtil::sendSuccess($this->pl->txt('video_deleted'), true);
+		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
 }

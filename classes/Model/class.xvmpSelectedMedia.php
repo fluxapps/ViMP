@@ -110,6 +110,13 @@ class xvmpSelectedMedia extends ActiveRecord {
 		return true;
 	}
 
+	public static function deleteVideo($mid) {
+		/** @var self $selected */
+		foreach (self::where(array('mid' => $mid))->get() as $selected) {
+			$selected->delete();
+		}
+	}
+
 
 	/**
 	 * @param $obj_id

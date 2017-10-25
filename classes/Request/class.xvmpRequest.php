@@ -16,6 +16,7 @@ class xvmpRequest {
 	const GET_MEDIA = 'getMedia';
 	const GET_MEDIUM = 'getMedium';
 	const EDIT_MEDIUM = 'editMedium';
+	const DELETE_MEDIUM = 'deleteMedium';
 	const UPLOAD_MEDIUM = 'uploadMedium';
 	const LOGIN_USER = 'loginUser';
 
@@ -150,18 +151,25 @@ class xvmpRequest {
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}
-		try {
-			$xvmpCurl->post();
-		} catch (xvmpException $e) {
-			if ($e->getCode() == 401) {
-				xvmp::resetToken();
-				$params['token'] = xvmp::getToken();
-				$xvmpCurl->post();
-			}
-		}
+
+		$xvmpCurl->post();
+
 		return $xvmpCurl;
 	}
 
+
+	/**
+	 * @param $mediumid
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function deleteMedium($mediumid) {
+		$xvmpCurl = new xvmpCurl(self::DELETE_MEDIUM);
+		$xvmpCurl->addPostField('token', xvmp::getToken());
+		$xvmpCurl->addPostField('mediumid', $mediumid);
+		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
 
 	/**
 	 * @param $username
@@ -176,4 +184,5 @@ class xvmpRequest {
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}
+
 }

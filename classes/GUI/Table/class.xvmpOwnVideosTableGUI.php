@@ -45,7 +45,10 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @var xvmpOwnVideosGUI
 	 */
 	protected $parent_obj;
-
+	/**
+	 * @var ilObjUser
+	 */
+	protected $user;
 
 	/**
 	 * xvmpOwnVideosTableGUI constructor.
@@ -54,7 +57,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
-		global $tpl;
+		global $tpl, $ilUser;
+		$this->user = $ilUser;
 		parent::__construct($parent_gui, $parent_cmd);
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
 		$tpl->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
@@ -76,7 +80,13 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		foreach ($this->filters as $filter_item) {
 			$filter[$filter_item->getPostVar()] = $filter_item->getValue();
 		}
-		$this->setData(xvmpMedium::getFilteredAsArray($filter));
+
+		$videos = xvmpMedium::getFilteredAsArray($filter);
+		foreach (xvmpUploadedMedia::where(array('user_id' => $this->user->getId()))->get() as $uploaded_media) {
+			$videos[] = xvmpMedium::getObjectAsArray($uploaded_media->getMid());
+		}
+
+		$this->setData($videos);
 	}
 
 	/**

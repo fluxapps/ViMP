@@ -112,6 +112,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		}
 
 
+		$this->tpl->setTitleIcon(ilObjViMP::_getIcon($this->object_id));
 		$this->tpl->setTitle($this->object->getTitle());
 		$this->tpl->setDescription($this->object->getDescription());
 

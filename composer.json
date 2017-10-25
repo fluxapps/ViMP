@@ -27,7 +27,8 @@
       "../../../../../../../Services/Repository",
       "../../../../../../../Services/Component",
       "../../../../../../../Services/ActiveRecord",
-      "../../../../../../../Services/UIComponent"
+      "../../../../../../../Services/UIComponent",
+      "../../../../../../../Services/Utilities"
     ]
   },
   "config": {
