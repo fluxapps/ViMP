@@ -1,4 +1,8 @@
 <?php
+
+// NOT IN USE
+exit;
+
 $path = $_GET['path'];
 $path_parts = explode('/', $path);
 if (count($path_parts) > 2 || in_array('..', $path_parts)) {

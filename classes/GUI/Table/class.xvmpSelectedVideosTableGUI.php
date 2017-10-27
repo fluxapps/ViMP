@@ -90,16 +90,18 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
 		$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSelectedVideosGUI::CMD_REMOVE_VIDEO, '', true));
 
+		$transcoding = $a_set['status'] != 'legal';
+		if ($transcoding) {
+			$this->tpl->setVariable('VAL_VISIBILITY_DISABLED', 'disabled');
+		}
+
 		foreach ($this->available_columns as $title => $props)
 		{
-			// DEV
-			if (ilViMPPlugin::DEV && $title == 'thumbnail') {
-				$a_set[$title] = str_replace('10.0.2.2', 'localhost', $a_set[$title]);
-			}
-			// DEV
 
 			if ($title == 'visible') {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] == 1 ? 'checked' : '');
+			} elseif ($title == 'thumbnail' && $transcoding) {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			} else {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			}

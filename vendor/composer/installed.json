@@ -52,5 +52,43 @@
             "mobile detector",
             "php mobile detect"
         ]
+    },
+    {
+        "name": "moxiecode/plupload",
+        "version": "v3.1.1",
+        "version_normalized": "3.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moxiecode/plupload.git",
+            "reference": "e0c37961c5e4018a6c7fcb7c39fb0367cd0ac7e5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moxiecode/plupload/zipball/e0c37961c5e4018a6c7fcb7c39fb0367cd0ac7e5",
+            "reference": "e0c37961c5e4018a6c7fcb7c39fb0367cd0ac7e5",
+            "shasum": ""
+        },
+        "time": "2017-10-03T06:25:37+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "(GPL-2.0 or OEM)"
+        ],
+        "authors": [
+            {
+                "name": "Davit Barbakadze",
+                "email": "david@moxiecode.com",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "Plupload is a JavaScript API for dealing with file uploads it supports features like multiple file selection, file type filtering, request chunking, client side image scaling and it uses different runtimes to achieve this such as HTML 5, Silverlight and Flash.",
+        "homepage": "http://plupload.com",
+        "keywords": [
+            "file upload",
+            "legacy browser support",
+            "multi-runtime",
+            "plupload"
+        ]
     }
 ]

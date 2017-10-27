@@ -1,9 +1,9 @@
 <tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row">
 	<td class="std small xvmp_action">
-		<a id="xvmp_add_{VAL_MID}" href="{VAL_LINK_ADD}" onclick="VimpSearch.add(event, {VAL_MID});" class="xvmp_action_add" {VAL_ACTION_ADD}>
+		<a id="xvmp_add_{VAL_MID}" onclick="VimpSearch.add(event, {VAL_MID}, {VAL_VISIBLE});" class="xvmp_action_add" {VAL_ACTION_ADD}>
 			<img width="50px" src="/Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/add_icon.png">
 		</a>
-		<a id="xvmp_remove_{VAL_MID}" href="{VAL_LINK_REMOVE}" onclick="VimpSearch.remove(event, {VAL_MID});" class="xvmp_action_remove" {VAL_ACTION_REMOVE}>
+		<a id="xvmp_remove_{VAL_MID}" onclick="VimpSearch.remove(event, {VAL_MID});" class="xvmp_action_remove" {VAL_ACTION_REMOVE}>
 			<img width="50px" src="/Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/remove_icon.jpg">
 		</a>
 	</td>
@@ -19,7 +19,7 @@
 		{VAL_PUBLISHED}
 	</td>
 	<td class="std small">
-		{VAL_STATUS}
+		{VAL_STATUS_TEXT}
 	</td>
 	<td class="std small">
 		{VAL_CREATED_AT}

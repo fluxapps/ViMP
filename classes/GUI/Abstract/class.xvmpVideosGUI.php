@@ -107,7 +107,8 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 */
 	public function addVideo() {
 		$mid = $_GET['mid'];
-		xvmpSelectedMedia::addVideo($mid, $this->getObjId());
+		$visible = $_GET['visible'];
+		xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
 		exit;
 	}
 

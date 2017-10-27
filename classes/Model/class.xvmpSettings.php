@@ -12,7 +12,7 @@ class xvmpSettings extends ActiveRecord {
 
 	const LAYOUT_TYPE_LIST = 1;
 	const LAYOUT_TYPE_TILES = 2;
-	const LAYOUT_TYPE_HORIZONTAL_SCROLL = 3;
+	const LAYOUT_TYPE_PLAYER = 3;
 
 	/**
 	 * @var int

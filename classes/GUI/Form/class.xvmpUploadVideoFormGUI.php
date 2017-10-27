@@ -41,7 +41,30 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$this->addItem($input);
 
 		// FILE
-		$input = new ilFileInputGUI($this->lng->txt('file'), 'source_url');
+		$input = new xoctFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO, $this->lng->txt('file'), 'source_url');
+		$input->setUrl($this->ctrl->getLinkTarget($this->parent_gui, xvmpOwnVideosGUI::CMD_UPLOAD_CHUNKS));
+		$input->setSuffixes(array(
+			'mov',
+			'mp4',
+			'm4v',
+			'flv',
+			'mpeg',
+			'avi',
+		));
+		$input->setMimeTypes(array(
+			'video/avi',
+			'video/quicktime',
+			'video/mpeg',
+			'video/mp4',
+			'video/ogg',
+			'video/webm',
+			'video/x-ms-wmv',
+			'video/x-flv',
+			'video/x-matroska',
+			'video/x-msvideo',
+			'video/x-dv',
+		));
+		$input->setRequired(true);
 		$this->addItem($input);
 
 		// ADD AUTOMATICALLY

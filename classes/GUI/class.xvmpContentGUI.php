@@ -16,6 +16,7 @@ class xvmpContentGUI extends xvmpGUI {
 
 	const CMD_SHOW_MODAL_PLAYER = 'showModalPlayer';
 	const CMD_RENDER_TILE = 'renderTile';
+	const CMD_RENDER_TILE_SMALL = 'renderTileSmall';
 
 	/**
 	 *
@@ -35,7 +36,10 @@ class xvmpContentGUI extends xvmpGUI {
 				$xvmpContentTilesGUI = new xvmpContentTilesGUI($this);
 				$xvmpContentTilesGUI->show();
 				break;
-			case xvmpSettings::LAYOUT_TYPE_HORIZONTAL_SCROLL:
+			case xvmpSettings::LAYOUT_TYPE_PLAYER:
+				$xvmpContentPlayerGUI = new xvmpContentPlayerGUI($this);
+				$xvmpContentPlayerGUI->show();
+				break;
 		}
 	}
 
@@ -57,8 +61,6 @@ class xvmpContentGUI extends xvmpGUI {
 			$tpl->setVariable('DESCRIPTION', $video->getDescription());
 			$tpl->setVariable('DURATION', $video->getDuration());
 
-
-
 //			$js = "$('#xvmp_modal_player_{$mid}').find('.modal-body').addClass('waiting');";
 			$js = "VimpContent.embed_codes[" . $video->getId() . "] = '" . $video->getEmbedCode() . "';";
 			$js .= "VimpContent.video_titles[" . $video->getId() . "] = '" . $video->getTitle() . "';";
@@ -71,6 +73,28 @@ class xvmpContentGUI extends xvmpGUI {
 //			$modal->setBody('<div id="xoct_waiter" class="xoct_waiter xoct_waiter_modal"></div><section></section>');
 //			$tpl->setVariable('MODAL', $modal->getHTML());
 //			$tpl->setVariable('MODAL_LINK', 'data-toggle="modal" data-target="#xvmp_modal_player_' . $mid . '"');
+			echo $tpl->get();
+			exit;
+		} catch (xvmpException $e) {
+			exit;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function renderTileSmall() {
+		$mid = $_GET['mid'];
+		try {
+			xvmpMedium::$thumb_size = '210x150';
+			$video = xvmpMedium::find($mid);
+			$tpl = new ilTemplate('tpl.content_tiles_small.html', true, true, $this->pl->getDirectory());
+
+			$tpl->setVariable('MID', $mid);
+			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
+			$tpl->setVariable('MID', $video->getId());
+			$tpl->setVariable('TITLE', $video->getTitle());
+
 			echo $tpl->get();
 			exit;
 		} catch (xvmpException $e) {

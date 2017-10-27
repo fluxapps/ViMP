@@ -20,6 +20,8 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const CMD_UPLOAD_VIDEO_FORM = 'uploadVideoForm';
 	const CMD_UPLOAD_VIDEO = 'uploadVideo';
 	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
+	const CMD_UPLOAD_CHUNKS = 'uploadChunks';
+
 
 
 	/**
@@ -86,6 +88,11 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		xvmpMedium::deleteObject($mid);
 		ilUtil::sendSuccess($this->pl->txt('video_deleted'), true);
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
+	}
+
+	protected function uploadChunks() {
+		$xoctPlupload = new xoctPlupload();
+		$xoctPlupload->handleUpload();
 	}
 
 }

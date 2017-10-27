@@ -78,7 +78,7 @@ class xvmpSelectedMedia extends ActiveRecord {
 	 *
 	 * @return bool
 	 */
-	public static function addVideo($mid, $obj_id) {
+	public static function addVideo($mid, $obj_id, $visible = true) {
 		$set = self::where(array('mid' => $mid, 'obj_id' => $obj_id))->first();
 		if ($set) {
 			return false; // already added
@@ -87,6 +87,7 @@ class xvmpSelectedMedia extends ActiveRecord {
 		$set = new self();
 		$set->setMid($mid);
 		$set->setObjId($obj_id);
+		$set->setVisible($visible);
 		$sort = self::where(array('obj_id' => $obj_id))->count() + 1;
 		$set->setSort($sort * 10);
 		$set->create();
@@ -123,8 +124,12 @@ class xvmpSelectedMedia extends ActiveRecord {
 	 *
 	 * @return self[]
 	 */
-	public static function getSelected($obj_id) {
-		return self::where(array('obj_id' => $obj_id))->orderBy('sort')->get();
+	public static function getSelected($obj_id, $visible_only = false) {
+		$where = array('obj_id' => $obj_id);
+		if ($visible_only) {
+			$where['visible'] = true;
+		}
+		return self::where($where)->orderBy('sort')->get();
 	}
 
 

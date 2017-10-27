@@ -15,6 +15,7 @@ class xvmpSettingsGUI extends xvmpGUI {
 	const CMD_UPDATE = 'update';
 
 	protected function index() {
+		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/xvmp_settings.css');
 		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
 		$this->tpl->setContent($xvmpSettingsFormGUI->getHTML());
 	}

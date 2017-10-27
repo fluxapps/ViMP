@@ -45,7 +45,7 @@ class xvmpContentTilesGUI {
 	public function show() {
 		$tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
 
-		$selected_media = xvmpSelectedMedia::getSelected($this->parent_gui->getObjId());
+		$selected_media = xvmpSelectedMedia::getSelected($this->parent_gui->getObjId(), true);
 		$json_array = array();
 		foreach ($selected_media as $media) {
 			$json_array[] = $media->getMid();

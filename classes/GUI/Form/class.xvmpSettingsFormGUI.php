@@ -60,7 +60,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 		$input->addOption($option);
 		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_TILES . '.png')),xvmpSettings::LAYOUT_TYPE_TILES);
 		$input->addOption($option);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_HORIZONTAL_SCROLL . '.png')),xvmpSettings::LAYOUT_TYPE_HORIZONTAL_SCROLL);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_PLAYER . '.png')),xvmpSettings::LAYOUT_TYPE_PLAYER);
 		$input->addOption($option);
 		$this->addItem($input);
 

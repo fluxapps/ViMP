@@ -68,7 +68,7 @@ class xvmpMedium extends xvmpObject {
 		$medium = $response->getResponseArray()['medium'];
 
 		if ($add_automatically) {
-			xvmpSelectedMedia::addVideo($medium['mid'],$obj_id);
+			xvmpSelectedMedia::addVideo($medium['mid'], $obj_id, false);
 		}
 
 		$uploaded_media = new xvmpUploadedMedia();
