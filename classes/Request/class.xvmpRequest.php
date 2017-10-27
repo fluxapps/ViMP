@@ -123,6 +123,7 @@ class xvmpRequest {
 	public static function editMedium($mediumid, $params) {
 		$xvmpCurl = new xvmpCurl(self::EDIT_MEDIUM);
 		$params['mediumid'] = $mediumid;
+		$params['token'] = xvmp::getToken();
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

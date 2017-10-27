@@ -17,7 +17,8 @@
   "minimum-stability": "beta",
   "prefer-stable": true,
   "require": {
-    "php" : "^5.5.9 || ^7.0"
+    "php" : "^5.5.9 || ^7.0",
+    "mobiledetect/mobiledetectlib": "^2.8"
   },
   "autoload": {
     "classmap": [

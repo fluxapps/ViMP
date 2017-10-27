@@ -58,9 +58,15 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	public function __construct($parent_gui, $parent_cmd) {
 		parent::__construct($parent_gui, $parent_cmd);
 		$this->setExternalSorting(true);
+		$this->setDisableFilterHiding(true);
+		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
+
 	}
 
 
+	/**
+	 *
+	 */
 	protected function initColumns() {
 		$this->addColumn('', '', 75, true);
 		$this->addColumn('', '', 210, true);

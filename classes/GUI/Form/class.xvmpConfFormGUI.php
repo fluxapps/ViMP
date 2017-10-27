@@ -6,38 +6,22 @@
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpConfFormGUI extends ilPropertyFormGUI {
+class xvmpConfFormGUI extends xvmpFormGUI {
 
 	/**
 	 * @var ilViMPConfigGUI
 	 */
 	protected $parent_gui;
-	/**
-	 * @var ilViMPPlugin
-	 */
-	protected $pl;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var ilLanguage
-	 */
-	protected $lng;
 
 	/**
 	 * xvmpConfFormGUI constructor.
+	 *
+	 * @param $parent_gui
 	 */
-	public function __construct(ilViMPConfigGUI $parent_gui) {
-		$media = xvmpRequest::getMedia(array('filterbyname' => 'How-To'))->getResponseArray();
+	public function __construct($parent_gui) {
+		global $tpl;
 
-		global $ilCtrl, $lng, $tpl;
-		$this->parent_gui = $parent_gui;
-		$this->pl = ilViMPPlugin::getInstance();
-		$this->ctrl = $ilCtrl;
-		$this->lng = $lng;
-
-		$this->initForm();
+		parent::__construct($parent_gui);
 
 		$tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_config.js');
 	}

@@ -25,3 +25,7 @@ div.xoct_percentage div.progress {
 	margin-right: 20%;
 	margin-top:   400px;
 }
+
+div.xoct_waiter_modal {
+	position: absolute;
+}

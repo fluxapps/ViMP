@@ -57,14 +57,21 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
-		global $tpl, $ilUser;
+		global $ilUser;
 		$this->user = $ilUser;
 		parent::__construct($parent_gui, $parent_cmd);
+		$this->setDisableFilterHiding(true);
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
-		$tpl->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
+		$this->tpl_global->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
+		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
+
 		$this->parseData();
 	}
 
+
+	/**
+	 *
+	 */
 	protected function initColumns() {
 		$this->addColumn('', '', 75, true);
 		$this->addColumn('', '', 210, true);
@@ -75,6 +82,9 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	public function parseData() {
 		$filter = array('thumbsize' => self::THUMBSIZE);
 		foreach ($this->filters as $filter_item) {

@@ -42,3 +42,6 @@ upload_video#:#Video Hochladen
 edit_video#:#Video Bearbeiten
 tags#:#Tags
 private#:#Privat
+layout#:#Darstellung
+notification#:#Benachrichtigung
+add_automatically#:#Automatisch Hinzufügen

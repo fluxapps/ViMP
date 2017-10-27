@@ -1,12 +1,16 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use Detection\MobileDetect;
+
 /**
  * Class xvmpMedium
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xvmpMedium extends xvmpObject {
+
+	public static $thumb_size = '170x108';
 
 	public static function getSelectedAsArray($obj_id) {
 		$selected = xvmpSelectedMedia::getSelected($obj_id);
@@ -33,7 +37,11 @@ class xvmpMedium extends xvmpObject {
 
 
 	public static function getObjectAsArray($id) {
-		$response = xvmpRequest::getMedium($id)->getResponseArray();
+		$detect = new MobileDetect();
+		$response = xvmpRequest::getMedium($id, array(
+			'thumbsize' => self::$thumb_size,
+			'responsive' => $detect->isMobile() ? 'true' : 'false'
+			))->getResponseArray();
 		return $response['medium'];
 	}
 
@@ -46,7 +54,10 @@ class xvmpMedium extends xvmpObject {
 		$params = array(
 			'title' => $this->getTitle(),
 			'description' => $this->getDescription(),
-			'categories' => implode(',', $this->getCategories())
+			'categories' => implode(',', $this->getCategories()),
+			'author' => $this->getCustomAuthor(),
+			'tags' => implode(',', $this->getCategories()),
+			'published' => $this->getPublished(),
 		);
 		xvmpRequest::editMedium($this->getId(), $params);
 	}
@@ -207,7 +218,25 @@ class xvmpMedium extends xvmpObject {
 	 * @var array
 	 */
 	protected $tags;
+	/**
+	 * @var String
+	 */
+	protected $custom_author;
 
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->getMid();
+	}
+
+
+	/**
+	 * @param int $id
+	 */
+	public function setId($id) {
+		return $this->setMid($id);
+	}
 
 	/**
 	 * @return int
@@ -734,5 +763,21 @@ class xvmpMedium extends xvmpObject {
 	 */
 	public function setTags($tags) {
 		$this->tags = $tags;
+	}
+
+
+	/**
+	 * @return String
+	 */
+	public function getCustomAuthor() {
+		return $this->custom_author;
+	}
+
+
+	/**
+	 * @param String $custom_author
+	 */
+	public function setCustomAuthor($custom_author) {
+		$this->custom_author = $custom_author;
 	}
 }

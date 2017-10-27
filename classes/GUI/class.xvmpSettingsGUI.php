@@ -12,7 +12,22 @@ class xvmpSettingsGUI extends xvmpGUI {
 
 	const TAB_ACTIVE = ilObjViMPGUI::TAB_SETTINGS;
 
-	protected function index() {
+	const CMD_UPDATE = 'update';
 
+	protected function index() {
+		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
+		$this->tpl->setContent($xvmpSettingsFormGUI->getHTML());
 	}
+
+	public function update() {
+		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
+		$xvmpSettingsFormGUI->setValuesByPost();
+		if (!$xvmpSettingsFormGUI->saveForm()) {
+			ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
+			$this->tpl->setContent($xvmpSettingsFormGUI->getHTML());
+		}
+		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
+		$this->ctrl->redirect($this, self::CMD_STANDARD);
+	}
+
 }

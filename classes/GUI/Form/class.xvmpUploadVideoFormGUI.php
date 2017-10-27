@@ -6,7 +6,7 @@
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
+class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 	/**
 	 * @var ilLanguage
@@ -27,16 +27,8 @@ class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
 
 
 	public function __construct($parent_gui) {
-		global $ilCtrl, $lng;
-		$this->lng = $lng;
-		$this->pl = ilViMPPlugin::getInstance();
-		$this->parent_gui = $parent_gui;
-
-		parent::__construct();
-
+		parent::__construct($parent_gui);
 		$this->setTitle($this->pl->txt('upload_video'));
-		$this->setFormAction($ilCtrl->getFormAction($this->parent_gui));
-		$this->initForm();
 	}
 
 	protected function initForm() {
@@ -137,10 +129,9 @@ class xvmpUploadVideoFormGUI extends ilPropertyFormGUI {
 					if (!is_dir($dir)) {
 						ilUtil::makeDir($dir);
 					}
-					$target_path = $dir . '/' . $value['name'];
-					ilUtil::moveUploadedFile($value['tmp_name'], $value['name'], $target_path);
-					$value = htmlentities(ILIAS_HTTP_PATH . '/' . ltrim($target_path, '.'));
+					ilUtil::moveUploadedFile($value['tmp_name'], $value['name'], $dir . '/' . $value['name']);
 
+					$value = ILIAS_HTTP_PATH . ltrim($dir, '.') . '/' . rawurlencode($value['name']);
 					$video[$item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
 					break;
 				case 'add_automatically':

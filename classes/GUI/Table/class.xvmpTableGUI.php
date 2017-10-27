@@ -29,6 +29,10 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 	 * @var array
 	 */
 	protected $available_filters = array();
+	/**
+	 * @var ilTemplate
+	 */
+	protected $tpl_global;
 
 
 
@@ -39,6 +43,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		global $ilCtrl, $tpl;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
+		$this->tpl_global = $tpl;
 		$this->setPrefix(ilViMPPlugin::XVMP . '_search_');
 		$this->setId($_GET['ref_id']);
 
@@ -51,13 +56,11 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		$this->setRowTemplate($this->pl->getDirectory() . '/templates/default/' . static::ROW_TEMPLATE);
 
 		foreach (array_merge($this->js_files, array('waiter.js')) as $js_file) {
-			$tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/' . $js_file);
+			$this->tpl_global->addJavaScript($this->pl->getDirectory() . '/templates/default/' . $js_file);
 		}
 		foreach (array_merge($this->css_files, array('waiter.css')) as $css_file) {
-			$tpl->addCss($this->pl->getDirectory() . '/templates/default/' . $css_file);
+			$this->tpl_global->addCss($this->pl->getDirectory() . '/templates/default/' . $css_file);
 		}
-
-		$tpl->addOnLoadCode('xoctWaiter.init("waiter");');
 
 	}
 

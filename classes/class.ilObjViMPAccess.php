@@ -9,4 +9,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilObjViMPAccess extends ilObjectPluginAccess {
 
+
 }

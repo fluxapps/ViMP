@@ -1,0 +1,38 @@
+tr.xvmp_table_row > td.std.small {
+	vertical-align: middle;
+	height: 150px;
+}
+
+/* add & remove button */
+td.xvmp_action.std.small {
+	vertical-align: middle;
+}
+
+div.xvmp_image_container {
+	/* round corners */
+	width:210px;
+	height:120px;
+	border-radius:7%;
+	overflow:hidden;
+
+	/* spacing */
+	/*margin-left: 15px;*/
+	/*margin-right: 25px;*/
+}
+
+div.xvmp_sort_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+div.modal-content {
+	width: fit-content;
+	height: fit-content;
+}
+
+div#xvmp_table_placeholder {
+	min-height: 110px;
+	background: url('../images/spinner.gif') no-repeat center center;
+}

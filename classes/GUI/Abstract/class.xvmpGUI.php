@@ -60,7 +60,26 @@ abstract class xvmpGUI {
 	abstract protected function index();
 
 
+	/**
+	 *
+	 */
 	protected function cancel() {
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
+
+
+	/**
+	 * @return ilObjViMP
+	 */
+	public function getObject() {
+		return $this->parent_gui->object;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getObjId() {
+		return $this->parent_gui->obj_id;
+	}
+
 }

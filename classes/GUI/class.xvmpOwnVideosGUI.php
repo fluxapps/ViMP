@@ -44,7 +44,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
 		}
 		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-		$this->ctrl->redirect($this->editVideo());
+		$this->ctrl->redirect($this, self::CMD_EDIT_VIDEO);
 
 	}
 

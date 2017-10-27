@@ -6,9 +6,21 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
 {
+    public static $prefixesPsr0 = array (
+        'D' => 
+        array (
+            'Detection' => 
+            array (
+                0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'ActiveRecord' => __DIR__ . '/../..' . '/../../../../../../../Services/ActiveRecord/class.ActiveRecord.php',
         'ActiveRecordList' => __DIR__ . '/../..' . '/../../../../../../../Services/ActiveRecord/class.ActiveRecordList.php',
+        'Detection\\MobileDetect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced/Detection/MobileDetect.php',
+        'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
         'OnlyIncludeReplacer' => __DIR__ . '/../..' . '/../../../../../../../Services/Utilities/classes/Parser.php',
         'Parser' => __DIR__ . '/../..' . '/../../../../../../../Services/Utilities/classes/Parser.php',
         'Sanitizer' => __DIR__ . '/../..' . '/../../../../../../../Services/Utilities/classes/Sanitizer.php',
@@ -253,11 +265,14 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpConf' => __DIR__ . '/../..' . '/classes/Model/class.xvmpConf.php',
         'xvmpConfFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpConfFormGUI.php',
         'xvmpContentGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpContentGUI.php',
+        'xvmpContentTableGUI' => __DIR__ . '/../..' . '/classes/GUI/Table/class.xvmpContentTableGUI.php',
+        'xvmpContentTilesGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpContentTilesGUI.php',
         'xvmpCurl' => __DIR__ . '/../..' . '/classes/Request/class.xvmpCurl.php',
         'xvmpCurlError' => __DIR__ . '/../..' . '/classes/Request/class.xvmpCurlError.php',
         'xvmpCurlLog' => __DIR__ . '/../..' . '/classes/Util/class.xvmpCurlLog.php',
         'xvmpEditVideoFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpEditVideoFormGUI.php',
         'xvmpException' => __DIR__ . '/../..' . '/classes/Exception/class.xvmpException.php',
+        'xvmpFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpFormGUI.php',
         'xvmpGUI' => __DIR__ . '/../..' . '/classes/GUI/Abstract/class.xvmpGUI.php',
         'xvmpLog' => __DIR__ . '/../..' . '/classes/Util/class.xvmpLog.php',
         'xvmpMedium' => __DIR__ . '/../..' . '/classes/Model/class.xvmpMedium.php',
@@ -284,6 +299,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixesPsr0 = ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798::$classMap;
 
         }, null, ClassLoader::class);

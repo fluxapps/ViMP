@@ -121,12 +121,6 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	}
 
 
-	/**
-	 * @return int
-	 */
-	public function getObjId() {
-		return $this->parent_gui->obj_id;
-	}
 
 
 	/**

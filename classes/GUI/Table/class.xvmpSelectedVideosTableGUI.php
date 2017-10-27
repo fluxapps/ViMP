@@ -49,8 +49,6 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
-		global $tpl;
-
 		parent::__construct($parent_gui, $parent_cmd);
 
 		$this->setTitle($this->pl->txt('selected_videos'));
@@ -60,7 +58,8 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		$this->setShowRowsSelector(false);
 
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
-		$tpl->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
+		$this->tpl_global->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
+		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 
 		$this->parseData();
 	}
