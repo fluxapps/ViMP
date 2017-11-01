@@ -30,7 +30,8 @@
       "../../../../../../../Services/Component",
       "../../../../../../../Services/ActiveRecord",
       "../../../../../../../Services/UIComponent",
-      "../../../../../../../Services/Utilities"
+      "../../../../../../../Services/Utilities",
+      "../../../../../../../Services/GlobalCache"
     ]
   },
   "config": {

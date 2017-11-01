@@ -56,10 +56,16 @@ class xvmpContentGUI extends xvmpGUI {
 
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
-			$tpl->setVariable('MID', $video->getId());
+			$tpl->setVariable('LABEL_TITLE', $this->pl->txt('title'));
 			$tpl->setVariable('TITLE', $video->getTitle());
-			$tpl->setVariable('DESCRIPTION', $video->getDescription());
-			$tpl->setVariable('DURATION', $video->getDuration());
+			$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt('description'));
+			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription()));
+			$tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
+			$tpl->setVariable('DURATION', $video->getDurationFormatted());
+			$tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
+			$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
+			$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
+			$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
 
 //			$js = "$('#xvmp_modal_player_{$mid}').find('.modal-body').addClass('waiting');";
 			$js = "VimpContent.embed_codes[" . $video->getId() . "] = '" . $video->getEmbedCode() . "';";
@@ -92,8 +98,16 @@ class xvmpContentGUI extends xvmpGUI {
 
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
-			$tpl->setVariable('MID', $video->getId());
+			$tpl->setVariable('LABEL_TITLE', $this->pl->txt('title'));
 			$tpl->setVariable('TITLE', $video->getTitle());
+			$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt('description'));
+			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription()));
+			$tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
+			$tpl->setVariable('DURATION', $video->getDurationFormatted());
+			$tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
+			$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
+			$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
+			$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
 
 			echo $tpl->get();
 			exit;

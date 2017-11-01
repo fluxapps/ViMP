@@ -175,6 +175,16 @@ class xvmpObject {
 	}
 
 	/**
+	 * @param       $identifier
+	 * @param array $object
+	 */
+	public static function cache($identifier, $object) {
+//		self::$cache[$key] = $object;
+		xvmpCurlLog::getInstance()->write('CACHE: added to cache: ' . $identifier, xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCacheFactory::getInstance()->set($identifier, $object);
+	}
+
+	/**
 	 * @param $string
 	 *
 	 * @return string

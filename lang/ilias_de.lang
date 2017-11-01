@@ -21,6 +21,8 @@ conf_media_permissions#:#Medienberechtigungen nutzen
 conf_media_permissions_info#:#MISSING
 conf_api_settings#:#API
 conf_general_settings#:#Allgemein
+conf_notification_subject#:#Betreff
+conf_notification_body#:#Nachricht
 msg_success#:#Änderungen erfolgreich gespeichert.
 all#:#Ja, alle
 content#:#Inhalt
@@ -33,7 +35,9 @@ own_videos#:#Eigene Videos
 title#:#Titel
 description#:#Beschreibung
 username#:#Benutzername
-created_at#:#Erstellungsdatum
+create_date#:#Erstellungsdatum
+created_at#:#Erstellt am
+created#:#Erstellt
 visible#:#Sichtbar
 selected_videos#:#Ausgewählte Videos
 published#:#Zugriff
@@ -47,3 +51,5 @@ notification#:#Benachrichtigung
 add_automatically#:#Automatisch Hinzufügen
 video_uploaded#:#Video erfolgreich hochgeladen.
 form_saved#:#Änderungen erfolgreich gespeichert.
+duration#:#Länge
+author#:#Autor

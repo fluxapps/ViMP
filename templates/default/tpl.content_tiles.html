@@ -1,10 +1,20 @@
-<div class="xvmp_image_container">
-	<a onclick="VimpContent.playVideo({MID});">
-		<img id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}">
-	</a>
+<div class="xvmp_overlay_infos">
+	<div class="xvmp_overlay_infos_content">
+		<p>{LABEL_TITLE}: {TITLE}</p>
+		<p>{LABEL_DESCRIPTION}: {DESCRIPTION}</p>
+		<p>{LABEL_DURATION}: {DURATION}</p>
+		<p>{LABEL_AUTHOR}: {AUTHOR}</p>
+		<p>{LABEL_CREATED_AT}: {CREATED_AT}</p>
+	</div>
 </div>
-<p>{TITLE}</p>
-<p>{DESCRIPTION}</p>
-<p>{DURATION}</p>
+
+<div class="xvmp_image_container">
+	<img id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}">
+</div>
+<div class="xvmp_video_infos">
+	<div class="xvmp_title"><h2>{TITLE}</h2></div>
+	<!--<div class="xvmp_description">{DESCRIPTION}</div>-->
+	<div class="xvmp_duration">{DURATION}</div>
+</div>
 <div class="xoctWaiter" id="waiter_{MID}"></div>
 <script type="text/javascript">{JS}</script>

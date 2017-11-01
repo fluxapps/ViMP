@@ -26,6 +26,8 @@ class xvmpConf extends ActiveRecord {
 	const F_MEDIA_PERMISSIONS = 'media_permissions';
 	const F_MEDIA_PERMISSIONS_SELECTION = 'media_permissions_selection';
 	const F_TOKEN = 'token';
+	const F_NOTIFICATION_SUBJECT = 'notification_subject';
+	const F_NOTIFICATION_BODY = 'notification_body';
 
 	/**
 	 * @var array

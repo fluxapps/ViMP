@@ -19,6 +19,10 @@ class xvmpRequest {
 	const DELETE_MEDIUM = 'deleteMedium';
 	const UPLOAD_MEDIUM = 'uploadMedium';
 	const LOGIN_USER = 'loginUser';
+	const GET_USERS = 'getUsers';
+	const GET_USER = 'getUser';
+	const REGISTER_USER = 'registerUser';
+	const GET_USER_MEDIA = 'getUserMedia';
 
 
 	/**
@@ -36,13 +40,13 @@ class xvmpRequest {
 		return $xvmpCurl;
 	}
 
-	public static function getCategories($parent_id = '', $filterbyname = '', $offset = '', $limit = '', $thumbsize = '', $language = '') {
+	public static function getCategories($params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORIES);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}
 
-	public static function getCategory($categoryid, $thumbsize = '', $language = '') {
+	public static function getCategory($categoryid, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORY);
 		$xvmpCurl->addPostField('categoryid', $categoryid);
 		$xvmpCurl->post();
@@ -183,6 +187,77 @@ class xvmpRequest {
 		$xvmpCurl->addPostField('username', $username);
 		$xvmpCurl->addPostField('password', $password);
 		$xvmpCurl->post();
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * possible parameters:
+	 * filterbyname
+	 * offset
+	 * limit
+	 * thumbsize
+	 *      width x height (ex. 210x108)
+	 * format
+	 *      one of "xml" or "json"
+	 *
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function getUsers($params = array()) {
+		$xvmpCurl = new xvmpCurl(self::GET_USERS);
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * @param       $userid
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function getUser($userid, $params = array()) {
+		$xvmpCurl = new xvmpCurl(self::GET_USER);
+
+		$params['userid'] = $userid;
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * @param $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function registerUser($params) {
+		$xvmpCurl = new xvmpCurl(self::REGISTER_USER);
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+
+		return $xvmpCurl;
+	}
+
+	public static function getUserMedia($user_id, $params = array()) {
+		$xvmpCurl = new xvmpCurl(self::GET_USER_MEDIA);
+		$xvmpCurl->addPostField('userid', $user_id);
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+
 		return $xvmpCurl;
 	}
 

@@ -113,18 +113,21 @@ class xvmpCurl {
 			xvmpCurlLog::getInstance()->write('ERROR ' . $this->getResponseStatus(), xvmpCurlLog::DEBUG_LEVEL_1);
 			xvmpCurlLog::getInstance()->write('Response:' . $resp_orig, xvmpCurlLog::DEBUG_LEVEL_3);
 
+			$error_msg = $this->getResponseArray()['errors']['error'];
+			$error_msg = is_array($error_msg) ? implode(".\n", $error_msg) : $error_msg;
+
 			switch ($this->getResponseStatus()) {
 				case 403:
-					throw new xvmpException(xvmpException::API_CALL_STATUS_403, $resp_orig);
+					throw new xvmpException(xvmpException::API_CALL_STATUS_403, $error_msg);
 					break;
 				case 401:
 					throw new xvmpException(xvmpException::API_CALL_BAD_CREDENTIALS);
 					break;
 				case 404:
-					throw new xvmpException(xvmpException::API_CALL_STATUS_404, $resp_orig);
+					throw new xvmpException(xvmpException::API_CALL_STATUS_404, $error_msg);
 					break;
 				default:
-					throw new xvmpException(xvmpException::API_CALL_STATUS_500, $resp_orig);
+					throw new xvmpException(xvmpException::API_CALL_STATUS_500, $error_msg);
 					break;
 			}
 		}

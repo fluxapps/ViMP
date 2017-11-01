@@ -38,6 +38,8 @@ class xvmpContentPlayerGUI {
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_content.js');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/waiter.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
+
+		ilTooltipGUI::initLibrary();
 	}
 
 	public function show() {
@@ -55,13 +57,14 @@ class xvmpContentPlayerGUI {
 				continue;
 			}
 			$json_array[] = $media->getMid();
-			$tiles_tpl->setCurrentBlock('block_box');
+			$tiles_tpl->setCurrentBlock('block_box_clickable');
 			$tiles_tpl->setVariable('MID', $media->getMid());
 
 			$this->ctrl->setParameter($this, 'mid', $mid);
 			$tiles_tpl->setVariable('PLAY_LINK', $this->ctrl->getLinkTarget($this->parent_gui, xvmpContentGUI::CMD_STANDARD));
 			$tiles_tpl->parseCurrentBlock();
 
+			ilTooltipGUI::addTooltip('box_' . $media->getMid(), 'test');
 
 		}
 

@@ -23,7 +23,7 @@ class xvmpException extends Exception {
 		self::API_CALL_STATUS_500 => 'An error occurred while communicating with the ViMP-Server',
 		self::API_CALL_STATUS_403 => 'Access denied',
 		self::API_CALL_STATUS_404 => 'Not Found',
-		self::NO_USER_MAPPING => 'Your user-account cannot communicate with the ViMP-Server. please contact your system administrator.',
+		self::NO_USER_MAPPING => 'Your user-account cannot communicate with the ViMP-Server. Please contact your system administrator.',
 		self::API_CALL_BAD_CREDENTIALS => 'An error occurred while communicating with the ViMP-Server.',
 
 	);

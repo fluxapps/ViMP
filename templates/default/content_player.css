@@ -28,6 +28,42 @@ div#xvmp_video_list_container {
 	/*float: left;*/
 	text-align: center;
 	background: white;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.box:hover .xvmp_overlay_infos {
+	opacity: 1;
+}
+
+.xvmp_overlay_infos {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: white;
+}
+
+
+.xvmp_overlay_infos_content {
+	text-align: left;
+	padding: 4%;
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+.xvmp_tile_title h3 {
+	overflow:hidden;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
 }
 
 .innerContent {
@@ -44,6 +80,10 @@ div#xvmp_video_list_container {
 	background: black;
 }
 
+.xvmp_image_container img:hover {
+	opacity: 0.75;
+}
+
 .xvmp_preview_image {
 	height: 100%;
 	max-width: 100%;
@@ -54,15 +94,15 @@ div#xvmp_video_list_container {
 	background: url('../images/spinner.gif') no-repeat center center !important;
 }
 
-@media only screen and (max-width : 480px) {
-	/* Smartphone view: 1 tile */
-	.box {
-		width: 95%;
-		max-width: 95%;
-		padding-bottom: 100%;
-		margin: 0 0 5% 0;
-	}
-}
+/*@media only screen and (max-width : 480px) {*/
+	/*!* Smartphone view: 1 tile *!*/
+	/*.box {*/
+		/*width: 95%;*/
+		/*max-width: 95%;*/
+		/*padding-bottom: 100%;*/
+		/*margin: 0 0 5% 0;*/
+	/*}*/
+/*}*/
 /*@media only screen and (max-width : 650px) and (min-width : 481px) {*/
 	/*!* Tablet view: 2 tiles *!*/
 	/*.box {*/

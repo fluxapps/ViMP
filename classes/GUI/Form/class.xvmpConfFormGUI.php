@@ -20,7 +20,6 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	 */
 	public function __construct($parent_gui) {
 		global $tpl;
-
 		parent::__construct($parent_gui);
 
 		$tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_config.js');
@@ -120,6 +119,24 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$radio_option->addSubItem($sub_selection);
 		$input->addOption($radio_option);
 
+		$this->addItem($input);
+
+
+		// *** NOTIFICATION ***
+		$header = new ilFormSectionHeaderGUI();
+		$header->setTitle($this->pl->txt('notification'));
+		$this->addItem($header);
+
+		// Noticiation Subject
+		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT), xvmpConf::F_NOTIFICATION_SUBJECT);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT . '_info'));
+		$input->setRequired(true);
+		$this->addItem($input);
+
+		// Noticiation Body
+		$input = new ilTextAreaInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY), xvmpConf::F_NOTIFICATION_BODY);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY . '_info'));
+		$input->setRequired(true);
 		$this->addItem($input);
 
 

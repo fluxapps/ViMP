@@ -1,25 +1,78 @@
 .box {
 	width: 30%;
-	padding-bottom: 30%;
+	padding-bottom: 26%;
 	margin: 0 3% 3% 0;
 	color: black;
 	position: relative;
 	float: left;
 	background: white;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
 
+.xvmp_title, .xvmp_description, .xvmp_duration {
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
 }
-.innerContent {
+
+.box:hover .xvmp_overlay_infos {
+	opacity: 1;
+}
+
+.xvmp_overlay_infos {
 	position: absolute;
-	left: 10px;
-	right: 10px;
-	top: 10px;
-	bottom: 10px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: white;
 }
+
+
+.xvmp_overlay_infos_content {
+	text-align: left;
+	padding: 4%;
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+.xvmp_video_infos {
+	padding:10px;
+}
+
+.xvmp_video_infos h2 {
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
+	overflow: hidden;
+}
+
+.innerContent {
+	text-align: center;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
 .xvmp_image_container {
 	text-align: center;
 	width: 100%;
-	height: 60%;
+	height: 66%;
 	background: black;
+}
+
+.xvmp_image_container img:hover {
+	opacity: 0.75;
 }
 
 .xvmp_preview_image {
@@ -43,7 +96,7 @@ div.modal-content {
 	/* Smartphone view: 1 tile */
 	.box {
 		width: 95%;
-		max-width: 95%;
+		max-width: 89%;
 		padding-bottom: 100%;
 		margin: 0 0 5% 0;
 	}
@@ -53,7 +106,7 @@ div.modal-content {
 	.box {
 		width: 46%;
 		max-width: 46%;
-		padding-bottom: 46%;
+		padding-bottom: 41%;
 		margin: 0 2% 2% 0;
 	}
 }
@@ -62,7 +115,7 @@ div.modal-content {
 	.box {
 		width: 30%;
 		max-width: 30%;
-		padding-bottom: 30%;
+		padding-bottom: 26%;
 		margin: 0 3% 3% 0;
 	}
 }
@@ -71,7 +124,7 @@ div.modal-content {
 	.box {
 		width: 23%;
 		max-width: 23%;
-		padding-bottom: 23%;
+		padding-bottom: 20%;
 		margin: 0 2% 2% 0;
 	}
 }

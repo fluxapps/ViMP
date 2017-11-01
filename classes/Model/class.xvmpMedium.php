@@ -12,6 +12,24 @@ class xvmpMedium extends xvmpObject {
 
 	public static $thumb_size = '170x108';
 
+	public static function getUserMedia($ilObjUser = null) {
+		if (!$ilObjUser) {
+			global $ilUser;
+			$ilObjUser = $ilUser;
+		}
+
+		$uid = xvmpUser::getVimpUser($ilObjUser)->getUid();
+		$response = xvmpRequest::getUserMedia($uid, array(
+			'thumbsize' => self::$thumb_size
+		))->getResponseArray()['media']['medium'];
+		foreach ($response as $key => $medium) {
+			if ($medium['mediatype'] != 'video') {
+				unset($response[$key]);
+			}
+		}
+		return $response;
+	}
+
 	public static function getSelectedAsArray($obj_id) {
 		$selected = xvmpSelectedMedia::getSelected($obj_id);
 		$videos = array();
@@ -37,11 +55,22 @@ class xvmpMedium extends xvmpObject {
 
 
 	public static function getObjectAsArray($id) {
+		$key = self::class . '-' . $id;
+		$existing = xvmpCacheFactory::getInstance()->get($key);
+		if ($existing) {
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $existing;
+		}
+
+		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+
+
 		$detect = new MobileDetect();
 		$response = xvmpRequest::getMedium($id, array(
 			'thumbsize' => self::$thumb_size,
 			'responsive' => $detect->isMobile() ? 'true' : 'false'
 			))->getResponseArray();
+		self::cache($key, $response['medium']);
 		return $response['medium'];
 	}
 
@@ -455,6 +484,14 @@ class xvmpMedium extends xvmpObject {
 
 
 	/**
+	 * @return string
+	 */
+	public function getDurationFormatted() {
+		return sprintf('%02d:%02d', ($this->duration/60%60), $this->duration%60);
+	}
+
+
+	/**
 	 * @param int $duration
 	 */
 	public function setDuration($duration) {
@@ -705,7 +742,11 @@ class xvmpMedium extends xvmpObject {
 	/**
 	 * @return String
 	 */
-	public function getCreatedAt() {
+	public function getCreatedAt($format = '') {
+		if ($format) {
+			$timestamp = strtotime($this->created_at);
+			return date($format, $timestamp);
+		}
 		return $this->created_at;
 	}
 

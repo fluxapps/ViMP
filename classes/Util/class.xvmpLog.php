@@ -11,20 +11,10 @@ class xvmpLog extends ilLog {
 
 	const LOG_TITLE = 'vimp.log';
 
-	const DEBUG_DEACTIVATED = 0;
-	const DEBUG_LEVEL_1 = 1;
-	const DEBUG_LEVEL_2 = 2;
-	const DEBUG_LEVEL_3 = 3;
-	const DEBUG_LEVEL_4 = 4;
-
 	/**
 	 * @var xoctLog
 	 */
 	protected static $instance;
-	/**
-	 * @var int
-	 */
-	protected static $log_level = self::DEBUG_LEVEL_4;
 
 	/**
 	 * @return xvmpLog
@@ -36,34 +26,6 @@ class xvmpLog extends ilLog {
 
 		return self::$instance;
 	}
-
-	/**
-	 * @param $log_level
-	 */
-	public static function init($log_level) {
-		self::$log_level = $log_level;
-	}
-
-
-	/**
-	 * @param $log_level
-	 *
-	 * @return bool
-	 */
-	public static function relevant($log_level) {
-		return $log_level <= self::$log_level;
-	}
-
-	/**
-	 * @param      $a_msg
-	 * @param null $log_level
-	 */
-	function write($a_msg, $log_level = null) {
-		if (self::relevant($log_level)) {
-			parent::write($a_msg);
-		}
-	}
-
 
 	public function writeTrace() {
 		try {
@@ -98,10 +60,4 @@ class xvmpLog extends ilLog {
 	}
 
 
-	/**
-	 * @return int
-	 */
-	public static function getLogLevel() {
-		return self::$log_level;
-	}
 }
