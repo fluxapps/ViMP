@@ -1,7 +1,11 @@
 div#xvmp_video_container {
-	margin: auto;
-	width: 65%;
+	/*margin: auto;*/
+	width: fit-content;
+	height: fit-content;
 	background: black;
+	float: left;
+	margin-right: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
 
 div#xvmp_video {
@@ -10,12 +14,18 @@ div#xvmp_video {
 	background: white;
 }
 
+div#xvmp_video_infos {
+	margin-left: 10px;
+}
+
 div#xvmp_video_list_container {
 	overflow-x: auto;
 	overflow-y: hidden;
 	/*width: auto;*/
 	margin-top: 20px;
 	white-space: nowrap;
+	width: 100%;
+	float:left;
 }
 
 .box {
@@ -60,7 +70,7 @@ div#xvmp_video_list_container {
 	-ms-transform: translate(-50%, -50%);
 }
 
-.xvmp_tile_title h3 {
+.xvmp_title h2 {
 	overflow:hidden;
 	-ms-text-overflow: ellipsis;
 	text-overflow:     ellipsis;
@@ -92,6 +102,14 @@ div#xvmp_video_list_container {
 
 .waiting {
 	background: url('../images/spinner.gif') no-repeat center center !important;
+}
+
+@media only screen and (max-width : 1000px) {
+/* Small desktop / ipad view: 3 tiles */
+	div#xvmp_video_infos {
+		width: 100%;
+		float:left;
+	}
 }
 
 /*@media only screen and (max-width : 480px) {*/

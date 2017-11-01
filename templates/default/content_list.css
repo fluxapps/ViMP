@@ -1,0 +1,11 @@
+.box {
+	width: 100%;
+	border-bottom: 1px solid black;
+	height: 150px;
+	overflow: hidden;
+}
+
+.xvmp_image_container {
+	float: left;
+	margin-right: 20px;
+}

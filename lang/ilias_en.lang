@@ -28,7 +28,8 @@ all#:#Yes, all
 content#:#Content
 info_short#:#Info
 videos#:#Videos
-Settings#:#Settings
+video#:#Video
+settings#:#Settings
 search_videos#:#Search
 selected_videos#:#Selected Videos
 own_videos#:#Own Videos
@@ -53,3 +54,6 @@ video_uploaded#:#Video uploaded successfully.
 form_saved#:#Changes saved successfully.
 duration#:#Duration
 author#:#Author
+flush_cache#:#Flush Cache
+repository_preview#:#Repository Preview
+no_preview#:#No Preview

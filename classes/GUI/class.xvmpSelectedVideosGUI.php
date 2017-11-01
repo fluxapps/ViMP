@@ -19,6 +19,12 @@ class xvmpSelectedVideosGUI extends xvmpVideosGUI {
 	const CMD_SET_VISIBILITY = 'setVisibility';
 
 
+	public function executeCommand() {
+		$this->addFlushCacheButton();
+		parent::executeCommand();
+	}
+
+
 	/**
 	 * ajax
 	 */

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class xoctFileUploadInputGUI
+ * Class xvmpFileUploadInputGUI
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class xoctFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
+class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 
 	/**
 	 * @var array

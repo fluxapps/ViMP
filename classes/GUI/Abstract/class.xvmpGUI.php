@@ -10,6 +10,7 @@ abstract class xvmpGUI {
 
 	const CMD_STANDARD = 'index';
 	const CMD_CANCEL = 'cancel';
+	const CMD_FLUSH_CACHE = 'flushCache';
 
 	const TAB_ACTIVE = ''; // overwrite in subclass
 	/**
@@ -48,6 +49,21 @@ abstract class xvmpGUI {
 		}
 	}
 
+
+	public function addFlushCacheButton () {
+		$button = ilLinkButton::getInstance();
+		$button->setUrl($this->ctrl->getLinkTarget($this,self::CMD_FLUSH_CACHE));
+		$button->setCaption($this->pl->txt('flush_cache'), false);
+		$this->toolbar->addButtonInstance($button);
+	}
+
+	/**
+	 *
+	 */
+	public function flushCache() {
+		xvmpCacheFactory::getInstance()->flush();
+		$this->ctrl->redirect($this, self::CMD_STANDARD);
+	}
 
 	/**
 	 * @param $cmd

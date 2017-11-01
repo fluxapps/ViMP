@@ -273,6 +273,7 @@ return array(
     'xvmpConf' => $baseDir . '/classes/Model/class.xvmpConf.php',
     'xvmpConfFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpConfFormGUI.php',
     'xvmpContentGUI' => $baseDir . '/classes/GUI/class.xvmpContentGUI.php',
+    'xvmpContentListGUI' => $baseDir . '/classes/GUI/class.xvmpContentListGUI.php',
     'xvmpContentPlayerGUI' => $baseDir . '/classes/GUI/class.xvmpContentPlayerGUI.php',
     'xvmpContentTableGUI' => $baseDir . '/classes/GUI/Table/class.xvmpContentTableGUI.php',
     'xvmpContentTilesGUI' => $baseDir . '/classes/GUI/class.xvmpContentTilesGUI.php',

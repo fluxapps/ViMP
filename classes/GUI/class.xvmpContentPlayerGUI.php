@@ -43,11 +43,20 @@ class xvmpContentPlayerGUI {
 	}
 
 	public function show() {
-		$mid = $_GET['mid'] ? $_GET['mid'] : xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->first()->getMid();
+		$mid = $_GET['mid'] ? $_GET['mid'] : xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort')->first()->getMid();
 		$video = xvmpMedium::find($mid);
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
 		$player_tpl->setVariable('VIDEO', $video->getEmbedCode());
+		$player_tpl->setVariable('TITLE', $video->getTitle());
+		$player_tpl->setVariable('DESCRIPTION', $video->getDescription());
+		$player_tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
+		$player_tpl->setVariable('DURATION', strip_tags($video->getDurationFormatted()));
+		$player_tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
+		$player_tpl->setVariable('AUTHOR', $video->getCustomAuthor());
+		$player_tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
+		$player_tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
+
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
 		$selected_media = xvmpSelectedMedia::getSelected($this->parent_gui->getObjId(), true);
@@ -60,7 +69,7 @@ class xvmpContentPlayerGUI {
 			$tiles_tpl->setCurrentBlock('block_box_clickable');
 			$tiles_tpl->setVariable('MID', $media->getMid());
 
-			$this->ctrl->setParameter($this, 'mid', $mid);
+			$this->ctrl->setParameter($this->parent_gui, 'mid', $media->getMid());
 			$tiles_tpl->setVariable('PLAY_LINK', $this->ctrl->getLinkTarget($this->parent_gui, xvmpContentGUI::CMD_STANDARD));
 			$tiles_tpl->parseCurrentBlock();
 
@@ -71,7 +80,8 @@ class xvmpContentPlayerGUI {
 		$player_tpl->setVariable('VIDEO_LIST', $tiles_tpl->get());
 
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
-		$this->tpl->addOnLoadCode("VimpContent.url_load_tile = '" . $this->ctrl->getLinkTarget($this->parent_gui, xvmpContentGUI::CMD_RENDER_TILE_SMALL, '', true) . "';");
+		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
+		$this->tpl->addOnLoadCode("VimpContent.template = 'tiles';");
 		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
 
 		$this->tpl->setContent($player_tpl->get());

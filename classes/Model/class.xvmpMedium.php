@@ -69,9 +69,10 @@ class xvmpMedium extends xvmpObject {
 		$response = xvmpRequest::getMedium($id, array(
 			'thumbsize' => self::$thumb_size,
 			'responsive' => $detect->isMobile() ? 'true' : 'false'
-			))->getResponseArray();
-		self::cache($key, $response['medium']);
-		return $response['medium'];
+			))->getResponseArray()['medium'];
+		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
+		self::cache($key, $response);
+		return $response;
 	}
 
 	public static function getAllAsArray() {
@@ -171,6 +172,10 @@ class xvmpMedium extends xvmpObject {
 	 * @var int
 	 */
 	protected $duration;
+	/**
+	 * @var String
+	 */
+	protected $duration_formatted;
 	/**
 	 * @var String
 	 */
@@ -487,7 +492,15 @@ class xvmpMedium extends xvmpObject {
 	 * @return string
 	 */
 	public function getDurationFormatted() {
-		return sprintf('%02d:%02d', ($this->duration/60%60), $this->duration%60);
+		return $this->duration_formatted;
+	}
+
+
+	/**
+	 * @param String $duration_formatted
+	 */
+	public function setDurationFormatted($duration_formatted) {
+		$this->duration_formatted = $duration_formatted;
 	}
 
 

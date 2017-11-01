@@ -2,11 +2,11 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 /**
- * Class xvmpContentTilesGUI
+ * Class xvmpContentListGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpContentTilesGUI {
+class xvmpContentListGUI {
 
 	/**
 	 * @var xvmpContentGUI
@@ -33,7 +33,7 @@ class xvmpContentTilesGUI {
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
 
-		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_tiles.css');
+		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_list.css');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_content.js');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/waiter.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
@@ -56,7 +56,7 @@ class xvmpContentTilesGUI {
 
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
 		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
-		$this->tpl->addOnLoadCode("VimpContent.template = 'tiles';");
+		$this->tpl->addOnLoadCode("VimpContent.template = 'list';");
 		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
 		//		$this->tpl->addOnLoadCode('VimpContent.loadTiles();');
 		//		$this->tpl->addOnLoadCode('$("div.xoctWaiter").each(function() { $(this).show(); });');
@@ -65,5 +65,4 @@ class xvmpContentTilesGUI {
 		$modal = $this->parent_gui->getModalPlayer();
 		$this->tpl->setContent($tpl->get() . $modal->getHTML());
 	}
-
 }

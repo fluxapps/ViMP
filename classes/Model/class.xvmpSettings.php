@@ -40,6 +40,14 @@ class xvmpSettings extends ActiveRecord {
 	 * @db_length           2
 	 */
 	protected $layout_type = self::LAYOUT_TYPE_LIST;
+	/**
+	 * @var int
+	 *
+	 * @db_has_field        true
+	 * @db_fieldtype        integer
+	 * @db_length           2
+	 */
+	protected $repository_preview = 0;
 
 
 	/**
@@ -89,6 +97,24 @@ class xvmpSettings extends ActiveRecord {
 	public function setLayoutType($layout_type) {
 		$this->layout_type = $layout_type;
 	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getRepositoryPreview() {
+		return $this->repository_preview;
+	}
+
+
+	/**
+	 * @param int $repository_preview
+	 */
+	public function setRepositoryPreview($repository_preview) {
+		$this->repository_preview = $repository_preview;
+	}
+
+
 
 	public static function returnDbTableName() {
 		return self::DB_TABLE_NAME;

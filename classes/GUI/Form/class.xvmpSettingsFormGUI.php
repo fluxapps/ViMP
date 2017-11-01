@@ -13,6 +13,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 	const F_DESCRIPTION = 'description';
 	const F_ONLINE = 'online';
 	const F_LAYOUT = 'layout';
+	const F_REPOSITORY_PREVIEW = 'repository_preview';
 	/**
 	 * @var ilObjViMP
 	 */
@@ -64,6 +65,17 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 		$input->addOption($option);
 		$this->addItem($input);
 
+		// REPOSITORY PREVIEW
+		$input = new ilSelectInputGUI($this->pl->txt(self::F_REPOSITORY_PREVIEW), self::F_REPOSITORY_PREVIEW);
+		$input->setOptions(array(
+			0 => $this->pl->txt('no_preview'),
+			1 => '1 ' . $this->pl->txt('video'),
+			2 => '2 ' . $this->pl->txt('videos'),
+			3 => '3 ' . $this->pl->txt('videos'),
+		));
+		$this->addItem($input);
+
+
 		$this->initCommandButtons();
 	}
 
@@ -86,6 +98,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 			self::F_DESCRIPTION => $this->parent_gui->getObject()->getDescription(),
 			self::F_ONLINE => $this->settings->getIsOnline(),
 			self::F_LAYOUT => $this->settings->getLayoutType(),
+			self::F_REPOSITORY_PREVIEW => $this->settings->getRepositoryPreview(),
 		);
 		$this->setValuesByArray($values);
 	}
@@ -105,6 +118,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 
 		$this->settings->setIsOnline($this->getInput(self::F_ONLINE));
 		$this->settings->setLayoutType($this->getInput(self::F_LAYOUT));
+		$this->settings->setRepositoryPreview($this->getInput(self::F_REPOSITORY_PREVIEW));
 		$this->settings->update();
 
 		return true;

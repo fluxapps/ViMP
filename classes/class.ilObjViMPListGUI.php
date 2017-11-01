@@ -49,4 +49,54 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 	function initType() {
 		$this->setType(ilViMPPlugin::XVMP);
 	}
+
+
+
+	/**
+	 * Get item properties
+	 *
+	 * @return    array        array of property arrays:
+	 *                        'alert' (boolean) => display as an alert property (usually in red)
+	 *                        'property' (string) => property name
+	 *                        'value' (string) => property value
+	 */
+	public function getCustomProperties($a_prop) {
+		$props = parent::getCustomProperties(array());
+
+		$settings = xvmpSettings::find($this->obj_id);
+		if (!$settings->getIsOnline()) {
+			$props[] = array(
+				'alert' => true,
+				'newline' => true,
+				'property' => 'Status',
+				'value' => 'Offline',
+				'propertyNameVisible' => true
+			);
+		}
+
+		if ($count = $settings->getRepositoryPreview()) {
+			$props[] = array(
+				'alert' => true,
+				'newline' => true,
+				'property' => 'API',
+				'value' => $this->getVideoPreview($count),
+				'propertyNameVisible' => false
+			);
+		}
+
+		return $props;
+	}
+
+
+	protected function getVideoPreview($count) {
+		xvmpMedium::$thumb_size = '170x108';
+		$selected_videos = xvmpSelectedMedia::where(array('obj_id' => $this->obj_id))->orderBy('sort')->limit(0, $count)->get();
+		$preview = '';
+		foreach ($selected_videos as $selected) {
+			$video = xvmpMedium::getObjectAsArray($selected->getMid());
+			$preview .= '<img style="margin-right:10px;" height=108px width=170px src="' . $video['thumbnail'] . '">';
+		}
+		return $preview;
+	}
+
 }

@@ -2,19 +2,18 @@ var VimpContent = {
 
 	selected_media: [],
 
-	url_load_tile: String,
+	ajax_base_url: String,
 
-	embed_codes: [],
-
-	video_titles: [],
+	template: String,
 
 	loadTiles: function () {
-		console.log(this.selected_media);
-		ajax_url = this.url_load_tile;
+		// console.log(this.selected_media);
 		$(this.selected_media).each(function(key, mid) {
 			$.get({
-				url: ajax_url,
+				url: this.ajax_base_url,
 				data: {
+					"cmd": "renderItem",
+					"tpl": this.template,
 					"mid": mid
 				}
 			}).always(function(response) {
@@ -25,12 +24,13 @@ var VimpContent = {
 	},
 
 	loadTilesInOrder: function(key) {
-		console.log('loadTilesInOrder ' + key);
-		ajax_url = this.url_load_tile;
+		// console.log('loadTilesInOrder ' + key);
 		var mid = VimpContent.selected_media[key];
 		$.get({
-			url: ajax_url,
+			url: this.ajax_base_url,
 			data: {
+				"cmd": "renderItem",
+				"tpl": this.template,
 				"mid": mid
 			}
 		}).always(function(response) {
@@ -47,11 +47,23 @@ var VimpContent = {
 		xoctWaiter.show();
 		var $modal = $('#xvmp_modal_player');
 		$modal.modal('show');
-		$modal.find('h4.modal-title').html(this.video_titles[mid]);
-		$modal.find('section').html(this.embed_codes[mid]);
-		$iframe = $('iframe').load(function() {
-			xoctWaiter.hide();
+
+		$.get({
+			url: this.ajax_base_url,
+			data: {
+				"cmd": "fillModalPlayer",
+				"mid": mid
+			}
+		}).always(function(response) {
+			response_object = JSON.parse(response);
+			$modal.find('section').html(response_object.html);
+			$modal.find('h4.modal-title').html(response_object.video_title);
+			$('iframe').load(function() {
+				xoctWaiter.hide();
+			});
 		});
+
+
 	}
 
 }

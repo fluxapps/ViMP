@@ -284,6 +284,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpConf' => __DIR__ . '/../..' . '/classes/Model/class.xvmpConf.php',
         'xvmpConfFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpConfFormGUI.php',
         'xvmpContentGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpContentGUI.php',
+        'xvmpContentListGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpContentListGUI.php',
         'xvmpContentPlayerGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpContentPlayerGUI.php',
         'xvmpContentTableGUI' => __DIR__ . '/../..' . '/classes/GUI/Table/class.xvmpContentTableGUI.php',
         'xvmpContentTilesGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpContentTilesGUI.php',

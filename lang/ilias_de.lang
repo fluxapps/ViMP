@@ -28,6 +28,7 @@ all#:#Ja, alle
 content#:#Inhalt
 info_short#:#Info
 videos#:#Videos
+video#:#Video
 settings#:#Einstellungen
 search_videos#:#Suchen
 selected_videos#:#Ausgewählte Videos
@@ -53,3 +54,6 @@ video_uploaded#:#Video erfolgreich hochgeladen.
 form_saved#:#Änderungen erfolgreich gespeichert.
 duration#:#Länge
 author#:#Autor
+flush_cache#:#Cache Leeren
+repository_preview#:#Vorschau im Magazin
+no_preview#:#Keine Vorschau
