@@ -74,7 +74,10 @@ class xvmpMedium extends xvmpObject {
 			'responsive' => $detect->isMobile() ? 'true' : 'false'
 			))->getResponseArray()['medium'];
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
-		self::cache($key, $response);
+
+		if ($response['status'] == 'legal') { // do not cache transcoding videos, we need to fetch them again to check the status
+			self::cache($key, $response);
+		}
 		return $response;
 	}
 

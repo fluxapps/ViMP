@@ -101,6 +101,14 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 
 	protected function uploadChunks() {
 		$xoctPlupload = new xoctPlupload();
+		$tmp_id = $_GET['tmp_id'];
+
+		$dir = ILIAS_ABSOLUTE_PATH  . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id;
+		if (!is_dir($dir)) {
+			ilUtil::makeDir($dir);
+		}
+
+		$xoctPlupload->setTargetDir($dir);
 		$xoctPlupload->handleUpload();
 	}
 

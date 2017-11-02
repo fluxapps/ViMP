@@ -28,7 +28,9 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 	public function __construct($parent_gui) {
 		$this->setId('xoct_event');
+
 		parent::__construct($parent_gui);
+
 		$this->setTitle($this->pl->txt('upload_video'));
 		$this->setTarget('_top');
 		$this->addCommandButtons();
@@ -36,7 +38,9 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 	}
 
 	protected function initForm() {
-
+		$tmp_id = ilUtil::randomhash();
+		$this->ctrl->setParameter($this->parent_gui, 'tmp_id', $tmp_id);
+		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 
 		$required_metada = xvmpConf::getConfig(xvmpConf::F_REQUIRED_METADATA);
 
@@ -46,6 +50,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		// FILE
 		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), 'source_url');
+
 		$input->setUrl($this->ctrl->getLinkTarget($this->parent_gui, xvmpOwnVideosGUI::CMD_UPLOAD_CHUNKS));
 		$input->setSuffixes(array(
 			'mov',
@@ -150,17 +155,8 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 			switch ($item->getPostVar()) {
 				case 'source_url':
-					$tmp_name = ilUtil::getDataDir() . '/temp/plupload/' . $value['name'];
-					$tmp_id = ilUtil::randomhash();
-
-					$dir = ILIAS_ABSOLUTE_PATH  . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id;
-					if (!is_dir($dir)) {
-						ilUtil::makeDir($dir);
-					}
-					$moved = ilUtil::moveUploadedFile($tmp_name, $value['name'], $dir . '/' . $value['name']);
-
-					$value = ILIAS_HTTP_PATH . ltrim($dir, '.') . '/' . rawurlencode($value['name']);
-					$video[$item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
+					$tmp_id = $_GET['tmp_id'];
+					$video[$item->getPostVar()] =  ILIAS_HTTP_PATH . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id . '/' . rawurlencode($value['name']);
 					break;
 				case 'add_automatically':
 					$add_automatically = (int) $value;
