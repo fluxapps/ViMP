@@ -27,8 +27,12 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 
 	public function __construct($parent_gui) {
+		$this->setId('xoct_event');
 		parent::__construct($parent_gui);
 		$this->setTitle($this->pl->txt('upload_video'));
+		$this->setTarget('_top');
+		$this->addCommandButtons();
+
 	}
 
 	protected function initForm() {
@@ -41,7 +45,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$this->addItem($input);
 
 		// FILE
-		$input = new xoctFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO, $this->lng->txt('file'), 'source_url');
+		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), 'source_url');
 		$input->setUrl($this->ctrl->getLinkTarget($this->parent_gui, xvmpOwnVideosGUI::CMD_UPLOAD_CHUNKS));
 		$input->setSuffixes(array(
 			'mov',
@@ -124,11 +128,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$input = new ilTextInputGUI($this->pl->txt('tags'), 'tags');
 		$this->addItem($input);
 
-		$this->addCommandButtons();
 	}
 
 	protected function addCommandButtons() {
-		$this->addCommandButton(xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO, $this->lng->txt('save'));
+		$this->addCommandButton(xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('save'));
 		$this->addCommandButton(xvmpOwnVideosGUI::CMD_CANCEL, $this->lng->txt(xvmpOwnVideosGUI::CMD_CANCEL));
 	}
 
@@ -147,12 +150,14 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 			switch ($item->getPostVar()) {
 				case 'source_url':
+					$tmp_name = ilUtil::getDataDir() . '/temp/plupload/' . $value['name'];
 					$tmp_id = ilUtil::randomhash();
-					$dir = $this->pl->getDirectory() . '/transfer/' . $tmp_id;
+
+					$dir = ILIAS_ABSOLUTE_PATH  . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id;
 					if (!is_dir($dir)) {
 						ilUtil::makeDir($dir);
 					}
-					ilUtil::moveUploadedFile($value['tmp_name'], $value['name'], $dir . '/' . $value['name']);
+					$moved = ilUtil::moveUploadedFile($tmp_name, $value['name'], $dir . '/' . $value['name']);
 
 					$value = ILIAS_HTTP_PATH . ltrim($dir, '.') . '/' . rawurlencode($value['name']);
 					$video[$item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;

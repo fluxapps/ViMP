@@ -57,3 +57,5 @@ author#:#Author
 flush_cache#:#Flush Cache
 repository_preview#:#Repository Preview
 no_preview#:#No Preview
+perm_upload#:#Upload
+access_denied#:#Permission denied.

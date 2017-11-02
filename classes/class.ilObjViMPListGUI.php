@@ -50,6 +50,21 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 		$this->setType(ilViMPPlugin::XVMP);
 	}
 
+	/**
+	 * get all alert properties
+	 *
+	 * @return array
+	 */
+	public function getAlertProperties() {
+		$alert = array();
+		foreach ((array)$this->getCustomProperties(array()) as $prop) {
+			if ($prop['alert'] == true) {
+				$alert[] = $prop;
+			}
+		}
+
+		return $alert;
+	}
 
 
 	/**

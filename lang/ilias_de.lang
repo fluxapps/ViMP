@@ -57,3 +57,5 @@ author#:#Autor
 flush_cache#:#Cache Leeren
 repository_preview#:#Vorschau im Magazin
 no_preview#:#Keine Vorschau
+perm_upload#:#Upload
+access_denied#:#Zugriff verweigert.

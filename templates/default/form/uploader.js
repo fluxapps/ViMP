@@ -6,6 +6,7 @@
 mOxie.Mime.addMimeType("video/quicktime, mov");
 var xoctFileuploader = {
     init: function () {
+        console.log('init')
         mOxie.Mime.addMimeType("video/quicktime, mov");
         var xoctFileuploaderJS = new plupload.Uploader({
             cmd: '',
@@ -30,7 +31,8 @@ var xoctFileuploader = {
                     var self = this;
                     info.runtime == 'html5' ? xoctWaiter.init('percentage') : xoctWaiter.init();
                     $(document).ready(function () {
-                        $('#form_xoct_event input[name="cmd[create]"]').click(function (e) {
+                        $('#form_xvmp_video input[name="cmd[create]"]').click(function (e) {
+                            console.log('upload');
                             e.preventDefault();
                             self.cmd = $(this).attr('name');
                             if (self.has_files) {

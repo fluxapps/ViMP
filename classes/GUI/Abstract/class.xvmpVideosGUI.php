@@ -25,7 +25,6 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	const TABLE_CLASS = '';
 
 
-
 	/**
 	 * @param $cmd
 	 */
@@ -33,9 +32,11 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		switch ($cmd) {
 			case self::CMD_STANDARD:
 			case self::CMD_SHOW_FILTERED:
-				$this->initUploadButton();
-				$this->setSubTabs();
-				$this->tabs->activateSubTab(static::SUBTAB_ACTIVE);
+				if (!$this->ctrl->isAsynch()) {
+					$this->initUploadButton();
+					$this->setSubTabs();
+					$this->tabs->activateSubTab(static::SUBTAB_ACTIVE);
+				}
 				$this->{$cmd}();
 				break;
 			default:
@@ -48,9 +49,11 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 *
 	 */
 	protected function setSubTabs() {
-		$this->tabs->addSubTab(self::SUBTAB_SEARCH, $this->pl->txt(self::SUBTAB_SEARCH), $this->ctrl->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
-		$this->tabs->addSubTab(self::SUBTAB_SELECTED, $this->pl->txt(self::SUBTAB_SELECTED), $this->ctrl->getLinkTargetByClass(xvmpSelectedVideosGUI::class, xvmpSelectedVideosGUI::CMD_STANDARD));
-		$this->tabs->addSubTab(self::SUBTAB_OWN, $this->pl->txt(self::SUBTAB_OWN), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
+		if (ilObjViMPAccess::hasWriteAccess()) {
+			$this->tabs->addSubTab(self::SUBTAB_SEARCH, $this->pl->txt(self::SUBTAB_SEARCH), $this->ctrl->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
+			$this->tabs->addSubTab(self::SUBTAB_SELECTED, $this->pl->txt(self::SUBTAB_SELECTED), $this->ctrl->getLinkTargetByClass(xvmpSelectedVideosGUI::class, xvmpSelectedVideosGUI::CMD_STANDARD));
+			$this->tabs->addSubTab(self::SUBTAB_OWN, $this->pl->txt(self::SUBTAB_OWN), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
+		}
 	}
 
 

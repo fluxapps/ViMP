@@ -14,6 +14,16 @@ class xvmpSettingsGUI extends xvmpGUI {
 
 	const CMD_UPDATE = 'update';
 
+
+	public function executeCommand() {
+		if (!ilObjViMPAccess::hasWriteAccess()) {
+			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+		}
+		parent::executeCommand();
+	}
+
+
 	protected function index() {
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/xvmp_settings.css');
 		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);

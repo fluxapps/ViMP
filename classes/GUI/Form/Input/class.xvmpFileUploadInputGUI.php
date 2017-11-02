@@ -26,7 +26,7 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 	/**
 	 * @var string
 	 */
-	protected $max_file_size = '10000mb';
+	protected $max_file_size = '20000mb';
 	/**
 	 * @var bool
 	 */
@@ -96,7 +96,7 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 		$settings->runtimes = 'html5,html4';
 		$settings->pick_button = 'xoct_pickfiles';
 		$settings->chunk_size = $this->getChunkSize();
-		$settings->max_file_size = '10000mb';
+		$settings->max_file_size = $this->max_file_size;
 		$settings->supported_suffixes = implode(',', $this->getSuffixes());
 		$settings->supported_suffixes_array = $this->getSuffixes();
 		$settings->mime_types = implode(',', $this->getMimeTypes());

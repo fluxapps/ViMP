@@ -8,10 +8,10 @@
  */
 class xvmpUser extends xvmpObject {
 
-
-
 	/**
 	 * @param ilObjUser $ilObjUser
+	 *
+	 * @return xvmpUser
 	 */
 	public static function getVimpUser(ilObjUser $ilObjUser) {
 		$mapping = self::getMappedUsername($ilObjUser);
@@ -73,11 +73,11 @@ class xvmpUser extends xvmpObject {
 
 		if ($ilObjUser->getAuthMode(true) != AUTH_LOCAL) {
 			$mapping = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_EXTERNAL);
-			str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping);
 		} else {
 			$mapping = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_LOCAL);
 		}
 
+		$mapping = str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping);
 		$mapping = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping);
 		$mapping = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping);
 

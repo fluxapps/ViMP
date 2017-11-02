@@ -18,10 +18,19 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const CMD_UPDATE_VIDEO = 'updateVideo';
 	const CMD_DELETE_VIDEO = 'deleteVideo';
 	const CMD_UPLOAD_VIDEO_FORM = 'uploadVideoForm';
-	const CMD_UPLOAD_VIDEO = 'uploadVideo';
+	const CMD_CREATE = 'create';
 	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
 	const CMD_UPLOAD_CHUNKS = 'uploadChunks';
 
+
+	public function executeCommand() {
+		if (!ilObjViMPAccess::hasWriteAccess() && !ilObjViMPAccess::hasUploadPermission()) {
+			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+		}
+
+		parent::executeCommand();
+	}
 
 
 	/**
@@ -58,7 +67,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
-	public function uploadVideo() {
+	public function create() {
 		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpEditVideoFormGUI->setValuesByPost();
 		if ($xvmpEditVideoFormGUI->uploadVideo()) {

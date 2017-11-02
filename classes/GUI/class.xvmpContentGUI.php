@@ -22,8 +22,10 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
-		// TODO checkaccess
-		$this->addFlushCacheButton();
+		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
+			$this->addFlushCacheButton();
+		}
+
 
 		switch (xvmpSettings::find($this->getObjId())->getLayoutType()) {
 			case xvmpSettings::LAYOUT_TYPE_LIST:

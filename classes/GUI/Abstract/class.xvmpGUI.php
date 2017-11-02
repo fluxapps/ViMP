@@ -38,7 +38,9 @@ abstract class xvmpGUI {
 
 
 	public function executeCommand() {
-		$this->tabs->activateTab(static::TAB_ACTIVE);
+		if (!$this->ctrl->isAsynch()) {
+			$this->tabs->activateTab(static::TAB_ACTIVE);
+		}
 
 		$nextClass = $this->ctrl->getNextClass();
 		switch ($nextClass) {

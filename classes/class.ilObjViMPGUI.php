@@ -37,39 +37,66 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 
 
 	public function executeCommand() {
-		$this->checkPermission('read');
 		$next_class = $this->ctrl->getNextClass();
 		$cmd = $this->ctrl->getCmd();
+		if (!ilObjViMPAccess::hasReadAccess() && $next_class != "ilinfoscreengui" && $cmd != "infoScreen") {
+			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+			$this->ctrl->returnToParent($this);
+		}
 		$this->tpl->getStandardTemplate();
 
 		try {
 			switch ($next_class) {
 				case 'xvmpcontentgui':
+					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
+						$this->setTabs();
+					}
+					$xvmpGUI = new xvmpContentGUI($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
 				case 'xvmpsearchvideosgui':
+					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
+						$this->setTabs();
+					}
+					$xvmpGUI = new xvmpSearchVideosGUI($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
 				case 'xvmpsettingsgui':
-					$this->initHeader();
-					$this->setTabs();
-					$xvmpGUI = new $next_class($this);
+					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
+						$this->setTabs();
+					}
+					$xvmpGUI = new xvmpSettingsGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
 					$this->tpl->show();
 					break;
 				case 'xvmpselectedvideosgui':
-					$this->initHeader();
-					$this->setTabs();
+					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
+						$this->setTabs();
+					}
 					$xvmpGUI = new xvmpSelectedVideosGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
 					$this->tpl->show();
 					break;
 				case 'xvmpownvideosgui':
 					$this->initHeader();
-					$this->setTabs();
+					if (!$this->ctrl->isAsynch()) {
+						$this->setTabs();
+					}
 					$xvmpGUI = new xvmpOwnVideosGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
 					$this->tpl->show();
 					break;
 				case "ilinfoscreengui":
-					$this->initHeader();
-					$this->setTabs();
+					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
+						$this->setTabs();
+					}
 					$this->checkPermission("visible");
 					$this->infoScreen();	// forwards command
 					$this->tpl->show();
@@ -116,14 +143,14 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		$this->tpl->setTitle($this->object->getTitle());
 		$this->tpl->setDescription($this->object->getDescription());
 
-		require_once('./Services/Object/classes/class.ilObjectListGUIFactory.php');
-		$list_gui = ilObjectListGUIFactory::_getListGUIByType('xvmp');
-		/**
-		 * @var $list_gui ilObjViMPListGUI
-		 */
-//		if (!$this->object->) {
-//			$this->tpl->setAlertProperties($list_gui->getAlertProperties());
-//		}
+		if (!xvmpSettings::find($this->obj_id)->getIsOnline()) {
+			require_once('./Services/Object/classes/class.ilObjectListGUIFactory.php');
+			/**
+			 * @var $list_gui ilObjViMPListGUI
+			 */
+			$list_gui = ilObjectListGUIFactory::_getListGUIByType('xvmp');
+			$this->tpl->setAlertProperties($list_gui->getAlertProperties());
+		}
 
 //		$this->tpl->setTitleIcon(ilObjViMP::_getIcon($this->object_id));
 		$this->tpl->setPermanentLink('xvmp', $_GET['ref_id']);
@@ -133,12 +160,20 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 * @return bool
 	 */
 	protected function setTabs() {
-		global $lng, $ilUser, $tree;
+		global $lng;
 
 		$this->tabs_gui->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xvmpContentGUI::class, xvmpContentGUI::CMD_STANDARD));
 		$this->tabs_gui->addTab(self::TAB_INFO, $this->pl->txt(self::TAB_INFO), $this->ctrl->getLinkTargetByClass(ilInfoScreenGUI::class));
-		$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
-		$this->tabs_gui->addTab(self::TAB_SETTINGS, $this->pl->txt(self::TAB_SETTINGS), $this->ctrl->getLinkTargetByClass(xvmpSettingsGUI::class, xvmpSettingsGUI::CMD_STANDARD));
+
+		if (ilObjViMPAccess::hasWriteAccess()) {
+			$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
+		} else if (ilObjViMPAccess::hasUploadPermission()) {
+			$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
+		}
+
+		if (ilObjViMPAccess::hasWriteAccess()) {
+			$this->tabs_gui->addTab(self::TAB_SETTINGS, $this->pl->txt(self::TAB_SETTINGS), $this->ctrl->getLinkTargetByClass(xvmpSettingsGUI::class, xvmpSettingsGUI::CMD_STANDARD));
+		}
 
 
 		if ($this->checkPermissionBool("edit_permission")) {

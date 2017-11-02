@@ -14,4 +14,13 @@ class xvmpSearchVideosGUI extends xvmpVideosGUI {
 
 	const TABLE_CLASS = 'xvmpSearchVideosTableGUI';
 
+
+	public function executeCommand() {
+		if (!ilObjViMPAccess::hasWriteAccess()) {
+			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+		}
+
+		parent::executeCommand();
+	}
 }

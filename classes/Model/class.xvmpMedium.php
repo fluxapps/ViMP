@@ -22,6 +22,9 @@ class xvmpMedium extends xvmpObject {
 		$response = xvmpRequest::getUserMedia($uid, array(
 			'thumbsize' => self::$thumb_size
 		))->getResponseArray()['media']['medium'];
+		if (!$response) {
+			return array();
+		}
 		foreach ($response as $key => $medium) {
 			if ($medium['mediatype'] != 'video') {
 				unset($response[$key]);
