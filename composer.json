@@ -31,7 +31,9 @@
       "../../../../../../../Services/ActiveRecord",
       "../../../../../../../Services/UIComponent",
       "../../../../../../../Services/Utilities",
-      "../../../../../../../Services/GlobalCache"
+      "../../../../../../../Services/GlobalCache",
+      "../../../../../../../Services/Tracking",
+      "../../../../../../../Services/Calendar"
     ]
   },
   "config": {

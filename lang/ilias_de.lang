@@ -59,3 +59,12 @@ repository_preview#:#Vorschau im Magazin
 no_preview#:#Keine Vorschau
 perm_upload#:#Upload
 access_denied#:#Zugriff verweigert.
+status_legal#:#Transkodierung abgeschlossen
+status_converting#:#Transkodierung läuft
+status_error#:#Fehler in der Transkodierung
+relevant#:#Erfordert
+required_percentage#:#Anteil
+from#:#Von
+to#:#Bis
+category#:#Kategorie
+views#:#Aufrufe

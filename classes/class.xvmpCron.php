@@ -132,7 +132,9 @@ class xvmpCron {
 		);
 		xvmpLog::getInstance()->write('to: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()));
 
-		// delete entry
+		// delete temp file and entry
+		$dir = ILIAS_HTTP_PATH . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $uploaded_medium->getTmpId();
+		ilUtil::delDir($dir);
 		$uploaded_medium->delete();
 
 		// set visible

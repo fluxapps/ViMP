@@ -100,9 +100,6 @@ class xvmpRequest {
 	public static function getMedium($mediumid, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_MEDIUM);
 		$params['mediumid'] = $mediumid;
-		if (!isset($params['thumbsize'])) {
-			$params['thumbsize'] = '170x108';
-		}
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

@@ -19,9 +19,24 @@ div.xvmp_image_container {
 	/*margin-right: 25px;*/
 }
 
+div.xvmp_image_container img {
+	background-image: url('../../../../../../../../../Services/WebAccessChecker/templates/images/access_denied.png');
+}
+
 div.xvmp_sort_container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.xvmp_image_container:hover img {
+	opacity: 0.5;
+}
+
+div.modal-content {
+	width: fit-content;
+	height: fit-content;
+	max-width: 100%;
+	margin: auto;
 }

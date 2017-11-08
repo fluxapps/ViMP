@@ -59,3 +59,12 @@ repository_preview#:#Repository Preview
 no_preview#:#No Preview
 perm_upload#:#Upload
 access_denied#:#Permission denied.
+status_legal#:#Transcoded successfully
+status_converting#:#Transcoding
+status_error#:#Transcoding failed
+relevant#:#Required
+required_percentage#:#Percentage
+from#:#From
+to#:#To
+category#:#Category
+views#:#Views

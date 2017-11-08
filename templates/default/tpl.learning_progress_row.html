@@ -1,0 +1,29 @@
+<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
+	<td class="std small">
+		<div class="xvmp_image_container">
+			<img class="xvmp_preview_image" src="{VAL_THUMBNAIL}">
+		</div>
+	</td>
+	<td class="std small">
+		<input id="xvmp_relevant_{VAL_MID}" onclick="VimpLP.setRelevance(event, {VAL_MID});" type="checkbox" {VAL_RELEVANT} {VAL_RELEVANCE_DISABLED}>
+	</td>
+	<td class="std small">
+		<input id="xvmp_percentage_{VAL_MID}" onclick="VimpLP.setPercentage(event, {VAL_MID});" type="number" value="80">
+	</td>
+
+	<td class="std small">
+		{VAL_TITLE}
+	</td>
+	<td class="std small">
+		{VAL_DESCRIPTION}
+	</td>
+	<td class="std small">
+		{VAL_DURATION}
+	</td>
+	<td class="std small">
+		{VAL_USERNAME}
+	</td>
+	<td class="std small">
+		{VAL_CREATED_AT}
+	</td>
+</tr>

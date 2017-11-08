@@ -9,13 +9,44 @@
 class xvmpCategory extends xvmpObject {
 
 	public static function getObjectAsArray($id) {
-		$response = xvmpRequest::getCategory($id)->getResponseArray();
-		return $response['category'];
+		$key = self::class;
+		$existing = xvmpCacheFactory::getInstance()->get($key);
+		if ($existing && isset($existing[$key])) {
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . $key . '-' . $id, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $existing[$key];
+		}
+
+		$response = xvmpRequest::getCategory($id)->getResponseArray()['category'];
+
+		if ($existing) {
+			$cache = $existing;
+			$cache[] = $response;
+		} else {
+			$cache = array($response);
+		}
+
+		self::cache($key, $cache);
+
+		return $response;
 	}
 
 	public static function getAllAsArray() {
-		$response = xvmpRequest::getCategories()->getResponseArray();
-		return $response['categories']['category'];
+		$key = self::class;
+		$existing = xvmpCacheFactory::getInstance()->get($key);
+		if ($existing && ($existing['loaded'] == 1)) {
+			unset($existing['loaded']);
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $existing;
+		}
+
+		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+
+		$response = xvmpRequest::getCategories()->getResponseArray()['categories']['category'];
+		$response['loaded'] = 1;
+		self::cache($key, $response);
+
+		unset($response['loaded']);
+		return $response;
 	}
 
 

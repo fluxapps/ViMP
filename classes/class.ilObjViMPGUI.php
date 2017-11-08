@@ -18,6 +18,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	const TAB_CONTENT = 'content';
 	const TAB_INFO = 'info_short';
 	const TAB_VIDEOS = 'videos';
+	const TAB_LEARNING_PROGRESS = 'learning_progress';
 	const TAB_SETTINGS = 'settings';
 	const TAB_PERMISSION = 'permissions';
 
@@ -89,6 +90,15 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 						$this->setTabs();
 					}
 					$xvmpGUI = new xvmpOwnVideosGUI($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
+				case 'xvmplearningprogressgui':
+					$this->initHeader();
+					if (!$this->ctrl->isAsynch()) {
+						$this->setTabs();
+					}
+					$xvmpGUI = new xvmpLearningProgressGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
 					$this->tpl->show();
 					break;
@@ -169,6 +179,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
 		} else if (ilObjViMPAccess::hasUploadPermission()) {
 			$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
+		}
+
+		if (ilObjViMPAccess::hasWriteAccess() && ilObjUserTracking::_enabledLearningProgress()) {
+			$this->tabs_gui->addTab(self::TAB_LEARNING_PROGRESS, $this->lng->txt(self::TAB_LEARNING_PROGRESS), $this->ctrl->getLinkTargetByClass(xvmpLearningProgressGUI::class, xvmpLearningProgressGUI::CMD_STANDARD));
+
 		}
 
 		if (ilObjViMPAccess::hasWriteAccess()) {

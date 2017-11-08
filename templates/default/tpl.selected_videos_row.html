@@ -10,9 +10,11 @@
 		</div>
 	</td>
 	<td class="std small">
-		<div class="xvmp_image_container">
-			<img class="xvmp_preview_image" src="{VAL_THUMBNAIL}">
-		</div>
+		<a onclick="VimpContent.playVideo({VAL_MID});">
+			<div class="xvmp_image_container">
+				<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}">
+			</div>
+		</a>
 	</td>
 	<td class="std small">
 		<input id="xvmp_visible_{VAL_MID}" onclick="VimpSelected.setVisibility(event, {VAL_MID});" type="checkbox" {VAL_VISIBLE} {VAL_VISIBILITY_DISABLED}>

@@ -10,18 +10,14 @@ use Detection\MobileDetect;
  */
 class xvmpMedium extends xvmpObject {
 
-	public static $thumb_size = '170x108';
-
-	public static function getUserMedia($ilObjUser = null) {
+	public static function getUserMedia($ilObjUser = null, $filter = array()) {
 		if (!$ilObjUser) {
 			global $ilUser;
 			$ilObjUser = $ilUser;
 		}
 
 		$uid = xvmpUser::getVimpUser($ilObjUser)->getUid();
-		$response = xvmpRequest::getUserMedia($uid, array(
-			'thumbsize' => self::$thumb_size
-		))->getResponseArray()['media']['medium'];
+		$response = xvmpRequest::getUserMedia($uid, $filter)->getResponseArray()['media']['medium'];
 		if (!$response) {
 			return array();
 		}
@@ -67,12 +63,7 @@ class xvmpMedium extends xvmpObject {
 
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
 
-
-		$detect = new MobileDetect();
-		$response = xvmpRequest::getMedium($id, array(
-			'thumbsize' => self::$thumb_size,
-			'responsive' => $detect->isMobile() ? 'true' : 'false'
-			))->getResponseArray()['medium'];
+		$response = xvmpRequest::getMedium($id)->getResponseArray()['medium'];
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
 
 		if ($response['status'] == 'legal') { // do not cache transcoding videos, we need to fetch them again to check the status
@@ -98,7 +89,7 @@ class xvmpMedium extends xvmpObject {
 		xvmpRequest::editMedium($this->getId(), $params);
 	}
 
-	public static function upload($video, $obj_id, $add_automatically, $notification) {
+	public static function upload($video, $obj_id, $tmp_id, $add_automatically, $notification) {
 		global $ilUser;
 		$response = xvmpRequest::uploadMedium($video);
 		$medium = $response->getResponseArray()['medium'];
@@ -111,6 +102,7 @@ class xvmpMedium extends xvmpObject {
 		$uploaded_media->setMid($medium['mid']);
 		$uploaded_media->setNotification($notification);
 		$uploaded_media->setUserId($ilUser->getId());
+		$uploaded_media->setTmpId($tmp_id);
 		$uploaded_media->create();
 	}
 
@@ -521,7 +513,10 @@ class xvmpMedium extends xvmpObject {
 	/**
 	 * @return String
 	 */
-	public function getThumbnail() {
+	public function getThumbnail($width = 0, $height = 0) {
+		if ($width && $height) {
+			return $this->thumbnail . "&size={$width}x{$height}";
+		}
 		return $this->thumbnail;
 	}
 
@@ -538,6 +533,10 @@ class xvmpMedium extends xvmpObject {
 	 * @return String
 	 */
 	public function getEmbedCode() {
+		$detect_mobile = new MobileDetect();
+		if ($detect_mobile->isMobile()) {
+			return str_replace('responsive=false', 'responsive=true', $this->embed_code);
+		}
 		return $this->embed_code;
 	}
 

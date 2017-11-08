@@ -44,8 +44,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->tpl_global = $tpl;
-		$this->setPrefix(ilViMPPlugin::XVMP . '_search_');
-		$this->setId($_GET['ref_id']);
+		$this->setPrefix(ilViMPPlugin::XVMP . '_table_');
 
 		parent::__construct($parent_gui, $parent_cmd);
 
@@ -55,12 +54,14 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		$this->initFilter();
 		$this->setRowTemplate($this->pl->getDirectory() . '/templates/default/' . static::ROW_TEMPLATE);
 
-		foreach (array_merge($this->js_files, array('waiter.js')) as $js_file) {
+		foreach (array_merge($this->js_files, array('waiter.js', 'xvmp_content.js')) as $js_file) {
 			$this->tpl_global->addJavaScript($this->pl->getDirectory() . '/templates/default/' . $js_file);
 		}
 		foreach (array_merge($this->css_files, array('waiter.css')) as $css_file) {
 			$this->tpl_global->addCss($this->pl->getDirectory() . '/templates/default/' . $css_file);
 		}
+
+		$this->tpl_global->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_obj, '', '', true) . "';");
 
 	}
 

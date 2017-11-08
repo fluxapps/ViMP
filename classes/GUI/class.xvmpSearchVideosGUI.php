@@ -23,4 +23,5 @@ class xvmpSearchVideosGUI extends xvmpVideosGUI {
 
 		parent::executeCommand();
 	}
+
 }

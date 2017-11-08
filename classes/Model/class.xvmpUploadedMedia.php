@@ -26,6 +26,15 @@ class xvmpUploadedMedia extends ActiveRecord {
 	 */
 	protected $mid = 0;
 	/**
+	 * @var String
+	 *
+	 * @db_has_field        true
+	 * @db_is_unique        true
+	 * @db_fieldtype        text
+	 * @db_length           256
+	 */
+	protected $tmp_id = 0;
+	/**
 	 * @var int
 	 *
 	 * @db_has_field        true
@@ -57,6 +66,22 @@ class xvmpUploadedMedia extends ActiveRecord {
 	 */
 	public function setMid($mid) {
 		$this->mid = $mid;
+	}
+
+
+	/**
+	 * @return String
+	 */
+	public function getTmpId() {
+		return $this->tmp_id;
+	}
+
+
+	/**
+	 * @param String $tmp_id
+	 */
+	public function setTmpId($tmp_id) {
+		$this->tmp_id = $tmp_id;
 	}
 
 

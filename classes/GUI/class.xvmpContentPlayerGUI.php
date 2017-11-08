@@ -73,7 +73,13 @@ class xvmpContentPlayerGUI {
 			$tiles_tpl->setVariable('PLAY_LINK', $this->ctrl->getLinkTarget($this->parent_gui, xvmpContentGUI::CMD_STANDARD));
 			$tiles_tpl->parseCurrentBlock();
 
-			ilTooltipGUI::addTooltip('box_' . $media->getMid(), 'test');
+//			$tooltip = "Title: {$video->getTitle()} \n
+//			Description: {$video->getDescription()}
+//			Duration: {$video->getDurationFormatted()}
+//			Author: {$video->getCustomAuthor()}
+//			Created At: {$video->getCreatedAt('d.m.Y, H:i')}";
+//
+//			ilTooltipGUI::addTooltip('box_' . $media->getMid(), $tooltip);
 
 		}
 

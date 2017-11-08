@@ -100,4 +100,36 @@ abstract class xvmpGUI {
 		return $this->parent_gui->obj_id;
 	}
 
+	/**
+	 * @return ilModalGUI
+	 */
+	public function getModalPlayer() {
+		$modal = ilModalGUI::getInstance();
+		$modal->setId('xvmp_modal_player');
+		$modal->setType(ilModalGUI::TYPE_LARGE);
+		$modal->setBody('
+			<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_modal"></div>
+			<section></section>');
+		return $modal;
+	}
+
+
+	/**
+	 * ajax
+	 */
+	public function fillModalPlayer() {
+		$mid = $_GET['mid'];
+		$video = xvmpMedium::find($mid);
+		$video_infos = "				
+			<h3>{$video->getDescription()}</h3>
+			<p>{$this->pl->txt('duration')}: {$video->getDurationFormatted()}</p>
+			<p>{$this->pl->txt('author')}: {$video->getCustomAuthor()}</p>
+			<p>{$this->pl->txt('created_at')}: {$video->getCreatedAt('m.d.Y, H:i')}</p>";
+		$response = new stdClass();
+		$response->html = $video->getEmbedCode() . $video_infos;
+		$response->video_title = $video->getTitle();
+		echo json_encode($response);
+		exit;
+	}
+
 }

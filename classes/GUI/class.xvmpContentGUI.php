@@ -25,17 +25,12 @@ class xvmpContentGUI extends xvmpGUI {
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
 		}
+		$detect_mobile = new MobileDetect();
 
+		$layout_type = $detect_mobile->isMobile() ? xvmpSettings::LAYOUT_TYPE_LIST : xvmpSettings::find($this->getObjId())->getLayoutType();
 
-		switch (xvmpSettings::find($this->getObjId())->getLayoutType()) {
+		switch ($layout_type) {
 			case xvmpSettings::LAYOUT_TYPE_LIST:
-//				$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_content.js');
-//				$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/waiter.js');
-//				$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
-//				$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/xvmp_content_table.css');
-//				$modal = $this->getModalPlayer();
-//				$this->tpl->setContent('<div id="xvmp_table_placeholder"></div>' . $modal->getHTML());
-//				$this->addOnLoadAjaxCode();
 				$xvmpContentListGUI = new xvmpContentListGUI($this);
 				$xvmpContentListGUI->show();
 				break;
@@ -58,7 +53,6 @@ class xvmpContentGUI extends xvmpGUI {
 		$mid = $_GET['mid'];
 		$template = $_GET['tpl'];
 		try {
-			xvmpMedium::$thumb_size = $template == 'list' ? '280x220' : '210x150';
 			$video = xvmpMedium::find($mid);
 			$tpl = new ilTemplate("tpl.content_{$template}.html", true, true, $this->pl->getDirectory());
 
@@ -108,36 +102,6 @@ class xvmpContentGUI extends xvmpGUI {
 	}
 
 
-	/**
-	 * @return ilModalGUI
-	 */
-	public function getModalPlayer() {
-		$modal = ilModalGUI::getInstance();
-		$modal->setId('xvmp_modal_player');
-		$modal->setType(ilModalGUI::TYPE_LARGE);
-        $modal->setBody('
-			<div id="xoct_waiter" class="xoct_waiter xoct_waiter_modal"></div>
-			<section></section>');
-		return $modal;
-	}
 
-
-	/**
-	 * ajax
-	 */
-	public function fillModalPlayer() {
-		$mid = $_GET['mid'];
-		$video = xvmpMedium::find($mid);
-		$video_infos = "				
-			<h3>{$video->getDescription()}</h3>
-			<p>{$this->pl->txt('duration')}: {$video->getDurationFormatted()}</p>
-			<p>{$this->pl->txt('author')}: {$video->getCustomAuthor()}</p>
-			<p>{$this->pl->txt('created_at')}: {$video->getCreatedAt('m.d.Y, H:i')}</p>";
-		$response = new stdClass();
-		$response->html = $video->getEmbedCode() . $video_infos;
-		$response->video_title = $video->getTitle();
-		echo json_encode($response);
-		exit;
-	}
 
 }

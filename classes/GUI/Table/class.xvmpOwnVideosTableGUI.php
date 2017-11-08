@@ -34,13 +34,6 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		)
 	);
 
-	protected $available_filters = array(
-		'title' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbyname'
-		),
-	);
-
 	/**
 	 * @var xvmpOwnVideosGUI
 	 */
@@ -59,13 +52,12 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	public function __construct($parent_gui, $parent_cmd) {
 		global $ilUser;
 		$this->user = $ilUser;
+		$this->setId('own_' . $_GET['ref_id']);
 		parent::__construct($parent_gui, $parent_cmd);
 		$this->setDisableFilterHiding(true);
+		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
 		$this->tpl_global->addOnLoadCode('VimpSearch.base_link = "'.$base_link.'";');
-		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
-
-		$this->parseData();
 	}
 
 
@@ -82,17 +74,46 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	}
 
 
+	public function initFilter() {
+		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'filterbyname');
+		$this->addAndReadFilterItem($filter_item);
+
+		$filter_item = new ilMultiSelectInputGUI($this->pl->txt('category'), 'filterbycategory');
+		$categories = xvmpCategory::getAll();
+		$options = array();
+		/** @var xvmpCategory $category */
+		foreach ($categories as $category) {
+			$options[$category->getId()] = $category->getName();
+		}
+		$filter_item->setOptions($options);
+		$this->addAndReadFilterItem($filter_item);
+
+//		$filter_item = new ilTextInputGUI($this->pl->txt('tags'), 'filterbytags');
+//		$this->addAndReadFilterItem($filter_item);
+//
+//		$filter_item = new ilDateDurationInputGUI($this->pl->txt('create_date'), 'filterbycreate');
+//		$filter_item->setShowTime(false);
+//		$filter_item->setStart(new ilDateTime(time(), IL_CAL_UNIX));
+//		$filter_item->setStartText($this->pl->txt('from'));
+//		$filter_item->setEnd(new ilDateTime(time(), IL_CAL_UNIX));
+//		$filter_item->setEndText($this->pl->txt('to'));
+
+//		$this->addAndReadFilterItem($filter_item);
+	}
+
+
 	/**
 	 *
 	 */
 	public function parseData() {
 		$filter = array('thumbsize' => self::THUMBSIZE);
 		foreach ($this->filters as $filter_item) {
-			$filter[$filter_item->getPostVar()] = $filter_item->getValue();
+			$value = $filter_item->getValue();
+			$filter[$filter_item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
 		}
 
 //		$videos = xvmpMedium::getFilteredAsArray($filter);
-		$videos = xvmpMedium::getUserMedia();
+		$videos = xvmpMedium::getUserMedia(null, $filter);
 		foreach ($videos as $video) {
 			$data[$video['mid']] = $video;
 		}
@@ -117,7 +138,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$hide_button = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId()) ? 'ADD' : 'REMOVE';
 		$this->tpl->setVariable('VAL_ACTION_' . $hide_button, 'hidden');
 
-		$this->tpl->setVariable('VAL_STATUS_TEXT', $this->pl->txt($a_set['status']));
+		$this->tpl->setVariable('VAL_STATUS_TEXT', $this->pl->txt('status_' . $a_set['status']));
 		$this->tpl->setVariable('VAL_VISIBLE', (int) ($a_set['status'] == 'legal'));
 
 		foreach ($this->available_columns as $title => $props)

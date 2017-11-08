@@ -44,7 +44,7 @@ var VimpContent = {
 
 	playVideo: function (mid) {
 		console.log('playVideo ' + mid)
-		xoctWaiter.show();
+		$('#xoct_waiter_modal').show();
 		var $modal = $('#xvmp_modal_player');
 		$modal.modal('show');
 
@@ -59,7 +59,8 @@ var VimpContent = {
 			$modal.find('section').html(response_object.html);
 			$modal.find('h4.modal-title').html(response_object.video_title);
 			$('iframe').load(function() {
-				xoctWaiter.hide();
+				console.log('iframe loaded');
+				$('#xoct_waiter_modal').hide();
 			});
 		});
 

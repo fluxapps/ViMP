@@ -100,7 +100,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$this->addItem($input);
 
 		// COPYRIGHT
-		$input = new ilTextInputGUI($this->pl->txt('copyright'), 'copyright');
+		$input = new ilTextInputGUI($this->pl->txt('copyright'), 'custom_copyright');
 		$input->setRequired(in_array('copyright', $required_metada));
 		$this->addItem($input);
 
@@ -175,7 +175,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		try {
-			xvmpMedium::upload($video, $this->parent_gui->getObjId(), $add_automatically, $notification);
+			xvmpMedium::upload($video, $this->parent_gui->getObjId(), $tmp_id,$add_automatically, $notification);
 		} catch (xvmpException $e) {
 			ilUtil::sendFailure($e->getMessage(), true);
 			return false;

@@ -9,7 +9,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 	const ROW_TEMPLATE = 'tpl.search_videos_row.html';
 
-	protected $js_files = array('xvmp_search_videos.js');
+	protected $js_files = array('xvmp_search_videos.js', 'xvmp_content.js');
 	protected $css_files = array('xvmp_video_table.css');
 
 
@@ -41,6 +41,34 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 			'input_gui' => 'ilTextInputGUI',
 			'post_var' => 'filterbyname'
 		),
+		'user' => array(
+			'input_gui' => 'ilTextInputGUI',
+			'post_var' => 'filterbyuser'
+		),
+		'copyright' => array(
+			'input_gui' => 'ilTextInputGUI',
+			'post_var' => 'filterbycopyright'
+		),
+		'category' => array(
+			'input_gui' => 'ilMultiSelectInputGUI',
+			'post_var' => 'filterbycategory'
+		),
+		'tags' => array(
+			'input_gui' => 'ilTextInputGUI',
+			'post_var' => 'filterbytags'
+		),
+		'created_at' => array(
+			'input_gui' => 'ilDateDurationInputGUI',
+			'post_var' => 'filterbycreatedate'
+		),
+		'duration' => array(
+			'input_gui' => 'ilTextInputGUI',
+			'post_var' => 'filterbyduration'
+		),
+		'views' => array(
+			'input_gui' => 'ilTextInputGUI',
+			'post_var' => 'filterbyviews'
+		),
 	);
 
 	/**
@@ -56,11 +84,11 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
+		$this->setPrefix(ilViMPPlugin::XVMP . '_search_');
+		$this->setId('search_' . $_GET['ref_id']);
 		parent::__construct($parent_gui, $parent_cmd);
-		$this->setExternalSorting(true);
 		$this->setDisableFilterHiding(true);
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
-
 	}
 
 
@@ -81,9 +109,53 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	public function parseData() {
 		$filter = array('thumbsize' => self::THUMBSIZE);
 		foreach ($this->filters as $filter_item) {
-			$filter[$filter_item->getPostVar()] = $filter_item->getValue();
+			$value = $filter_item->getValue();
+			$filter[$filter_item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
 		}
-		$this->setData(xvmpMedium::getFilteredAsArray($filter));
+		$data = xvmpMedium::getFilteredAsArray(array_filter($filter));
+		$this->setData(array_filter($data));
+	}
+
+
+	public function initFilter() {
+		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'filterbyname');
+		$this->addAndReadFilterItem($filter_item);
+
+		$filter_item = new ilTextInputGUI($this->pl->txt('username'), 'filterbyuser');
+		$this->addAndReadFilterItem($filter_item);
+
+		$filter_item = new ilTextInputGUI($this->pl->txt('copyright'), 'filterbycopyright');
+		$this->addAndReadFilterItem($filter_item);
+
+		$filter_item = new ilMultiSelectInputGUI($this->pl->txt('category'), 'filterbycategory');
+		$categories = xvmpCategory::getAll();
+		$options = array();
+		/** @var xvmpCategory $category */
+		foreach ($categories as $category) {
+			$options[$category->getId()] = $category->getName();
+		}
+		$filter_item->setOptions($options);
+		$this->addAndReadFilterItem($filter_item);
+
+		$filter_item = new ilTextInputGUI($this->pl->txt('tags'), 'filterbytags');
+		$this->addAndReadFilterItem($filter_item);
+
+		$filter_item = new ilDateDurationInputGUI($this->pl->txt('create_date'), 'filterbycreate');
+		$filter_item->setShowTime(false);
+		$filter_item->setStart(new ilDateTime(time(), IL_CAL_UNIX));
+		$filter_item->setStartText($this->pl->txt('from'));
+		$filter_item->setEnd(new ilDateTime(time(), IL_CAL_UNIX));
+		$filter_item->setEndText($this->pl->txt('to'));
+
+		$this->addAndReadFilterItem($filter_item);
+
+
+		$filter_item = new ilTextInputGUI($this->pl->txt('duration'), 'filterbyduration');
+		$this->addAndReadFilterItem($filter_item);
+
+
+		$filter_item = new ilTextInputGUI($this->pl->txt('views'), 'filterbyviews');
+		$this->addAndReadFilterItem($filter_item);
 	}
 
 
@@ -102,12 +174,10 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 		foreach ($this->available_columns as $title => $props)
 		{
-			// DEV
-			if (ilViMPPlugin::DEV && $title == 'thumbnail') {
-				$a_set[$title] = str_replace('10.0.2.2', 'localhost', $a_set[$title]);
+			if ($title == 'thumbnail') {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] . 'size=' . self::THUMBSIZE);
+				continue;
 			}
-			// DEV
-
 
 			$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 		}

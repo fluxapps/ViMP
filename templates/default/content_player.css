@@ -42,7 +42,11 @@ div#xvmp_video_list_container {
 }
 
 .box:hover .xvmp_overlay_infos {
-	opacity: 1;
+	/*opacity: 1;*/
+}
+
+.box:hover {
+	opacity: 0.75;
 }
 
 .xvmp_overlay_infos {
