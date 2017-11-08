@@ -13,6 +13,7 @@ var VimpSearch = {
 		}
 		var remove_button = $('#xvmp_remove_'+mid);
 		var add_button = $('#xvmp_add_'+mid);
+		var row = $('#xvmp_row_'+mid);
 
 		ajax_url = this.base_link;
 		$.ajax({
@@ -26,6 +27,8 @@ var VimpSearch = {
 		}).always(function(data, textStatus, jqXHR) {
 			add_button.hide();
 			remove_button.show();
+			row.removeClass('xvmp_row_not_added');
+			row.addClass('xvmp_row_added');
 			xoctWaiter.hide();
 		});
 	},
@@ -36,6 +39,7 @@ var VimpSearch = {
 
 		var remove_button = $('#xvmp_remove_'+mid);
 		var add_button = $('#xvmp_add_'+mid);
+		var row = $('#xvmp_row_'+mid);
 
 		ajax_url = this.base_link;
 		$.ajax({
@@ -46,10 +50,10 @@ var VimpSearch = {
 				mid: mid
 			}
 		}).always(function(data, textStatus, jqXHR) {
-			console.log(remove_button);
-			console.log(add_button);
 			remove_button.hide();
 			add_button.show();
+			row.addClass('xvmp_row_not_added');
+			row.removeClass('xvmp_row_added');
 			xoctWaiter.hide();
 		});
 	}
