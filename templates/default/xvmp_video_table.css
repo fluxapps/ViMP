@@ -5,6 +5,7 @@ tr.xvmp_table_row > td.std.small {
 /* add & remove button */
 td.xvmp_action.std.small {
 	vertical-align: middle;
+	text-align: center;
 }
 
 div.xvmp_image_container {
@@ -20,7 +21,8 @@ div.xvmp_image_container {
 }
 
 div.xvmp_image_container img {
-	background-image: url('../../../../../../../../../Services/WebAccessChecker/templates/images/access_denied.png');
+	background: url('../images/vimp_logo.svg') center no-repeat;
+	background-size: contain;
 }
 
 div.xvmp_sort_container {
@@ -39,6 +41,11 @@ div.modal-content {
 	height: fit-content;
 	max-width: 100%;
 	margin: auto;
+}
+
+div.modal-body > section > iframe {
+	background: black url('../images/vimp_logo.svg') center no-repeat;
+	background-size: contain;
 }
 
 .xvmp_row_added, .table-striped > tbody > tr:nth-child(odd).xvmp_row_added > td, .table-striped > tbody > tr:nth-child(odd).xvmp_row_added > th {

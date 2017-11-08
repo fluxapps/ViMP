@@ -24,12 +24,23 @@ var VimpSearch = {
 				mid: mid,
 				visible: visible
 			}
-		}).always(function(data, textStatus, jqXHR) {
-			add_button.hide();
-			remove_button.show();
-			row.removeClass('xvmp_row_not_added');
-			row.addClass('xvmp_row_added');
-			xoctWaiter.hide();
+		}).always(function(response) {
+			try {
+				response = JSON.parse(response);
+			} catch (error) {
+				response = '{"success" = false}';
+			}
+
+			if (response.success) {
+				add_button.hide();
+				remove_button.show();
+				row.removeClass('xvmp_row_not_added');
+				row.addClass('xvmp_row_added');
+				xoctWaiter.hide();
+			} else {
+				xoctWaiter.hide();
+				alert('Authentication failed. Please log in again.');
+			}
 		});
 	},
 
@@ -49,12 +60,23 @@ var VimpSearch = {
 				cmd: 'removeVideo',
 				mid: mid
 			}
-		}).always(function(data, textStatus, jqXHR) {
-			remove_button.hide();
-			add_button.show();
-			row.addClass('xvmp_row_not_added');
-			row.removeClass('xvmp_row_added');
-			xoctWaiter.hide();
+		}).always(function(response) {
+			try {
+				response = JSON.parse(response);
+			} catch (error) {
+				response = '{"success" = false}';
+			}
+
+			if (response.success) {
+				remove_button.hide();
+				add_button.show();
+				row.addClass('xvmp_row_not_added');
+				row.removeClass('xvmp_row_added');
+				xoctWaiter.hide();
+			} else {
+				xoctWaiter.hide();
+				alert('Authentication failed. Please log in again.');
+			}
 		});
 	}
 }

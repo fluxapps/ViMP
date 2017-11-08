@@ -108,7 +108,7 @@ class xvmpCron {
 	protected function sendNotification(xvmpMedium $medium, xvmpUploadedMedia $uploaded_medium) {
 		xvmpLog::getInstance()->write('Medium transcoded successfully: ' . $medium->getTitle() . ' (' . $medium->getMid() . ')');
 
-		$body = xvmpConf::getConfig(xvmpConf::F_NOTIFICATION_BODY);
+		$body = xvmpConf::getConfig(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL);
 
 		// replace placeholders
 		$ilObjUser = new ilObjUser($uploaded_medium->getUserId());
@@ -124,7 +124,7 @@ class xvmpCron {
 			$ilObjUser->getLogin(),
 			'',
 			'',
-			xvmpConf::getConfig(xvmpConf::F_NOTIFICATION_SUBJECT),
+			xvmpConf::getConfig(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL),
 			$body,
 			array(),
 			array('normal'),

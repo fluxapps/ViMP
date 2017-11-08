@@ -128,15 +128,44 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($header);
 
 		// Noticiation Subject
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT), xvmpConf::F_NOTIFICATION_SUBJECT);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL), xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Noticiation Body
-		$input = new ilTextAreaInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY), xvmpConf::F_NOTIFICATION_BODY);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY . '_info'));
+		$input = new ilTextAreaInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL), xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL . '_info'));
 		$input->setRequired(true);
+		$this->addItem($input);
+
+		// Noticiation Subject
+		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED), xvmpConf::F_NOTIFICATION_SUBJECT_FAILED);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED . '_info'));
+		$input->setRequired(true);
+		$this->addItem($input);
+
+		// Noticiation Body
+		$input = new ilTextAreaInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_FAILED), xvmpConf::F_NOTIFICATION_BODY_FAILED);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_FAILED . '_info'));
+		$input->setRequired(true);
+		$this->addItem($input);
+
+
+		// *** CACHE ***
+		$header = new ilFormSectionHeaderGUI();
+		$header->setTitle($this->pl->confTxt('cache'));
+		$header->setInfo($this->pl->confTxt('cache_info'));
+		$this->addItem($header);
+
+		// Video Cache TTL
+		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_VIDEOS), xvmpConf::F_CACHE_TTL_VIDEOS);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_VIDEOS . '_info'));
+		$this->addItem($input);
+
+		// Category Cache TTL
+		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CATEGORIES), xvmpConf::F_CACHE_TTL_CATEGORIES);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CATEGORIES . '_info'));
 		$this->addItem($input);
 
 

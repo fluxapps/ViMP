@@ -65,6 +65,7 @@ class xvmpMedium extends xvmpObject {
 
 		$response = xvmpRequest::getMedium($id)->getResponseArray()['medium'];
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
+		$response['description'] = strip_tags($response['description']);
 
 		if ($response['status'] == 'legal') { // do not cache transcoding videos, we need to fetch them again to check the status
 			self::cache($key, $response);
@@ -112,6 +113,10 @@ class xvmpMedium extends xvmpObject {
 		if ($uploaded_media = xvmpUploadedMedia::find($mid)) {
 			$uploaded_media->delete();
 		}
+	}
+
+	public static function cache($identifier, $object, $ttl = NULL) {
+		parent::cache($identifier, $object, ($ttl ? $ttl : xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_VIDEOS)));
 	}
 
 	/**

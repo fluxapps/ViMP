@@ -21,7 +21,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 			'no_header' => true
 		),
 		'title' => array(
-			'sort_field' => 'title'
+			'sort_field' => 'title',
+			'width' => 210
 		),
 		'published' => array(
 			'sort_field' => 'published'

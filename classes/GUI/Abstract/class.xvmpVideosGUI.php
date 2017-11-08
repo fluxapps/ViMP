@@ -112,6 +112,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$mid = $_GET['mid'];
 		$visible = $_GET['visible'];
 		xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
+		echo "{\"success\": true}";
 		exit;
 	}
 
@@ -121,6 +122,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	public function removeVideo() {
 		$mid = $_GET['mid'];
 		xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
+		echo "{\"success\": true}";
 		exit;
 	}
 

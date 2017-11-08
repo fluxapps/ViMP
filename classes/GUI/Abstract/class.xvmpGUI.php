@@ -55,7 +55,7 @@ abstract class xvmpGUI {
 	public function addFlushCacheButton () {
 		$button = ilLinkButton::getInstance();
 		$button->setUrl($this->ctrl->getLinkTarget($this,self::CMD_FLUSH_CACHE));
-		$button->setCaption($this->pl->txt('flush_cache'), false);
+		$button->setCaption($this->pl->txt('flush_video_cache'), false);
 		$this->toolbar->addButtonInstance($button);
 	}
 
@@ -63,7 +63,10 @@ abstract class xvmpGUI {
 	 *
 	 */
 	public function flushCache() {
-		xvmpCacheFactory::getInstance()->flush();
+//		xvmpCacheFactory::getInstance()->flush();
+		foreach (xvmpSelectedMedia::getSelected($this->getObjId()) as $selected) {
+			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $selected->getMid());
+		}
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
@@ -107,9 +110,8 @@ abstract class xvmpGUI {
 		$modal = ilModalGUI::getInstance();
 		$modal->setId('xvmp_modal_player');
 		$modal->setType(ilModalGUI::TYPE_LARGE);
-		$modal->setBody('
-			<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_modal"></div>
-			<section></section>');
+		$modal->setHeading('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>');
+		$modal->setBody('<section></section>');
 		return $modal;
 	}
 

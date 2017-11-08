@@ -20,7 +20,8 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 			'no_header' => true
 		),
 		'title' => array(
-			'sort_field' => 'title'
+			'sort_field' => 'title',
+			'width' => 180,
 		),
 		'description' => array(
 			'sort_field' => 'description'

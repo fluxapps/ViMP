@@ -57,14 +57,14 @@ var VimpContent = {
 		}).always(function(response) {
 			response_object = JSON.parse(response);
 			$modal.find('section').html(response_object.html);
-			$modal.find('h4.modal-title').html(response_object.video_title);
+			$modal.find('h4.modal-title').html('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>' + response_object.video_title);
+			$('#xoct_waiter_modal').show();
+
 			$('iframe').load(function() {
 				console.log('iframe loaded');
 				$('#xoct_waiter_modal').hide();
 			});
 		});
-
-
 	}
 
 }

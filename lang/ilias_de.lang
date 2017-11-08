@@ -21,8 +21,16 @@ conf_media_permissions#:#Medienberechtigungen nutzen
 conf_media_permissions_info#:#MISSING
 conf_api_settings#:#API
 conf_general_settings#:#Allgemein
-conf_notification_subject#:#Betreff
-conf_notification_body#:#Nachricht
+conf_notification_subject#:#Betreff (Transk. Erfolgreich)
+conf_notification_body#:#Nachricht (Transk. Erfolgreich)
+conf_notification_subject_failed#:#Betreff (Transk. Fehlgeschlagen)
+conf_notification_body_failed#:#Nachricht (Transk. Fehlgeschlagen)
+conf_cache_ttl_videos#:#Videos (Metadaten)
+conf_cache_ttl_videos_info#:#Time-To-Live in Sekunden: Nach Ablauf dieser Zeit werden Objekte automatisch aus dem Cache entfernt und neu geladen. Bei Eingabe von "0" werden Objekte ausschliesslich manuell aus dem Cache entfernt.
+conf_cache_ttl_categories#:#Kategorien
+conf_cache_ttl_categories_info#:#Time-To-Live in Sekunden: Nach Ablauf dieser Zeit werden Objekte automatisch aus dem Cache entfernt und neu geladen. Bei Eingabe von "0" werden Objekte ausschliesslich manuell aus dem Cache entfernt.
+conf_cache#:#Caching
+conf_cache_info#:#Objekte werden zur Verbesserung der Performanz zwischengespeichert. Der gesamte Cache kann mithilfe der Schaltfläche oben auf dieser Seite geleert werden. Innerhalb von ViMP-Objekten im Magazin können ausserdem die Videos dieser Objekte aus dem Cache entfernt und neu geladen werden.
 msg_success#:#Änderungen erfolgreich gespeichert.
 all#:#Ja, alle
 content#:#Inhalt
@@ -54,7 +62,8 @@ video_uploaded#:#Video erfolgreich hochgeladen.
 form_saved#:#Änderungen erfolgreich gespeichert.
 duration#:#Länge
 author#:#Autor
-flush_cache#:#Cache Leeren
+flush_cache#:#Gesamter Cache Leeren
+flush_video_cache#:#Video-Cache Leeren
 repository_preview#:#Vorschau im Magazin
 no_preview#:#Keine Vorschau
 perm_upload#:#Upload

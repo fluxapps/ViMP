@@ -9,3 +9,13 @@
 	float: left;
 	margin-right: 20px;
 }
+
+div.xvmp_image_container img {
+	background: url('../images/vimp_logo.svg') center no-repeat;
+	background-size: contain;
+}
+
+div.modal-body > section > iframe {
+	background: black url('../images/vimp_logo.svg') center no-repeat;
+	background-size: contain;
+}

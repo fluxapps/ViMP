@@ -23,6 +23,12 @@ conf_api_settings#:#API
 conf_general_settings#:#General
 conf_notification_subject#:#Subject
 conf_notification_body#:#Message
+conf_cache_ttl_videos#:#Videos (Metadata)
+conf_cache_ttl_videos_info#:#Time-To-Live in seconds: after this amount of time, objects will be removed from the cache and reloaded. If entered "0", the objects will only be removed manually.
+conf_cache_ttl_categories#:#Categories
+conf_cache_ttl_categories_info#:#Time-To-Live in seconds: after this amount of time, objects will be removed from the cache and reloaded. If entered "0", the objects will only be removed manually.
+conf_cache#:#Caching
+conf_cache_info#:#Objects are cached to improve performance. Flush the whole cache with the button on top of this form or flush only the video cache inside a ViMP Object.
 msg_success#:#Changes saved successfully.
 all#:#Yes, all
 content#:#Content
@@ -55,6 +61,7 @@ form_saved#:#Changes saved successfully.
 duration#:#Duration
 author#:#Author
 flush_cache#:#Flush Cache
+flush_video_cache#:#Flush Video Cache
 repository_preview#:#Repository Preview
 no_preview#:#No Preview
 perm_upload#:#Upload
