@@ -73,4 +73,29 @@ class xvmp {
 	public static function resetToken() {
 		xvmpConf::set(xvmpConf::F_TOKEN, '');
 	}
+
+
+	public static function lookupRefId($obj_id) {
+		return array_shift(ilObject2::_getAllReferences($obj_id));
+	}
+
+	public static function isLearningProgressActive($obj_id) {
+		$ref_id = self::lookupRefId($obj_id);
+		return (ilObjUserTracking::_enabledLearningProgress() && self::isInCourse($ref_id));
+	}
+
+	public static function isInCourse($ref_id) {
+		global $tree;
+		/**
+		 * @var $tree ilTree
+		 */
+		while (ilObject2::_lookupType($ref_id, true) != 'crs') {
+			if ($ref_id == 1) {
+				return false;
+			}
+			$ref_id = $tree->getParentId($ref_id);
+		}
+
+		return true;
+	}
 }

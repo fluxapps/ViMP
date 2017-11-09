@@ -45,7 +45,6 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	}
 
 
-
 	function getPluginName() {
 		return self::PLUGIN_NAME;
 	}

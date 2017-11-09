@@ -110,7 +110,7 @@ abstract class xvmpGUI {
 		$modal = ilModalGUI::getInstance();
 		$modal->setId('xvmp_modal_player');
 		$modal->setType(ilModalGUI::TYPE_LARGE);
-		$modal->setHeading('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>');
+//		$modal->setHeading('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>');
 		$modal->setBody('<section></section>');
 		return $modal;
 	}
@@ -128,10 +128,64 @@ abstract class xvmpGUI {
 			<p>{$this->pl->txt('author')}: {$video->getCustomAuthor()}</p>
 			<p>{$this->pl->txt('created_at')}: {$video->getCreatedAt('m.d.Y, H:i')}</p>";
 		$response = new stdClass();
-		$response->html = $video->getEmbedCode() . $video_infos;
+//		$response->html = $video->getEmbedCode() . $video_infos;
+		$response->html = $this->getVideoHTML($video) . $video_infos;
 		$response->video_title = $video->getTitle();
+		$progress = xvmpUserProgress::where(array('usr_id' => $this->user->getId(), 'mid' => $mid))->first();
+		if ($progress) {
+			$response->time_ranges = json_decode($progress->getRanges());
+		} else {
+			$response->time_ranges = array();
+		}
 		echo json_encode($response);
 		exit;
 	}
+
+	public function getVideoHTML($video) {
+		if (is_int($video)) {
+			$video = xvmpMedium::find($video);
+		}
+
+		$medium = $video->getMedium();
+		if (is_array($medium)) {
+			$medium = $medium[0];
+		}
+		$template = $this->pl->getTemplate('default/tpl.video.html');
+		$template->setVariable('SOURCE', $medium);
+		$pathinfo = pathinfo($medium);
+		$template->setVariable('TYPE', $pathinfo['extension']);
+		return $template->get();
+	}
+
+
+	/**
+	 * ajax
+	 */
+	public function updateProgress() {
+		global $ilUser;
+		$mid = $_POST['mid'];
+		$ranges = $_POST['time_ranges'];
+		xvmpUserProgress::storeProgress($ilUser->getid(), $mid, $ranges);
+		echo "ok";
+		exit;
+	}
+
+//
+//$sources = array();
+//foreach ($video->getMedium() as $medium) {
+//$pathinfo = pathinfo($medium);
+//$parts = explode('/', $medium);
+//$src = new stdClass();
+//$src->src = $medium;
+//$src->type = 'video/'.$pathinfo['extension'];
+//$src->label = $parts[(count($parts)-2)];
+//$sources[] = '
+//			{
+//				src: "' . $medium . '",
+//				type: "video/'.$pathinfo['extension'] . '",
+//				label: "' . $parts[(count($parts)-2)] . '"
+//			}';
+//}
+//$template->setVariable('SOURCES', implode(',', $sources));
 
 }

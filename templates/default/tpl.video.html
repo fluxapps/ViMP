@@ -1,0 +1,48 @@
+<video id="xvmp_video" class="video-js vjs-default-skin vjs-big-play-centered" data-setup=''>
+	<source src="{SOURCE}" type="video/{TYPE}"/>
+	<!-- BEGIN source -->
+	<!--<source src="{SOURCE}" type="video/{TYPE}" label="{LABEL}" res="480"/>-->
+	<!-- END source -->
+</video>
+<!--<script>-->
+	<!--videojs('video_1').videoJsResolutionSwitcher();-->
+<!--</script>-->
+<script type="text/javascript" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/vendor/video-js-6.4.0/video.min.js"></script>
+<script type="text/javascript" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/js/videojs-resolution-switcher/lib/videojs-resolution-switcher.js"></script>
+<script>
+	videojs('xvmp_video', {
+		"controls": true,
+		"autoplay": false,
+		"preload": "auto",
+		"width": "850px",
+		"height": "590px",
+		"playbackRates": [0.5, 1.0, 1.25, 1.5]
+	}, function () {
+		$('video').on('contextmenu', function(e) {
+			e.preventDefault();
+		});
+	});
+</script>
+<style>
+	.video-js .vjs-current-time { display: block; }
+</style>
+<!--<script>-->
+	<!--videojs('video_1', {-->
+		<!--controls: true,-->
+		<!--plugins: {-->
+			<!--videoJsResolutionSwitcher: {-->
+				<!--default: 'Default',-->
+				<!--dynamicLabel: true-->
+			<!--}-->
+		<!--}-->
+	<!--}, function(){-->
+		<!--var player = this;-->
+		<!--// Add dynamically sources via updateSrc method-->
+		<!--player.updateSrc([{SOURCES}]);-->
+
+		<!--player.on('resolutionchange', function(){-->
+			<!--console.info('Source changed to %s', player.src())-->
+		<!--})-->
+
+	<!--})-->
+<!--</script>-->

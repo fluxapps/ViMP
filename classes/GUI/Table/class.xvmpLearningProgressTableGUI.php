@@ -19,14 +19,6 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 		'thumbnail' => array(
 			'no_header' => true
 		),
-		'relevant' => array(
-			'sort_field' => '',
-			'width' => 10
-		),
-		'required_percentage' => array(
-			'sort_field' => '',
-			'width' => 10
-		),
 		'title' => array(
 			'sort_field' => ''
 		),
@@ -41,7 +33,15 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 		),
 		'created_at' => array(
 			'sort_field' => ''
-		)
+		),
+		'required' => array(
+			'sort_field' => '',
+			'width' => 10
+		),
+		'required_percentage' => array(
+			'sort_field' => '',
+			'width' => 10
+		),
 	);
 
 	/**
@@ -69,6 +69,7 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 
 		$this->parseData();
+		$this->addCommandButton(xvmpLearningProgressGUI::CMD_SAVE, $this->pl->txt('save_settings'));
 	}
 
 	protected function initColumns() {
@@ -89,18 +90,19 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 	protected function fillRow($a_set) {
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
+		/** @var xvmpSelectedMedia $selected_medium */
+		$selected_medium = xvmpSelectedMedia::where(array('obj_id' => $this->parent_obj->getObjId(), 'mid' => $a_set['mid']))->first();
 
-
-//		$transcoding = $a_set['status'] != 'legal';
-//		if ($transcoding) {
-//			$this->tpl->setVariable('VAL_VISIBILITY_DISABLED', 'disabled');
-//		}
 
 		foreach ($this->available_columns as $title => $props)
 		{
 
-			if ($title == 'relevant') {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] == 1 ? 'checked' : '');
+			if ($title == 'required') {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), $selected_medium->getLpIsRequired() == 1 ? 'checked' : '');
+				//			} elseif ($title == 'thumbnail' && $transcoding) {
+				//				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
+			} else if ($title == 'required_percentage') {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), $selected_medium->getLpReqPercentage());
 				//			} elseif ($title == 'thumbnail' && $transcoding) {
 				//				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			} else if ($title == 'duration') {

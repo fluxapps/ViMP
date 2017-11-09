@@ -55,15 +55,20 @@ var VimpContent = {
 				"mid": mid
 			}
 		}).always(function(response) {
+			console.log(response);
 			response_object = JSON.parse(response);
 			$modal.find('section').html(response_object.html);
-			$modal.find('h4.modal-title').html('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>' + response_object.video_title);
+			// $modal.find('h4.modal-title').html('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>' + response_object.video_title);
+			$modal.find('h4.modal-title').html(response_object.video_title);
 			$('#xoct_waiter_modal').show();
+			VimpObserver.init(mid, response_object.time_ranges);
+			console.log(response_object);
 
-			$('iframe').load(function() {
-				console.log('iframe loaded');
-				$('#xoct_waiter_modal').hide();
-			});
+			// $('iframe').load(function() {
+			// 	console.log('iframe loaded');
+			// 	// VimpObserver.init();
+			// 	$('#xoct_waiter_modal').hide();
+			// });
 		});
 	}
 

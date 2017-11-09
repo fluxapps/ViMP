@@ -12,6 +12,8 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 
 	const TAB_ACTIVE = ilObjViMPGUI::TAB_LEARNING_PROGRESS;
 
+	const CMD_SAVE = 'save';
+
 
 	/**
 	 *
@@ -30,8 +32,15 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 		$this->tpl->setContent($xvmpLearningProgressTableGUI->getHTML());
 	}
 
-	public function setRelevance() {
-		$mid = $_GET['mid'];
-		$relevance = $_GET['relevance'];
+	protected function save() {
+		foreach ($_POST['lp_required_percentage'] as $mid => $percentage) {
+			/** @var xvmpSelectedMedia $selected_medium */
+			$selected_medium = xvmpSelectedMedia::where(array('mid' => $mid, 'obj_id' => $this->getObjId()))->first();
+			$selected_medium->setLpReqPercentage($percentage);
+			$selected_medium->setLpIsRequired((int) isset($_POST['lp_required'][$mid]));
+			$selected_medium->update();
+		}
+		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
+		$this->ctrl->redirect($this,self::CMD_STANDARD);
 	}
 }

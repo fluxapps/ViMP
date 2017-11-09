@@ -51,6 +51,24 @@ class xvmpSelectedMedia extends ActiveRecord {
 	 * @db_length           1
 	 */
 	protected $visible = 1;
+
+	/**
+	 * @var int
+	 *
+	 * @db_has_field        true
+	 * @db_fieldtype        integer
+	 * @db_length           1
+	 */
+	protected $lp_is_required = 0;
+
+	/**
+	 * @var int
+	 *
+	 * @db_has_field        true
+	 * @db_fieldtype        integer
+	 * @db_length           8
+	 */
+	protected $lp_req_percentage = 80;
 	/**
 	 * @var int
 	 *
@@ -245,5 +263,38 @@ class xvmpSelectedMedia extends ActiveRecord {
 	public function setSort($sort) {
 		$this->sort = $sort;
 	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getLpIsRequired() {
+		return $this->lp_is_required;
+	}
+
+
+	/**
+	 * @param int $lp_is_required
+	 */
+	public function setLpIsRequired($lp_is_required) {
+		$this->lp_is_required = $lp_is_required;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getLpReqPercentage() {
+		return $this->lp_req_percentage;
+	}
+
+
+	/**
+	 * @param int $lp_req_percentage
+	 */
+	public function setLpReqPercentage($lp_req_percentage) {
+		$this->lp_req_percentage = $lp_req_percentage;
+	}
+
 
 }

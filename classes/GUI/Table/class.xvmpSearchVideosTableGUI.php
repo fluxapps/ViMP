@@ -73,7 +73,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	);
 
 	/**
-	 * @var xvmpSearchVideosGUI
+	 * @var xvmpSearchVideosGUI|ilVimpPageComponentPluginGUI
 	 */
 	protected $parent_obj;
 

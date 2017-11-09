@@ -465,6 +465,8 @@ return array(
     'xvmpUploadVideoFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpUploadVideoFormGUI.php',
     'xvmpUploadedMedia' => $baseDir . '/classes/Model/class.xvmpUploadedMedia.php',
     'xvmpUser' => $baseDir . '/classes/Model/class.xvmpUser.php',
+    'xvmpUserLPStatus' => $baseDir . '/classes/Model/class.xvmpUserLPStatus.php',
+    'xvmpUserProgress' => $baseDir . '/classes/Model/class.xvmpUserProgress.php',
     'xvmpUserRoles' => $baseDir . '/classes/Model/class.xvmpUserRoles.php',
     'xvmpVideosGUI' => $baseDir . '/classes/GUI/Abstract/class.xvmpVideosGUI.php',
 );

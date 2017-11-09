@@ -4,10 +4,12 @@ require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/
 require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/class.xvmpSelectedMedia.php');
 require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/class.xvmpUploadedMedia.php');
 require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/class.xvmpSettings.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/class.xvmpUserProgress.php');
 xvmpConf::updateDB();
 xvmpSelectedMedia::updateDB();
 xvmpUploadedMedia::updateDB();
 xvmpSettings::updateDB();
+xvmpUserProgress::updateDB();
 ?>
 <#2>
 <?php

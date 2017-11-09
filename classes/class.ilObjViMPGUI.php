@@ -181,7 +181,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
 		}
 
-		if (ilObjViMPAccess::hasWriteAccess() && ilObjUserTracking::_enabledLearningProgress()) {
+		if (ilObjViMPAccess::hasWriteAccess() && xvmp::isLearningProgressActive($this->obj_id)) {
 			$this->tabs_gui->addTab(self::TAB_LEARNING_PROGRESS, $this->lng->txt(self::TAB_LEARNING_PROGRESS), $this->ctrl->getLinkTargetByClass(xvmpLearningProgressGUI::class, xvmpLearningProgressGUI::CMD_STANDARD));
 
 		}

@@ -5,13 +5,6 @@
 		</div>
 	</td>
 	<td class="std small">
-		<input id="xvmp_relevant_{VAL_MID}" onclick="VimpLP.setRelevance(event, {VAL_MID});" type="checkbox" {VAL_RELEVANT} {VAL_RELEVANCE_DISABLED}>
-	</td>
-	<td class="std small">
-		<input id="xvmp_percentage_{VAL_MID}" onclick="VimpLP.setPercentage(event, {VAL_MID});" type="number" value="80">
-	</td>
-
-	<td class="std small">
 		{VAL_TITLE}
 	</td>
 	<td class="std small">
@@ -25,5 +18,11 @@
 	</td>
 	<td class="std small">
 		{VAL_CREATED_AT}
+	</td>
+	<td class="std small">
+		<input name="lp_required[{VAL_MID}]" id="xvmp_relevant_{VAL_MID}" value="1" type="checkbox" {VAL_REQUIRED} {VAL_RELEVANCE_DISABLED}>
+	</td>
+	<td class="std small">
+		<input name="lp_required_percentage[{VAL_MID}]" id="xvmp_percentage_{VAL_MID}" type="number" value="{VAL_REQUIRED_PERCENTAGE}">
 	</td>
 </tr>

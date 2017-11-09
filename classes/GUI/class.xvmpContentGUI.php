@@ -22,6 +22,12 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
+		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_observer.js');
+		$this->tpl->addJavaScript($this->pl->getDirectory() . '/vendor/video-js-6.4.0/video.min.js');
+		$this->tpl->addCss($this->pl->getDirectory() . '/vendor/video-js-6.4.0/video-js.min.css');
+		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/videojs-resolution-switcher/lib/videojs-resolution-switcher.js');
+		$this->tpl->addCss($this->pl->getDirectory() . '/js/videojs-resolution-switcher/lib/videojs-resolution-switcher.css');
+
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
 		}
@@ -68,6 +74,8 @@ class xvmpContentGUI extends xvmpGUI {
 			$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
 			$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
 			$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
+			$tpl->setVariable('LABEL_WATCHED', 'watched');
+			$tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid));
 
 			echo $tpl->get();
 			exit;
