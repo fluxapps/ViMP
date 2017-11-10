@@ -152,6 +152,7 @@ abstract class xvmpGUI {
 		}
 		$template = $this->pl->getTemplate('default/tpl.video.html');
 		$template->setVariable('SOURCE', $medium);
+		$template->setVariable('THUMBNAIL', $video->getThumbnail());
 		$pathinfo = pathinfo($medium);
 		$template->setVariable('TYPE', $pathinfo['extension']);
 		return $template->get();
@@ -169,23 +170,5 @@ abstract class xvmpGUI {
 		echo "ok";
 		exit;
 	}
-
-//
-//$sources = array();
-//foreach ($video->getMedium() as $medium) {
-//$pathinfo = pathinfo($medium);
-//$parts = explode('/', $medium);
-//$src = new stdClass();
-//$src->src = $medium;
-//$src->type = 'video/'.$pathinfo['extension'];
-//$src->label = $parts[(count($parts)-2)];
-//$sources[] = '
-//			{
-//				src: "' . $medium . '",
-//				type: "video/'.$pathinfo['extension'] . '",
-//				label: "' . $parts[(count($parts)-2)] . '"
-//			}';
-//}
-//$template->setVariable('SOURCES', implode(',', $sources));
 
 }

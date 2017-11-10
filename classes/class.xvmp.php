@@ -57,6 +57,9 @@ class xvmp {
 	}
 
 
+	/**
+	 * @return mixed
+	 */
 	public static function getToken() {
 //		if (!$token = xvmpConf::getConfig(xvmpConf::F_TOKEN)) {
 			$token = self::loadToken();
@@ -64,27 +67,52 @@ class xvmp {
 		return $token;
 	}
 
+
+	/**
+	 * @return mixed
+	 */
 	public static function loadToken() {
 		$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER),xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))->getResponseArray();
 //		xvmpConf::set(xvmpConf::F_TOKEN, $response['token']);
 		return $response['token'];
 	}
 
+
+	/**
+	 *
+	 */
 	public static function resetToken() {
 		xvmpConf::set(xvmpConf::F_TOKEN, '');
 	}
 
 
+	/**
+	 * @param $obj_id
+	 *
+	 * @return mixed
+	 */
 	public static function lookupRefId($obj_id) {
 		return array_shift(ilObject2::_getAllReferences($obj_id));
 	}
 
+
+	/**
+	 * @param $obj_id
+	 *
+	 * @return bool
+	 */
 	public static function isLearningProgressActive($obj_id) {
 		$ref_id = self::lookupRefId($obj_id);
-		return (ilObjUserTracking::_enabledLearningProgress() && self::isInCourse($ref_id));
+		return (ilObjUserTracking::_enabledLearningProgress() && self::getParentCourseRefId($ref_id));
 	}
 
-	public static function isInCourse($ref_id) {
+
+	/**
+	 * @param $ref_id
+	 *
+	 * @return bool|int
+	 */
+	public static function getParentCourseRefId($ref_id) {
 		global $tree;
 		/**
 		 * @var $tree ilTree
@@ -96,6 +124,24 @@ class xvmp {
 			$ref_id = $tree->getParentId($ref_id);
 		}
 
-		return true;
+		return $ref_id;
+	}
+
+
+	/**
+	 * @param $id
+	 *
+	 * @return array
+	 */
+	public static function getCourseMembers($id, $is_ref_id = true) {
+		$members = array();
+		$ref_id = self::getParentCourseRefId($is_ref_id ? $id : self::lookupRefId($id));
+		if ($ref_id) {
+			global $rbacreview;
+			$crs = new ilObjCourse($ref_id);
+			$member_role = $crs->getDefaultMemberRole();
+			$members = $rbacreview->assignedUsers($member_role);
+		}
+		return $members;
 	}
 }

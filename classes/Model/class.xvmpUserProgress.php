@@ -183,6 +183,9 @@ class xvmpUserProgress extends ActiveRecord {
 	public function store() {
 		$this->calcTotalWatched();
 		parent::store();
+
+		// learning progress
+		xvmpUserLPStatus::updateLPStatuses();
 	}
 
 	protected function calcTotalWatched() {

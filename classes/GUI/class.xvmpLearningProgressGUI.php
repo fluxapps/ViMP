@@ -40,6 +40,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 			$selected_medium->setLpIsRequired((int) isset($_POST['lp_required'][$mid]));
 			$selected_medium->update();
 		}
+		xvmpUserLPStatus::updateLPStatuses($this->getObjId(), false);
 		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
 		$this->ctrl->redirect($this,self::CMD_STANDARD);
 	}

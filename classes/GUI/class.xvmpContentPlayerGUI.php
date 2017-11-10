@@ -47,7 +47,7 @@ class xvmpContentPlayerGUI {
 		$video = xvmpMedium::find($mid);
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
-		$player_tpl->setVariable('VIDEO', $video->getEmbedCode());
+		$player_tpl->setVariable('VIDEO', $this->parent_gui->getVideoHTML($video));
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', $video->getDescription());
 		$player_tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
@@ -85,6 +85,14 @@ class xvmpContentPlayerGUI {
 
 		$player_tpl->setVariable('VIDEO_LIST', $tiles_tpl->get());
 
+		$progress = xvmpUserProgress::where(array('usr_id' => $this->user->getId(), 'mid' => $mid))->first();
+		if ($progress) {
+			$time_ranges = $progress->getRanges();
+		} else {
+			$time_ranges = '[]';
+		}
+
+		$this->tpl->addOnLoadCode('VimpObserver.init(' . $mid  . ', ' . $time_ranges . ');');
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
 		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
 		$this->tpl->addOnLoadCode("VimpContent.template = 'tiles';");

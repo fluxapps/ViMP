@@ -1,4 +1,4 @@
-<video id="xvmp_video" class="video-js vjs-default-skin vjs-big-play-centered" data-setup=''>
+<video width="640" height="264" id="xvmp_video" class="video-js vjs-default-skin vjs-big-play-centered vjs-4-3" poster="{THUMBNAIL}" data-setup=''>
 	<source src="{SOURCE}" type="video/{TYPE}"/>
 	<!-- BEGIN source -->
 	<!--<source src="{SOURCE}" type="video/{TYPE}" label="{LABEL}" res="480"/>-->
@@ -14,8 +14,9 @@
 		"controls": true,
 		"autoplay": false,
 		"preload": "auto",
-		"width": "850px",
-		"height": "590px",
+		"fluid": true,
+//		"width": "850px",
+//		"height": "590px",
 		"playbackRates": [0.5, 1.0, 1.25, 1.5]
 	}, function () {
 		$('video').on('contextmenu', function(e) {

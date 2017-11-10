@@ -176,6 +176,10 @@ class xvmpUserLPStatus extends ActiveRecord {
 	 * @param int $status
 	 */
 	public function setStatus($status) {
+		if ($status != $this->status) {
+			$this->old_status = $this->status;
+			$this->status_changed = true;
+		}
 		$this->status = $status;
 	}
 
@@ -259,7 +263,7 @@ class xvmpUserLPStatus extends ActiveRecord {
 		$progress = false;
 		$complete = true;
 		/** @var xvmpSelectedMedia $selected_medium */
-		foreach (xvmpSelectedMedia::where(array('obj_id' => $this->getObjId(), 'usr_id' => $this->getUserId(), 'lp_is_required' => 1))->get() as $selected_medium) {
+		foreach (xvmpSelectedMedia::where(array('obj_id' => $this->getObjId(), 'lp_is_required' => 1, 'visible' => 1))->get() as $selected_medium) {
 			$reached_percentage = xvmpUserProgress::calcPercentage($this->getUserId(), $selected_medium->getMid());
 			if ($reached_percentage > 0) {
 				$progress = true;
@@ -280,13 +284,18 @@ class xvmpUserLPStatus extends ActiveRecord {
 		}
 	}
 
+
 	/**
-	 * @param $obj_id
+	 * @param int  $id
+	 * @param bool $is_ref_id
 	 */
-	public static function updateLPStatuses($obj_id) {
-		foreach (ilAttendanceListPlugin::getInstance()->getMembers(ilAttendanceListPlugin::lookupRefId($attendancelist_id)) as $user_id) {
-			$user_status = self::getInstance($user_id, $attendancelist_id);
-			$user_status->updateLPStatus();
+	public static function updateLPStatuses($id = 0, $is_ref_id = true) {
+		if (!$id) {
+			$id = $_GET['ref_id'];
+		}
+		foreach (xvmp::getCourseMembers($id, $is_ref_id) as $user_id) {
+			$user_status = self::getInstance($user_id, $is_ref_id ? ilObject2::_lookupObjectId($id) : $id);
+			$user_status->updateStatus();
 			$user_status->store();
 		}
 	}

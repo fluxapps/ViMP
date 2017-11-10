@@ -25,8 +25,6 @@ class xvmpContentGUI extends xvmpGUI {
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_observer.js');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/vendor/video-js-6.4.0/video.min.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/vendor/video-js-6.4.0/video-js.min.css');
-		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/videojs-resolution-switcher/lib/videojs-resolution-switcher.js');
-		$this->tpl->addCss($this->pl->getDirectory() . '/js/videojs-resolution-switcher/lib/videojs-resolution-switcher.css');
 
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
