@@ -479,6 +479,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpUserLPStatus' => __DIR__ . '/../..' . '/classes/Model/class.xvmpUserLPStatus.php',
         'xvmpUserProgress' => __DIR__ . '/../..' . '/classes/Model/class.xvmpUserProgress.php',
         'xvmpUserRoles' => __DIR__ . '/../..' . '/classes/Model/class.xvmpUserRoles.php',
+        'xvmpVideoPlayer' => __DIR__ . '/../..' . '/classes/Util/class.xvmpVideoPlayer.php',
         'xvmpVideosGUI' => __DIR__ . '/../..' . '/classes/GUI/Abstract/class.xvmpVideosGUI.php',
     );
 

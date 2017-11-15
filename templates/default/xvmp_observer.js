@@ -14,7 +14,7 @@ var VimpObserver = {
 
 	observe: function() {
 		VimpObserver.send_request = false;
-		var played = $('#xvmp_video').find('video')[0].played;
+		var played = $('video')[0].played;
 		var i = 0;
 		var ranges = [];
 		while (i < played.length) {

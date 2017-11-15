@@ -47,7 +47,8 @@ class xvmpContentPlayerGUI {
 		$video = xvmpMedium::find($mid);
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
-		$player_tpl->setVariable('VIDEO', $this->parent_gui->getVideoHTML($video));
+		$video_player = new xvmpVideoPlayer($video);
+		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', $video->getDescription());
 		$player_tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
