@@ -109,6 +109,10 @@ class xvmpSelectedMedia extends ActiveRecord {
 		$sort = self::where(array('obj_id' => $obj_id))->count() + 1;
 		$set->setSort($sort * 10);
 		$set->create();
+
+		// this will add the video to the cache
+		xvmpMedium::getObjectAsArray($mid);
+
 		return true;
 	}
 
@@ -126,6 +130,10 @@ class xvmpSelectedMedia extends ActiveRecord {
 
 		$set->delete();
 		self::reSort($obj_id);
+
+		// remove from cache
+		xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
+
 		return true;
 	}
 

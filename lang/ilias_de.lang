@@ -78,3 +78,8 @@ to#:#Bis
 category#:#Kategorie
 views#:#Aufrufe
 save_settings#:#Einstellungen Speichern
+exception_message#:#Es konnte keine Verbindung mit dem ViMP-Server hergestellt werden
+not_available#:#Nicht verfügbar
+not_available_description#:#Dieses Video wurde in ViMP nicht gefunden. Möglicherweise wurde es von der Plattform entfernt.
+confirm_delete_text#:#Achtung: Durch diese Aktion wird das Video endgültig in ViMP gelöscht und kann in keinem ILIAS-Objekt mehr verwendet werden. Sind Sie sicher, dass Sie das Video löschen möchten?
+video_deleted#:#Video erfolgreich gelöscht.

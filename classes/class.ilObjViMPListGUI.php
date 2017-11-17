@@ -107,8 +107,14 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 		$selected_videos = xvmpSelectedMedia::where(array('obj_id' => $this->obj_id))->orderBy('sort')->limit(0, $count)->get();
 		$preview = '';
 		foreach ($selected_videos as $selected) {
-			$video = xvmpMedium::getObjectAsArray($selected->getMid());
-			$preview .= '<img style="margin-right:10px;" height=108px width=170px src="' . $video['thumbnail'] . "&size=170x108" . '">';
+			try {
+				$video = xvmpMedium::getObjectAsArray($selected->getMid());
+				$preview .= '<img style="margin-right:10px;" height=108px width=170px src="' . $video['thumbnail'] . "&size=170x108" . '">';
+			} catch (xvmpException $e) {
+//				if ($e->getCode() == 404) {
+//					return $this->getVideoPreview($count + 1);
+//				}
+			}
 		}
 		return $preview;
 	}

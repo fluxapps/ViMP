@@ -10,6 +10,21 @@ use Detection\MobileDetect;
  */
 class xvmpMedium extends xvmpObject {
 
+	public static function find($id) {
+		try {
+			return parent::find($id);
+		} catch (xvmpException $e) {
+			if ($e->getCode() == 404) {
+				$deleted = new xvmpDeletedMedium();
+				$deleted->setMid($id);
+				return $deleted;
+			} else {
+				throw $e;
+			}
+		}
+	}
+
+
 	public static function getUserMedia($ilObjUser = null, $filter = array()) {
 		if (!$ilObjUser) {
 			global $ilUser;
@@ -36,7 +51,13 @@ class xvmpMedium extends xvmpObject {
 			try {
 				$item = self::getObjectAsArray($rec->getMid());
 			} catch (xvmpException $e) {
-				continue;
+				if ($e->getCode() == 404) {
+					$deleted = new xvmpDeletedMedium();
+					$deleted->setMid($rec->getMid());
+					$item = $deleted->__toArray();
+				} else {
+					throw $e;
+				}
 			}
 			$item['visible'] = $rec->getVisible();
 			$videos[] = $item;
@@ -64,6 +85,8 @@ class xvmpMedium extends xvmpObject {
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
 
 		$response = xvmpRequest::getMedium($id)->getResponseArray()['medium'];
+
+
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
 		$response['description'] = strip_tags($response['description']);
 
@@ -113,6 +136,7 @@ class xvmpMedium extends xvmpObject {
 		if ($uploaded_media = xvmpUploadedMedia::find($mid)) {
 			$uploaded_media->delete();
 		}
+		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $mid);
 	}
 
 	public static function cache($identifier, $object, $ttl = NULL) {

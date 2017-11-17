@@ -449,6 +449,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpCurl' => __DIR__ . '/../..' . '/classes/Request/class.xvmpCurl.php',
         'xvmpCurlError' => __DIR__ . '/../..' . '/classes/Request/class.xvmpCurlError.php',
         'xvmpCurlLog' => __DIR__ . '/../..' . '/classes/Util/class.xvmpCurlLog.php',
+        'xvmpDeletedMedium' => __DIR__ . '/../..' . '/classes/Model/class.xvmpDeletedMedium.php',
         'xvmpEditVideoFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpEditVideoFormGUI.php',
         'xvmpEventLog' => __DIR__ . '/../..' . '/classes/Model/class.xvmpEventLog.php',
         'xvmpException' => __DIR__ . '/../..' . '/classes/Exception/class.xvmpException.php',

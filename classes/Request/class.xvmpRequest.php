@@ -30,6 +30,7 @@ class xvmpRequest {
 	 */
 	public static function version() {
 		$xvmpCurl = new xvmpCurl(self::VERSION);
+		$xvmpCurl->setTimeoutMS(10000);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}

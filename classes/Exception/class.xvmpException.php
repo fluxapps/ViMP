@@ -34,12 +34,9 @@ class xvmpException extends Exception {
 	 * @param string $additional_message
 	 */
 	public function __construct($code, $additional_message = '') {
-		$message = '';
-		if (isset(self::$messages[$code])) {
-			$message = self::$messages[$code];
-		}
+		$message = ilViMPPlugin::getInstance()->txt("exception_message");
 		if ($additional_message) {
-			$message .= ': ' . $additional_message;
+			$message .= ' (Code ' . $code . '): "' . $additional_message . '"';
 		}
 		parent::__construct($message, $code);
 	}

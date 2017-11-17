@@ -438,6 +438,7 @@ return array(
     'xvmpCurl' => $baseDir . '/classes/Request/class.xvmpCurl.php',
     'xvmpCurlError' => $baseDir . '/classes/Request/class.xvmpCurlError.php',
     'xvmpCurlLog' => $baseDir . '/classes/Util/class.xvmpCurlLog.php',
+    'xvmpDeletedMedium' => $baseDir . '/classes/Model/class.xvmpDeletedMedium.php',
     'xvmpEditVideoFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpEditVideoFormGUI.php',
     'xvmpEventLog' => $baseDir . '/classes/Model/class.xvmpEventLog.php',
     'xvmpException' => $baseDir . '/classes/Exception/class.xvmpException.php',

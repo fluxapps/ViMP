@@ -22,6 +22,12 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
+//		try {
+			xvmpRequest::version();
+//		} catch (xvmpException $e) {
+//
+//		}
+
 		xvmpVideoPlayer::loadVideoJSAndCSS(true);
 
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
@@ -61,18 +67,21 @@ class xvmpContentGUI extends xvmpGUI {
 
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
-			$tpl->setVariable('LABEL_TITLE', $this->pl->txt('title'));
 			$tpl->setVariable('TITLE', $video->getTitle());
-			$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt('description'));
 			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription()));
-			$tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
-			$tpl->setVariable('DURATION', $video->getDurationFormatted());
-			$tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
-			$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
-			$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
-			$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
-			$tpl->setVariable('LABEL_WATCHED', 'watched');
-			$tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid));
+
+			if (!$video instanceof xvmpDeletedMedium) {
+				$tpl->setVariable('LABEL_TITLE', $this->pl->txt('title') . ':');
+				$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt('description') . ':');
+				$tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration') . ':');
+				$tpl->setVariable('DURATION', $video->getDurationFormatted());
+				$tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author') . ':');
+				$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
+				$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at') . ':');
+				$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
+				$tpl->setVariable('LABEL_WATCHED', 'watched' . ':');
+				$tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
+			}
 
 			echo $tpl->get();
 			exit;

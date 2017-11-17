@@ -83,6 +83,10 @@ class xvmpCurl {
 			}
 		}
 
+		if ($this->getTimeoutMS()) {
+			curl_setopt($ch, CURLOPT_TIMEOUT_MS, $this->getTimeoutMS());
+		}
+
 		curl_setopt($ch, CURLOPT_URL, $this->getUrl());
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->getRequestType());
 
@@ -132,6 +136,11 @@ class xvmpCurl {
 					throw new xvmpException(xvmpException::API_CALL_STATUS_500, $error_msg);
 					break;
 			}
+		}
+
+		if (($this->getResponseStatus() == 0) && $this->getResponseError()->getErrorNr()) {
+			$error = $this->getResponseError();
+			throw new xvmpException(xvmpException::API_CALL_STATUS_500, $error->getMessage());
 		}
 		//		curl_close($ch);
 	}
@@ -289,6 +298,26 @@ class xvmpCurl {
 	 * @var
 	 */
 	protected $files = array();
+	/**
+	 * @var integer
+	 */
+	protected $timeout_MS;
+
+
+	/**
+	 * @return int
+	 */
+	public function getTimeoutMS() {
+		return $this->timeout_MS;
+	}
+
+
+	/**
+	 * @param int $timeout_MS
+	 */
+	public function setTimeoutMS($timeout_MS) {
+		$this->timeout_MS = $timeout_MS;
+	}
 
 
 	/**

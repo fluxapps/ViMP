@@ -44,20 +44,30 @@ class xvmpContentPlayerGUI {
 
 	public function show() {
 		$mid = $_GET['mid'] ? $_GET['mid'] : xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort')->first()->getMid();
-		$video = xvmpMedium::find($mid);
+
+		try {
+			$video = xvmpMedium::find($mid);
+		} catch (xvmpException $e) {
+			if ($e->getCode() != 404) {
+				throw $e;
+			}
+			
+		}
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
 		$video_player = new xvmpVideoPlayer($video);
 		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', $video->getDescription());
-		$player_tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
-		$player_tpl->setVariable('DURATION', strip_tags($video->getDurationFormatted()));
-		$player_tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
-		$player_tpl->setVariable('AUTHOR', $video->getCustomAuthor());
-		$player_tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
-		$player_tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
 
+		if (!$video instanceof xvmpDeletedMedium) {
+			$player_tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
+			$player_tpl->setVariable('DURATION', strip_tags($video->getDurationFormatted()));
+			$player_tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
+			$player_tpl->setVariable('AUTHOR', $video->getCustomAuthor());
+			$player_tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
+			$player_tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
+		}
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
 		$selected_media = xvmpSelectedMedia::getSelected($this->parent_gui->getObjId(), true);

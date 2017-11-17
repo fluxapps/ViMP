@@ -104,7 +104,7 @@ class xvmpCurlError {
 	 * @return string
 	 */
 	public function getMessage() {
-		return self::$error_codes[$this->getErrorNr()] . ': ' . $this->getErrorText();
+		return $this->getErrorText() . ' (' . self::$error_codes[$this->getErrorNr()] . ')';
 	}
 
 

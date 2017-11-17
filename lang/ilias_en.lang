@@ -76,3 +76,8 @@ to#:#To
 category#:#Category
 views#:#Views
 save_settings#:#Save Settings
+exception_message#:#A connection with the ViMP server could not be established
+not_available#:#Not Available
+not_available_description#:#This video was not found in ViMP, it may have been deleted from the platform.
+confirm_delete_text#:#Warning: this action will delete the video in ViMP and make the video unavailable in every ILIAS object using it. Are you sure that you want to delete this video?
+video_deleted#:#Video deleted successfully.
