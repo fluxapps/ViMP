@@ -59,13 +59,12 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	public function updateVideo() {
 		$xvmpEditVideoFormGUI = new xvmpEditVideoFormGUI($this, $_POST['mid']);
 		$xvmpEditVideoFormGUI->setValuesByPost();
-		if (!$xvmpEditVideoFormGUI->saveForm()) {
-			ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
-			$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
+		if ($xvmpEditVideoFormGUI->saveForm()) {
+			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
+			$this->ctrl->redirect($this, self::CMD_EDIT_VIDEO);
 		}
-		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-		$this->ctrl->redirect($this, self::CMD_EDIT_VIDEO);
-
+		ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
+		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
 	/**

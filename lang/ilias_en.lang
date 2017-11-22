@@ -1,28 +1,35 @@
 conf_object_title#:#Object Title in Repository
-conf_object_title_info#:#
+conf_object_title_info#:#This term will be used when creating a new object in the repository.
 conf_api_key#:#API Key
-conf_api_key_info#:#
+conf_api_key_info#:#An API key can be generated in the ViMP backend configuration.
 conf_api_user#:#API User
-conf_api_user_info#:#
+conf_api_user_info#:#The API user must exist in ViMP and must be authorized to upload, edit and delete videos.
 conf_api_password#:#API Password
-conf_api_password_info#:#
+conf_api_password_info#:#Password of the above user.
 conf_api_url#:#API URL
-conf_api_url_info#:#
+conf_api_url_info#:#Base URL of the ViMP API. E.g.: https://my-vimp.com/api
 conf_user_mapping_ext#:#User Mapping (external users)
-conf_user_mapping_ext_info#:#
+conf_user_mapping_ext_info#:#The formula, with which external ILIAS users are found or created in ViMP. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_user_mapping_local#:#User Mapping (local users)
-conf_user_mapping_local_info#:#
+conf_user_mapping_local_info#:#The formula, with which local ILIAS users are found or created in ViMP. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_allow_public_upload#:#Permission „Upload“ can set Videos public
-conf_allow_public_upload_info#:#
-conf_required_metadata#:#Required Metadata
-conf_required_metadata_info#:#
-copyright#:#Copyright
+conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Private".
+conf_form_fields#:#Additional Form Fields
+conf_form_fields_info#:#Textfield 1: Field ID<br>Textfield 2: Field Title<br>Checkbox 1: Required<br>Checkbox 2: Fill field automatically with username
+conf_filter_fields#:#Additional Table Filters
+conf_filter_fields_info#:#Textfield 1: Field ID<br>Textfield 2: Field Title
 conf_media_permissions#:#Use Media Permissions
-conf_media_permissions_info#:#MISSING
+conf_media_permissions_info#:#Defines if and which media permissions can be set when uploading or editing a video.
 conf_api_settings#:#API
 conf_general_settings#:#General
-conf_notification_subject#:#Subject
-conf_notification_body#:#Message
+conf_notification_subject#:#Subject (transcoding successful)
+conf_notification_subject_info#:#Subject of the email sent when a video has been transcoded successfully.
+conf_notification_body#:#Message (transcoding successful)
+conf_notification_body_info#:#Content of the email sent when a video has been transcoded successfully.
+conf_notification_subject_failed#:#Subject (transcoding failed)
+conf_notification_subject_failed_info#:#Subject of the email sent when an error occured during transcoding.
+conf_notification_body_failed#:#Message (transcoding failed)
+conf_notification_body_failed_info#:#Content of the email sent when an error occured during transcoding.
 conf_cache_ttl_videos#:#Videos (Metadata)
 conf_cache_ttl_videos_info#:#Time-To-Live in seconds: after this amount of time, objects will be removed from the cache and reloaded. If entered "0", the objects will only be removed manually.
 conf_cache_ttl_categories#:#Categories
@@ -30,6 +37,7 @@ conf_cache_ttl_categories_info#:#Time-To-Live in seconds: after this amount of t
 conf_cache#:#Caching
 conf_cache_info#:#Objects are cached to improve performance. Flush the whole cache with the button on top of this form or flush only the video cache inside a ViMP Object.
 msg_success#:#Changes saved successfully.
+selection#:#Selection
 all#:#Yes, all
 content#:#Content
 info_short#:#Info
@@ -55,7 +63,9 @@ tags#:#Tags
 private#:#Private
 layout#:#Layout
 notification#:#Notification
+notification_info#:#You will receive an email notification when the video is transcoded.
 add_automatically#:#Add Automatically
+add_automatically_info#:#The video will be automatically added to this video container.
 video_uploaded#:#Video uploaded successfully.
 form_saved#:#Changes saved successfully.
 duration#:#Duration
@@ -81,3 +91,8 @@ not_available#:#Not Available
 not_available_description#:#This video was not found in ViMP, it may have been deleted from the platform.
 confirm_delete_text#:#Warning: this action will delete the video in ViMP and make the video unavailable in every ILIAS object using it. Are you sure that you want to delete this video?
 video_deleted#:#Video deleted successfully.
+media_permissions#:#Media Permissions
+upload_select#:#Select file
+upload_clear#:#Reset
+supported_filetypes#:#Supported Filetypes
+watched#:#Watched

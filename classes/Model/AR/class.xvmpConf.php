@@ -22,7 +22,6 @@ class xvmpConf extends ActiveRecord {
 	const F_USER_MAPPING_EXTERNAL = 'user_mapping_ext';
 	const F_USER_MAPPING_LOCAL = 'user_mapping_local';
 	const F_ALLOW_PUBLIC_UPLOAD = 'allow_public_upload';
-	const F_REQUIRED_METADATA = 'required_metadata';
 	const F_MEDIA_PERMISSIONS = 'media_permissions';
 	const F_MEDIA_PERMISSIONS_SELECTION = 'media_permissions_selection';
 	const F_TOKEN = 'token';
@@ -32,6 +31,18 @@ class xvmpConf extends ActiveRecord {
 	const F_NOTIFICATION_BODY_FAILED = 'notification_body_failed';
 	const F_CACHE_TTL_VIDEOS = 'cache_ttl_videos';
 	const F_CACHE_TTL_CATEGORIES = 'cache_ttl_categories';
+	const F_FILTER_FIELDS = 'filter_fields';
+	const F_FILTER_FIELD_ID = 'filter_id';
+	const F_FILTER_FIELD_TITLE = 'filter_title';
+	const F_FORM_FIELDS = 'form_fields';
+	const F_FORM_FIELD_ID = 'field_id';
+	const F_FORM_FIELD_TITLE = 'field_title';
+	const F_FORM_FIELD_REQUIRED = 'required';
+	const F_FORM_FIELD_FILL_USER_DATA = 'fill_user_data';
+
+	const MEDIA_PERMISSION_OFF = 0;
+	const MEDIA_PERMISSION_ON = 1;
+	const MEDIA_PERMISSION_SELECTION = 2;
 
 	/**
 	 * @var array
@@ -80,7 +91,7 @@ class xvmpConf extends ActiveRecord {
 				$obj = new self();
 				$obj->setName($name);
 			}
-			self::$cache[$name] = json_decode($obj->getValue());
+			self::$cache[$name] = json_decode($obj->getValue(), true);
 			self::$cache_loaded[$name] = true;
 		}
 

@@ -125,9 +125,6 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		$filter_item = new ilTextInputGUI($this->pl->txt('username'), 'filterbyuser');
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilTextInputGUI($this->pl->txt('copyright'), 'filterbycopyright');
-		$this->addAndReadFilterItem($filter_item);
-
 		$filter_item = new ilMultiSelectInputGUI($this->pl->txt('category'), 'filterbycategory');
 		$categories = xvmpCategory::getAll();
 		$options = array();
@@ -150,13 +147,17 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 		$this->addAndReadFilterItem($filter_item);
 
-
 		$filter_item = new ilTextInputGUI($this->pl->txt('duration'), 'filterbyduration');
 		$this->addAndReadFilterItem($filter_item);
 
-
 		$filter_item = new ilTextInputGUI($this->pl->txt('views'), 'filterbyviews');
 		$this->addAndReadFilterItem($filter_item);
+
+		// custom filters
+		foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $field) {
+			$filter_item = new ilTextInputGUI($field[xvmpConf::F_FILTER_FIELD_TITLE], $field[xvmpConf::F_FILTER_FIELD_ID]);
+			$this->addAndReadFilterItem($filter_item);
+		}
 	}
 
 

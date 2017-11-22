@@ -1,30 +1,35 @@
 conf_object_title#:#Objektbezeichnung im Magazin
-conf_object_title_info#:#
+conf_object_title_info#:#Diese Bezeichnung wird beim Erstellen eines neuen Objektes im Magazin verwendet.
 conf_api_key#:#API-Key
-conf_api_key_info#:#
+conf_api_key_info#:#Ein API-Key kann in ViMP im Backend unter dem Punkt "API-Keys" generiert werden.
 conf_api_user#:#API-Benutzername
-conf_api_user_info#:#
+conf_api_user_info#:#Der API-Benutzer muss in ViMP existieren und dort über genügend Rechte verfügen, um neue Videos hochzuladen und beliebige Videos zu editieren und zu löschen.
 conf_api_password#:#API-Passwort
-conf_api_password_info#:#
+conf_api_password_info#:#Passwort des obigen Benutzers.
 conf_api_url#:#API-URL
-conf_api_url_info#:#
+conf_api_url_info#:#Basis Adresse der API. Z.B.: https://my-vimp.com/api
 conf_user_mapping_ext#:#User­Mapping (externe Benutzer)
-conf_user_mapping_ext_info#:#
+conf_user_mapping_ext_info#:#Nach dieser Formel werden externe ILIAS-Benutzer in ViMP gefunden, bzw. erstellt. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
 conf_user_mapping_local#:#User­Mapping (lokale Benutzer)
-conf_user_mapping_local_info#:#
+conf_user_mapping_local_info#:#Nach dieser Formel werden lokale ILIAS-Benutzer in ViMP gefunden, bzw. erstellt. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
 conf_allow_public_upload#:#Recht „Upload“ darf Videos öffentlich schalten
-conf_allow_public_upload_info#:#
-conf_required_metadata#:#Obligatorische Metadaten
-conf_required_metadata_info#:#
-conf_copyright#:#Copyright
+conf_allow_public_upload_info#:#Wenn aktiviert: Benutzer mit dem Recht "Upload" dürfen beim Hochladen eines Videos auswählen, ob das Video den Status "Öffentlich" oder "Privat" hat. Ansonsten wird automatisch der Status "Privat" gesetzt.
+conf_form_fields#:#Zusätzliche Formular-Felder
+conf_form_fields_info#:#Textfeld 1: Feld-ID<br>Textfeld 2: Feld-Bezeichnung<br>Checkbox 1: Pflichtfeld<br>Checkbox 2: Feld automatisch mit Benutzernamen füllen
+conf_filter_fields#:#Zusätzliche Tabellen-Filter
+conf_filter_fields_info#:#Textfeld 1: Feld-ID<br>Textfeld 2: Feld-Bezeichnung
 conf_media_permissions#:#Medienberechtigungen nutzen
-conf_media_permissions_info#:#MISSING
+conf_media_permissions_info#:#Definiert, ob und welche Medienberechtigungen beim Upload und beim Editieren von Videos gesetzt werden dürfen.
 conf_api_settings#:#API
 conf_general_settings#:#Allgemein
 conf_notification_subject#:#Betreff (Transk. Erfolgreich)
+conf_notification_subject_info#:#Betreff der Email, welche nach erfolgreicher Transkodierung an den Benutzer verschickt wird.
 conf_notification_body#:#Nachricht (Transk. Erfolgreich)
+conf_notification_body_info#:#Inhalt der Email, welche nach erfolgreicher Transkodierung an den Benutzer verschickt wird.
 conf_notification_subject_failed#:#Betreff (Transk. Fehlgeschlagen)
+conf_notification_subject_failed_info#:#Betreff der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird.
 conf_notification_body_failed#:#Nachricht (Transk. Fehlgeschlagen)
+conf_notification_body_failed_info#:#Inhalt der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird.
 conf_cache_ttl_videos#:#Videos (Metadaten)
 conf_cache_ttl_videos_info#:#Time-To-Live in Sekunden: Nach Ablauf dieser Zeit werden Objekte automatisch aus dem Cache entfernt und neu geladen. Bei Eingabe von "0" werden Objekte ausschliesslich manuell aus dem Cache entfernt.
 conf_cache_ttl_categories#:#Kategorien
@@ -32,6 +37,7 @@ conf_cache_ttl_categories_info#:#Time-To-Live in Sekunden: Nach Ablauf dieser Ze
 conf_cache#:#Caching
 conf_cache_info#:#Objekte werden zur Verbesserung der Performanz zwischengespeichert. Der gesamte Cache kann mithilfe der Schaltfläche oben auf dieser Seite geleert werden. Innerhalb von ViMP-Objekten im Magazin können ausserdem die Videos dieser Objekte aus dem Cache entfernt und neu geladen werden.
 msg_success#:#Änderungen erfolgreich gespeichert.
+selection#:#Auswahl
 all#:#Ja, alle
 content#:#Inhalt
 info_short#:#Info
@@ -57,7 +63,9 @@ tags#:#Tags
 private#:#Privat
 layout#:#Darstellung
 notification#:#Benachrichtigung
+notification_info#:#Sie erhalten nach abgeschlossener Transkodierung des Videos eine Email-Benachrichtigung.
 add_automatically#:#Automatisch Hinzufügen
+add_automatically_info#:#Das Video wird nach dem Upload direkt diesem Video-Container hinzugefügt.
 video_uploaded#:#Video erfolgreich hochgeladen.
 form_saved#:#Änderungen erfolgreich gespeichert.
 duration#:#Länge
@@ -83,3 +91,8 @@ not_available#:#Nicht verfügbar
 not_available_description#:#Dieses Video wurde in ViMP nicht gefunden. Möglicherweise wurde es von der Plattform entfernt.
 confirm_delete_text#:#Achtung: Durch diese Aktion wird das Video endgültig in ViMP gelöscht und kann in keinem ILIAS-Objekt mehr verwendet werden. Sind Sie sicher, dass Sie das Video löschen möchten?
 video_deleted#:#Video erfolgreich gelöscht.
+media_permissions#:#Medienberechtigungen
+upload_select#:#Datei auswählen
+upload_clear#:#Zurücksetzen
+supported_filetypes#:#Unterstützte Dateitypen
+watched#:#Angesehen

@@ -90,28 +90,40 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD . '_info'));
 		$this->addItem($input);
 
-		// Required Metadata
-		$input = new ilMultiSelectInputGUI($this->pl->confTxt(xvmpConf::F_REQUIRED_METADATA), xvmpConf::F_REQUIRED_METADATA);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_REQUIRED_METADATA . '_info'));
-		$options = array(
-			'description' => $this->lng->txt('description'),
-			'author' => $this->lng->txt('author'),
-			'copyright' => $this->pl->txt('copyright'),
-		);
-		$input->setOptions($options);
+		// Form Fields
+		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FORM_FIELDS), xvmpConf::F_FORM_FIELDS);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_FORM_FIELDS . '_info'));
+		$subinput = new ilTextInputGUI('', xvmpConf::F_FORM_FIELD_ID);
+		$input->addInput($subinput);
+		$subinput = new ilTextInputGUI('', xvmpConf::F_FORM_FIELD_TITLE);
+		$input->addInput($subinput);
+		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_REQUIRED);
+		$input->addInput($subinput);
+		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_FILL_USER_DATA);
+		$input->addInput($subinput);
 		$this->addItem($input);
+
+		// Filter Fields
+		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FILTER_FIELDS), xvmpConf::F_FILTER_FIELDS);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_FILTER_FIELDS . '_info'));
+		$subinput = new ilTextInputGUI('', xvmpConf::F_FILTER_FIELD_ID);
+		$input->addInput($subinput);
+		$subinput = new ilTextInputGUI('', xvmpConf::F_FILTER_FIELD_TITLE);
+		$input->addInput($subinput);
+		$this->addItem($input);
+
 
 		// Media Permission
 		$input = new ilRadioGroupInputGUI($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS), xvmpConf::F_MEDIA_PERMISSIONS);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS . '_info'));
 
-		$radio_option = new ilRadioOption($this->lng->txt('no'), 'no');
+		$radio_option = new ilRadioOption($this->lng->txt('no'), xvmpConf::MEDIA_PERMISSION_OFF);
 		$input->addOption($radio_option);
 
-		$radio_option = new ilRadioOption($this->pl->txt('all'), 'all');
+		$radio_option = new ilRadioOption($this->pl->txt('all'), xvmpConf::MEDIA_PERMISSION_ON);
 		$input->addOption($radio_option);
 
-		$radio_option = new ilRadioOption($this->lng->txt('selection'), 'selection');
+		$radio_option = new ilRadioOption($this->pl->txt('selection'), xvmpConf::MEDIA_PERMISSION_SELECTION);
 		$sub_selection = new ilMultiSelectInputGUI('', xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
 		$options = $this->getMediaPermissionOptions();
 		$sub_selection->setOptions($options);

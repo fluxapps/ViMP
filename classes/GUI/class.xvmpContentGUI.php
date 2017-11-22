@@ -79,7 +79,7 @@ class xvmpContentGUI extends xvmpGUI {
 				$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
 				$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at') . ':');
 				$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
-				$tpl->setVariable('LABEL_WATCHED', 'watched' . ':');
+				$tpl->setVariable('LABEL_WATCHED', $this->pl->txt('watched') . ':');
 				$tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
 			}
 

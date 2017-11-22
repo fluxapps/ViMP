@@ -25,10 +25,8 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	 */
 	protected $video;
 
-
 	public function __construct($parent_gui, $mid) {
 		$this->video = xvmpMedium::getObjectAsArray($mid);
-		$this->formatVideo();
 
 		parent::__construct($parent_gui);
 
@@ -37,7 +35,6 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	}
 
 	protected function initForm() {
-		$required_metada = xvmpConf::getConfig(xvmpConf::F_REQUIRED_METADATA);
 
 		// HIDDEN ID
 		$input = new ilHiddenInputGUI('mid');
@@ -50,32 +47,43 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 
 		// DESCRIPTION
 		$input = new ilTextAreaInputGUI($this->pl->txt('description'), 'description');
-		$input->setRequired(in_array('description', $required_metada));
+		$input->setRequired(true);
 		$this->addItem($input);
 
-		// AUTHOR
-		$input = new ilTextInputGUI($this->lng->txt('author'), 'custom_author');
-		$input->setRequired(in_array('author', $required_metada));
-		$this->addItem($input);
-
-		// COPYRIGHT
-		$input = new ilTextInputGUI($this->pl->txt('copyright'), 'copyright');
-		$input->setRequired(in_array('copyright', $required_metada));
-		$this->addItem($input);
+		// custom fields
+		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+			$input = new ilTextInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+			$input->setRequired($field[xvmpConf::F_FORM_FIELD_REQUIRED]);
+			$this->addItem($input);
+		}
 
 		// PUBLISHED (Zugriff)
 		$input = new ilRadioGroupInputGUI($this->pl->txt('published'), 'published');
-		$radio_item = new ilRadioOption($this->pl->txt('private'), 'private');
+		$radio_item = new ilRadioOption($this->pl->txt('private'), xvmpMedium::PUBLISHED_PRIVATE);
 		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->lng->txt('public'), 'public');
+		$radio_item = new ilRadioOption($this->lng->txt('public'), xvmpMedium::PUBLISHED_PUBLIC);
 		$input->addOption($radio_item);
 		$this->addItem($input);
 
 		// MEDIA PERMISSIONS
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
-
-//		if ($media_permissions )
-		// TODO: media permissions
+		if ($media_permissions) {
+			$input = new ilMultiSelectInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), 'mediapermissions');
+			$options = array();
+			if ($media_permissions == xvmpConf::MEDIA_PERMISSION_SELECTION) {
+				$selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
+			}
+			foreach (xvmpUserRoles::getAll() as $role) {
+				if ($selectable_roles && !in_array($role->getId(), $selectable_roles)) {
+					continue;
+				}
+				$options[$role->getId()] = $role->getName();
+			}
+			$input->setOptions($options);
+			if (!empty($options)) {
+				$this->addItem($input);
+			}
+		}
 
 		// CATEGORIES
 		$input = new ilMultiSelectInputGUI($this->lng->txt('categories'), 'categories');
@@ -86,10 +94,12 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 			$options[$category->getId()] = $category->getName();
 		}
 		$input->setOptions($options);
+		$input->setRequired(true);
 		$this->addItem($input);
 
 		// TAGS
 		$input = new ilTextInputGUI($this->pl->txt('tags'), 'tags');
+		$input->setRequired(true);
 		$this->addItem($input);
 
 		$this->addCommandButtons();
@@ -122,25 +132,7 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	}
 
 
-	/**
-	 * some attributes have to be formatted to fill the form correctly
-	 */
-	protected function formatVideo() {
-		foreach (array(array('categories', 'category', 'cid'), array('tags', 'tag', 'tid')) as $labels) {
-			$array = array();
-			if (isset($this->video[$labels[0]][$labels[1]][$labels[2]])) {
-				$this->video[$labels[0]][$labels[1]] = array( $this->video[$labels[0]][$labels[1]] );
-			}
-			foreach ($this->video[$labels[0]][$labels[1]] as $item) {
-				$array[$item[$labels[2]]] = $item['name'];
-			}
-			$this->video[$labels[0]] = $labels[0] == 'tags' ? implode(', ', $array) : $array;
-		}
-	}
-
-
 	function setValuesByArray($a_values, $a_restrict_to_value_keys = false) {
-		$a_values['categories'] = array_keys($a_values['categories']);
 		parent::setValuesByArray($a_values, $a_restrict_to_value_keys);
 	}
 }

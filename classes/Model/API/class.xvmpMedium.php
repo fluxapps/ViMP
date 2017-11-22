@@ -10,6 +10,10 @@ use Detection\MobileDetect;
  */
 class xvmpMedium extends xvmpObject {
 
+	const PUBLISHED_PUBLIC = 0;
+	const PUBLISHED_PRIVATE = 1;
+	const PUBLISHED_HIDDEN = 2;
+
 	public static function find($id) {
 		try {
 			return parent::find($id);
@@ -85,10 +89,7 @@ class xvmpMedium extends xvmpObject {
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
 
 		$response = xvmpRequest::getMedium($id)->getResponseArray()['medium'];
-
-
-		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
-		$response['description'] = strip_tags($response['description']);
+		$response = self::formatResponse($response);
 
 		if ($response['status'] == 'legal') { // do not cache transcoding videos, we need to fetch them again to check the status
 			self::cache($key, $response);
@@ -107,10 +108,13 @@ class xvmpMedium extends xvmpObject {
 			'description' => $this->getDescription(),
 			'categories' => implode(',', $this->getCategories()),
 			'author' => $this->getCustomAuthor(),
-			'tags' => implode(',', $this->getCategories()),
+			'tags' => is_array($this->getTags()) ? implode(',', $this->getTags()) : $this->getTags(),
+			// TODO: mediapermissions
 			'published' => $this->getPublished(),
 		);
-		xvmpRequest::editMedium($this->getId(), $params);
+		$response = xvmpRequest::editMedium($this->getId(), $params);
+		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $this->getMid());
+		self::cache(self::class . '-' . $this->getMid(),$this->__toArray());
 	}
 
 	public static function upload($video, $obj_id, $tmp_id, $add_automatically, $notification) {
@@ -137,6 +141,26 @@ class xvmpMedium extends xvmpObject {
 			$uploaded_media->delete();
 		}
 		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $mid);
+	}
+
+	/**
+	 * some attributes have to be formatted to fill the form correctly
+	 */
+	protected static function formatResponse($response) {
+		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
+		$response['description'] = strip_tags($response['description']);
+
+		foreach (array(array('categories', 'category', 'cid'), array('tags', 'tag', 'tid')) as $labels) {
+			$result = array();
+			if (isset($response[$labels[0]][$labels[1]][$labels[2]])) {
+				$response[$labels[0]][$labels[1]] = array($response[$labels[0]][$labels[1]] );
+			}
+			foreach ($response[$labels[0]][$labels[1]] as $item) {
+				$result[$item[$labels[2]]] = $item['name'];
+			}
+			$response[$labels[0]] = $labels[0] == 'tags' ? implode(', ', $result) : $result;
+		}
+		return $response;
 	}
 
 	public static function cache($identifier, $object, $ttl = NULL) {

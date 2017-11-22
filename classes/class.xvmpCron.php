@@ -94,7 +94,9 @@ class xvmpCron {
 					$this->sendNotification($medium, $uploaded_medium);
 				}
 			} catch (xvmpException $e) {
-				// TODO: if medium not found, delete uploaded_medium
+				if ($e->getCode() == 404) {
+
+				}
 				continue;
 			}
 		}

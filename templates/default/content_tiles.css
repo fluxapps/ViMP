@@ -108,6 +108,10 @@ div.modal-body > section > iframe {
 	background-size: contain;
 }
 
+.xvmp_play_overlay, .xvmp_play_overlay img {
+	display: none;
+}
+
 @media only screen and (max-width : 480px) {
 	/* Smartphone view: 1 tile */
 	.box {

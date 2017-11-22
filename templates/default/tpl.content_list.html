@@ -1,12 +1,17 @@
 <div class="xvmp_image_container">
-	<img width="220px" height="140px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}">
+	<img width="280px" height="160px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}">
+	<div class="xvmp_play_overlay">
+		<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
+		<img class="xvmp_play_icon" width="32px" height="32px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/play.svg">
+	</div>
 </div>
 <div class="xvmp_video_infos">
 	<h2>{TITLE}</h2>
-	<h3>{DESCRIPTION}</h3>
+	<p>{DESCRIPTION}</p>
 	<p><i>{LABEL_DURATION}</i> {DURATION}</p>
 	<p><i>{LABEL_AUTHOR}</i> {AUTHOR}</p>
 	<p><i>{LABEL_CREATED_AT}</i> {CREATED_AT}</p>
+	<p><i>{LABEL_WATCHED}</i> {WATCHED}</p>
 </div>
 <div class="xoctWaiter" id="waiter_{MID}"></div>
 <script type="text/javascript">{JS}</script>

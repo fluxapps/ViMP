@@ -14,6 +14,7 @@ div.xvmp_image_container {
 	height:95px;
 	border-radius:7%;
 	overflow:hidden;
+	background-color: black;
 
 	/* spacing */
 	/*margin-left: 15px;*/
