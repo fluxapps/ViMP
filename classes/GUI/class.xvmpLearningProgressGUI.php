@@ -19,6 +19,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 	 *
 	 */
 	public function executeCommand() {
+		xvmpVideoPlayer::loadVideoJSAndCSS(false);
 		if (!ilObjViMPAccess::hasWriteAccess()) {
 			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
 			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
@@ -29,7 +30,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 
 	protected function index() {
 		$xvmpLearningProgressTableGUI = new xvmpLearningProgressTableGUI($this, self::CMD_STANDARD);
-		$this->tpl->setContent($xvmpLearningProgressTableGUI->getHTML());
+		$this->tpl->setContent($xvmpLearningProgressTableGUI->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
 	protected function save() {

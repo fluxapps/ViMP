@@ -66,6 +66,7 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
 		$this->tpl_global->addOnLoadCode('VimpLP.ajax_base_url = "'.$base_link.'";');
+		$this->tpl_global->addOnLoadCode('VimpContent.ajax_base_url = "'.$base_link.'";');
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 
 		$this->parseData();

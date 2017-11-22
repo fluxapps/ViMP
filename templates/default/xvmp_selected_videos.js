@@ -1,6 +1,6 @@
 var VimpSelected = {
 
-	base_link: String = '',
+	base_link: '',
 
 	init: function (base_link) {
 		VimpSelected.base_link = base_link;

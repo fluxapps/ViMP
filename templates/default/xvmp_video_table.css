@@ -12,16 +12,17 @@ div.xvmp_image_container {
 	/* round corners */
 	width:170px;
 	height:95px;
-	border-radius:7%;
+	border-radius: 12px;
 	overflow:hidden;
 	background-color: black;
-
+	position: relative;
+	text-align: center;
 	/* spacing */
 	/*margin-left: 15px;*/
 	/*margin-right: 25px;*/
 }
 
-div.xvmp_image_container img {
+div.xvmp_image_container img.xvmp_preview_image {
 	background: url('../images/vimp_logo.svg') center no-repeat;
 	background-size: contain;
 }
@@ -33,14 +34,15 @@ div.xvmp_sort_container {
 	align-items: center;
 }
 
-.xvmp_image_container:hover img {
+.xvmp_image_container:hover img.xvmp_preview_image {
 	opacity: 0.5;
 }
 
+
 div.modal-content {
-	width: fit-content;
-	height: fit-content;
-	max-width: 100%;
+	width: 100%;
+	/*height: fit-content;*/
+	max-width: 800px;
 	margin: auto;
 }
 
@@ -51,4 +53,37 @@ div.modal-body > section > iframe {
 
 .xvmp_row_added, .table-striped > tbody > tr:nth-child(odd).xvmp_row_added > td, .table-striped > tbody > tr:nth-child(odd).xvmp_row_added > th {
 	/*background-color: rgba(0, 255, 0, 0.7);*/
+}
+
+/* PLAY OVERLAY */
+.xvmp_play_overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: inherit;
+	width: inherit;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: rgba(0,0,0,.7);
+	vertical-align: middle;
+	display: inline-block;
+	/*background: url('../images/play.svg') center no-repeat;*/
+}
+
+.xvmp_image_container:hover .xvmp_play_overlay, .box:hover .xvmp_play_icon {
+	opacity: 1;
+}
+
+/* this is necessary to center the "play" image */
+.xvmp_pseudo_element {
+	height: 100%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+div.xvmp_image_container img.xvmp_play_icon {
+	vertical-align: middle;
+	display: inline-block;
 }

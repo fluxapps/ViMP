@@ -2,7 +2,7 @@ var VimpSearch = {
 
 	videos: [],
 
-	base_link: String = "",
+	base_link: "",
 
 
 	add: function (event, mid, visible) {

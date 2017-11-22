@@ -1,6 +1,6 @@
 var VimpLP = {
 
-	ajax_base_url: String = '',
+	ajax_base_url: '',
 
 	setRelevance: function (event, mid) {
 		xoctWaiter.show();

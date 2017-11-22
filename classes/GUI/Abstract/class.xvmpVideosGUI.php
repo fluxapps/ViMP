@@ -29,6 +29,8 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 * @param $cmd
 	 */
 	protected function performCommand($cmd) {
+		xvmpVideoPlayer::loadVideoJSAndCSS(false);
+
 		switch ($cmd) {
 			case self::CMD_STANDARD:
 			case self::CMD_SHOW_FILTERED:

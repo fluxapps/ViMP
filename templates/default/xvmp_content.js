@@ -2,9 +2,9 @@ var VimpContent = {
 
 	selected_media: [],
 
-	ajax_base_url: String,
+	ajax_base_url: '',
 
-	template: String,
+	template: '',
 
 	loadTiles: function () {
 		// console.log(this.selected_media);
@@ -55,13 +55,11 @@ var VimpContent = {
 				"mid": mid
 			}
 		}).always(function(response) {
-			console.log(response);
 			response_object = JSON.parse(response);
 			$modal.find('div#xvmp_video_container').html(response_object.html);
 			$modal.find('h4.modal-title').html(response_object.video_title);
 			$('#xoct_waiter_modal').show();
 			VimpObserver.init(mid, response_object.time_ranges);
-			console.log(response_object);
 
 			$modal.on('hidden', function() { // bootstrap 2.3.2
 				$('video')[0].pause();
