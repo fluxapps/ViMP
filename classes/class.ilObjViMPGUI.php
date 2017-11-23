@@ -19,6 +19,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	const TAB_INFO = 'info_short';
 	const TAB_VIDEOS = 'videos';
 	const TAB_LEARNING_PROGRESS = 'learning_progress';
+	const TAB_LOG = 'log';
 	const TAB_SETTINGS = 'settings';
 	const TAB_PERMISSION = 'permissions';
 
@@ -63,6 +64,15 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 						$this->setTabs();
 					}
 					$xvmpGUI = new xvmpSearchVideosGUI($this);
+					$this->ctrl->forwardCommand($xvmpGUI);
+					$this->tpl->show();
+					break;
+				case 'xvmpeventloggui':
+					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
+						$this->setTabs();
+					}
+					$xvmpGUI = new xvmpEventLogGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
 					$this->tpl->show();
 					break;
@@ -184,6 +194,10 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		if (ilObjViMPAccess::hasWriteAccess() && xvmp::isLearningProgressActive($this->obj_id)) {
 			$this->tabs_gui->addTab(self::TAB_LEARNING_PROGRESS, $this->lng->txt(self::TAB_LEARNING_PROGRESS), $this->ctrl->getLinkTargetByClass(xvmpLearningProgressGUI::class, xvmpLearningProgressGUI::CMD_STANDARD));
 
+		}
+
+		if (ilObjViMPAccess::hasWriteAccess()) {
+			$this->tabs_gui->addTab(self::TAB_LOG, $this->pl->txt(self::TAB_LOG), $this->ctrl->getLinkTargetByClass(xvmpEventLogGUI::class, xvmpEventLogGUI::CMD_STANDARD));
 		}
 
 		if (ilObjViMPAccess::hasWriteAccess()) {

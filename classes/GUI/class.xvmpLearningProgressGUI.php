@@ -29,6 +29,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 
 
 	protected function index() {
+		ilUtil::sendInfo($this->pl->txt('hint_learning_progress_gui'));
 		$xvmpLearningProgressTableGUI = new xvmpLearningProgressTableGUI($this, self::CMD_STANDARD);
 		$this->tpl->setContent($xvmpLearningProgressTableGUI->getHTML() . $this->getModalPlayer()->getHTML());
 	}

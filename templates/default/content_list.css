@@ -14,26 +14,54 @@
 	top: 0;
 	left: 0;
 	height: 100%;
+	width: 100%;
 }
 
 .xvmp_image_container {
 	height: 160px;
 	width: 280px;
 	float: left;
-	margin-right: 20px;
 	background-color: black;
 	text-align: center;
+	display: inline;
+	overflow: hidden;
 }
 
 .xvmp_video_infos {
-	float: left;
+	position: absolute;
+	left: 300px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	word-break: break-all;
+	word-wrap: break-word;
+	display: inline;
+	width: auto;
+}
+
+.xvmp_video_infos h2 {
+	margin-top: 8px;
+	margin-bottom: 3px;
 }
 
 .xvmp_video_infos p {
-	margin-top: 3px;
-	margin-bottom: 3px;
+	margin-top: 1px;
+	margin-bottom: 1px;
 	color: black;
 }
+
+.xvmp_video_infos h2, .xvmp_video_infos p {
+	/*display: inline;*/
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
+	word-break: break-all;
+	word-wrap: break-word;
+	width: auto;
+	float: left;
+	clear: both;
+}
+
 
 /* PLAY OVERLAY */
 .xvmp_play_overlay {
@@ -78,4 +106,29 @@ div.xvmp_image_container img.xvmp_preview_image {
 div.modal-body > section > iframe {
 	background: black url('../images/vimp_logo.svg') center no-repeat;
 	background-size: contain;
+}
+
+@media only screen and (max-width : 650px) {
+	/* Tablet view: 2 tiles */
+	.xvmp_image_container {
+		width: 100%;
+		height: 172px;
+	}
+
+	.xvmp_image_container img {
+		width: 295px;
+		height: 172px;
+	}
+
+	.xvmp_video_infos {
+		position: relative;
+		left: 0;
+		float: left;
+		width: 100%;
+		padding-left: 20px;
+	}
+
+	.box {
+		height: 320px;
+	}
 }

@@ -52,7 +52,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 
 		$this->initColumns();
 		$this->initFilter();
-		$this->setRowTemplate($this->pl->getDirectory() . '/templates/default/' . static::ROW_TEMPLATE);
+		$this->setRowTemplate($this->pl->getDirectory() . '/templates/table_rows/' . static::ROW_TEMPLATE);
 
 		foreach (array_merge($this->js_files, array('waiter.js', 'xvmp_content.js')) as $js_file) {
 			$this->tpl_global->addJavaScript($this->pl->getDirectory() . '/templates/default/' . $js_file);

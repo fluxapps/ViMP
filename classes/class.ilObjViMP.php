@@ -22,6 +22,7 @@ class ilObjViMP extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
 
 	protected function doDelete() {
+		// todo: delete event log
 		xvmpSettings::find($this->getId())->delete();
 		foreach (xvmpSelectedMedia::where(array('obj_id' => $this->getId()))->get() as $selected_media) {
 			$selected_media->delete();

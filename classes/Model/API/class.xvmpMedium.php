@@ -10,9 +10,15 @@ use Detection\MobileDetect;
  */
 class xvmpMedium extends xvmpObject {
 
-	const PUBLISHED_PUBLIC = 0;
-	const PUBLISHED_PRIVATE = 1;
-	const PUBLISHED_HIDDEN = 2;
+	const PUBLISHED_PUBLIC = 'public';
+	const PUBLISHED_PRIVATE = 'private';
+	const PUBLISHED_HIDDEN = 'hidden';
+
+	public static $published_id_mapping = array(
+		'public' => 0,
+		'private' => 1,
+		'hidden' => 2,
+	);
 
 	public static function find($id) {
 		try {
@@ -110,11 +116,12 @@ class xvmpMedium extends xvmpObject {
 			'author' => $this->getCustomAuthor(),
 			'tags' => is_array($this->getTags()) ? implode(',', $this->getTags()) : $this->getTags(),
 			// TODO: mediapermissions
-			'published' => $this->getPublished(),
+			'published' => $this->getPublishedId(),
 		);
 		$response = xvmpRequest::editMedium($this->getId(), $params);
 		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $this->getMid());
 		self::cache(self::class . '-' . $this->getMid(),$this->__toArray());
+		return $response;
 	}
 
 	public static function upload($video, $obj_id, $tmp_id, $add_automatically, $notification) {
@@ -132,6 +139,8 @@ class xvmpMedium extends xvmpObject {
 		$uploaded_media->setUserId($ilUser->getId());
 		$uploaded_media->setTmpId($tmp_id);
 		$uploaded_media->create();
+
+		return $medium;
 	}
 
 	public static function deleteObject($mid) {
@@ -426,6 +435,9 @@ class xvmpMedium extends xvmpObject {
 		return $this->published;
 	}
 
+	public function getPublishedId() {
+		return self::$published_id_mapping[$this->published];
+	}
 
 	/**
 	 * @param String $published

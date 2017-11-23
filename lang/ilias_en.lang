@@ -92,7 +92,21 @@ not_available_description#:#This video was not found in ViMP, it may have been d
 confirm_delete_text#:#Warning: this action will delete the video in ViMP and make the video unavailable in every ILIAS object using it. Are you sure that you want to delete this video?
 video_deleted#:#Video deleted successfully.
 media_permissions#:#Media Permissions
+mediapermissions#:#Media Permissions
 upload_select#:#Select file
 upload_clear#:#Reset
 supported_filetypes#:#Supported Filetypes
 watched#:#Watched
+hint_learning_progress_gui#:#Hint: changes in this view are not instantly saved and must be saved with the button "Save Settings".
+log#:#Log
+log_action_1#:#Upload
+log_action_2#:#Edit
+log_action_3#:#Delete
+log_action_4#:#Add
+log_action_5#:#Remove
+datetime#:#Date and Time
+action#:#Action
+mid#:#Medium ID
+data#:#Data
+categories#:#Categories
+user#:#User

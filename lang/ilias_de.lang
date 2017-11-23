@@ -92,7 +92,21 @@ not_available_description#:#Dieses Video wurde in ViMP nicht gefunden. Mögliche
 confirm_delete_text#:#Achtung: Durch diese Aktion wird das Video endgültig in ViMP gelöscht und kann in keinem ILIAS-Objekt mehr verwendet werden. Sind Sie sicher, dass Sie das Video löschen möchten?
 video_deleted#:#Video erfolgreich gelöscht.
 media_permissions#:#Medienberechtigungen
+mediapermissions#:#Medienberechtigungen
 upload_select#:#Datei auswählen
 upload_clear#:#Zurücksetzen
 supported_filetypes#:#Unterstützte Dateitypen
 watched#:#Angesehen
+hint_learning_progress_gui#:#Hinweis: Änderungen in dieser Ansicht werden nicht direkt übernommen, sondern müssen über die Schaltfläche "Einstellungen speichern" abgespeichert werden.
+log#:#Log
+log_action_1#:#Upload
+log_action_2#:#Bearbeitet
+log_action_3#:#Gelöscht
+log_action_4#:#Hinzugefügt
+log_action_5#:#Entfernt
+datetime#:#Datum und Uhrzeit
+action#:#Aktion
+mid#:#Medium-ID
+data#:#Daten
+categories#:#Kategorien
+user#:#Benutzer

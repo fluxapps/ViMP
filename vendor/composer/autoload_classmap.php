@@ -442,6 +442,8 @@ return array(
     'xvmpDeletedMedium' => $baseDir . '/classes/Model/API/class.xvmpDeletedMedium.php',
     'xvmpEditVideoFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpEditVideoFormGUI.php',
     'xvmpEventLog' => $baseDir . '/classes/Model/AR/class.xvmpEventLog.php',
+    'xvmpEventLogGUI' => $baseDir . '/classes/GUI/class.xvmpEventLogGUI.php',
+    'xvmpEventLogTableGUI' => $baseDir . '/classes/GUI/Table/class.xvmpEventLogTableGUI.php',
     'xvmpException' => $baseDir . '/classes/Exception/class.xvmpException.php',
     'xvmpFileUploadInputGUI' => $baseDir . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',
     'xvmpFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpFormGUI.php',

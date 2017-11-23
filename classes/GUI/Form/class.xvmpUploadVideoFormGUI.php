@@ -198,11 +198,16 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		try {
-			xvmpMedium::upload($video, $this->parent_gui->getObjId(), $tmp_id,$add_automatically, $notification);
+			$video = xvmpMedium::upload($video, $this->parent_gui->getObjId(), $tmp_id,$add_automatically, $notification);
 		} catch (xvmpException $e) {
 			ilUtil::sendFailure($e->getMessage(), true);
 			return false;
 		}
+
+		// the object has to be loaded again, since the response from "upload" has another format for the categories
+		$video = xvmpMedium::getObjectAsArray($video['mid']);
+
+		xvmpEventLog::logEvent(xvmpEventLog::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
 
 		return true;
 				// indirect file download via ViMP/transfer.php

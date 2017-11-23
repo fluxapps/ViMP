@@ -25,7 +25,10 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	 */
 	protected $video;
 
+
 	public function __construct($parent_gui, $mid) {
+		// load the video from the api, not from the cache
+		xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
 		$this->video = xvmpMedium::getObjectAsArray($mid);
 
 		parent::__construct($parent_gui);
@@ -106,7 +109,9 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	}
 
 	public function fillForm() {
-		$this->setValuesByArray($this->video);
+		$array = $this->video;
+		$array['categories'] = array_keys($this->video['categories']);
+		$this->setValuesByArray($array);
 	}
 
 
@@ -114,6 +119,10 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 		if (!$this->checkInput()) {
 			return false;
 		}
+
+		// store current state for changelog
+		$old = $this->video;
+
 		/** @var ilFormPropertyGUI $item */
 		foreach ($this->getItems() as $item) {
 			$this->video[$item->getPostVar()] = $this->getInput($item->getPostVar());
@@ -122,6 +131,12 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 		$video = new xvmpMedium();
 		$video->buildObjectFromArray($this->video);
 		$video->update();
+
+		// changelog entry
+		xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $video->getMid());
+		$new = xvmpMedium::getObjectAsArray($video->getMid());
+
+		xvmpEventLog::logEvent(xvmpEventLog::ACTION_EDIT, $this->parent_gui->getObjId(), $new, $old);
 
 		return true;
 	}

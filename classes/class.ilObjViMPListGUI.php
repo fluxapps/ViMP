@@ -110,6 +110,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 			try {
 				$video = xvmpMedium::getObjectAsArray($selected->getMid());
 				$preview .= '<img style="margin-right:10px;" height=108px width=170px src="' . $video['thumbnail'] . "&size=170x108" . '">';
+				// TODO: play icon overlay
 			} catch (xvmpException $e) {
 //				if ($e->getCode() == 404) {
 //					return $this->getVideoPreview($count + 1);

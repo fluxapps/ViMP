@@ -111,7 +111,10 @@ class xvmpSelectedMedia extends ActiveRecord {
 		$set->create();
 
 		// this will add the video to the cache
-		xvmpMedium::getObjectAsArray($mid);
+		$video = xvmpMedium::getObjectAsArray($mid);
+
+		// log event
+		xvmpEventLog::logEvent(xvmpEventLog::ACTION_ADD, $obj_id, $video);
 
 		return true;
 	}
@@ -130,6 +133,10 @@ class xvmpSelectedMedia extends ActiveRecord {
 
 		$set->delete();
 		self::reSort($obj_id);
+
+		// log event
+		$video = xvmpMedium::getObjectAsArray($mid);
+		xvmpEventLog::logEvent(xvmpEventLog::ACTION_REMOVE, $obj_id, $video);
 
 		// remove from cache
 		xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);

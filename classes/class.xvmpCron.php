@@ -100,6 +100,8 @@ class xvmpCron {
 				continue;
 			}
 		}
+
+		//TODO: evtl. alte eventlog einträge löschen
 	}
 
 

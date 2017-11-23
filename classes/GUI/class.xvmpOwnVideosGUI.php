@@ -102,7 +102,14 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 
 	public function confirmedDeleteVideo() {
 		$mid = $_POST['mid'];
+
+		// fetch the video for logging purposes
+		$video = xvmpMedium::getObjectAsArray($mid);
+
 		xvmpMedium::deleteObject($mid);
+
+		xvmpEventLog::logEvent(xvmpEventLog::ACTION_DELETE, $this->getObjId(), $video);
+
 		ilUtil::sendSuccess($this->pl->txt('video_deleted'), true);
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}

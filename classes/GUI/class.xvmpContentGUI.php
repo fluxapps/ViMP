@@ -90,32 +90,4 @@ class xvmpContentGUI extends xvmpGUI {
 		}
 	}
 
-	protected function addOnLoadAjaxCode() {
-		$ajax_link = $this->ctrl->getLinkTarget($this, 'asyncGetTableGUI', "", true);
-
-		$ajax = "$.ajax({
-				    url: '{$ajax_link}',
-				    dataType: 'html',
-				    success: function(data){
-				        $('div#xvmp_table_placeholder').replaceWith($(data));
-				    }
-				});";
-		$this->tpl->addOnLoadCode('xoctWaiter.show();');
-		$this->tpl->addOnLoadCode($ajax);
-	}
-
-
-	/**
-	 * ajax
-	 */
-	public function asyncGetTableGUI() {
-		$xvmpContentTableGUI = new xvmpContentTableGUI($this, self::CMD_STANDARD);
-		$xvmpContentTableGUI->parseData();
-		echo $xvmpContentTableGUI->getHTML();
-		exit();
-	}
-
-
-
-
 }
