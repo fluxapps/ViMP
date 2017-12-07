@@ -136,9 +136,13 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	protected function fillRow($a_set) {
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
-		$hide_button = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId()) ? 'ADD' : 'REMOVE';
-		$this->tpl->setVariable('VAL_ACTION_' . $hide_button, 'hidden');
-		$this->tpl->setVariable('CSS_ROW', $hide_button == 'ADD' ? 'xvmp_row_added' : 'xvmp_row_not_added');
+		$checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
+		if ($checked) {
+			$this->tpl->setVariable('VAL_CHECKED', 'checked');
+		}
+
+//		$this->tpl->setVariable('VAL_ACTION_' . $hide_button, 'hidden');
+//		$this->tpl->setVariable('CSS_ROW', $hide_button == 'ADD' ? 'xvmp_row_added' : 'xvmp_row_not_added');
 
 		$this->tpl->setVariable('VAL_STATUS_TEXT', $this->pl->txt('status_' . $a_set['status']));
 		$this->tpl->setVariable('VAL_VISIBLE', (int) ($a_set['status'] == 'legal'));

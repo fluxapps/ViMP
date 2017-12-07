@@ -107,6 +107,19 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
+	public function toggleVideo() {
+		$mid = $_GET['mid'];
+		$checked = $_GET['checked'];
+		$visible = $_GET['visible'];
+		if ($checked) {
+			xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
+		} else {
+			xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
+		}
+		echo "{\"success\": true}";
+		exit;
+	}
+
 	/**
 	 * ajax
 	 */

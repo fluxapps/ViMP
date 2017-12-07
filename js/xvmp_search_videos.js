@@ -4,6 +4,39 @@ var VimpSearch = {
 
 	base_link: "",
 
+	toggle: function (mid, visible) {
+		xoctWaiter.show();
+		if (typeof visible == 'undefined') {
+			visible = 1;
+		}
+
+		var checked = $('#xvmp_checkbox_' + mid)[0].checked === true ? 1 : 0;
+		console.log($('#xvmp_checkbox_' + mid)[0].checked);
+		ajax_url = this.base_link;
+		$.ajax({
+			url: ajax_url,
+			type: "GET",
+			data: {
+				cmd: 'toggleVideo',
+				mid: mid,
+				checked: checked,
+				visible: visible
+			}
+		}).always(function(response) {
+			try {
+				response = JSON.parse(response);
+			} catch (error) {
+				response = '{"success" = false}';
+			}
+
+			if (response.success) {
+				xoctWaiter.hide();
+			} else {
+				xoctWaiter.hide();
+				alert('Authentication failed. Please log in again.');
+			}
+		});
+	},
 
 	add: function (event, mid, visible) {
 		event.preventDefault();
