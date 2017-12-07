@@ -34,8 +34,8 @@ class xvmpContentTilesGUI {
 		$this->parent_gui = $parent_gui;
 
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_tiles.css');
-		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_content.js');
-		$this->tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/waiter.js');
+		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
+		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
 	}
 

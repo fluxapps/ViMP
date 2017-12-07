@@ -165,6 +165,16 @@ class xvmpCategory extends xvmpObject {
 		return $this->name;
 	}
 
+	public function getNameWithPath() {
+		$path = array($this->getName());
+		$category = $this;
+		while ($pid = $category->getPid()) {
+			$category = xvmpCategory::find($pid);
+			array_unshift($path, $category->getName());
+		}
+		return implode(' » ', $path);
+	}
+
 
 	/**
 	 * @param String $name

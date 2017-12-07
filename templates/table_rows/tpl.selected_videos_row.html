@@ -1,14 +1,18 @@
-<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
-	<td class="std small xvmp_action">
-		<div class="xvmp_sort_container">
-			<a id="xvmp_up_{VAL_MID}" onclick="VimpSelected.up(event, {VAL_MID});">
-				<img width="30px" src="./templates/default/images/arrow_up.svg">
-			</a>
-			<a id="xvmp_down_{VAL_MID}" onclick="VimpSelected.down(event, {VAL_MID});">
-				<img width="30px" src="./templates/default/images/arrow_down.svg">
-			</a>
-		</div>
+<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row xvmpSortable" id="xvmp_row_{VAL_MID}">
+	<td class="std small">
+		<span class="glyphicon glyphicon-resize-vertical"></span>
+		<!--<input type="hidden" name="position[]" value="{ID}">-->
 	</td>
+	<!--<td class="std small xvmp_action">-->
+		<!--<div class="xvmp_sort_container">-->
+			<!--<a id="xvmp_up_{VAL_MID}" onclick="VimpSelected.up(event, {VAL_MID});">-->
+				<!--<img width="30px" src="./templates/default/images/arrow_up.svg">-->
+			<!--</a>-->
+			<!--<a id="xvmp_down_{VAL_MID}" onclick="VimpSelected.down(event, {VAL_MID});">-->
+				<!--<img width="30px" src="./templates/default/images/arrow_down.svg">-->
+			<!--</a>-->
+		<!--</div>-->
+	<!--</td>-->
 	<td class="std small">
 		<a onclick="VimpContent.playVideo({VAL_MID});">
 			<div class="xvmp_image_container">

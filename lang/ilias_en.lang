@@ -61,6 +61,7 @@ upload_video#:#Upload Video
 edit_video#:#Edit Video
 tags#:#Tags
 private#:#Private
+public#:#Public
 layout#:#Layout
 notification#:#Notification
 notification_info#:#You will receive an email notification when the video is transcoded.
@@ -71,7 +72,8 @@ form_saved#:#Changes saved successfully.
 duration#:#Duration
 author#:#Author
 flush_cache#:#Flush Cache
-flush_video_cache#:#Flush Video Cache
+flush_video_cache#:#Reload Video Data
+flush_video_cache_tooltip#:#The video data is saved temporarily in ILIAS to allow shorter loading times. Click on this button to refresh the data.
 repository_preview#:#Repository Preview
 no_preview#:#No Preview
 perm_upload#:#Upload
@@ -79,6 +81,7 @@ access_denied#:#Permission denied.
 status_legal#:#Transcoded successfully
 status_converting#:#Transcoding
 status_error#:#Transcoding failed
+status_uploaded#:#Uploaded
 relevant#:#Required
 required_percentage#:#Percentage
 from#:#From
@@ -110,3 +113,7 @@ mid#:#Medium ID
 data#:#Data
 categories#:#Categories
 user#:#User
+required#:#Required
+hidden#:#Hidden
+form_msg_select#:#Please choose a file to upload.
+form_msg_not_supported#:#File type not supported.

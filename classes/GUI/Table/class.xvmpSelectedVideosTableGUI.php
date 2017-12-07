@@ -11,7 +11,7 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 	const ROW_TEMPLATE = 'tpl.selected_videos_row.html';
 
 
-	protected $js_files = array('xvmp_selected_videos.js');
+	protected $js_files = array('xvmp_selected_videos.js', 'sortable.js');
 	protected $css_files = array('xvmp_video_table.css');
 
 	const THUMBSIZE = '170x108';

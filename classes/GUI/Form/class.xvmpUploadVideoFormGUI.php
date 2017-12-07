@@ -111,10 +111,12 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		// PUBLISHED (Zugriff)
-		$input = new ilRadioGroupInputGUI($this->pl->txt('published'), 'published');
-		$radio_item = new ilRadioOption($this->pl->txt('private'), 'private');
+		$input = new ilRadioGroupInputGUI($this->pl->txt('published'), 'hidden');
+		$radio_item = new ilRadioOption($this->lng->txt('public'), 0);
 		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->lng->txt('public'), 'public');
+		$radio_item = new ilRadioOption($this->pl->txt('private'), 1);
+		$input->addOption($radio_item);
+		$radio_item = new ilRadioOption($this->pl->txt('hidden'), 2);
 		$input->addOption($radio_item);
 		$input->setRequired(true);
 		$this->addItem($input);
@@ -123,6 +125,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
 		if ($media_permissions) {
 			$input = new ilMultiSelectInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), 'mediapermissions');
+			$input->setRequired(true);
 			$options = array();
 			if ($media_permissions == xvmpConf::MEDIA_PERMISSION_SELECTION) {
 				$selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
@@ -140,12 +143,12 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		// CATEGORIES
-		$input = new ilMultiSelectInputGUI($this->lng->txt('categories'), 'categories');
+		$input = new ilMultiSelectSearchInputGUI($this->lng->txt('categories'), 'categories');
 		$categories = xvmpCategory::getAll();
 		$options = array();
 		/** @var xvmpCategory $category */
 		foreach ($categories as $category) {
-			$options[$category->getId()] = $category->getName();
+			$options[$category->getId()] = $category->getNameWithPath();
 		}
 		$input->setOptions($options);
 		$input->setRequired(true);
@@ -177,6 +180,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 			$value = $this->getInput($item->getPostVar());
 
 			switch ($item->getPostVar()) {
+				case 'categories[]':
+					$post_var = rtrim($item->getPostVar(), '[]');
+					$video[$post_var] = implode(',', $this->getInput($post_var));
+					break;
 				case 'source_url':
 					$tmp_id = $_GET['tmp_id'];
 					$video[$item->getPostVar()] =  ILIAS_HTTP_PATH . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id . '/' . rawurlencode($value['name']);
@@ -209,6 +216,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		xvmpEventLog::logEvent(xvmpEventLog::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
 
+		// TODO: Webaccesschecker? Async hochladen ILIAS -> Vimp ?
 		return true;
 				// indirect file download via ViMP/transfer.php
 //				if (!is_dir(CLIENT_DATA_DIR . '/vimp_upload')) {

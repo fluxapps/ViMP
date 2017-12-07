@@ -55,7 +55,7 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 	public function __construct(ilPropertyFormGUI $ilPropertyFormGUI, $cmd, $a_title, $a_postvar) {
 		global $tpl;
 		$this->pl = ilViMPPlugin::getInstance();
-		$tpl->addJavaScript('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/waiter.js');
+		$tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
 		$tpl->addCss('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/waiter.css');
 
 		$ilPropertyFormGUI->setId($ilPropertyFormGUI->getId() ? $ilPropertyFormGUI->getId() : md5(rand(1, 99)));

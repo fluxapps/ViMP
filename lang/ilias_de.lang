@@ -61,6 +61,7 @@ upload_video#:#Video Hochladen
 edit_video#:#Video Bearbeiten
 tags#:#Tags
 private#:#Privat
+public#:#Öffentlich
 layout#:#Darstellung
 notification#:#Benachrichtigung
 notification_info#:#Sie erhalten nach abgeschlossener Transkodierung des Videos eine Email-Benachrichtigung.
@@ -71,7 +72,8 @@ form_saved#:#Änderungen erfolgreich gespeichert.
 duration#:#Länge
 author#:#Autor
 flush_cache#:#Gesamter Cache Leeren
-flush_video_cache#:#Video-Cache Leeren
+flush_video_cache#:#Videodaten neu laden
+flush_video_cache_tooltip#:#Die Videodaten werden in ILIAS zwischengespeichert, um ein schnelleres Laden der Seite zu ermöglichen. Klicken Sie auf die Schaltfläche, um die Daten zu aktualisieren.
 repository_preview#:#Vorschau im Magazin
 no_preview#:#Keine Vorschau
 perm_upload#:#Upload
@@ -79,6 +81,7 @@ access_denied#:#Zugriff verweigert.
 status_legal#:#Transkodierung abgeschlossen
 status_converting#:#Transkodierung läuft
 status_error#:#Fehler in der Transkodierung
+status_uploaded#:#Hochgeladen
 relevant#:#Erfordert
 required_percentage#:#Anteil
 from#:#Von
@@ -110,3 +113,7 @@ mid#:#Medium-ID
 data#:#Daten
 categories#:#Kategorien
 user#:#Benutzer
+required#:#Erforderlich
+hidden#:#Versteckt
+form_msg_select#:#Bitte wählen Sie eine Datei zum Hochladen aus.
+form_msg_not_supported#:#Dateityp nicht unterstützt.

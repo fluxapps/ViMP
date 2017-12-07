@@ -15,9 +15,9 @@ class xvmpMedium extends xvmpObject {
 	const PUBLISHED_HIDDEN = 'hidden';
 
 	public static $published_id_mapping = array(
-		'public' => 0,
-		'private' => 1,
-		'hidden' => 2,
+		'public' => "0",
+		'private' => "1",
+		'hidden' => "2",
 	);
 
 	public static function find($id) {
@@ -113,11 +113,14 @@ class xvmpMedium extends xvmpObject {
 			'title' => $this->getTitle(),
 			'description' => $this->getDescription(),
 			'categories' => implode(',', $this->getCategories()),
-			'author' => $this->getCustomAuthor(),
 			'tags' => is_array($this->getTags()) ? implode(',', $this->getTags()) : $this->getTags(),
-			// TODO: mediapermissions
-			'published' => $this->getPublishedId(),
+			'mediapermissions' => implode(',',$this->getMediapermissions()),
+			'hidden' => $this->getPublishedId(),
 		);
+		// TODO: uncomment when fixed by vimp
+//		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+//			$params[$field[xvmpConf::F_FORM_FIELD_ID]] = $this->$field[xvmpConf::F_FORM_FIELD_ID];
+//		}
 		$response = xvmpRequest::editMedium($this->getId(), $params);
 		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $this->getMid());
 		self::cache(self::class . '-' . $this->getMid(),$this->__toArray());
@@ -192,6 +195,10 @@ class xvmpMedium extends xvmpObject {
 	 * @var String
 	 */
 	protected $mediakey;
+	/**
+	 * @var array
+	 */
+	protected $mediapermissions;
 	/**
 	 * @var String
 	 */
@@ -317,6 +324,22 @@ class xvmpMedium extends xvmpObject {
 	 */
 	protected $custom_author;
 
+
+	/**
+	 * @return array
+	 */
+	public function getMediapermissions() {
+		return $this->mediapermissions;
+	}
+
+
+	/**
+	 * @param array $mediapermissions
+	 */
+	public function setMediapermissions($mediapermissions) {
+		$this->mediapermissions = $mediapermissions;
+	}
+
 	/**
 	 * @return int
 	 */
@@ -435,6 +458,10 @@ class xvmpMedium extends xvmpObject {
 		return $this->published;
 	}
 
+
+	/**
+	 * @return mixed
+	 */
 	public function getPublishedId() {
 		return self::$published_id_mapping[$this->published];
 	}

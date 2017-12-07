@@ -30,7 +30,7 @@ class xvmpCron {
 
 		global $ilDB, $ilUser, $ilCtrl, $ilLog, $ilias;
 		if (self::DEBUG) {
-			$ilLog->write('Auth passed for async Certificate');
+			$ilLog->write('Auth passed for async ViMP');
 		}
 		/**
 		 * @var $ilDB   ilDB
@@ -92,6 +92,7 @@ class xvmpCron {
 				$medium = xvmpMedium::find($uploaded_medium->getMid());
 				if ($medium->getStatus() == 'legal') {
 					$this->sendNotification($medium, $uploaded_medium);
+					// TODO: lokal videos löschen
 				}
 			} catch (xvmpException $e) {
 				if ($e->getCode() == 404) {
@@ -100,7 +101,6 @@ class xvmpCron {
 				continue;
 			}
 		}
-
 		//TODO: evtl. alte eventlog einträge löschen
 	}
 

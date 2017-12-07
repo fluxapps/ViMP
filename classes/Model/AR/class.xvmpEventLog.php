@@ -228,7 +228,7 @@ class xvmpEventLog extends ActiveRecord {
 			case self::ACTION_EDIT:
 				foreach (self::$logged_media_fields as $field) {
 					if ($old_video[$field] != $video[$field]) {
-						$changed[$field] = array($old_video[$field], $video[$field]);
+						$eventlog_data[$field] = array($old_video[$field], $video[$field]);
 					}
 				}
 				break;
@@ -237,6 +237,10 @@ class xvmpEventLog extends ActiveRecord {
 					$eventlog_data[$field] = $video[$field];
 				}
 				break;
+		}
+
+		if (empty($eventlog_data)) {
+			return false;
 		}
 
 		$eventLog = new self();

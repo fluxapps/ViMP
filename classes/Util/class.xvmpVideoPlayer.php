@@ -49,7 +49,7 @@ class xvmpVideoPlayer {
 	public static function loadVideoJSAndCSS($load_observer) {
 		global $tpl;
 		if ($load_observer) {
-			$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/xvmp_observer.js');
+			$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/js/xvmp_observer.js');
 
 		}
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-6.4.0/video.min.js');

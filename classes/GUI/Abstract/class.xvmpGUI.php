@@ -56,7 +56,10 @@ abstract class xvmpGUI {
 		$button = ilLinkButton::getInstance();
 		$button->setUrl($this->ctrl->getLinkTarget($this,self::CMD_FLUSH_CACHE));
 		$button->setCaption($this->pl->txt('flush_video_cache'), false);
+		$button->setId('xvmp_flush_video_cache');
 		$this->toolbar->addButtonInstance($button);
+
+		ilTooltipGUI::addTooltip('xvmp_flush_video_cache', $this->pl->txt('flush_video_cache_tooltip'));
 	}
 
 	/**

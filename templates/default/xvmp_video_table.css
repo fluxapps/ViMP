@@ -1,3 +1,8 @@
+span.glyphicon-resize-vertical {
+	font-size: 30px;
+	padding-left: 19px;
+}
+
 tr.xvmp_table_row > td.std.small {
 	vertical-align: middle;
 }

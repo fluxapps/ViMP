@@ -22,7 +22,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		global $tpl;
 		parent::__construct($parent_gui);
 
-		$tpl->addJavaScript($this->pl->getDirectory() . '/templates/default/xvmp_config.js');
+		$tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_config.js');
 	}
 
 	protected function initForm(){

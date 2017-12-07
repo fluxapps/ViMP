@@ -436,7 +436,7 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 
 		if ($this->getMulti()) {
 			$output = '<div id="' . $this->getFieldId() . '" class="multi_line_input">' . $output . '</div>';
-			$tpl->addJavascript(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/generic_multi_line_input.js');
+			$tpl->addJavascript(ilViMPPlugin::getInstance()->getDirectory() . '/js/generic_multi_line_input.js');
 			$output .= '<script type="text/javascript">$("#' . $this->getFieldId() . '").multi_line_input('
 				. json_encode($this->input_options) . ', '
 				. json_encode(array('limit' => $this->limit, 'sortable' => $this->multi_sortable, 'locale' => $DIC->language()->getLangKey()))
