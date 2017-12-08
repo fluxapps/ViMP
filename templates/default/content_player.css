@@ -19,6 +19,10 @@ div#xvmp_video_infos {
 	margin-left: 10px;
 }
 
+div.xvmp_video_infos {
+	padding: 0 5px;
+}
+
 div#xvmp_video_list_container {
 	overflow-x: auto;
 	overflow-y: hidden;
@@ -76,6 +80,7 @@ div#xvmp_video_list_container {
 }
 
 .xvmp_title h2 {
+	margin-top: 7px;
 	overflow:hidden;
 	-ms-text-overflow: ellipsis;
 	text-overflow:     ellipsis;
@@ -83,10 +88,10 @@ div#xvmp_video_list_container {
 
 .innerContent {
 	position: absolute;
-	left: 10px;
-	right: 10px;
-	top: 10px;
-	bottom: 10px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
 }
 .xvmp_image_container {
 	text-align: center;

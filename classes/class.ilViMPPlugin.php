@@ -31,10 +31,20 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 		return self::$instance;
 	}
 
+
+	/**
+	 * @param $lang_var
+	 *
+	 * @return string
+	 */
 	public function confTxt($lang_var) {
 		return $this->txt('conf_' . $lang_var);
 	}
 
+
+	/**
+	 * @return bool
+	 */
 	public function hasConnection() {
 		try {
 			$version = xvmpRequest::version();
@@ -45,12 +55,25 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	}
 
 
+	/**
+	 * @return string
+	 */
 	function getPluginName() {
 		return self::PLUGIN_NAME;
 	}
 
 
+	/**
+	 *
+	 */
 	protected function uninstallCustom() {
-		// TODO: Implement uninstallCustom() method.
+		global $DIC;
+		$DIC->database()->dropTable(xvmpConf::returnDbTableName());
+		$DIC->database()->dropTable(xvmpEventLog::returnDbTableName());
+		$DIC->database()->dropTable(xvmpSelectedMedia::returnDbTableName());
+		$DIC->database()->dropTable(xvmpSettings::returnDbTableName());
+		$DIC->database()->dropTable(xvmpUploadedMedia::returnDbTableName());
+		$DIC->database()->dropTable(xvmpUserLPStatus::returnDbTableName());
+		$DIC->database()->dropTable(xvmpUserProgress::returnDbTableName());
 	}
 }

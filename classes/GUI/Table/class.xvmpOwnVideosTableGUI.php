@@ -134,6 +134,13 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @param xvmpObject $a_set
 	 */
 	protected function fillRow($a_set) {
+		$transcoded = ($a_set['status'] == 'legal');
+		if ($transcoded) {
+			$this->tpl->setCurrentBlock('transcoded');
+		} else {
+			$this->tpl->setCurrentBlock('transcoding');
+		}
+
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
 		$checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
@@ -142,7 +149,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		}
 
 		$this->tpl->setVariable('VAL_STATUS_TEXT', $this->pl->txt('status_' . $a_set['status']));
-		$this->tpl->setVariable('VAL_VISIBLE', (int) ($a_set['status'] == 'legal'));
+		$this->tpl->setVariable('VAL_VISIBLE', (int) $transcoded);
 
 
 		foreach ($this->available_columns as $title => $props)
@@ -151,6 +158,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		}
 
 		$this->tpl->setVariable('VAL_ACTIONS', $this->buildActionList($a_set));
+		$this->tpl->parseCurrentBlock();
 	}
 
 

@@ -7,7 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class ilObjViMPAccess extends ilObjectPluginAccess implements ilWACCheckingClass {
+class ilObjViMPAccess extends ilObjectPluginAccess {
 
 	/**
 	 * @param string $a_cmd
@@ -112,12 +112,4 @@ class ilObjViMPAccess extends ilObjectPluginAccess implements ilWACCheckingClass
 		return xvmpSettings::find($obj_id)->getIsOnline();
 	}
 
-
-	/**
-	 * @param ilWACPath $ilWACPath
-	 */
-	public function canBeDelivered(ilWACPath $ilWACPath) {
-//		var_dump($ilWACPath);
-		return true;
-	}
 }

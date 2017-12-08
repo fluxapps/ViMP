@@ -91,14 +91,20 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 	 * @param xvmpObject $a_set
 	 */
 	protected function fillRow($a_set) {
+		$transcoded = ($a_set['status'] == 'legal');
+		if ($transcoded) {
+			$this->tpl->setCurrentBlock('transcoded');
+		} else {
+			$this->tpl->setCurrentBlock('transcoding');
+		}
+
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
 
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
 		$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSelectedVideosGUI::CMD_REMOVE_VIDEO, '', true));
 
-		$transcoding = $a_set['status'] != 'legal';
-		if ($transcoding) {
+		if (!$transcoded) {
 			$this->tpl->setVariable('VAL_VISIBILITY_DISABLED', 'disabled');
 		}
 
@@ -107,12 +113,12 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 
 			if ($title == 'visible') {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] == 1 ? 'checked' : '');
-			} elseif ($title == 'thumbnail' && $transcoding) {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			} else {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			}
 		}
+
+		$this->tpl->parseCurrentBlock();
 	}
 
 	protected function addRepositoryPreviewCss($number) {
