@@ -11,7 +11,7 @@ var VimpSearch = {
 		}
 
 		var checked = $('#xvmp_checkbox_' + mid)[0].checked === true ? 1 : 0;
-		console.log($('#xvmp_checkbox_' + mid)[0].checked);
+
 		ajax_url = this.base_link;
 		$.ajax({
 			url: ajax_url,

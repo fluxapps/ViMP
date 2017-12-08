@@ -1,4 +1,4 @@
-table input[type='checkbox'] {
+div.ilTableOuter table input[type='checkbox'] {
 	width: 17px;
 	height: 17px;
 }
@@ -44,7 +44,7 @@ div.xvmp_sort_container {
 	align-items: center;
 }
 
-.xvmp_image_container:hover img.xvmp_preview_image {
+.xvmp_image_container:hover img.xvmp_image_clickable {
 	opacity: 0.5;
 }
 

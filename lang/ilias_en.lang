@@ -46,6 +46,8 @@ video#:#Video
 settings#:#Settings
 search_videos#:#Search
 selected_videos#:#Selected Videos
+selected_videos_description#:#Note: adjust the order of the videos via Drag & Drop
+selected_videos_description_preview#:# The videos inside of the black frame will be displayed as a preview in the repository.
 own_videos#:#Own Videos
 title#:#Title
 description#:#Description
@@ -54,7 +56,6 @@ create_date#:#Created At
 created_at#:#Created At
 created#:#Created
 visible#:#Visible
-selected_videos#:#Selected Videos
 published#:#Access
 status#:#Status
 upload_video#:#Upload Video
@@ -117,3 +118,4 @@ required#:#Required
 hidden#:#Hidden
 form_msg_select#:#Please choose a file to upload.
 form_msg_not_supported#:#File type not supported.
+form_incomplete#:#Some of this forms fields are mandatory and need to be filled out. Please complete these fields.

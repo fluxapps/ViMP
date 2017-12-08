@@ -52,6 +52,14 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		parent::__construct($parent_gui, $parent_cmd);
 
 		$this->setTitle($this->pl->txt('selected_videos'));
+
+		$description = $this->pl->txt('selected_videos_description');
+		if ($repository_preview = xvmpSettings::find($this->parent_obj->getObjId())->getRepositoryPreview()) {
+			$this->addRepositoryPreviewCss($repository_preview);
+			$description .= ' ' . $this->pl->txt('selected_videos_description_preview');
+		}
+		$this->setDescription($description);
+
 		$this->setExternalSorting(true);
 		$this->setEnableNumInfo(false);
 		$this->setLimit(0);
@@ -60,6 +68,7 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
 		$this->tpl_global->addOnLoadCode('VimpSelected.init("'.$base_link.'");');
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
+
 
 		$this->parseData();
 	}
@@ -84,8 +93,6 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 	protected function fillRow($a_set) {
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
-		$hide_button = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId()) ? 'ADD' : 'REMOVE';
-		$this->tpl->setVariable('VAL_ACTION_' . $hide_button, 'hidden');
 
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
 		$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSelectedVideosGUI::CMD_REMOVE_VIDEO, '', true));
@@ -106,5 +113,26 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			}
 		}
+	}
+
+	protected function addRepositoryPreviewCss($number) {
+		$css = "
+		div.ilTableOuter table {
+			border-collapse: collapse;
+		}
+		
+		div.ilTableOuter table tbody tr:nth-child(1) {
+			border-top: 2px solid black;
+		}
+		
+		div.ilTableOuter table tbody tr:nth-child($number) {
+			border-bottom: 2px solid black;
+		}
+		
+		div.ilTableOuter table tbody tr:nth-child(-n+$number) {
+			border-left: 2px solid black;
+			border-right: 2px solid black;
+		}";
+		$this->tpl_global->addInlineCss($css);
 	}
 }

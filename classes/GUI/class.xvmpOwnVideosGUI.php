@@ -23,6 +23,9 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const CMD_UPLOAD_CHUNKS = 'uploadChunks';
 
 
+	/**
+	 *
+	 */
 	public function executeCommand() {
 		if (!ilObjViMPAccess::hasWriteAccess() && !ilObjViMPAccess::hasUploadPermission()) {
 			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
@@ -33,6 +36,9 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function index() {
 		$class_name = static::TABLE_CLASS;
 		/** @var xvmpTableGUI $table_gui */
@@ -75,6 +81,10 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
+
+	/**
+	 *
+	 */
 	public function create() {
 		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpEditVideoFormGUI->setValuesByPost();
@@ -88,6 +98,10 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
+
+	/**
+	 *
+	 */
 	public function deleteVideo() {
 		$mid = $_GET['mid'];
 		$video = xvmpMedium::find($mid);
@@ -100,6 +114,10 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$this->tpl->setContent($confirmation_gui->getHTML());
 	}
 
+
+	/**
+	 *
+	 */
 	public function confirmedDeleteVideo() {
 		$mid = $_POST['mid'];
 
@@ -114,6 +132,10 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
 	}
 
+
+	/**
+	 *
+	 */
 	protected function uploadChunks() {
 		$xoctPlupload = new xoctPlupload();
 		$tmp_id = $_GET['tmp_id'];

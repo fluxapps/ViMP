@@ -46,6 +46,8 @@ video#:#Video
 settings#:#Einstellungen
 search_videos#:#Suchen
 selected_videos#:#Ausgewählte Videos
+selected_videos_description#:#Hinweis: Ändern Sie die Sortierung der Videos via Drag & Drop.
+selected_videos_description_preview#:# Die Videos innerhalb des Rahmens werden im Magazin als Vorschau angezeigt.
 own_videos#:#Eigene Videos
 title#:#Titel
 description#:#Beschreibung
@@ -54,7 +56,6 @@ create_date#:#Erstellungsdatum
 created_at#:#Erstellt am
 created#:#Erstellt
 visible#:#Sichtbar
-selected_videos#:#Ausgewählte Videos
 published#:#Zugriff
 status#:#Status
 upload_video#:#Video Hochladen
@@ -117,3 +118,4 @@ required#:#Erforderlich
 hidden#:#Versteckt
 form_msg_select#:#Bitte wählen Sie eine Datei zum Hochladen aus.
 form_msg_not_supported#:#Dateityp nicht unterstützt.
+form_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen ausgefüllt werden. Bitte ergänzen Sie diese Felder.

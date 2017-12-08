@@ -186,7 +186,11 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 					break;
 				case 'source_url':
 					$tmp_id = $_GET['tmp_id'];
-					$video[$item->getPostVar()] =  ILIAS_HTTP_PATH . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id . '/' . rawurlencode($value['name']);
+					$dir = ilUtil::getWebspaceDir() . '/vimp/' . $tmp_id;
+					$source_url = ltrim($dir, '.') . '/' . rawurlencode($value['name']);
+					ilWACSignedPath::setTokenMaxLifetimeInSeconds(ilWACSignedPath::MAX_LIFETIME);
+					$source_url = ilWACSignedPath::signFile($source_url);
+					$video[$item->getPostVar()] =  ILIAS_HTTP_PATH . ltrim($source_url, '.');
 					break;
 				case 'add_automatically':
 					$add_automatically = (int) $value;
@@ -206,30 +210,21 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		try {
 			$video = xvmpMedium::upload($video, $this->parent_gui->getObjId(), $tmp_id,$add_automatically, $notification);
+			ilUtil::delDir($dir);
 		} catch (xvmpException $e) {
+			ilUtil::delDir($dir);
 			ilUtil::sendFailure($e->getMessage(), true);
 			return false;
 		}
 
 		// the object has to be loaded again, since the response from "upload" has another format for the categories
+		// also, this adds it to the cache
 		$video = xvmpMedium::getObjectAsArray($video['mid']);
 
 		xvmpEventLog::logEvent(xvmpEventLog::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
 
-		// TODO: Webaccesschecker? Async hochladen ILIAS -> Vimp ?
+		// TODO: Async hochladen ILIAS -> Vimp ?
 		return true;
-				// indirect file download via ViMP/transfer.php
-//				if (!is_dir(CLIENT_DATA_DIR . '/vimp_upload')) {
-//					ilUtil::makeDir(CLIENT_DATA_DIR . '/vimp_upload');
-//				}
-//				if (!is_dir(CLIENT_DATA_DIR . '/vimp_upload/' . $tmp_id)) {
-//					ilUtil::makeDir(CLIENT_DATA_DIR . '/vimp_upload/' . $tmp_id);
-//				}
-//				ilUtil::moveUploadedFile($value['tmp_name'],$value['name'],CLIENT_DATA_DIR . '/vimp_upload/' . $tmp_id . '/' . $value['name']);
-//				$value = ILIAS_HTTP_PATH . '/vimp_transfer/' . $tmp_id . '/' . $value['name'];
-//				$value = htmlentities($value);
-
-				// direct file download via ViMP/transfer folder
 
 	}
 }

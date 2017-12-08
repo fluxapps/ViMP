@@ -167,12 +167,10 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	protected function fillRow($a_set) {
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
-		$hide_button = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId()) ? 'ADD' : 'REMOVE';
-		$this->tpl->setVariable('VAL_ACTION_' . $hide_button, 'hidden');
-
-		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
-		$this->tpl->setVariable('VAL_LINK_ADD', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSearchVideosGUI::CMD_ADD_VIDEO, '', true));
-		$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSearchVideosGUI::CMD_REMOVE_VIDEO, '', true));
+		$checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
+		if ($checked) {
+			$this->tpl->setVariable('VAL_CHECKED', 'checked');
+		}
 
 		foreach ($this->available_columns as $title => $props)
 		{

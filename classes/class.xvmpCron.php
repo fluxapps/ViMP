@@ -92,7 +92,6 @@ class xvmpCron {
 				$medium = xvmpMedium::find($uploaded_medium->getMid());
 				if ($medium->getStatus() == 'legal') {
 					$this->sendNotification($medium, $uploaded_medium);
-					// TODO: lokal videos löschen
 				}
 			} catch (xvmpException $e) {
 				if ($e->getCode() == 404) {
