@@ -1,3 +1,4 @@
+<!-- BEGIN transcoded -->
 <tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
 	<td class="std small">
 		<a onclick="VimpContent.playVideo({VAL_MID});">
@@ -32,3 +33,34 @@
 		<input name="lp_required_percentage[{VAL_MID}]" id="xvmp_percentage_{VAL_MID}" type="number" value="{VAL_REQUIRED_PERCENTAGE}">
 	</td>
 </tr>
+<!-- END transcoded -->
+<!-- BEGIN transcoding -->
+<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
+	<td class="std small">
+		<div class="xvmp_image_container">
+			<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}">
+		</div>
+	</td>
+	<td class="std small">
+		{VAL_TITLE}
+	</td>
+	<td class="std small">
+		{VAL_DESCRIPTION}
+	</td>
+	<td class="std small">
+		{VAL_DURATION}
+	</td>
+	<td class="std small">
+		{VAL_USERNAME}
+	</td>
+	<td class="std small">
+		{VAL_CREATED_AT}
+	</td>
+	<td class="std small">
+		<input name="lp_required[{VAL_MID}]" id="xvmp_relevant_{VAL_MID}" value="1" type="checkbox" {VAL_REQUIRED} {VAL_RELEVANCE_DISABLED}>
+	</td>
+	<td class="std small">
+		<input name="lp_required_percentage[{VAL_MID}]" id="xvmp_percentage_{VAL_MID}" type="number" value="{VAL_REQUIRED_PERCENTAGE}">
+	</td>
+</tr>
+<!-- END transcoding -->

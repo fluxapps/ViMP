@@ -113,6 +113,10 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 
 			if ($title == 'visible') {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] == 1 ? 'checked' : '');
+			} elseif ($title == 'description' && strlen($a_set[$title]) > 95) {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 90) . '...');
+			} elseif ($title == 'title' && strlen($a_set[$title]) > 50) {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 45) . '...');
 			} else {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			}

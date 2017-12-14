@@ -15,20 +15,34 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 		'action' => array(),
 		'user' => array(),
 		'mid' => array(),
-		'title' => array(),
+		'object_title' => array(),
+		'video_title' => array(),
 		'data' => array()
 	);
 
+	protected $is_global_log;
+
 	public function __construct($parent_gui, $parent_cmd) {
-		$this->setId('log_' . $parent_gui->getObjId());
+		if ($parent_gui instanceof ilViMPConfigGUI) {
+			$this->is_global_log = true;
+			$this->setId('global_log');
+		} else {
+			unset($this->available_columns['object_title']);
+			$this->setId('log_' . $parent_gui->getObjId());
+		}
 		parent::__construct($parent_gui, $parent_cmd);
 		$this->setShowRowsSelector(true);
 	}
 
 
 	public function parseData() {
-		$where = array('obj_id' => $this->parent_obj->getObjId());
-		$operators = array('obj_id' => '=', 'action' => 'IN', 'title' => 'LIKE');
+		if ($this->is_global_log) {
+			$where = array();
+			$operators = array('action' => 'IN', 'title' => 'LIKE');
+		} else {
+			$where = array('obj_id' => $this->parent_obj->getObjId());
+			$operators = array('obj_id' => '=', 'action' => 'IN', 'title' => 'LIKE');
+		}
 
 		foreach ($this->filters as $filter_item) {
 			$value = $filter_item->getValue();
@@ -38,7 +52,11 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 			$where[$filter_item->getPostVar()] = $filter_item->getPostVar() == 'title' ? '%'.$value.'%' : $value;
 		}
 
-		$this->setData(xvmpEventLog::where($where, $operators)->orderBy('timestamp', 'DESC')->getArray());
+		if (empty($where)) {
+			$this->setData(xvmpEventLog::orderBy('timestamp', 'DESC')->getArray());
+		} else {
+			$this->setData(xvmpEventLog::where($where, $operators)->orderBy('timestamp', 'DESC')->getArray());
+		}
 	}
 
 
@@ -58,6 +76,18 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 					break;
 				case 'data':
 					$this->tpl->setVariable("VAL_DATA", $this->formatData($a_set['action'], $value));
+					break;
+				case 'obj_id':
+					if ($this->is_global_log) {
+						$this->tpl->setCurrentBlock('block_object_title');
+						$this->tpl->setVariable('VAL_OBJECT_TITLE', ilObject2::_lookupTitle($value));
+
+						$this->ctrl->setParameterByClass(ilObjViMPGUI::class, 'ref_id',array_shift(ilObject2::_getAllReferences($value)));
+						$link = $this->ctrl->getLinkTargetByClass(array(ilObjPluginDispatchGUI::class, ilObjViMPGUI::class), ilObjViMPGUI::CMD_SHOW_CONTENT);
+						$this->tpl->setVariable('VAL_OBJECT_LINK', $link);
+
+						$this->tpl->parseCurrentBlock();
+					}
 					break;
 				default:
 					$this->tpl->setVariable("VAL_".strtoupper($key), $value);

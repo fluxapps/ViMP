@@ -93,6 +93,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		// TITLE
 		$input = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$input->setRequired(true);
+		$input->setMaxLength(128);
 		$this->addItem($input);
 
 		// DESCRIPTION

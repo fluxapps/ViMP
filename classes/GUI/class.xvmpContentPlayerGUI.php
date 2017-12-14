@@ -58,15 +58,26 @@ class xvmpContentPlayerGUI {
 		$video_player = new xvmpVideoPlayer($video);
 		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
-		$player_tpl->setVariable('DESCRIPTION', $video->getDescription());
+		$player_tpl->setVariable('DESCRIPTION', $video->getDescription(50));
 
 		if (!$video instanceof xvmpDeletedMedium) {
-			$player_tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration'));
-			$player_tpl->setVariable('DURATION', strip_tags($video->getDurationFormatted()));
-			$player_tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author'));
-			$player_tpl->setVariable('AUTHOR', $video->getCustomAuthor());
-			$player_tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at'));
-			$player_tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
+			$player_tpl->setCurrentBlock('video_info');
+			$player_tpl->setVariable('VALUE', $this->pl->txt('duration') . ': ' . strip_tags($video->getDurationFormatted()));
+			$player_tpl->parseCurrentBlock();
+
+			foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $custom_field) {
+				$value = $video->getField($custom_field[xvmpConf::F_FORM_FIELD_ID]);
+				if (!$value) {
+					continue;
+				}
+				$player_tpl->setCurrentBlock('video_info');
+				$player_tpl->setVariable('VALUE', $custom_field[xvmpConf::F_FORM_FIELD_TITLE] . ': ' . $value);
+				$player_tpl->parseCurrentBlock();
+			}
+
+			$player_tpl->setCurrentBlock('video_info');
+			$player_tpl->setVariable('VALUE', $this->pl->txt('created_at') . ': ' . $video->getCreatedAt('d.m.Y, H:i'));
+			$player_tpl->parseCurrentBlock();
 		}
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());

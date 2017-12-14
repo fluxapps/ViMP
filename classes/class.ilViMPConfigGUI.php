@@ -11,6 +11,10 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 	const CMD_STANDARD = 'configure';
 	const CMD_UPDATE = 'update';
 	const CMD_FLUSH_CACHE = 'flushCache';
+	const CMD_SHOW_LOG = 'showLog';
+
+	const SUBTAB_SETTINGS = 'settings';
+	const SUBTAB_LOG = 'log';
 
 	/**
 	 * @var ilTemplate
@@ -29,14 +33,19 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 	 */
 	protected $toolbar;
 	/**
+	 * @var ilTabsGUI
+	 */
+	protected $tabs;
+	/**
 	 * ilViMPConfigGUI constructor.
 	 */
 	public function __construct() {
-		global $tpl, $ilCtrl, $ilToolbar;
+		global $tpl, $ilCtrl, $ilToolbar, $ilTabs;
 		$this->toolbar = $ilToolbar;
 		$this->tpl = $tpl;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
+		$this->tabs = $ilTabs;
 	}
 
 
@@ -44,11 +53,38 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 	 * @param $cmd
 	 */
 	function performCommand($cmd) {
+		$this->addSubTabs();
 		switch ($cmd) {
 			default:
 				$this->{$cmd}();
 				break;
 		}
+	}
+
+	protected function addSubTabs() {
+		$this->tabs->addSubTab(self::SUBTAB_SETTINGS, $this->pl->txt(self::SUBTAB_SETTINGS), $this->ctrl->getLinkTarget($this, self::CMD_STANDARD));
+		$this->tabs->addSubTab(self::SUBTAB_LOG, $this->pl->txt(self::SUBTAB_LOG), $this->ctrl->getLinkTarget($this, self::CMD_SHOW_LOG));
+	}
+
+	protected function showLog() {
+		$this->tabs->activateSubTab(self::SUBTAB_LOG);
+		$xvmpEventLogTableGUI = new xvmpEventLogTableGUI($this, self::CMD_SHOW_LOG);
+		$xvmpEventLogTableGUI->parseData();
+		$this->tpl->setContent($xvmpEventLogTableGUI->getHTML());
+	}
+
+	protected function applyFilter() {
+		$xvmpEventLogTableGUI = new xvmpEventLogTableGUI($this, self::CMD_SHOW_LOG);
+		$xvmpEventLogTableGUI->writeFilterToSession();
+		$xvmpEventLogTableGUI->resetOffset();
+		$this->ctrl->redirect($this, self::CMD_SHOW_LOG);
+	}
+
+	protected function resetFilter() {
+		$xvmpEventLogTableGUI = new xvmpEventLogTableGUI($this, self::CMD_SHOW_LOG);
+		$xvmpEventLogTableGUI->resetFilter();
+		$xvmpEventLogTableGUI->resetOffset();
+		$this->ctrl->redirect($this, self::CMD_SHOW_LOG);
 	}
 
 	public function addFlushCacheButton () {
@@ -71,6 +107,7 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 	 *
 	 */
 	protected function configure() {
+		$this->tabs->activateSubTab(self::SUBTAB_SETTINGS);
 		$this->addFlushCacheButton();
 		$xvmpConfFormGUI = new xvmpConfFormGUI($this);
 		$xvmpConfFormGUI->fillForm();

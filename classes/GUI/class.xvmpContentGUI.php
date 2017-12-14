@@ -68,7 +68,7 @@ class xvmpContentGUI extends xvmpGUI {
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
 			$tpl->setVariable('TITLE', $video->getTitle());
-			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription()));
+			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription(50)));
 
 			if (!$video instanceof xvmpDeletedMedium) {
 				$tpl->setVariable('LABEL_TITLE', $this->pl->txt('title') . ':');

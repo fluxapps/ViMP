@@ -30,7 +30,7 @@ class xvmpDeletedMedium extends xvmpMedium {
 	/**
 	 * @return String
 	 */
-	public function getDescription() {
+	public function getDescription($max_length = 0) {
 		return ilViMPPlugin::getInstance()->txt('not_available_description');
 	}
 

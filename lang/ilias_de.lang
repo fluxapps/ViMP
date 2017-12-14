@@ -118,4 +118,7 @@ required#:#Erforderlich
 hidden#:#Versteckt
 form_msg_select#:#Bitte wählen Sie eine Datei zum Hochladen aus.
 form_msg_not_supported#:#Dateityp nicht unterstützt.
+msg_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen ausgefüllt werden. Bitte ergänzen Sie diese Felder.
 form_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen ausgefüllt werden. Bitte ergänzen Sie diese Felder.
+object_title#:#ViMP-Objekt
+video_title#:#Video-Titel

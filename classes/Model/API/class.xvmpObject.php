@@ -256,4 +256,16 @@ class xvmpObject {
 	public function setId($id) {
 		$this->id = $id;
 	}
+
+
+	/**
+	 * used for custom fields
+	 *
+	 * @param $field_name
+	 *
+	 * @return mixed
+	 */
+	public function getField($field_name) {
+		return $this->$field_name;
+	}
 }

@@ -7,6 +7,7 @@
 	float: left;
 	background: white;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
 }
 
 .xvmp_title, .xvmp_description, .xvmp_duration {
@@ -31,10 +32,22 @@
 	opacity: 0;
 	transition: .5s ease;
 	background-color: white;
+	border-radius: 6px;
 }
 
 
+.xvmp_overlay_infos_content p {
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
+}
+
 .xvmp_overlay_infos_content {
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
 	text-align: left;
 	padding: 4%;
 	width: 100%;
@@ -69,6 +82,8 @@
 	width: 100%;
 	height: 66%;
 	background: black;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
 }
 
 .xvmp_image_container img:hover {
@@ -86,6 +101,8 @@ div.xvmp_image_container img {
 	height: 100%;
 	max-width: 100%;
 	horiz-align: center;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
 }
 
 .waiting {
@@ -97,6 +114,13 @@ div.modal-content {
 	/*height: fit-content;*/
 	max-width: 800px;
 	margin: auto;
+}
+
+h4.modal-title {
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
 }
 
 div#xvmp_video_container {

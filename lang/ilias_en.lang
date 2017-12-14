@@ -119,3 +119,6 @@ hidden#:#Hidden
 form_msg_select#:#Please choose a file to upload.
 form_msg_not_supported#:#File type not supported.
 form_incomplete#:#Some of this forms fields are mandatory and need to be filled out. Please complete these fields.
+msg_incomplete#:#Some of this forms fields are mandatory and need to be filled out. Please complete these fields.
+object_title#:#ViMP-Object
+video_title#:#Video Title

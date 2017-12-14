@@ -81,7 +81,7 @@ class xvmpEventLog extends ActiveRecord {
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        text
-	 * @db_length           256
+	 * @db_length           4000
 	 */
 	protected $data;
 	/**

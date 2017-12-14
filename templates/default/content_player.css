@@ -33,6 +33,25 @@ div#xvmp_video_list_container {
 	float:left;
 }
 
+div#xvmp_video_list_container::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+div#xvmp_video_list_container::-webkit-scrollbar
+{
+	height: 10px;
+	background-color: #F5F5F5;
+}
+
+div#xvmp_video_list_container::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
 .box {
 	width: 150px;
 	padding-bottom: 150px;
@@ -44,6 +63,7 @@ div#xvmp_video_list_container {
 	text-align: center;
 	background: white;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
 }
 
 .box:hover .xvmp_overlay_infos {
@@ -98,6 +118,8 @@ div#xvmp_video_list_container {
 	width: 100%;
 	height: 60%;
 	background: black;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
 }
 
 div.xvmp_image_container img.xvmp_preview_image {
@@ -105,6 +127,8 @@ div.xvmp_image_container img.xvmp_preview_image {
 	background-size: contain;
 	width: 100%;
 	height: 100%;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
 }
 
 .xvmp_play_overlay {

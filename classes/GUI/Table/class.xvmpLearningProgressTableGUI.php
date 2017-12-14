@@ -89,6 +89,13 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 	 * @param xvmpObject $a_set
 	 */
 	protected function fillRow($a_set) {
+		$transcoded = ($a_set['status'] == 'legal');
+		if ($transcoded) {
+			$this->tpl->setCurrentBlock('transcoded');
+		} else {
+			$this->tpl->setCurrentBlock('transcoding');
+		}
+
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
 		/** @var xvmpSelectedMedia $selected_medium */
@@ -108,9 +115,15 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 				//				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			} else if ($title == 'duration') {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set['duration_formatted']);
+			} elseif ($title == 'description' && strlen($a_set[$title]) > 95) {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 90) . '...');
+			} elseif ($title == 'title' && strlen($a_set[$title]) > 50) {
+				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 45) . '...');
 			} else {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 			}
 		}
+
+		$this->tpl->parseCurrentBlock();
 	}
 }
