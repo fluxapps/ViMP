@@ -40,7 +40,9 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 	 * xvmpTableGUI constructor.
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
-		global $ilCtrl, $tpl;
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
+		$tpl = $DIC['tpl'];
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->tpl_global = $tpl;

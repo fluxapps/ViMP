@@ -40,7 +40,11 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 	 * ilViMPConfigGUI constructor.
 	 */
 	public function __construct() {
-		global $tpl, $ilCtrl, $ilToolbar, $ilTabs;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilToolbar = $DIC['ilToolbar'];
+		$ilTabs = $DIC['ilTabs'];
 		$this->toolbar = $ilToolbar;
 		$this->tpl = $tpl;
 		$this->ctrl = $ilCtrl;

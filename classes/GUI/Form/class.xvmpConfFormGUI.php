@@ -19,7 +19,8 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	 * @param $parent_gui
 	 */
 	public function __construct($parent_gui) {
-		global $tpl;
+		global $DIC;
+		$tpl = $DIC['tpl'];
 		parent::__construct($parent_gui);
 
 		$tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_config.js');

@@ -19,7 +19,9 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 	 * @return bool
 	 */
 	public function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id = NULL, $a_user_id = '') {
-		global $ilUser, $ilAccess;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
+		$ilAccess = $DIC['ilAccess'];
 		/**
 		 * @var $ilAccess ilAccessHandler
 		 */
@@ -55,7 +57,8 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 		if ($ref_id === NULL) {
 			$ref_id = $_GET['ref_id'];
 		}
-		global $ilAccess;
+		global $DIC;
+		$ilAccess = $DIC['ilAccess'];
 
 		/**
 		 * @var $ilAccess ilAccesshandler
@@ -73,7 +76,8 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 		if ($ref_id === NULL) {
 			$ref_id = $_GET['ref_id'];
 		}
-		global $ilAccess;
+		global $DIC;
+		$ilAccess = $DIC['ilAccess'];
 
 		/**
 		 * @var $ilAccess ilAccesshandler
@@ -91,7 +95,8 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 		if ($ref_id === NULL) {
 			$ref_id = $_GET['ref_id'];
 		}
-		global $ilAccess;
+		global $DIC;
+		$ilAccess = $DIC['ilAccess'];
 
 		/**
 		 * @var $ilAccess ilAccesshandler

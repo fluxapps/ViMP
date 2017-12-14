@@ -180,7 +180,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 * @return bool
 	 */
 	protected function setTabs() {
-		global $lng;
+		global $DIC;
+		$lng = $DIC['lng'];
 
 		$this->tabs_gui->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xvmpContentGUI::class, xvmpContentGUI::CMD_STANDARD));
 		$this->tabs_gui->addTab(self::TAB_INFO, $this->pl->txt(self::TAB_INFO), $this->ctrl->getLinkTargetByClass(ilInfoScreenGUI::class));

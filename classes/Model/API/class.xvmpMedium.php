@@ -37,7 +37,8 @@ class xvmpMedium extends xvmpObject {
 
 	public static function getUserMedia($ilObjUser = null, $filter = array()) {
 		if (!$ilObjUser) {
-			global $ilUser;
+			global $DIC;
+			$ilUser = $DIC['ilUser'];
 			$ilObjUser = $ilUser;
 		}
 
@@ -128,7 +129,8 @@ class xvmpMedium extends xvmpObject {
 	}
 
 	public static function upload($video, $obj_id, $tmp_id, $add_automatically, $notification) {
-		global $ilUser;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
 		$response = xvmpRequest::uploadMedium($video);
 		$medium = $response->getResponseArray()['medium'];
 

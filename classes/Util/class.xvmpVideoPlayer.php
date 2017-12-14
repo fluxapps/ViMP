@@ -37,7 +37,8 @@ class xvmpVideoPlayer {
 
 
 	public function __construct($video) {
-		global $tpl;
+		global $DIC;
+		$tpl = $DIC['tpl'];
 		$this->tpl = $tpl;
 		$this->pl = ilViMPPlugin::getInstance();
 		if (is_int($video)) {
@@ -47,7 +48,8 @@ class xvmpVideoPlayer {
 	}
 
 	public static function loadVideoJSAndCSS($load_observer) {
-		global $tpl;
+		global $DIC;
+		$tpl = $DIC['tpl'];
 		if ($load_observer) {
 			$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/js/xvmp_observer.js');
 

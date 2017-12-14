@@ -17,7 +17,8 @@ class xvmpCurl {
 	 * @param string $request_type
 	 */
 	public function __construct($url = '') {
-		global $lng;
+		global $DIC;
+		$lng = $DIC['lng'];
 		self::$api_key = xvmpConf::getConfig(xvmpConf::F_API_KEY);
 		if (strpos($url, 'http') === false) {
 			$url = rtrim(xvmpConf::getConfig(xvmpConf::F_API_URL), '/') . '/' . ltrim($url, '/');

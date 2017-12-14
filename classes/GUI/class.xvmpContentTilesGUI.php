@@ -17,7 +17,13 @@ class xvmpContentTilesGUI {
 	 * xvmpContentTilesGUI constructor.
 	 */
 	public function __construct($parent_gui) {
-		global $tpl, $ilCtrl, $ilTabs, $ilToolbar, $ilUser, $lng;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilTabs = $DIC['ilTabs'];
+		$ilToolbar = $DIC['ilToolbar'];
+		$ilUser = $DIC['ilUser'];
+		$lng = $DIC['lng'];
 		/**
 		 * @var $ilCtrl    ilCtrl
 		 * @var $ilTabs    ilTabsGUI

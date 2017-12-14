@@ -30,7 +30,8 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 	protected $user;
 
 	public function __construct($parent_gui) {
-		global $ilUser;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
 		$this->user = $ilUser;
 
 		$this->setId('xoct_event');

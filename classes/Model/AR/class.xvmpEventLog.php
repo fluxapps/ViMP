@@ -253,7 +253,8 @@ class xvmpEventLog extends ActiveRecord {
 	}
 
 	public function create() {
-		global $ilUser;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
 		$this->setTimestamp(time());
 		$this->setLogin($ilUser->getLogin());
 		parent::create();

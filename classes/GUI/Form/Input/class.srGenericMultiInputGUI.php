@@ -240,7 +240,8 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 	 * @return    boolean        Input ok, true/false
 	 */
 	public function checkInput() {
-		global $lng;
+		global $DIC;
+		$lng = $DIC['lng'];
 
 		$valid = true;
 

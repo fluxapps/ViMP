@@ -19,7 +19,13 @@ abstract class xvmpGUI {
 	protected $parent_gui;
 
 	public function __construct(ilObjViMPGUI $parent_gui) {
-		global $tpl, $ilCtrl, $ilTabs, $ilToolbar, $ilUser, $lng;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilTabs = $DIC['ilTabs'];
+		$ilToolbar = $DIC['ilToolbar'];
+		$ilUser = $DIC['ilUser'];
+		$lng = $DIC['lng'];
 		/**
 		 * @var $ilCtrl    ilCtrl
 		 * @var $ilTabs    ilTabsGUI
@@ -151,7 +157,8 @@ abstract class xvmpGUI {
 	 * ajax
 	 */
 	public function updateProgress() {
-		global $ilUser;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
 		$mid = $_POST['mid'];
 		$ranges = $_POST['time_ranges'];
 		xvmpUserProgress::storeProgress($ilUser->getid(), $mid, $ranges);

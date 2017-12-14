@@ -51,7 +51,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
-		global $ilUser;
+		global $DIC;
+		$ilUser = $DIC['ilUser'];
 		$this->user = $ilUser;
 		$this->setId('own_' . $_GET['ref_id']);
 		parent::__construct($parent_gui, $parent_cmd);

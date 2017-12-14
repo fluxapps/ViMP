@@ -113,7 +113,8 @@ class xvmp {
 	 * @return bool|int
 	 */
 	public static function getParentCourseRefId($ref_id) {
-		global $tree;
+		global $DIC;
+		$tree = $DIC['tree'];
 		/**
 		 * @var $tree ilTree
 		 */
@@ -137,7 +138,8 @@ class xvmp {
 		$members = array();
 		$ref_id = self::getParentCourseRefId($is_ref_id ? $id : self::lookupRefId($id));
 		if ($ref_id) {
-			global $rbacreview;
+			global $DIC;
+			$rbacreview = $DIC['rbacreview'];
 			$crs = new ilObjCourse($ref_id);
 			$member_role = $crs->getDefaultMemberRole();
 			$members = $rbacreview->assignedUsers($member_role);

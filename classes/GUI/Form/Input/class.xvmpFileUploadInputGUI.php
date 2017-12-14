@@ -53,7 +53,8 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 	 * @param $a_postvar
 	 */
 	public function __construct(ilPropertyFormGUI $ilPropertyFormGUI, $cmd, $a_title, $a_postvar) {
-		global $tpl;
+		global $DIC;
+		$tpl = $DIC['tpl'];
 		$this->pl = ilViMPPlugin::getInstance();
 		$tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
 		$tpl->addCss('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/waiter.css');
@@ -83,7 +84,8 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 
 
 	protected function initJS() {
-		global $tpl;
+		global $DIC;
+		$tpl = $DIC['tpl'];
 		$tpl->addJavaScript('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/form/uploader.min.js');
 		$settings = new stdClass();
 		$settings->lng = new stdClass();
@@ -399,7 +401,8 @@ class xoctPlupload {
 		}
 
 		$filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
-		global $ilLog;
+		global $DIC;
+		$ilLog = $DIC['ilLog'];
 		$ilLog->write('plupload chunks');
 		$ilLog->write($filePath);
 		$this->setFilePath($filePath);

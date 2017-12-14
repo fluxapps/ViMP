@@ -42,7 +42,10 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 	protected $input_template;
 
 	public function __construct($title, $post_var){
-		global $tpl, $ilUser, $lng;
+		global $DIC;
+		$tpl = $DIC['tpl'];
+		$ilUser = $DIC['ilUser'];
+		$lng = $DIC['lng'];
 
 		if(substr($post_var, -2) != "[]")
 			$post_var = $post_var."[]";
@@ -63,7 +66,8 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 	 */
 	function checkInput()
 	{
-		global $lng;
+		global $DIC;
+		$lng = $DIC['lng'];
 
 		//var_dump($this->getValue());
 		if ($this->getRequired() && count($this->getValue()) == 0)

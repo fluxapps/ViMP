@@ -28,7 +28,12 @@ class xvmpCron {
 		$_POST['password'] = $data[2];
 		$this->initILIAS();
 
-		global $ilDB, $ilUser, $ilCtrl, $ilLog, $ilias;
+		global $DIC;
+		$ilDB = $DIC['ilDB'];
+		$ilUser = $DIC['ilUser'];
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilLog = $DIC['ilLog'];
+		$ilias = $DIC['ilias'];
 		if (self::DEBUG) {
 			$ilLog->write('Auth passed for async ViMP');
 		}
@@ -75,7 +80,8 @@ class xvmpCron {
 		require_once './Services/Mail/classes/class.ilMail.php';
 
 		// fix for some stupid ilias init....
-		global $ilSetting;
+		global $DIC;
+		$ilSetting = $DIC['ilSetting'];
 		if (!$ilSetting) {
 			$ilSetting = new ilSessionMock();
 		}
