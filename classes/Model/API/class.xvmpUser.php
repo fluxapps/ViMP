@@ -10,17 +10,23 @@ class xvmpUser extends xvmpObject {
 
 	/**
 	 * @param ilObjUser $ilObjUser
+	 * @param bool      $omit_creation
 	 *
-	 * @return xvmpUser
+	 * @return null|xvmpUser
+	 *
 	 */
-	public static function getVimpUser(ilObjUser $ilObjUser) {
+	public static function getVimpUser(ilObjUser $ilObjUser, $omit_creation = false) {
 		$mapping = self::getMappedUsername($ilObjUser);
 
 		$response = xvmpRequest::getUsers(array('filterbyname' => $mapping))->getResponseArray();
 		$count = $response['users']['count'];
 		switch ($count) {
 			case 0:
+				if ($omit_creation) {
+					return null;
+				}
 				self::createShadowUser($ilObjUser);
+				break;
 			case 1:
 				$xvmpUser = new self();
 				$xvmpUser->buildObjectFromArray($response['users']['user']);
@@ -32,6 +38,9 @@ class xvmpUser extends xvmpObject {
 						$xvmpUser->buildObjectFromArray($user);
 						return $xvmpUser;
 					}
+				}
+				if ($omit_creation) {
+					return null;
 				}
 				self::createShadowUser($ilObjUser);
 		}

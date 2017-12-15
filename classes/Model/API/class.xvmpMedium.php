@@ -77,8 +77,20 @@ class xvmpMedium extends xvmpObject {
 	}
 
 	public static function getFilteredAsArray(array $filter) {
-		$response = xvmpRequest::getMedia($filter)->getResponseArray();
-		if ($response['media']['count'] <= 1) {
+		if (!isset($filter['title'])) {
+			$filter['title'] = '';
+		}
+
+		try {
+			$response = xvmpRequest::extendedSearch($filter)->getResponseArray();
+		} catch (xvmpException $e) {    // api throws 404 exception if nothing is found
+			if ($e->getCode() == 404) {
+				return array();
+			}
+			throw $e;
+		}
+
+		if (isset($response['media']['medium']['mid'])) {
 			return array($response['media']['medium']);
 		}
 		return $response['media']['medium'];

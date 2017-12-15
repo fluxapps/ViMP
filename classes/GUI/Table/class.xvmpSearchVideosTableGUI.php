@@ -86,8 +86,13 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
 		$this->setPrefix(ilViMPPlugin::XVMP . '_search_');
-		$this->setId('search_' . $_GET['ref_id']);
+		$this->setId('xvmp_search_' . $_GET['ref_id']);
+
 		parent::__construct($parent_gui, $parent_cmd);
+
+		$this->setFilterCols(4);
+
+		$this->lng->loadLanguageModule('form'); // some lang vars from the form module are used
 		$this->setDisableFilterHiding(true);
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 	}
@@ -108,49 +113,93 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	 *
 	 */
 	public function parseData() {
-		$filter = array('thumbsize' => self::THUMBSIZE);
 		foreach ($this->filters as $filter_item) {
 			$value = $filter_item->getValue();
-			$filter[$filter_item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
+			$postvar = $filter_item->getPostVar();
+			switch ($postvar) {
+				case 'username':
+					if (ilObjUser::_loginExists($value)) {
+						$ilObjUser = new ilObjUser(ilObjUser::_lookupId($value));
+						$xvmpUser = xvmpUser::getVimpUser($ilObjUser, true);
+						if (!$xvmpUser) {
+							// if the ilias user has no vimp user, then he/she certainly doesn't have any videos
+							$this->setData(array());
+							return;
+						}
+						$filter['userid'] = $xvmpUser->getId();
+					} else {
+						ilUtil::sendInfo($this->pl->txt('msg_username_not_found'), true);
+						$this->setData(array());
+						return;
+					}
+					break;
+				case 'created':
+					$filter[$postvar.'_min'] = $value['start'];
+					$filter[$postvar.'_max'] = $value['end'];
+					break;
+				case 'duration':
+					$filter[$postvar.'_min'] = $filter_item->getCombinationItem('min')->getValueInSeconds();
+					$filter[$postvar.'_max'] = $filter_item->getCombinationItem('max')->getValueInSeconds();
+					break;
+				case 'views':
+					$filter[$postvar.'_min'] = $filter_item->getCombinationItem('min')->getValue();
+					$filter[$postvar.'_max'] = $filter_item->getCombinationItem('max')->getValue();
+					break;
+				default:
+					$filter[$postvar] = is_array($value) ? implode(',', $value) : $value;
+					break;
+			}
 		}
+
 		$data = xvmpMedium::getFilteredAsArray(array_filter($filter));
 		$this->setData(array_filter($data));
 	}
 
 
 	public function initFilter() {
-		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'filterbyname');
+		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilTextInputGUI($this->pl->txt('username'), 'filterbyuser');
+		$filter_item = new ilTextInputGUI($this->pl->txt('username'), 'username');
+		$this->ctrl->setParameterByClass('ilViMPPlugin', 'ref_id', $_GET['ref_id']);
+		$filter_item->setDataSource($this->ctrl->getLinkTargetByClass(array('ilUIPluginRouterGUI', 'ilViMPPlugin'),
+			'addUserAutoComplete', "", true));
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilMultiSelectInputGUI($this->pl->txt('category'), 'filterbycategory');
+		$filter_item = new ilMultiSelectSearchInputGUI($this->pl->txt('category'), 'categories');
 		$categories = xvmpCategory::getAll();
 		$options = array();
 		/** @var xvmpCategory $category */
 		foreach ($categories as $category) {
-			$options[$category->getId()] = $category->getName();
+			$options[$category->getId()] = $category->getNameWithPath();
 		}
 		$filter_item->setOptions($options);
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilTextInputGUI($this->pl->txt('tags'), 'filterbytags');
+		$filter_item = new ilTextInputGUI($this->pl->txt('tags'), 'tags');
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilDateDurationInputGUI($this->pl->txt('create_date'), 'filterbycreate');
+		$filter_item = new srDateDurationInputGUI($this->pl->txt('create_date'), 'created');
 		$filter_item->setShowTime(false);
-		$filter_item->setStart(new ilDateTime(time(), IL_CAL_UNIX));
 		$filter_item->setStartText($this->pl->txt('from'));
-		$filter_item->setEnd(new ilDateTime(time(), IL_CAL_UNIX));
 		$filter_item->setEndText($this->pl->txt('to'));
 
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilTextInputGUI($this->pl->txt('duration'), 'filterbyduration');
+		$filter_item = new ilCombinationInputGUI($this->pl->txt('duration'), 'duration');
+		$filter_subitem = new ilDurationInputGUI($this->pl->txt('min'), 'duration_min');
+		$filter_subitem->setShowSeconds(true);
+		$filter_item->addCombinationItem('min', $filter_subitem, 'Min');
+		$filter_subitem = new ilDurationInputGUI($this->pl->txt('max'), 'duration_max');
+		$filter_subitem->setShowSeconds(true);
+		$filter_item->addCombinationItem('max', $filter_subitem, 'Max');
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilTextInputGUI($this->pl->txt('views'), 'filterbyviews');
+		$filter_item = new ilCombinationInputGUI($this->pl->txt('views'), 'views');
+		$filter_subitem = new ilNumberInputGUI($this->pl->txt('min'), 'views_min');
+		$filter_item->addCombinationItem('min', $filter_subitem, 'Min');
+		$filter_subitem = new ilNumberInputGUI($this->pl->txt('max'), 'views_max');
+		$filter_item->addCombinationItem('max', $filter_subitem, 'Max');
 		$this->addAndReadFilterItem($filter_item);
 
 		// custom filters
@@ -175,7 +224,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		foreach ($this->available_columns as $title => $props)
 		{
 			if ($title == 'thumbnail') {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] . 'size=' . self::THUMBSIZE);
+				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
 				continue;
 			} elseif ($title == 'description' && strlen($a_set[$title]) > 95) {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 90) . '...');

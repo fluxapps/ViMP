@@ -422,6 +422,7 @@ return array(
     'ilViMPPlugin' => $baseDir . '/classes/class.ilViMPPlugin.php',
     'ilXcache' => $baseDir . '/../../../../../../../Services/GlobalCache/classes/Xcache/class.ilXcache.php',
     'pdoDB' => $baseDir . '/../../../../../../../Services/ActiveRecord/Connector/DataBase/class.pdoDB.php',
+    'srDateDurationInputGUI' => $baseDir . '/classes/GUI/Form/Input/class.srDateDurationInputGUI.php',
     'srGenericMultiInputGUI' => $baseDir . '/classes/GUI/Form/Input/class.srGenericMultiInputGUI.php',
     'xoctPlupload' => $baseDir . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',
     'xoctPluploadException' => $baseDir . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',

@@ -122,3 +122,4 @@ form_incomplete#:#Some of this forms fields are mandatory and need to be filled 
 msg_incomplete#:#Some of this forms fields are mandatory and need to be filled out. Please complete these fields.
 object_title#:#ViMP-Object
 video_title#:#Video Title
+msg_username_not_found#:#The username could not be found.

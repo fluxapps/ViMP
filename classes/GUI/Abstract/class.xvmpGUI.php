@@ -132,10 +132,11 @@ abstract class xvmpGUI {
 		$mid = $_GET['mid'];
 		$video = xvmpMedium::find($mid);
 		$video_infos = "				
-			<h3>{$video->getDescription()}</h3>
 			<p>{$this->pl->txt('duration')}: {$video->getDurationFormatted()}</p>
 			<p>{$this->pl->txt('author')}: {$video->getCustomAuthor()}</p>
-			<p>{$this->pl->txt('created_at')}: {$video->getCreatedAt('m.d.Y, H:i')}</p>";
+			<p>{$this->pl->txt('created_at')}: {$video->getCreatedAt('m.d.Y, H:i')}</p>
+			<p class='xvmp_ellipsis'>{$this->pl->txt('description')}: {$video->getDescription()}</p>
+		";
 		$response = new stdClass();
 //		$response->html = $video->getEmbedCode() . $video_infos;
 		$video_player = new xvmpVideoPlayer($video);

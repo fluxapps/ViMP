@@ -66,6 +66,10 @@ class xvmpCategory extends xvmpObject {
 	 */
 	protected $pid;
 	/**
+	 * @var int
+	 */
+	protected $parent;
+	/**
 	 * @var String
 	 */
 	protected $culture;
@@ -143,6 +147,22 @@ class xvmpCategory extends xvmpObject {
 
 
 	/**
+	 * @return int
+	 */
+	public function getParent() {
+		return $this->parent;
+	}
+
+
+	/**
+	 * @param int $parent
+	 */
+	public function setParent($parent) {
+		$this->parent = $parent;
+	}
+
+
+	/**
 	 * @return String
 	 */
 	public function getCulture() {
@@ -168,8 +188,8 @@ class xvmpCategory extends xvmpObject {
 	public function getNameWithPath() {
 		$path = array($this->getName());
 		$category = $this;
-		while ($pid = $category->getPid()) {
-			$category = xvmpCategory::find($pid);
+		while ($parent = $category->getParent()) {
+			$category = xvmpCategory::find($parent);
 			array_unshift($path, $category->getName());
 		}
 		return implode(' » ', $path);

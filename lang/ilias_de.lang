@@ -122,3 +122,4 @@ msg_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen 
 form_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen ausgefüllt werden. Bitte ergänzen Sie diese Felder.
 object_title#:#ViMP-Objekt
 video_title#:#Video-Titel
+msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.

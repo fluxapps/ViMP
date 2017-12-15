@@ -77,30 +77,27 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 
 	public function initFilter() {
-		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'filterbyname');
+		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilMultiSelectInputGUI($this->pl->txt('category'), 'filterbycategory');
+		$filter_item = new ilMultiSelectSearchInputGUI($this->pl->txt('category'), 'categories');
 		$categories = xvmpCategory::getAll();
 		$options = array();
 		/** @var xvmpCategory $category */
 		foreach ($categories as $category) {
-			$options[$category->getId()] = $category->getName();
+			$options[$category->getId()] = $category->getNameWithPath();
 		}
 		$filter_item->setOptions($options);
 		$this->addAndReadFilterItem($filter_item);
 
-//		$filter_item = new ilTextInputGUI($this->pl->txt('tags'), 'filterbytags');
-//		$this->addAndReadFilterItem($filter_item);
-//
-//		$filter_item = new ilDateDurationInputGUI($this->pl->txt('create_date'), 'filterbycreate');
-//		$filter_item->setShowTime(false);
-//		$filter_item->setStart(new ilDateTime(time(), IL_CAL_UNIX));
-//		$filter_item->setStartText($this->pl->txt('from'));
-//		$filter_item->setEnd(new ilDateTime(time(), IL_CAL_UNIX));
-//		$filter_item->setEndText($this->pl->txt('to'));
+		$filter_item = new ilTextInputGUI($this->pl->txt('tags'), 'tags');
+		$this->addAndReadFilterItem($filter_item);
 
-//		$this->addAndReadFilterItem($filter_item);
+		$filter_item = new srDateDurationInputGUI($this->pl->txt('create_date'), 'created');
+		$filter_item->setShowTime(false);
+		$filter_item->setStartText($this->pl->txt('from'));
+		$filter_item->setEndText($this->pl->txt('to'));
+		$this->addAndReadFilterItem($filter_item);
 	}
 
 
@@ -108,14 +105,24 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 *
 	 */
 	public function parseData() {
-		$filter = array('thumbsize' => self::THUMBSIZE);
 		foreach ($this->filters as $filter_item) {
 			$value = $filter_item->getValue();
-			$filter[$filter_item->getPostVar()] = is_array($value) ? implode(',', $value) : $value;
+			$postvar = $filter_item->getPostVar();
+			switch ($postvar) {
+				case 'created':
+					$filter[$postvar.'_min'] = $value['start'];
+					$filter[$postvar.'_max'] = $value['end'];
+					break;
+				default:
+					$filter[$postvar] = is_array($value) ? implode(',', $value) : $value;
+					break;
+			}
 		}
 
-//		$videos = xvmpMedium::getFilteredAsArray($filter);
-		$videos = xvmpMedium::getUserMedia(null, $filter);
+		$filter['userid'] = xvmpUser::getVimpUser($this->user)->getId();
+
+		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
+
 		foreach ($videos as $video) {
 			$data[$video['mid']] = $video;
 		}

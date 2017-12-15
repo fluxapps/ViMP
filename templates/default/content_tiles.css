@@ -132,6 +132,13 @@ div.modal-body > section > iframe {
 	background-size: contain;
 }
 
+.xvmp_ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
+}
+
 .xvmp_play_overlay, .xvmp_play_overlay img {
 	display: none;
 }

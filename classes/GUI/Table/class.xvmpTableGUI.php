@@ -101,6 +101,9 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 					'end'   => $item->getEnd(),
 				);
 				break;
+			case ($item instanceof ilDurationInputGUI):
+				$this->filter[$item->getPostVar()] = $item->getSeconds();
+				break;
 			default:
 				$this->filter[$item->getPostVar()] = $item->getValue();
 				break;

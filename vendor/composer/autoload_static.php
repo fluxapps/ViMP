@@ -433,6 +433,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'ilViMPPlugin' => __DIR__ . '/../..' . '/classes/class.ilViMPPlugin.php',
         'ilXcache' => __DIR__ . '/../..' . '/../../../../../../../Services/GlobalCache/classes/Xcache/class.ilXcache.php',
         'pdoDB' => __DIR__ . '/../..' . '/../../../../../../../Services/ActiveRecord/Connector/DataBase/class.pdoDB.php',
+        'srDateDurationInputGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/Input/class.srDateDurationInputGUI.php',
         'srGenericMultiInputGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/Input/class.srGenericMultiInputGUI.php',
         'xoctPlupload' => __DIR__ . '/../..' . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',
         'xoctPluploadException' => __DIR__ . '/../..' . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',

@@ -23,6 +23,7 @@ class xvmpRequest {
 	const GET_USER = 'getUser';
 	const REGISTER_USER = 'registerUser';
 	const GET_USER_MEDIA = 'getUserMedia';
+	const EXTENDED_SEARCH = 'extendedSearch';
 
 
 	/**
@@ -248,9 +249,33 @@ class xvmpRequest {
 		return $xvmpCurl;
 	}
 
+
+	/**
+	 * @param       $user_id
+	 * @param array $params
+	 *
+	 * @return xvmpCurl
+	 */
 	public static function getUserMedia($user_id, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_USER_MEDIA);
 		$xvmpCurl->addPostField('userid', $user_id);
+		foreach ($params as $name => $value) {
+			$xvmpCurl->addPostField($name, $value);
+		}
+		$xvmpCurl->post();
+
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * @param $params
+	 *
+	 * @return xvmpCurl
+	 */
+	public static function extendedSearch($params) {
+		$xvmpCurl = new xvmpCurl(self::EXTENDED_SEARCH);
+		$xvmpCurl->addPostField('searchrange', 'video');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

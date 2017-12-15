@@ -5,6 +5,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 /**
  * Class ilViMPPlugin
  *
+ * @ilCtrl_isCalledBy ilViMPPlugin: ilUIPluginRouterGUI
+ *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class ilViMPPlugin extends ilRepositoryObjectPlugin {
@@ -29,6 +31,19 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 *
+	 */
+	public function executeCommand() {
+		global $ilCtrl;
+		$cmd = $ilCtrl->getCmd();
+		switch($cmd) {
+			default:
+				$this->{$cmd}();
+				break;
+		}
 	}
 
 
@@ -75,5 +90,28 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 		$DIC->database()->dropTable(xvmpUploadedMedia::returnDbTableName());
 		$DIC->database()->dropTable(xvmpUserLPStatus::returnDbTableName());
 		$DIC->database()->dropTable(xvmpUserProgress::returnDbTableName());
+	}
+
+	/**
+	 * async auto complete method for user filter in search table
+	 */
+	public function addUserAutoComplete() {
+		include_once './Services/User/classes/class.ilUserAutoComplete.php';
+		$auto = new ilUserAutoComplete();
+		$auto->setSearchFields(array('login','firstname','lastname'));
+		$auto->setResultField('login');
+		$auto->enableFieldSearchableCheck(false);
+		$auto->setMoreLinkAvailable(true);
+
+
+		if(($_REQUEST['fetchall']))
+		{
+			$auto->setLimit(ilUserAutoComplete::MAX_ENTRIES);
+		}
+
+		$list = $auto->getList($_REQUEST['term']);
+
+		echo $list;
+		exit();
 	}
 }
