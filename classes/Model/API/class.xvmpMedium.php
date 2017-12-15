@@ -176,6 +176,11 @@ class xvmpMedium extends xvmpObject {
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
 		$response['description'] = strip_tags($response['description']);
 
+		if (is_array($response['mediapermissions']['rid'])) {
+			$response['mediapermissions'] = $response['mediapermissions']['rid'];
+		}
+//		foreach ($response['mediapermissions'])
+
 		foreach (array(array('categories', 'category', 'cid'), array('tags', 'tag', 'tid')) as $labels) {
 			$result = array();
 			if (isset($response[$labels[0]][$labels[1]][$labels[2]])) {

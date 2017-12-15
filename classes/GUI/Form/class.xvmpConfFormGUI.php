@@ -125,7 +125,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input->addOption($radio_option);
 
 		$radio_option = new ilRadioOption($this->pl->txt('selection'), xvmpConf::MEDIA_PERMISSION_SELECTION);
-		$sub_selection = new ilMultiSelectInputGUI('', xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
+		$sub_selection = new ilMultiSelectSearchInputGUI('', xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
 		$options = $this->getMediaPermissionOptions();
 		$sub_selection->setOptions($options);
 		$sub_selection->setDisabled(empty($options));
@@ -216,7 +216,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	 */
 	private function getValuesForItem($item, &$array) {
 		if (self::checkItem($item)) {
-			$key = $item->getPostVar();
+			$key = rtrim($item->getPostVar(), '[]');
 			$array[$key] = xvmpConf::getConfig($key);
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {
@@ -239,7 +239,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	 */
 	private function saveValueForItem($item) {
 		if (self::checkItem($item)) {
-			$key = $item->getPostVar();
+			$key = rtrim($item->getPostVar(), '[]');
 			xvmpConf::set($key, $this->getInput($key));
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {

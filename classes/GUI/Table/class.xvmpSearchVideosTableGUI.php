@@ -115,6 +115,9 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	public function parseData() {
 		foreach ($this->filters as $filter_item) {
 			$value = $filter_item->getValue();
+			if (!$value) {
+				continue;
+			}
 			$postvar = $filter_item->getPostVar();
 			switch ($postvar) {
 				case 'username':

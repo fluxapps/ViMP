@@ -102,6 +102,7 @@ class xvmpRequest {
 	public static function getMedium($mediumid, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_MEDIUM);
 		$params['mediumid'] = $mediumid;
+		$params['token'] = xvmp::getToken();
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}
@@ -276,6 +277,8 @@ class xvmpRequest {
 	public static function extendedSearch($params) {
 		$xvmpCurl = new xvmpCurl(self::EXTENDED_SEARCH);
 		$xvmpCurl->addPostField('searchrange', 'video');
+		$xvmpCurl->addPostField('token', xvmp::getToken());
+		$xvmpCurl->addPostField('hidden', 'true');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

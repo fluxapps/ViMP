@@ -126,7 +126,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		// MEDIA PERMISSIONS
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
 		if ($media_permissions) {
-			$input = new ilMultiSelectInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), 'mediapermissions');
+			$input = new ilMultiSelectSearchInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), 'mediapermissions');
 			$input->setRequired(true);
 			$options = array();
 			if ($media_permissions == xvmpConf::MEDIA_PERMISSION_SELECTION) {
