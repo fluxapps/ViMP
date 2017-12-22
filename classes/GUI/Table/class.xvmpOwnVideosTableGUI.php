@@ -98,6 +98,12 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$filter_item->setStartText($this->pl->txt('from'));
 		$filter_item->setEndText($this->pl->txt('to'));
 		$this->addAndReadFilterItem($filter_item);
+
+		// custom filters
+		foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $field) {
+			$filter_item = new ilTextInputGUI($field[xvmpConf::F_FILTER_FIELD_TITLE], $field[xvmpConf::F_FILTER_FIELD_ID]);
+			$this->addAndReadFilterItem($filter_item);
+		}
 	}
 
 
@@ -121,8 +127,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 		$filter['userid'] = xvmpUser::getVimpUser($this->user)->getId();
 
-//		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
-		$videos = xvmpMedium::getUserMedia($this->user, array_filter($filter));
+		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
+//		$videos = xvmpMedium::getUserMedia($this->user, array_filter($filter));
 
 		foreach ($videos as $video) {
 			$data[$video['mid']] = $video;
