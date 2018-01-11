@@ -12,6 +12,10 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	 * @var ilViMPConfigGUI
 	 */
 	protected $parent_gui;
+	/**
+	 * @var ilDB
+	 */
+	protected $db;
 
 	/**
 	 * xvmpConfFormGUI constructor.
@@ -23,6 +27,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$tpl = $DIC['tpl'];
 		parent::__construct($parent_gui);
 
+		$this->db = $DIC['ilDB'];
 		$tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_config.js');
 	}
 
@@ -217,7 +222,13 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	private function getValuesForItem($item, &$array) {
 		if (self::checkItem($item)) {
 			$key = rtrim($item->getPostVar(), '[]');
-			$array[$key] = xvmpConf::getConfig($key);
+			if ($key == xvmpConf::F_OBJECT_TITLE) {
+				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
+				$value = $this->db->fetchObject($sql)->value;
+			} else {
+				$value = xvmpConf::getConfig($key);
+			}
+			$array[$key] = $value;
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {
 					$this->getValuesForItem($subitem, $array);
@@ -240,7 +251,20 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	private function saveValueForItem($item) {
 		if (self::checkItem($item)) {
 			$key = rtrim($item->getPostVar(), '[]');
-			xvmpConf::set($key, $this->getInput($key));
+			$value = $this->getInput($key);
+
+			// exception: object title is stored in lng_data, not in config table
+			if ($key == xvmpConf::F_OBJECT_TITLE) {
+				$this->db->update('lng_data',array(
+					'value' => array('text', $value)
+				), array(
+					'module' => array('text', 'rep_robj_xvmp'),
+					'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
+				));
+				return;
+			}
+
+			xvmpConf::set($key, $value);
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {
 					$this->saveValueForItem($subitem);

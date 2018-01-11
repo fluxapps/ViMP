@@ -464,7 +464,7 @@ class xoctPlupload {
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class xoctPluploadException extends xoctException {
+class xoctPluploadException extends xvmpException {
 
 	/**
 	 * @param string $code
