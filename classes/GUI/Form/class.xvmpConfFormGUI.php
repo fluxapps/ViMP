@@ -42,11 +42,13 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		// API User
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_USER), xvmpConf::F_API_USER);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_USER . '_info'));
+		$input->setRequired(true);
 		$this->addItem($input);
 
 		// API Password
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_PASSWORD), xvmpConf::F_API_PASSWORD);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_PASSWORD . '_info'));
+		$input->setRequired(true);
 		$this->addItem($input);
 
 		// API Key
@@ -72,11 +74,13 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		// External User Mapping
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL), xvmpConf::F_USER_MAPPING_EXTERNAL);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL . '_info'));
+		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Local User Mapping
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_USER_MAPPING_LOCAL), xvmpConf::F_USER_MAPPING_LOCAL);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_USER_MAPPING_LOCAL . '_info'));
+		$input->setRequired(true);
 		$this->addItem($input);
 
 

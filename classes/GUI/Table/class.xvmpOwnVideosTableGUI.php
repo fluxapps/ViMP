@@ -130,6 +130,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
 //		$videos = xvmpMedium::getUserMedia($this->user, array_filter($filter));
 
+		$data = array();
+
 		foreach ($videos as $video) {
 			$data[$video['mid']] = $video;
 		}

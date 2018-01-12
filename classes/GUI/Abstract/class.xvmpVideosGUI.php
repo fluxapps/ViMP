@@ -35,9 +35,10 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 			case self::CMD_STANDARD:
 			case self::CMD_SHOW_FILTERED:
 				if (!$this->ctrl->isAsynch()) {
-					$this->initUploadButton();
 					$this->setSubTabs();
 					$this->tabs->activateSubTab(static::SUBTAB_ACTIVE);
+
+					$this->initUploadButton();
 				}
 				$this->{$cmd}();
 				break;
@@ -148,6 +149,9 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 *
 	 */
 	protected function initUploadButton() {
+		if (!xvmpUser::getVimpUser($this->user)->getId()) {
+			return false;
+		}
 		$upload_button = ilLinkButton::getInstance();
 		$upload_button->setCaption($this->pl->txt('upload_video'), false);
 		$upload_button->setUrl($this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO_FORM));

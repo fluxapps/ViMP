@@ -81,7 +81,9 @@ class xvmpCron {
 			try {
 				$medium = xvmpMedium::find($uploaded_medium->getMid());
 				if ($medium->getStatus() == 'legal') {
-					$this->sendNotification($medium, $uploaded_medium);
+					$this->sendNotification($medium, $uploaded_medium, true);
+				} elseif ($medium->getStatus() == 'error') {
+					$this->sendNotification($medium, $uploaded_medium, false);
 				}
 			} catch (xvmpException $e) {
 				if ($e->getCode() == 404) {
@@ -98,10 +100,11 @@ class xvmpCron {
 	 * @param xvmpMedium        $medium
 	 * @param xvmpUploadedMedia $uploaded_medium
 	 */
-	protected function sendNotification(xvmpMedium $medium, xvmpUploadedMedia $uploaded_medium) {
-		xvmpLog::getInstance()->write('Medium transcoded successfully: ' . $medium->getTitle() . ' (' . $medium->getMid() . ')');
+	protected function sendNotification(xvmpMedium $medium, xvmpUploadedMedia $uploaded_medium, $transcoding_succeeded) {
+		xvmpLog::getInstance()->write('Medium transcoding ' . ($transcoding_succeeded ? 'succeeded:' : 'failed:') . $medium->getTitle() . ' (' . $medium->getMid() . ')');
 
-		$body = xvmpConf::getConfig(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL);
+		$subject = xvmpConf::getConfig($transcoding_succeeded ? xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL : xvmpConf::F_NOTIFICATION_SUBJECT_FAILED);
+		$body = xvmpConf::getConfig($transcoding_succeeded ? xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL : xvmpConf::F_NOTIFICATION_BODY_FAILED);
 
 		// replace placeholders
 		$ilObjUser = new ilObjUser($uploaded_medium->getUserId());
@@ -117,17 +120,14 @@ class xvmpCron {
 			$ilObjUser->getLogin(),
 			'',
 			'',
-			xvmpConf::getConfig(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL),
+			$subject,
 			$body,
 			array(),
 			array('normal'),
 			1
 		);
-		xvmpLog::getInstance()->write('to: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()));
 
-		// delete temp file and entry
-		$dir = ILIAS_HTTP_PATH . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $uploaded_medium->getTmpId();
-		ilUtil::delDir($dir);
+		// delete entry
 		$uploaded_medium->delete();
 
 		// set visible

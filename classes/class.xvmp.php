@@ -72,9 +72,12 @@ class xvmp {
 	 * @return mixed
 	 */
 	public static function loadToken() {
-		$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER),xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))->getResponseArray();
-//		xvmpConf::set(xvmpConf::F_TOKEN, $response['token']);
-		return $response['token'];
+		static $token;
+		if (!$token) {
+			$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER),xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))->getResponseArray();
+			$token = $response['token'];
+		}
+		return $token;
 	}
 
 
