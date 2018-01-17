@@ -29,47 +29,9 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		'username' => array(
 			'sort_field' => 'user'
 		),
-		'copyright' => array(
-			'sort_field' => 'copyright'
-		),
 		'created_at' => array(
 			'sort_field' => 'unix_time'
 		)
-	);
-
-	protected $available_filters = array(
-		'title' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbyname'
-		),
-		'user' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbyuser'
-		),
-		'copyright' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbycopyright'
-		),
-		'category' => array(
-			'input_gui' => 'ilMultiSelectInputGUI',
-			'post_var' => 'filterbycategory'
-		),
-		'tags' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbytags'
-		),
-		'created_at' => array(
-			'input_gui' => 'ilDateDurationInputGUI',
-			'post_var' => 'filterbycreatedate'
-		),
-		'duration' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbyduration'
-		),
-		'views' => array(
-			'input_gui' => 'ilTextInputGUI',
-			'post_var' => 'filterbyviews'
-		),
 	);
 
 	/**

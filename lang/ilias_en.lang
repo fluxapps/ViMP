@@ -123,3 +123,16 @@ msg_incomplete#:#Some of this forms fields are mandatory and need to be filled o
 object_title#:#ViMP-Object
 video_title#:#Video Title
 msg_username_not_found#:#The username could not be found.
+xvmp_new#:#Create new ViMP object
+xvmp_add#:#Create
+cat_create_xvmp#:#Create ViMP
+crs_create_xvmp#:#Create ViMP
+fold_create_xvmp#:#Create ViMP
+grp_create_xvmp#:#Create ViMP
+root_create_xvmp#:#Create ViMP
+xvmp_visible#:#Visible: ViMP is visible
+xvmp_read#:#Read: User can watch the videos
+xvmp_rep_robj_xvmp_perm_upload#:#Upload: User can upload videos
+xvmp_write#:#Edit Settings: User can edit content and settings of ViMP object
+xvmp_delete#:#Delete: User can delete ViMP object
+xvmp_edit_permission#:#Change Permissions: User can change permission settings

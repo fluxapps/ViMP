@@ -123,3 +123,16 @@ form_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen
 object_title#:#ViMP-Objekt
 video_title#:#Video-Titel
 msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.
+xvmp_new#:#Neues ViMP-Objekt anlegen
+xvmp_add#:#Erstellen
+cat_create_xvmp#:#ViMP Erstellen
+crs_create_xvmp#:#ViMP Erstellen
+fold_create_xvmp#:#ViMP Erstellen
+grp_create_xvmp#:#ViMP Erstellen
+root_create_xvmp#:#ViMP Erstellen
+xvmp_visible#:#Anzeigen: ViMP ist sichtbar
+xvmp_read#:#Lesezugriff: Videos können angezeigt werden
+xvmp_rep_robj_xvmp_perm_upload#:#Upload: Videos können hochgeladen werden
+xvmp_write#:#Einstellungen bearbeiten: Einstellungen und Inhalte können bearbeitet werden
+xvmp_delete#:#Löschen: Objekt kann gelöscht werden
+xvmp_edit_permission#:#Rechteeinstellungen ändern: Rechteeinstellungen ändern

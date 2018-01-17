@@ -150,6 +150,12 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		}
 	}
 
+
+	protected function supportsCloning() {
+		return false;
+	}
+
+
 	/**
 	 * @return xoctOpenCast
 	 */
