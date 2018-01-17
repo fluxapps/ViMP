@@ -92,6 +92,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 
 		// Object Title
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_OBJECT_TITLE), xvmpConf::F_OBJECT_TITLE);
+		$input->setRequired(true);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_OBJECT_TITLE . '_info'));
 		$this->addItem($input);
 
@@ -102,6 +103,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 
 		// Form Fields
 		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FORM_FIELDS), xvmpConf::F_FORM_FIELDS);
+		$input->setAllowEmptyFields(true);
 		$input->setRequired(false);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_FORM_FIELDS . '_info'));
 		$subinput = new ilTextInputGUI('', xvmpConf::F_FORM_FIELD_ID);
@@ -117,6 +119,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		// Filter Fields
 		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FILTER_FIELDS), xvmpConf::F_FILTER_FIELDS);
 		$input->setRequired(false);
+		$input->setAllowEmptyFields(true);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_FILTER_FIELDS . '_info'));
 		$subinput = new ilTextInputGUI('', xvmpConf::F_FILTER_FIELD_ID);
 		$input->addInput($subinput);
