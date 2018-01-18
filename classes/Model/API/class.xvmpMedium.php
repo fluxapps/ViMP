@@ -20,6 +20,13 @@ class xvmpMedium extends xvmpObject {
 		'hidden' => "2",
 	);
 
+
+	/**
+	 * @param $id
+	 *
+	 * @return xvmpDeletedMedium|static
+	 * @throws xvmpException
+	 */
 	public static function find($id) {
 		try {
 			return parent::find($id);
@@ -35,6 +42,12 @@ class xvmpMedium extends xvmpObject {
 	}
 
 
+	/**
+	 * @param null  $ilObjUser
+	 * @param array $filter
+	 *
+	 * @return array
+	 */
 	public static function getUserMedia($ilObjUser = null, $filter = array()) {
 		if (!$ilObjUser) {
 			global $DIC;
@@ -55,6 +68,13 @@ class xvmpMedium extends xvmpObject {
 		return $response;
 	}
 
+
+	/**
+	 * @param $obj_id
+	 *
+	 * @return array
+	 * @throws xvmpException
+	 */
 	public static function getSelectedAsArray($obj_id) {
 		$selected = xvmpSelectedMedia::getSelected($obj_id);
 		$videos = array();
@@ -76,6 +96,13 @@ class xvmpMedium extends xvmpObject {
 		return $videos;
 	}
 
+
+	/**
+	 * @param array $filter
+	 *
+	 * @return array
+	 * @throws xvmpException
+	 */
 	public static function getFilteredAsArray(array $filter) {
 		if (!isset($filter['title'])) {
 			$filter['title'] = '';
@@ -97,6 +124,11 @@ class xvmpMedium extends xvmpObject {
 	}
 
 
+	/**
+	 * @param $id
+	 *
+	 * @return bool|mixed|null
+	 */
 	public static function getObjectAsArray($id) {
 		$key = self::class . '-' . $id;
 		$existing = xvmpCacheFactory::getInstance()->get($key);
@@ -116,11 +148,19 @@ class xvmpMedium extends xvmpObject {
 		return $response;
 	}
 
+
+	/**
+	 * @return mixed
+	 */
 	public static function getAllAsArray() {
 		$response = xvmpRequest::getMedia()->getResponseArray();
 		return $response['media']['medium'];
 	}
 
+
+	/**
+	 * @return xvmpCurl
+	 */
 	public function update() {
 		$params = array(
 			'title' => $this->getTitle(),
@@ -140,6 +180,16 @@ class xvmpMedium extends xvmpObject {
 		return $response;
 	}
 
+
+	/**
+	 * @param $video
+	 * @param $obj_id
+	 * @param $tmp_id
+	 * @param $add_automatically
+	 * @param $notification
+	 *
+	 * @return mixed
+	 */
 	public static function upload($video, $obj_id, $tmp_id, $add_automatically, $notification) {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
@@ -160,6 +210,10 @@ class xvmpMedium extends xvmpObject {
 		return $medium;
 	}
 
+
+	/**
+	 * @param $mid
+	 */
 	public static function deleteObject($mid) {
 		xvmpRequest::deleteMedium($mid);
 		xvmpSelectedMedia::deleteVideo($mid);
@@ -194,6 +248,12 @@ class xvmpMedium extends xvmpObject {
 		return $response;
 	}
 
+
+	/**
+	 * @param       $identifier
+	 * @param array $object
+	 * @param null  $ttl
+	 */
 	public static function cache($identifier, $object, $ttl = NULL) {
 		parent::cache($identifier, $object, ($ttl ? $ttl : xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_VIDEOS)));
 	}

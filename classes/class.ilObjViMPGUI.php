@@ -14,6 +14,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 
 	const CMD_SHOW_CONTENT = 'showContent';
 	const CMD_SEARCH_VIDEOS = 'searchVideos';
+	const CMD_SEARCH_USER_AJAX = 'searchUserAjax';
 
 	const TAB_CONTENT = 'content';
 	const TAB_INFO = 'info_short';
@@ -274,5 +275,19 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 
 	public function searchVideos() {
 		$this->ctrl->redirectByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD);
+	}
+
+
+	/**
+	 * ajax
+	 */
+	public function searchUserAjax() {
+		$username = $_GET['username'];
+		$response = xvmpRequest::extendedSearch(array(
+			'searchrange' => 'user',
+			'title' => $username,
+		))->getResponseBody();
+		echo $response;
+		exit;
 	}
 }

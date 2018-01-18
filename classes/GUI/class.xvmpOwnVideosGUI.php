@@ -15,6 +15,8 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const TABLE_CLASS = 'xvmpOwnVideosTableGUI';
 
 	const CMD_EDIT_VIDEO = 'editVideo';
+	const CMD_CHANGE_OWNER = 'changeOwner';
+	const CMD_CONFIRMED_CHANGE_OWNER = 'confirmedChangeOwner';
 	const CMD_UPDATE_VIDEO = 'updateVideo';
 	const CMD_DELETE_VIDEO = 'deleteVideo';
 	const CMD_UPLOAD_VIDEO_FORM = 'uploadVideoForm';
@@ -32,6 +34,12 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
 		}
 
+		/**
+		 * this will find (and cache) or create a vimp user,
+		 * or throw an exception if no vimp user is found and no vimp user can be created.
+		 */
+		xvmpUser::getOrCreateVimpUser($this->user);
+
 		parent::executeCommand();
 	}
 
@@ -43,7 +51,6 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$class_name = static::TABLE_CLASS;
 		/** @var xvmpTableGUI $table_gui */
 		$table_gui = new $class_name($this, self::CMD_STANDARD);
-		$table_gui->parseData();
 		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
@@ -58,6 +65,60 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
+
+	/**
+	 *
+	 */
+	public function changeOwner() {
+		$mid = $_GET['mid'];
+		$uid = $_GET['uid'];
+		$username = $_GET['username'];
+		if ($uid) {
+			$ilConfirmationGUI = new ilConfirmationGUI();
+			$ilConfirmationGUI->setFormAction($this->ctrl->getFormAction($this));
+			$ilConfirmationGUI->setHeaderText($this->pl->txt('msg_warning_change_owner'));
+			$ilConfirmationGUI->addItem('mid', $mid, sprintf(
+				$this->pl->txt('confirmation_new_owner'),
+				xvmpMedium::find($mid)->getTitle(),
+				$username
+			));
+			$ilConfirmationGUI->addHiddenItem('uid', $uid);
+			$ilConfirmationGUI->setConfirm($this->lng->txt('confirm'), self::CMD_CONFIRMED_CHANGE_OWNER);
+			$ilConfirmationGUI->setCancel($this->lng->txt('cancel'), self::CMD_STANDARD);
+			$this->tpl->setContent($ilConfirmationGUI->getHTML());
+		} else {
+			$xvmpChangeOwnerFormGUI = new xvmpChangeOwnerFormGUI($this, $mid);
+			$this->tpl->setContent($xvmpChangeOwnerFormGUI->getHTML());
+		}
+	}
+
+
+	/**
+	 *
+	 */
+	public function confirmedChangeOwner() {
+		$mid = $_POST['mid'];
+		$uid = $_POST['uid'];
+
+		$medium = xvmpMedium::getObjectAsArray($mid);
+		if ($medium['uid'] !== xvmpUser::getVimpUser($this->user)->getUid()) {
+			ilUtil::sendFailure($this->pl->txt('permission_denied'), true);
+			$this->ctrl->redirect($this, self::CMD_STANDARD);
+		}
+
+		$response = xvmpRequest::editMedium($mid, array('uid' => $uid))->getResponseBody();
+		if ($response) {
+			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
+			$medium['uid'];
+			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
+			xvmpMedium::cache(xvmpMedium::class . '-' . $mid, $medium);
+			xvmpEventLog::logEvent(xvmpEventLog::ACTION_CHANGE_OWNER, $this->getObjId(), $medium);
+		} else {
+			ilUtil::sendFailure($this->pl->txt('failure'));
+		}
+
+		$this->ctrl->redirect($this, self::CMD_STANDARD);
+	}
 
 	/**
 	 *

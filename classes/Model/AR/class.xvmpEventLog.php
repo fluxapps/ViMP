@@ -24,6 +24,7 @@ class xvmpEventLog extends ActiveRecord {
 	const ACTION_DELETE = 3;
 	const ACTION_ADD = 4;
 	const ACTION_REMOVE = 5;
+	const ACTION_CHANGE_OWNER = 6;
 
 	/**
 	 * @var int

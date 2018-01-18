@@ -10,6 +10,7 @@ class xvmpException extends Exception {
 
 	const API_CALL_UNSUPPORTED = 10;
 	const NO_USER_MAPPING = 20;
+	const USER_CREATION_FAILED = 30;
 	const API_CALL_STATUS_500 = 500;
 	const API_CALL_STATUS_403 = 403;
 	const API_CALL_STATUS_404 = 404;
@@ -23,8 +24,9 @@ class xvmpException extends Exception {
 		self::API_CALL_STATUS_500 => 'An error occurred while communicating with the ViMP-Server',
 		self::API_CALL_STATUS_403 => 'Access denied',
 		self::API_CALL_STATUS_404 => 'Not Found',
-		self::NO_USER_MAPPING => 'Your user-account cannot communicate with the ViMP-Server. Please contact your system administrator.',
-		self::API_CALL_BAD_CREDENTIALS => 'An error occurred while communicating with the ViMP-Server.',
+		self::NO_USER_MAPPING => 'Your ILIAS account cannot communicate with the ViMP-Server. Please contact your system administrator.',
+		self::USER_CREATION_FAILED => 'There was an error while creating a ViMP user for your ILIAS account. Please contact your system administrator.',
+		self::API_CALL_BAD_CREDENTIALS => 'An error occurred while communicating with the ViMP-Server (bad credentials).',
 
 	);
 

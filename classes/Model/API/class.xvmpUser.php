@@ -9,47 +9,68 @@
 class xvmpUser extends xvmpObject {
 
 	/**
-	 * @param ilObjUser $ilObjUser
-	 * @param bool      $omit_creation
-	 *
-	 * @return null|xvmpUser
-	 *
+	 * @var self[]
 	 */
-	public static function getVimpUser(ilObjUser $ilObjUser, $omit_creation = false) {
-		$mapping = self::getMappedUsername($ilObjUser);
+	protected static $cache = array();
 
-		$response = xvmpRequest::getUsers(array('filterbyname' => $mapping))->getResponseArray();
-		$count = $response['users']['count'];
-		switch ($count) {
-			case 0:
-				if ($omit_creation) {
-					return null;
-				}
-				self::createShadowUser($ilObjUser);
-				break;
-			case 1:
-				$xvmpUser = new self();
-				$xvmpUser->buildObjectFromArray($response['users']['user']);
-				return $xvmpUser;
-			default:
-				foreach ($response['users']['user'] as $user) {
-					if ($user['username'] == $mapping) {
-						$xvmpUser = new self();
-						$xvmpUser->buildObjectFromArray($user);
-						return $xvmpUser;
-					}
-				}
-				if ($omit_creation) {
-					return null;
-				}
-				self::createShadowUser($ilObjUser);
+	/**
+	 * @param ilObjUser $ilObjUser
+	 *
+	 * @return bool|xvmpUser
+	 */
+	public static function getVimpUser(ilObjUser $ilObjUser) {
+		if (isset(self::$cache[$ilObjUser->getEmail()])) {
+			return self::$cache[$ilObjUser->getEmail()];
 		}
+
+		$response = xvmpRequest::extendedSearch(array(
+			'searchrange' => 'user',
+			'title' => $ilObjUser->getEmail(),
+		))->getResponseArray();
+
+		$users = $response['users'];
+		if (!$users) {
+			return false;
+		}
+
+		if (isset($users['user']['uid'])) {
+			$xvmpUser = new self();
+			$xvmpUser->buildObjectFromArray($users['user']);
+			self::$cache[$ilObjUser->getEmail()] = $xvmpUser;
+			return $xvmpUser;
+		}
+
+		foreach ($users['user'] as $user) {
+			if ($user['email'] == $ilObjUser->getEmail()) {
+				$xvmpUser = new self();
+				$xvmpUser->buildObjectFromArray($user);
+				self::$cache[$ilObjUser->getEmail()] = $xvmpUser;
+				return $xvmpUser;
+			}
+		}
+
+		return false;
 	}
 
 
 	/**
 	 * @param ilObjUser $ilObjUser
-	 * @return self
+	 *
+	 * @return xvmpUser
+	 */
+	public static function getOrCreateVimpUser(ilObjUser $ilObjUser) {
+		$xvmpUser = self::getVimpUser($ilObjUser);
+		if (!$xvmpUser) {
+			self::createShadowUser($ilObjUser);
+			$xvmpUser = self::getVimpUser($ilObjUser);
+		}
+		return $xvmpUser;
+	}
+
+
+	/**
+	 * @param ilObjUser $ilObjUser
+	 *
 	 */
 	public static function createShadowUser(ilObjUser $ilObjUser) {
 		$params = array(
@@ -65,6 +86,7 @@ class xvmpUser extends xvmpObject {
 		}
 
 		xvmpRequest::registerUser($params);
+
 	}
 
 
@@ -88,6 +110,7 @@ class xvmpUser extends xvmpObject {
 
 		$mapping = str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping);
 		$mapping = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping);
+		$mapping = str_replace('{EMAIL}', $ilObjUser->getEmail(), $mapping);
 		$mapping = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping);
 
 		return $mapping;

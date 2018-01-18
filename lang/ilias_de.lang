@@ -123,6 +123,8 @@ form_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen
 object_title#:#ViMP-Objekt
 video_title#:#Video-Titel
 msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.
+msg_warning_change_owner#:#Achtung: Sie sind im Begriff, den Besitzer eines Ihrer Videos zu ändern. Nach dem Besitzerwechsel können Sie dieses Video nicht mehr bearbeiten. Sind Sie sicher, dass Sie fortfahren möchten?
+confirmation_new_owner#:#Video Titel: "%s", neuer Besitzer: %s
 xvmp_new#:#Neues ViMP-Objekt anlegen
 xvmp_add#:#Erstellen
 cat_create_xvmp#:#ViMP Erstellen
@@ -136,3 +138,6 @@ xvmp_rep_robj_xvmp_perm_upload#:#Upload: Videos können hochgeladen werden
 xvmp_write#:#Einstellungen bearbeiten: Einstellungen und Inhalte können bearbeitet werden
 xvmp_delete#:#Löschen: Objekt kann gelöscht werden
 xvmp_edit_permission#:#Rechteeinstellungen ändern: Rechteeinstellungen ändern
+form_title_change_owner#:#Benutzer suchen
+search#:#Suchen
+permission_denied#:#Zugriff verweigert.

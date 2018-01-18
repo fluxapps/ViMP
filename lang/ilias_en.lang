@@ -123,6 +123,8 @@ msg_incomplete#:#Some of this forms fields are mandatory and need to be filled o
 object_title#:#ViMP-Object
 video_title#:#Video Title
 msg_username_not_found#:#The username could not be found.
+msg_warning_change_owner#:#Warning: You are changing the owner of one of your videos. After this action you are not able to edit this video anymore. Do you want to continue?
+confirmation_new_owner#:#Video title: "%s", new owner: %s
 xvmp_new#:#Create new ViMP object
 xvmp_add#:#Create
 cat_create_xvmp#:#Create ViMP
@@ -136,3 +138,6 @@ xvmp_rep_robj_xvmp_perm_upload#:#Upload: User can upload videos
 xvmp_write#:#Edit Settings: User can edit content and settings of ViMP object
 xvmp_delete#:#Delete: User can delete ViMP object
 xvmp_edit_permission#:#Change Permissions: User can change permission settings
+form_title_change_owner#:#Search User
+search#:#Search
+permission_denied#:#Permission denied.

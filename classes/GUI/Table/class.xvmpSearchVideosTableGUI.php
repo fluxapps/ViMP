@@ -85,7 +85,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 				case 'username':
 					if (ilObjUser::_loginExists($value)) {
 						$ilObjUser = new ilObjUser(ilObjUser::_lookupId($value));
-						$xvmpUser = xvmpUser::getVimpUser($ilObjUser, true);
+						$xvmpUser = xvmpUser::getVimpUser($ilObjUser);
 						if (!$xvmpUser) {
 							// if the ilias user has no vimp user, then he/she certainly doesn't have any videos
 							$this->setData(array());

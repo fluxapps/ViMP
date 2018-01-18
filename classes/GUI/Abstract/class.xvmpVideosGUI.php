@@ -149,7 +149,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 *
 	 */
 	protected function initUploadButton() {
-		if (!xvmpUser::getVimpUser($this->user)->getId()) {
+		if (!xvmpUser::getVimpUser($this->user)) {
 			return false;
 		}
 		$upload_button = ilLinkButton::getInstance();
