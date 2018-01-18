@@ -9,6 +9,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilObjViMPAccess extends ilObjectPluginAccess {
 
+	const ACTION_ADD_VIDEO = 'add_video';
+
 	/**
 	 * @param string $a_cmd
 	 * @param string $a_permission
@@ -106,6 +108,9 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 	}
 
 
+	public static function checkAction($action) {
+
+	}
 
 
 	/**

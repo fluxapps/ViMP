@@ -108,6 +108,7 @@ log_action_2#:#Edit
 log_action_3#:#Delete
 log_action_4#:#Add
 log_action_5#:#Remove
+log_action_6#:#Owner changed
 datetime#:#Date and Time
 action#:#Action
 mid#:#Medium ID
@@ -125,6 +126,7 @@ video_title#:#Video Title
 msg_username_not_found#:#The username could not be found.
 msg_warning_change_owner#:#Warning: You are changing the owner of one of your videos. After this action you are not able to edit this video anymore. Do you want to continue?
 confirmation_new_owner#:#Video title: "%s", new owner: %s
+new_owner#:#New Owner
 xvmp_new#:#Create new ViMP object
 xvmp_add#:#Create
 cat_create_xvmp#:#Create ViMP

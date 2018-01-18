@@ -11,6 +11,7 @@ abstract class xvmpGUI {
 	const CMD_STANDARD = 'index';
 	const CMD_CANCEL = 'cancel';
 	const CMD_FLUSH_CACHE = 'flushCache';
+	const CMD_FILL_MODAL = 'fillModalPlayer';
 
 	const TAB_ACTIVE = ''; // overwrite in subclass
 	/**
@@ -57,6 +58,21 @@ abstract class xvmpGUI {
 		}
 	}
 
+	/**
+	 * @param $cmd
+	 */
+	protected function performCommand($cmd) {
+		switch ($cmd) {
+			case self::CMD_FILL_MODAL:
+				$mid = $_GET['mid'];
+				if (!$mid || !xvmpSelectedMedia::isSelected($mid, $this->getObjId())) {
+					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+				}
+		}
+
+		$this->{$cmd}();
+	}
 
 	public function addFlushCacheButton () {
 		$button = ilLinkButton::getInstance();
@@ -77,13 +93,6 @@ abstract class xvmpGUI {
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $selected->getMid());
 		}
 		$this->ctrl->redirect($this, self::CMD_STANDARD);
-	}
-
-	/**
-	 * @param $cmd
-	 */
-	protected function performCommand($cmd) {
-		$this->{$cmd}();
 	}
 
 

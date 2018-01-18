@@ -108,6 +108,7 @@ log_action_2#:#Bearbeitet
 log_action_3#:#Gelöscht
 log_action_4#:#Hinzugefügt
 log_action_5#:#Entfernt
+log_action_6#:#Besitzer geändert
 datetime#:#Datum und Uhrzeit
 action#:#Aktion
 mid#:#Medium-ID
@@ -125,6 +126,7 @@ video_title#:#Video-Titel
 msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.
 msg_warning_change_owner#:#Achtung: Sie sind im Begriff, den Besitzer eines Ihrer Videos zu ändern. Nach dem Besitzerwechsel können Sie dieses Video nicht mehr bearbeiten. Sind Sie sicher, dass Sie fortfahren möchten?
 confirmation_new_owner#:#Video Titel: "%s", neuer Besitzer: %s
+new_owner#:#Neuer Besitzer
 xvmp_new#:#Neues ViMP-Objekt anlegen
 xvmp_add#:#Erstellen
 cat_create_xvmp#:#ViMP Erstellen

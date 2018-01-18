@@ -56,6 +56,9 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 
 		// custom fields
 		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+			if (!$field[xvmpConf::F_FORM_FIELD_ID]) {
+				continue;
+			}
 			$input = new ilTextInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
 			$input->setRequired($field[xvmpConf::F_FORM_FIELD_REQUIRED]);
 			$this->addItem($input);

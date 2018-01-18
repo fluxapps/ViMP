@@ -33,7 +33,7 @@ class xvmpContentGUI extends xvmpGUI {
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
 		}
-		$detect_mobile = new MobileDetect();
+//		$detect_mobile = new MobileDetect();
 
 //		$layout_type = $detect_mobile->isMobile() ? xvmpSettings::LAYOUT_TYPE_TILES : xvmpSettings::find($this->getObjId())->getLayoutType();
 		$layout_type = xvmpSettings::find($this->getObjId())->getLayoutType();
@@ -52,6 +52,21 @@ class xvmpContentGUI extends xvmpGUI {
 				$xvmpContentPlayerGUI->show();
 				break;
 		}
+	}
+
+
+	protected function performCommand($cmd) {
+		switch ($cmd) {
+			case self::CMD_RENDER_ITEM:
+				$mid = $_GET['mid'];
+				// check if current user is owner of this video
+				if (!$mid || !xvmpSelectedMedia::isSelected($mid, $this->getObjId())) {
+					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+				}
+				break;
+		}
+		parent::performCommand($cmd);
 	}
 
 

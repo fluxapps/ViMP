@@ -34,13 +34,35 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
 		}
 
-		/**
-		 * this will find (and cache) or create a vimp user,
-		 * or throw an exception if no vimp user is found and no vimp user can be created.
-		 */
-		xvmpUser::getOrCreateVimpUser($this->user);
-
 		parent::executeCommand();
+	}
+
+
+	protected function performCommand($cmd) {
+		switch ($cmd) {
+			case self::CMD_EDIT_VIDEO:
+			case self::CMD_CHANGE_OWNER:
+			case self::CMD_UPDATE_VIDEO:
+			case self::CMD_DELETE_VIDEO:
+			case self::CMD_CONFIRMED_CHANGE_OWNER:
+			case self::CMD_CONFIRMED_DELETE_VIDEO:
+				$mid = max($_GET['mid'], $_POST['mid']);
+				$medium = xvmpMedium::find($mid);
+				// check if current user is owner of this video
+				if (!$mid || ($medium->getMediatype() != 'video') || ($medium->getUid() != xvmpUser::getVimpUser($this->user)->getUid())) {
+					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+				}
+				break;
+		}
+		if ($cmd != self::CMD_UPLOAD_CHUNKS) {
+			/**
+			 * this will find (and cache) or create a vimp user,
+			 * or throw an exception if no vimp user is found and no vimp user can be created.
+			 */
+			xvmpUser::getOrCreateVimpUser($this->user);
+		}
+		parent::performCommand($cmd);
 	}
 
 
@@ -83,6 +105,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 				$username
 			));
 			$ilConfirmationGUI->addHiddenItem('uid', $uid);
+			$ilConfirmationGUI->addHiddenItem('username', $username);
 			$ilConfirmationGUI->setConfirm($this->lng->txt('confirm'), self::CMD_CONFIRMED_CHANGE_OWNER);
 			$ilConfirmationGUI->setCancel($this->lng->txt('cancel'), self::CMD_STANDARD);
 			$this->tpl->setContent($ilConfirmationGUI->getHTML());
@@ -99,6 +122,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	public function confirmedChangeOwner() {
 		$mid = $_POST['mid'];
 		$uid = $_POST['uid'];
+		$username = $_POST['username'];
 
 		$medium = xvmpMedium::getObjectAsArray($mid);
 		if ($medium['uid'] !== xvmpUser::getVimpUser($this->user)->getUid()) {
@@ -112,7 +136,11 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			$medium['uid'];
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
 			xvmpMedium::cache(xvmpMedium::class . '-' . $mid, $medium);
-			xvmpEventLog::logEvent(xvmpEventLog::ACTION_CHANGE_OWNER, $this->getObjId(), $medium);
+			xvmpEventLog::logEvent(xvmpEventLog::ACTION_CHANGE_OWNER, $this->getObjId(), array(
+				'owner' => $username,
+				'mid' => $mid,
+				'title' => $medium['title']
+			));
 		} else {
 			ilUtil::sendFailure($this->pl->txt('failure'));
 		}

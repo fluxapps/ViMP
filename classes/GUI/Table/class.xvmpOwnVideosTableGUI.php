@@ -157,6 +157,10 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 			$this->tpl->setCurrentBlock('transcoding');
 		}
 
+		if ($a_set['status'] == 'error') {
+			$this->tpl->setVariable('VAL_DISABLED', 'disabled');
+		}
+
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
 		$checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
@@ -187,6 +191,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle($this->lng->txt('actions'));
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
+//		if ($a_set['status'])
 		$actions->addItem($this->lng->txt('edit'), 'edit', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_EDIT_VIDEO));
 		$actions->addItem($this->lng->txt('change_owner'), 'change_owner', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_CHANGE_OWNER));
 		$actions->addItem($this->lng->txt('delete'), 'delete', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_DELETE_VIDEO));

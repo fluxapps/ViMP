@@ -19,6 +19,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	const CMD_APPLY_FILTER = 'applyFilter';
 	const CMD_RESET_FILTER = 'resetFilter';
 	const CMD_ADD_VIDEO = 'addVideo';
+	const CMD_TOGGLE_VIDEO = 'toggleVideo';
 	const CMD_REMOVE_VIDEO = 'removeVideo';
 
 
@@ -40,13 +41,20 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 
 					$this->initUploadButton();
 				}
-				$this->{$cmd}();
 				break;
-			default:
-				$this->{$cmd}();
+			case self::CMD_TOGGLE_VIDEO:
+				$mid = $_GET['mid'];
+				$medium = xvmpMedium::find($mid);
+				$checked = $_GET['checked'];
+
+				if ($checked && ($medium->getPublished() == 'private') && ($medium->getUid() != xvmpUser::getVimpUser($this->user)->getUid())) {
+					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+				}
 				break;
 		}
- 	}
+		$this->{$cmd}();
+	}
 
 	/**
 	 *

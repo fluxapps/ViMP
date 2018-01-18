@@ -114,6 +114,9 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 					$string .= $this->pl->txt($key) . ': "' . (is_array($old) ? implode(', ', $old) : $old) . '" -> "' . (is_array($new) ? implode(', ', $new) : $new) . '"<br>';
 				}
 				break;
+			case xvmpEventLog::ACTION_CHANGE_OWNER:
+				$new_owner = $data['owner'];
+				$string .= $this->pl->txt('new_owner') . ': ' . $new_owner;
 		}
 
 		return $string;

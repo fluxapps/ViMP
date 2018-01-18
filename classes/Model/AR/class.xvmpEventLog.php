@@ -222,20 +222,23 @@ class xvmpEventLog extends ActiveRecord {
 		$this->timestamp = $timestamp;
 	}
 
-	public static function logEvent($action, $obj_id, $video, $old_video = null) {
+	public static function logEvent($action, $obj_id, $data, $old_data = null) {
 		$eventlog_data = array();
 
 		switch ($action) {
 			case self::ACTION_EDIT:
 				foreach (self::$logged_media_fields as $field) {
-					if ($old_video[$field] != $video[$field]) {
-						$eventlog_data[$field] = array($old_video[$field], $video[$field]);
+					if ($old_data[$field] != $data[$field]) {
+						$eventlog_data[$field] = array($old_data[$field], $data[$field]);
 					}
 				}
 				break;
+			case self::ACTION_CHANGE_OWNER:
+				$eventlog_data['owner'] = $data['owner'];
+				break;
 			default:
 				foreach (self::$logged_media_fields as $field) {
-					$eventlog_data[$field] = $video[$field];
+					$eventlog_data[$field] = $data[$field];
 				}
 				break;
 		}
@@ -245,10 +248,10 @@ class xvmpEventLog extends ActiveRecord {
 		}
 
 		$eventLog = new self();
-		$eventLog->setMid($video['mid']);
+		$eventLog->setMid($data['mid']);
 		$eventLog->setObjId($obj_id);
 		$eventLog->setAction($action);
-		$eventLog->setTitle($video['title']);
+		$eventLog->setTitle($data['title']);
 		$eventLog->setData($eventlog_data);
 		$eventLog->create();
 	}
