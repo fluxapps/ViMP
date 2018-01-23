@@ -34,7 +34,8 @@
       "../../../../../../../Services/GlobalCache",
       "../../../../../../../Services/Tracking",
       "../../../../../../../Services/Calendar",
-      "../../../../../../../Services/WebAccessChecker"
+      "../../../../../../../Services/WebAccessChecker",
+      "../../../../../../../Services/FileDelivery"
     ]
   },
   "config": {

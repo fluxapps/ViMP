@@ -24,7 +24,6 @@ class xvmpConf extends ActiveRecord {
 	const F_ALLOW_PUBLIC_UPLOAD = 'allow_public_upload';
 	const F_MEDIA_PERMISSIONS = 'media_permissions';
 	const F_MEDIA_PERMISSIONS_SELECTION = 'media_permissions_selection';
-	const F_TOKEN = 'token';
 	const F_NOTIFICATION_SUBJECT_SUCCESSFULL = 'notification_subject';
 	const F_NOTIFICATION_BODY_SUCCESSFULL = 'notification_body';
 	const F_NOTIFICATION_SUBJECT_FAILED = 'notification_subject_failed';
@@ -113,7 +112,6 @@ class xvmpConf extends ActiveRecord {
 		$obj->setValue(json_encode($value));
 		$obj->store();
 	}
-
 
 	/**
 	 * @param string $name

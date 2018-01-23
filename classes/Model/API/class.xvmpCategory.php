@@ -13,9 +13,9 @@ class xvmpCategory extends xvmpObject {
 	public static function getObjectAsArray($id) {
 		$key = self::class;
 		$existing = xvmpCacheFactory::getInstance()->get($key);
-		if ($existing && isset($existing[$key])) {
+		if ($existing && isset($existing[$id])) {
 			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . $key . '-' . $id, xvmpCurlLog::DEBUG_LEVEL_2);
-			return $existing[$key];
+			return $existing[$id];
 		}
 
 		$response = xvmpRequest::getCategory($id)->getResponseArray()['category'];

@@ -12,19 +12,26 @@ class xvmpUserRoles extends xvmpObject {
 	 * @inheritdoc
 	 */
 	public static function find($id) {
-		$key = self::class . '-' . $id;
-		if (!isset(xvmpObject::$cache[$key])) {
-			xvmpObject::buildAllFromArray(self::getAllAsArray());
-		}
-		return xvmpObject::$cache[$id];
+		return self::getAllAsArray()[$id];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public static function getAllAsArray() {
+		$existing = xvmpCacheFactory::getInstance()->get(self::class);
+		if ($existing) {
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . self::class, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $existing;
+		}
+
+		xvmpCurlLog::getInstance()->write('CACHE: cache not used: ' . self::class, xvmpCurlLog::DEBUG_LEVEL_2);
+
 		$response = xvmpRequest::getUserRoles()->getResponseArray();
-		return $response['roles']['role'];
+		$user_roles = $response['roles']['role'];
+
+		self::cache(self::class, $user_roles);
+		return $user_roles;
 	}
 
 	/**

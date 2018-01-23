@@ -9,19 +9,21 @@
 class xvmpUser extends xvmpObject {
 
 	/**
-	 * @var self[]
-	 */
-	protected static $cache = array();
-
-	/**
 	 * @param ilObjUser $ilObjUser
 	 *
 	 * @return bool|xvmpUser
 	 */
 	public static function getVimpUser(ilObjUser $ilObjUser) {
-		if (isset(self::$cache[$ilObjUser->getEmail()])) {
-			return self::$cache[$ilObjUser->getEmail()];
+		$key = self::class . '-' . $ilObjUser->getEmail();
+		$existing = xvmpCacheFactory::getInstance()->get($key);
+
+		if ($existing) {
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $existing;
 		}
+
+		xvmpCurlLog::getInstance()->write('CACHE: cache not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+
 
 		$response = xvmpRequest::extendedSearch(array(
 			'searchrange' => 'user',
@@ -36,7 +38,7 @@ class xvmpUser extends xvmpObject {
 		if (isset($users['user']['uid'])) {
 			$xvmpUser = new self();
 			$xvmpUser->buildObjectFromArray($users['user']);
-			self::$cache[$ilObjUser->getEmail()] = $xvmpUser;
+			xvmpCacheFactory::getInstance()->set($key, $xvmpUser);
 			return $xvmpUser;
 		}
 
@@ -44,7 +46,7 @@ class xvmpUser extends xvmpObject {
 			if ($user['email'] == $ilObjUser->getEmail()) {
 				$xvmpUser = new self();
 				$xvmpUser->buildObjectFromArray($user);
-				self::$cache[$ilObjUser->getEmail()] = $xvmpUser;
+				xvmpCacheFactory::getInstance()->set($key, $xvmpUser);
 				return $xvmpUser;
 			}
 		}
@@ -112,6 +114,9 @@ class xvmpUser extends xvmpObject {
 		$mapping = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping);
 		$mapping = str_replace('{EMAIL}', $ilObjUser->getEmail(), $mapping);
 		$mapping = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping);
+
+
+//		preg_match('/[.]*/')
 
 		return $mapping;
 	}

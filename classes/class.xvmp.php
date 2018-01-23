@@ -14,6 +14,8 @@ class xvmp {
 	const ILIAS_53 = 53;
 	const MIN_ILIAS_VERSION = self::ILIAS_50;
 
+	const TOKEN = 'token';
+
 	/**
 	 * @return int
 	 */
@@ -61,31 +63,19 @@ class xvmp {
 	 * @return mixed
 	 */
 	public static function getToken() {
-//		if (!$token = xvmpConf::getConfig(xvmpConf::F_TOKEN)) {
-			$token = self::loadToken();
-//		}
-		return $token;
-	}
-
-
-	/**
-	 * @return mixed
-	 */
-	public static function loadToken() {
-		static $token;
-		if (!$token) {
-			$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER),xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))->getResponseArray();
-			$token = $response['token'];
+		$token = xvmpCacheFactory::getInstance()->get(self::TOKEN);
+		if ($token) {
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . self::TOKEN, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $token;
 		}
+
+		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . self::TOKEN, xvmpCurlLog::DEBUG_LEVEL_2);
+
+		$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER),xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))->getResponseArray();
+		$token = $response[self::TOKEN];
+		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, 300);
+
 		return $token;
-	}
-
-
-	/**
-	 *
-	 */
-	public static function resetToken() {
-		xvmpConf::set(xvmpConf::F_TOKEN, '');
 	}
 
 

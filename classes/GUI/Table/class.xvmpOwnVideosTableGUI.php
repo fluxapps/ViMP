@@ -39,10 +39,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @var xvmpOwnVideosGUI
 	 */
 	protected $parent_obj;
-	/**
-	 * @var ilObjUser
-	 */
-	protected $user;
+
 
 	/**
 	 * xvmpOwnVideosTableGUI constructor.
@@ -53,7 +50,6 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	public function __construct($parent_gui, $parent_cmd) {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
-		$this->user = $ilUser;
 		$this->setId('own_' . $_GET['ref_id']);
 		parent::__construct($parent_gui, $parent_cmd);
 		$this->setDisableFilterHiding(true);
@@ -101,6 +97,9 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 		// custom filters
 		foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $field) {
+			if (!$field[xvmpConf::F_FILTER_FIELD_ID]) {
+				continue;
+			}
 			$filter_item = new ilTextInputGUI($field[xvmpConf::F_FILTER_FIELD_TITLE], $field[xvmpConf::F_FILTER_FIELD_ID]);
 			$this->addAndReadFilterItem($filter_item);
 		}
@@ -138,7 +137,14 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 		foreach (xvmpUploadedMedia::where(array('user_id' => $this->user->getId()))->get() as $uploaded_media) {
 			if (!in_array($uploaded_media->getMid(), array_keys($data))) {
-				$data[$uploaded_media->getMid()] = xvmpMedium::getObjectAsArray($uploaded_media->getMid());
+				try {
+					$data[$uploaded_media->getMid()] = xvmpMedium::getObjectAsArray($uploaded_media->getMid());
+				} catch (xvmpException $e) {
+					if ($e->getCode() == 404 && strpos($e->getMessage(), "Medium not exist") !== false) {
+						$uploaded_media->delete();
+					}
+					continue;
+				}
 			}
 		}
 
@@ -191,9 +197,10 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle($this->lng->txt('actions'));
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
-//		if ($a_set['status'])
-		$actions->addItem($this->lng->txt('edit'), 'edit', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_EDIT_VIDEO));
-		$actions->addItem($this->lng->txt('change_owner'), 'change_owner', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_CHANGE_OWNER));
+		if ($a_set['status'] == 'legal') {
+			$actions->addItem($this->lng->txt('edit'), 'edit', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_EDIT_VIDEO));
+			$actions->addItem($this->lng->txt('change_owner'), 'change_owner', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_CHANGE_OWNER));
+		}
 		$actions->addItem($this->lng->txt('delete'), 'delete', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_DELETE_VIDEO));
 		return $actions->getHTML();
 	}

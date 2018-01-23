@@ -57,6 +57,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		$this->lng->loadLanguageModule('form'); // some lang vars from the form module are used
 		$this->setDisableFilterHiding(true);
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
+//		$this->tpl_global->addOnLoadCode('VimpSearch.initEmptyFilterCheck();');
 	}
 
 
@@ -77,10 +78,10 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	public function parseData() {
 		foreach ($this->filters as $filter_item) {
 			$value = $filter_item->getValue();
-			if (!$value) {
+			$postvar = $filter_item->getPostVar();
+			if (!$value && !is_array($value)) {
 				continue;
 			}
-			$postvar = $filter_item->getPostVar();
 			switch ($postvar) {
 				case 'username':
 					if (ilObjUser::_loginExists($value)) {
@@ -116,7 +117,16 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 			}
 		}
 
-		$data = xvmpMedium::getFilteredAsArray(array_filter($filter));
+
+		$filter = array_filter($filter);
+		if (empty($filter)) {
+			ilUtil::sendQuestion($this->pl->txt('msg_please_enter_filter'), true);
+			$this->ctrl->redirect($this->parent_obj, xvmpSearchVideosGUI::CMD_STANDARD);
+		}
+		// TODO: mediapermissions
+		//		$current_user = xvmpUser::getVimpUser($this->user);
+
+		$data = xvmpMedium::getFilteredAsArray($filter);
 		$this->setData(array_filter($data));
 	}
 
@@ -169,6 +179,9 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 		// custom filters
 		foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $field) {
+			if (!$field[xvmpConf::F_FILTER_FIELD_ID]) {
+				continue;
+			}
 			$filter_item = new ilTextInputGUI($field[xvmpConf::F_FILTER_FIELD_TITLE], $field[xvmpConf::F_FILTER_FIELD_ID]);
 			$this->addAndReadFilterItem($filter_item);
 		}

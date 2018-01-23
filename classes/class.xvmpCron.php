@@ -82,17 +82,26 @@ class xvmpCron {
 				$medium = xvmpMedium::find($uploaded_medium->getMid());
 				if ($medium->getStatus() == 'legal') {
 					$this->sendNotification($medium, $uploaded_medium, true);
+
+					// set visible
+					/** @var xvmpSelectedMedia $selected */
+					foreach (xvmpSelectedMedia::where(array('mid' => $medium->getId()))->get() as $selected) {
+						$selected->setVisible(1);
+						$selected->update();
+					}
 				} elseif ($medium->getStatus() == 'error') {
 					$this->sendNotification($medium, $uploaded_medium, false);
 				}
-			} catch (xvmpException $e) {
-				if ($e->getCode() == 404) {
 
+				// delete entry
+				$uploaded_medium->delete();
+			} catch (xvmpException $e) {
+				if ($e->getCode() == 404 && strpos($e->getMessage(), "Medium not exist") !== false) {
+					$uploaded_medium->delete();
 				}
 				continue;
 			}
 		}
-		//TODO: evtl. alte eventlog einträge löschen
 	}
 
 
@@ -126,16 +135,6 @@ class xvmpCron {
 			array('normal'),
 			1
 		);
-
-		// delete entry
-		$uploaded_medium->delete();
-
-		// set visible
-		/** @var xvmpSelectedMedia $selected */
-		foreach (xvmpSelectedMedia::where(array('mid' => $medium->getId()))->get() as $selected) {
-			$selected->setVisible(1);
-			$selected->update();
-		}
 
 		xvmpLog::getInstance()->write('Notification sent to user: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()) . ' (' . $uploaded_medium->getUserId() . ')');
 	}

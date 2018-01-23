@@ -22,6 +22,10 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 	 */
 	protected $ctrl;
 	/**
+	 * @var mixed
+	 */
+	protected $user;
+	/**
 	 * @var array
 	 */
 	protected $available_columns = array();
@@ -43,6 +47,8 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		global $DIC;
 		$ilCtrl = $DIC['ilCtrl'];
 		$tpl = $DIC['tpl'];
+		$user = $DIC['ilUser'];
+		$this->user = $user;
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->tpl_global = $tpl;

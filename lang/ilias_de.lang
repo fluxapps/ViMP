@@ -9,9 +9,9 @@ conf_api_password_info#:#Passwort des obigen Benutzers.
 conf_api_url#:#API-URL
 conf_api_url_info#:#Basis Adresse der API. Z.B.: https://my-vimp.com/api
 conf_user_mapping_ext#:#User­Mapping (externe Benutzer)
-conf_user_mapping_ext_info#:#Nach dieser Formel werden externe ILIAS-Benutzer in ViMP gefunden, bzw. erstellt. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
+conf_user_mapping_ext_info#:#Nach dieser Formel werden externe ILIAS-Benutzer in ViMP erstellt, falls kein ViMP-Benutzer mit derselben Email-Adresse existiert. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
 conf_user_mapping_local#:#User­Mapping (lokale Benutzer)
-conf_user_mapping_local_info#:#Nach dieser Formel werden lokale ILIAS-Benutzer in ViMP gefunden, bzw. erstellt. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
+conf_user_mapping_local_info#:#Nach dieser Formel werden lokale ILIAS-Benutzer in ViMP erstellt, falls kein ViMP-Benutzer mit derselben Email-Adresse existiert. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
 conf_allow_public_upload#:#Recht „Upload“ darf Videos öffentlich schalten
 conf_allow_public_upload_info#:#Wenn aktiviert: Benutzer mit dem Recht "Upload" dürfen beim Hochladen eines Videos auswählen, ob das Video den Status "Öffentlich" oder "Privat" hat. Ansonsten wird automatisch der Status "Privat" gesetzt.
 conf_form_fields#:#Zusätzliche Formular-Felder
@@ -125,6 +125,7 @@ object_title#:#ViMP-Objekt
 video_title#:#Video-Titel
 msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.
 msg_warning_change_owner#:#Achtung: Sie sind im Begriff, den Besitzer eines Ihrer Videos zu ändern. Nach dem Besitzerwechsel können Sie dieses Video nicht mehr bearbeiten. Sind Sie sicher, dass Sie fortfahren möchten?
+msg_please_enter_filter#:#Bitte schränken Sie die Suche mithilfe der verfügbaren Filter ein.
 confirmation_new_owner#:#Video Titel: "%s", neuer Besitzer: %s
 new_owner#:#Neuer Besitzer
 xvmp_new#:#Neues ViMP-Objekt anlegen

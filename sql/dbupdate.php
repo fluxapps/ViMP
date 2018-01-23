@@ -70,3 +70,27 @@ if (!$query->numRows()) {
 	));
 }
 ?>
+<#5>
+<?php
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpConf.php');
+xvmpConf::set(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL, 'Transkodierung abgeschlossen');
+xvmpConf::set(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL, 'Guten Tag {FIRSTNAME} {LASTNAME},
+
+die Transkodierung eines von Ihnen hochgeladenen Videos wurde abgeschlossen:
+
+Titel: {TITLE}
+Beschreibung: {DESCRIPTION}
+
+Das Video kann nun in ILIAS verwendet werden.');
+xvmpConf::set(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED, 'Transkodierung fehlgeschlagen');
+xvmpConf::set(xvmpConf::F_NOTIFICATION_BODY_FAILED, 'Guten Tag {FIRSTNAME} {LASTNAME},
+
+die Transkodierung eines von Ihnen hochgeladenen Videos ist fehlgeschlagen:
+
+Titel: {TITLE}
+Beschreibung: {DESCRIPTION}
+
+Bitte versuchen Sie es erneut oder kontaktieren Sie einen Administrator.');
+xvmpConf::set(xvmpConf::F_CACHE_TTL_VIDEOS, 0);
+xvmpConf::set(xvmpConf::F_CACHE_TTL_CATEGORIES, 86400);
+?>

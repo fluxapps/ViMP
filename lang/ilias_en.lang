@@ -9,9 +9,9 @@ conf_api_password_info#:#Password of the above user.
 conf_api_url#:#API URL
 conf_api_url_info#:#Base URL of the ViMP API. E.g.: https://my-vimp.com/api
 conf_user_mapping_ext#:#User Mapping (external users)
-conf_user_mapping_ext_info#:#The formula, with which external ILIAS users are found or created in ViMP. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
+conf_user_mapping_ext_info#:#The formula, with which external ILIAS users are created in ViMP, if no ViMP account with the same email address is found. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_user_mapping_local#:#User Mapping (local users)
-conf_user_mapping_local_info#:#The formula, with which local ILIAS users are found or created in ViMP. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
+conf_user_mapping_local_info#:#The formula, with which local ILIAS users are created in ViMP, if no ViMP account with the same email address is found. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_allow_public_upload#:#Permission „Upload“ can set Videos public
 conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Private".
 conf_form_fields#:#Additional Form Fields
@@ -125,6 +125,7 @@ object_title#:#ViMP-Object
 video_title#:#Video Title
 msg_username_not_found#:#The username could not be found.
 msg_warning_change_owner#:#Warning: You are changing the owner of one of your videos. After this action you are not able to edit this video anymore. Do you want to continue?
+msg_please_enter_filter#:#Please limit the search with the available filters.
 confirmation_new_owner#:#Video title: "%s", new owner: %s
 new_owner#:#New Owner
 xvmp_new#:#Create new ViMP object

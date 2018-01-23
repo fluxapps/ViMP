@@ -111,6 +111,31 @@ var VimpSearch = {
 				alert('Authentication failed. Please log in again.');
 			}
 		});
+	},
+
+	initEmptyFilterCheck: function () {
+		$('input[name="cmd[applyFilter]"]').click(function(event) {
+			has_filter_values = false;
+			// check all filters for values
+			$('table.ilTableFilter input').each(function(key, filter) {
+				if ($(filter).val()) {
+					has_filter_values = true;
+				}
+			});
+
+			$('table.ilTableFilter select option:selected').each(function(key, filter) {
+				if ($(filter).text() != 0) {
+					console.log($(filter).text());
+					has_filter_values = true;
+				}
+			});
+
+			// if no filter has a value, send warning
+			if (!has_filter_values) {
+				window.alert('Bitte schränken Sie die Suche mithilfe der Filter ein.');
+				event.preventDefault();
+			}
+		});
 	}
 }
 

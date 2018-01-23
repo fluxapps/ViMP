@@ -108,6 +108,8 @@ class xvmpMedium extends xvmpObject {
 			$filter['title'] = '';
 		}
 
+		$filter['searchrange'] = 'video';
+
 		try {
 			$response = xvmpRequest::extendedSearch($filter)->getResponseArray();
 		} catch (xvmpException $e) {    // api throws 404 exception if nothing is found

@@ -195,6 +195,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 					$source_url = ltrim($dir, '.') . '/' . rawurlencode($value['name']);
 					ilWACSignedPath::setTokenMaxLifetimeInSeconds(ilWACSignedPath::MAX_LIFETIME);
 					$source_url = ilWACSignedPath::signFile($source_url);
+					$source_url .= '&' . ilWebAccessChecker::DISPOSITION . '=' . ilFileDelivery::DISP_ATTACHMENT;
 					$video[$item->getPostVar()] =  ILIAS_HTTP_PATH . ltrim($source_url, '.');
 					break;
 				case 'add_automatically':
