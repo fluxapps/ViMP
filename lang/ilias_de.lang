@@ -126,6 +126,7 @@ video_title#:#Video-Titel
 msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.
 msg_warning_change_owner#:#Achtung: Sie sind im Begriff, den Besitzer eines Ihrer Videos zu ändern. Nach dem Besitzerwechsel können Sie dieses Video nicht mehr bearbeiten. Sind Sie sicher, dass Sie fortfahren möchten?
 msg_please_enter_filter#:#Bitte schränken Sie die Suche mithilfe der verfügbaren Filter ein.
+msg_no_videos#:#Diesem Objekt wurden noch keine Videos hinzugefügt.
 confirmation_new_owner#:#Video Titel: "%s", neuer Besitzer: %s
 new_owner#:#Neuer Besitzer
 xvmp_new#:#Neues ViMP-Objekt anlegen

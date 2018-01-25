@@ -273,6 +273,15 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 				return;
 			}
 
+			// remove empty value for multi input gui
+			if ($key == xvmpConf::F_FORM_FIELDS || $key == xvmpConf::F_FILTER_FIELDS) {
+				foreach ($value as $k => $v) {
+					if (!$v[xvmpConf::F_FORM_FIELD_ID] && !$v[xvmpConf::F_FILTER_FIELD_ID]) {
+						unset($value[$k]);
+					}
+				}
+			}
+
 			xvmpConf::set($key, $value);
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {

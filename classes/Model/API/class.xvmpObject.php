@@ -266,6 +266,6 @@ class xvmpObject {
 	 * @return mixed
 	 */
 	public function getField($field_name) {
-		return $this->$field_name;
+		return $field_name ? $this->$field_name : '';
 	}
 }

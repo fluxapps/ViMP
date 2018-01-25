@@ -126,6 +126,7 @@ video_title#:#Video Title
 msg_username_not_found#:#The username could not be found.
 msg_warning_change_owner#:#Warning: You are changing the owner of one of your videos. After this action you are not able to edit this video anymore. Do you want to continue?
 msg_please_enter_filter#:#Please limit the search with the available filters.
+msg_no_videos#:#There are currently no videos in this object.
 confirmation_new_owner#:#Video title: "%s", new owner: %s
 new_owner#:#New Owner
 xvmp_new#:#Create new ViMP object

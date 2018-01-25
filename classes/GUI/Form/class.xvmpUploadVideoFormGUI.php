@@ -143,6 +143,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 			}
 			$input->setOptions($options);
 			if (!empty($options)) {
+				$input->setValue(array_keys($options));
 				$this->addItem($input);
 			}
 		}

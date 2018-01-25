@@ -24,6 +24,7 @@ class xvmpRequest {
 	const REGISTER_USER = 'registerUser';
 	const GET_USER_MEDIA = 'getUserMedia';
 	const EXTENDED_SEARCH = 'extendedSearch';
+	const GET_PICTURE = 'getPicture';
 
 
 	/**
@@ -282,6 +283,21 @@ class xvmpRequest {
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}
+		$xvmpCurl->post();
+
+		return $xvmpCurl;
+	}
+
+
+	/**
+	 * @param $key
+	 */
+	public static function getPicture($key) {
+		$xvmpCurl = new xvmpCurl(self::GET_PICTURE);
+
+		$xvmpCurl->addPostField('token', xvmp::getToken());
+		$xvmpCurl->addPostField('key', $key);
+
 		$xvmpCurl->post();
 
 		return $xvmpCurl;

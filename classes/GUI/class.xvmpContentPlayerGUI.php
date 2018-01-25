@@ -45,11 +45,17 @@ class xvmpContentPlayerGUI {
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
 
-		ilTooltipGUI::initLibrary();
+//		ilTooltipGUI::initLibrary();
 	}
 
 	public function show() {
-		$mid = $_GET['mid'] ? $_GET['mid'] : xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort')->first()->getMid();
+		$selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
+		if (!$selected_media->hasSets()) {
+			ilUtil::sendInfo($this->pl->txt('msg_no_videos'));
+			return;
+		}
+
+		$mid = $_GET['mid'] ? $_GET['mid'] : $selected_media->first()->getMid();
 
 		try {
 			$video = xvmpMedium::find($mid);
@@ -87,9 +93,9 @@ class xvmpContentPlayerGUI {
 		}
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
-		$selected_media = xvmpSelectedMedia::getSelected($this->parent_gui->getObjId(), true);
 		$json_array = array();
-		foreach ($selected_media as $media) {
+		/** @var xvmpSelectedMedia $media */
+		foreach ($selected_media->get() as $media) {
 			if ($media->getMid() == $mid) {
 				continue;
 			}
