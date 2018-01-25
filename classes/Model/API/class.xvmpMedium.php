@@ -205,6 +205,7 @@ class xvmpMedium extends xvmpObject {
 		$uploaded_media = new xvmpUploadedMedia();
 		$uploaded_media->setMid($medium['mid']);
 		$uploaded_media->setNotification($notification);
+		$uploaded_media->setEmail($ilUser->getEmail());
 		$uploaded_media->setUserId($ilUser->getId());
 		$uploaded_media->setTmpId($tmp_id);
 		$uploaded_media->create();

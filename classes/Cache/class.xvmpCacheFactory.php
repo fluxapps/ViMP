@@ -17,24 +17,10 @@ class xvmpCacheFactory {
 
 		if(self::$cache_instance === null)
 		{
-			if (xvmp::is52()) {
-				self::$cache_instance = xvmpCache::getInstance('');
-				self::$cache_instance->init();
-			} else {
-				self::$cache_instance = xvmpCache::getCacheInstance();
-			}
-
-
-			/*
-			 * caching adapter of the xlvoConf will call getInstance again,
-			 * due to that we need to call the init logic after we created the
-			 * cache in an deactivated state.
-			 *
-			 * The xlvoConf call gets the deactivated cache and query the value
-			 * out of the database. afterwards the cache is turned on with this init() call.
-			 *
-			 * This must be considered as workaround and should be probably fixed in the next major release.
-			 */
+			// 5.2 and 5.3 have the same cache methods
+			// add switch statement if needed in further versions
+			self::$cache_instance = xvmpCache::getInstance('');
+			self::$cache_instance->init();
 		}
 
 		return self::$cache_instance;

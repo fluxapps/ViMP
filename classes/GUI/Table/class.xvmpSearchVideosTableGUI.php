@@ -124,7 +124,8 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 			$this->ctrl->redirect($this->parent_obj, xvmpSearchVideosGUI::CMD_STANDARD);
 		}
 		// TODO: mediapermissions
-		//		$current_user = xvmpUser::getVimpUser($this->user);
+		$current_user = xvmpUser::getOrCreateVimpUser($this->user);
+		$filter['mediapermissions'] = implode(',', array_keys($current_user->getRoles()));
 
 		$data = xvmpMedium::getFilteredAsArray($filter);
 		$this->setData(array_filter($data));

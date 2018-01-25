@@ -35,23 +35,31 @@ class xvmpUser extends xvmpObject {
 			return false;
 		}
 
-		if (isset($users['user']['uid'])) {
-			$xvmpUser = new self();
-			$xvmpUser->buildObjectFromArray($users['user']);
-			xvmpCacheFactory::getInstance()->set($key, $xvmpUser);
+		if ($uid = $users['user']['uid']) {
+
+			$xvmpUser = self::getVimpUserWithId($uid);
+			self::cache($key, $xvmpUser);
 			return $xvmpUser;
 		}
 
 		foreach ($users['user'] as $user) {
 			if ($user['email'] == $ilObjUser->getEmail()) {
-				$xvmpUser = new self();
-				$xvmpUser->buildObjectFromArray($user);
-				xvmpCacheFactory::getInstance()->set($key, $xvmpUser);
+				$xvmpUser = self::getVimpUserWithId($user['uid']);
+				self::cache($key, $xvmpUser);
 				return $xvmpUser;
 			}
 		}
 
 		return false;
+	}
+
+	public static function getVimpUserWithId($uid) {
+		$response = xvmpRequest::getUser($uid, array(
+			'roles' => 'true'
+		))->getResponseArray();
+		$xvmpUser = new self();
+		$xvmpUser->buildObjectFromArray($response['user']);
+		return $xvmpUser;
 	}
 
 
@@ -67,6 +75,21 @@ class xvmpUser extends xvmpObject {
 			$xvmpUser = self::getVimpUser($ilObjUser);
 		}
 		return $xvmpUser;
+	}
+
+
+	public function buildObjectFromArray(array $array) {
+		if (isset($array['roles']['role']['id'])) {
+			$array['roles'] = array($array['roles']['role']['id'] => $array['roles']['role']['name']);
+		} else {
+			foreach ($array['roles']['role'] as $key => $value) {
+				$array['roles'][$value['id']] = $value['name'];
+			}
+			unset($array['roles']['role']);
+		}
+		foreach ($array as $key => $value) {
+			$this->{$key} = $value;
+		}
 	}
 
 
@@ -163,6 +186,10 @@ class xvmpUser extends xvmpObject {
 	 * @var String
 	 */
 	protected $updated_at;
+	/**
+	 * @var array
+	 */
+	protected $roles;
 
 
 	/**
@@ -338,5 +365,21 @@ class xvmpUser extends xvmpObject {
 	 */
 	public function setId($id) {
 		$this->setUid($id);
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function getRoles() {
+		return $this->roles;
+	}
+
+
+	/**
+	 * @param array $roles
+	 */
+	public function setRoles($roles) {
+		$this->roles = $roles;
 	}
 }

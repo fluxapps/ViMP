@@ -22,7 +22,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 	 */
 	protected $ctrl;
 	/**
-	 * @var mixed
+	 * @var ilObjUser
 	 */
 	protected $user;
 	/**

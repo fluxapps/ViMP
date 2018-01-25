@@ -135,7 +135,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		}
 
 
-		foreach (xvmpUploadedMedia::where(array('user_id' => $this->user->getId()))->get() as $uploaded_media) {
+		foreach (xvmpUploadedMedia::where(array('email' => $this->user->getEmail()))->get() as $uploaded_media) {
 			if (!in_array($uploaded_media->getMid(), array_keys($data))) {
 				try {
 					$data[$uploaded_media->getMid()] = xvmpMedium::getObjectAsArray($uploaded_media->getMid());
