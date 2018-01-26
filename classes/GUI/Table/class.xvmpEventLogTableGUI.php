@@ -130,7 +130,7 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 	{
 		$item = new ilMultiSelectInputGUI($this->pl->txt('action'), 'action');
 		$options = array();
-		foreach (array(xvmpEventLog::ACTION_UPLOAD, xvmpEventLog::ACTION_EDIT, xvmpEventLog::ACTION_DELETE, xvmpEventLog::ACTION_ADD, xvmpEventLog::ACTION_REMOVE)
+		foreach (array(xvmpEventLog::ACTION_UPLOAD, xvmpEventLog::ACTION_EDIT, xvmpEventLog::ACTION_DELETE, xvmpEventLog::ACTION_ADD, xvmpEventLog::ACTION_REMOVE, xvmpEventLog::ACTION_CHANGE_OWNER)
 		         as $action_id) {
 			$options[$action_id] = $this->pl->txt('log_action_' . $action_id);
 		}

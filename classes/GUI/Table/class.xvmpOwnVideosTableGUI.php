@@ -127,6 +127,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$filter['userid'] = xvmpUser::getVimpUser($this->user)->getId();
 
 		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
+//		$videos = xvmpMedium::getUserMedia($this->user);
 
 		$data = array();
 

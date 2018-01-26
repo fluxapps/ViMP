@@ -30,12 +30,16 @@ conf_notification_subject_failed#:#Betreff (Transk. Fehlgeschlagen)
 conf_notification_subject_failed_info#:#Betreff der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird.
 conf_notification_body_failed#:#Nachricht (Transk. Fehlgeschlagen)
 conf_notification_body_failed_info#:#Inhalt der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird.
-conf_cache_ttl_videos#:#Videos (Metadaten)
-conf_cache_ttl_videos_info#:#Time-To-Live in Sekunden: Nach Ablauf dieser Zeit werden Objekte automatisch aus dem Cache entfernt und neu geladen. Bei Eingabe von "0" werden Objekte ausschliesslich manuell aus dem Cache entfernt.
-conf_cache_ttl_categories#:#Kategorien
-conf_cache_ttl_categories_info#:#Time-To-Live in Sekunden: Nach Ablauf dieser Zeit werden Objekte automatisch aus dem Cache entfernt und neu geladen. Bei Eingabe von "0" werden Objekte ausschliesslich manuell aus dem Cache entfernt.
+conf_cache_ttl_videos#:#TTL Videos (Metadaten)
+conf_cache_ttl_videos_info#:#Time-To-Live in Sekunden
+conf_cache_ttl_users#:#TTL Vimp-Benutzerdaten
+conf_cache_ttl_users_info#:#Time-To-Live in Sekunden
+conf_cache_ttl_categories#:#TTL Kategorien
+conf_cache_ttl_categories_info#:#Time-To-Live in Sekunden
+conf_cache_ttl_token#:#TTL Token
+conf_cache_ttl_token_info#:#Time-To-Live in Sekunden
 conf_cache#:#Caching
-conf_cache_info#:#Objekte werden zur Verbesserung der Performanz zwischengespeichert. Der gesamte Cache kann mithilfe der Schaltfläche oben auf dieser Seite geleert werden. Innerhalb von ViMP-Objekten im Magazin können ausserdem die Videos dieser Objekte aus dem Cache entfernt und neu geladen werden.
+conf_cache_info#:#Objekte werden zur Verbesserung der Performanz zwischengespeichert. Nach Ablauf der TTL wird ein Objekt aus dem Cache entfernt und neu geladen (bei Eingabe von 0 werden sie nicht automatisch entfernt). Der gesamte Cache kann mithilfe der Schaltfläche oben auf dieser Seite geleert werden. Innerhalb von ViMP-Objekten im Magazin können ausserdem die Videos dieser Objekte aus dem Cache entfernt und neu geladen werden.
 msg_success#:#Änderungen erfolgreich gespeichert.
 selection#:#Auswahl
 all#:#Ja, alle

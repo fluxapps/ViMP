@@ -190,9 +190,19 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_VIDEOS . '_info'));
 		$this->addItem($input);
 
+		// User Cache TTL
+		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_USERS), xvmpConf::F_CACHE_TTL_USERS);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_USERS . '_info'));
+		$this->addItem($input);
+
 		// Category Cache TTL
 		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CATEGORIES), xvmpConf::F_CACHE_TTL_CATEGORIES);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CATEGORIES . '_info'));
+		$this->addItem($input);
+
+		// Token Cache TTL
+		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_TOKEN), xvmpConf::F_CACHE_TTL_TOKEN);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_TOKEN . '_info'));
 		$this->addItem($input);
 
 

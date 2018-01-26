@@ -29,7 +29,9 @@ class xvmpConf extends ActiveRecord {
 	const F_NOTIFICATION_SUBJECT_FAILED = 'notification_subject_failed';
 	const F_NOTIFICATION_BODY_FAILED = 'notification_body_failed';
 	const F_CACHE_TTL_VIDEOS = 'cache_ttl_videos';
+	const F_CACHE_TTL_USERS = 'cache_ttl_users';
 	const F_CACHE_TTL_CATEGORIES = 'cache_ttl_categories';
+	const F_CACHE_TTL_TOKEN = 'cache_ttl_token';
 	const F_FILTER_FIELDS = 'filter_fields';
 	const F_FILTER_FIELD_ID = 'filter_id';
 	const F_FILTER_FIELD_TITLE = 'filter_title';

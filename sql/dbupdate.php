@@ -92,5 +92,7 @@ Beschreibung: {DESCRIPTION}
 
 Bitte versuchen Sie es erneut oder kontaktieren Sie einen Administrator.');
 xvmpConf::set(xvmpConf::F_CACHE_TTL_VIDEOS, 0);
+xvmpConf::set(xvmpConf::F_CACHE_TTL_USERS, 0);
+xvmpConf::set(xvmpConf::F_CACHE_TTL_TOKEN, 0);
 xvmpConf::set(xvmpConf::F_CACHE_TTL_CATEGORIES, 86400);
 ?>

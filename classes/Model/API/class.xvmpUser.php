@@ -38,14 +38,14 @@ class xvmpUser extends xvmpObject {
 		if ($uid = $users['user']['uid']) {
 
 			$xvmpUser = self::getVimpUserWithId($uid);
-			self::cache($key, $xvmpUser);
+			self::cache($key, $xvmpUser, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_USERS));
 			return $xvmpUser;
 		}
 
 		foreach ($users['user'] as $user) {
 			if ($user['email'] == $ilObjUser->getEmail()) {
 				$xvmpUser = self::getVimpUserWithId($user['uid']);
-				self::cache($key, $xvmpUser);
+				self::cache($key, $xvmpUser, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_USERS));
 				return $xvmpUser;
 			}
 		}
