@@ -60,6 +60,9 @@ class xvmpVideoPlayer {
 	}
 
 	public function getHTML() {
+//		if ($this->video->getPublished() == xvmpMedium::PUBLISHED_PRIVATE) {
+//			return $this->video->getEmbedCode();
+//		}
 		$template = $this->pl->getTemplate('default/tpl.video.html');
 
 		$medium = $this->video->getMedium();

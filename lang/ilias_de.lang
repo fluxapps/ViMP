@@ -65,14 +65,19 @@ status#:#Status
 upload_video#:#Video Hochladen
 edit_video#:#Video Bearbeiten
 tags#:#Tags
+tags_info#:#Kommaseparierte Werte eingeben.
 private#:#Privat
+private_info#:#Video kann ausschliesslich vom Besitzer angesehen, und somit in ILIAS nicht verwendet werden.
 public#:#Öffentlich
+public_info#:#Video kann von allen Benutzern angesehen und in ILIAS hinzugefügt werden.
+hidden#:#Versteckt
+hidden_info#:#Video kann von allen Benutzern angesehen, jedoch nur vom Besitzer in ILIAS hinzugefügt werden.
 layout#:#Darstellung
 notification#:#Benachrichtigung
 notification_info#:#Sie erhalten nach abgeschlossener Transkodierung des Videos eine Email-Benachrichtigung.
 add_automatically#:#Automatisch Hinzufügen
 add_automatically_info#:#Das Video wird nach dem Upload direkt diesem Video-Container hinzugefügt.
-video_uploaded#:#Video erfolgreich hochgeladen.
+video_uploaded#:#Video erfolgreich hochgeladen. Bitte beachten Sie, dass das Video zuerst transkodiert werden muss, bevor es angesehen werden kann. Dieser Vorgang kann, je nach Grösse des Videos, einige Zeit in Anspruch nehmen.
 form_saved#:#Änderungen erfolgreich gespeichert.
 duration#:#Länge
 author#:#Autor
@@ -100,6 +105,7 @@ not_available_description#:#Dieses Video wurde in ViMP nicht gefunden. Mögliche
 confirm_delete_text#:#Achtung: Durch diese Aktion wird das Video endgültig in ViMP gelöscht und kann in keinem ILIAS-Objekt mehr verwendet werden. Sind Sie sicher, dass Sie das Video löschen möchten?
 video_deleted#:#Video erfolgreich gelöscht.
 media_permissions#:#Medienberechtigungen
+media_permissions_info#:#Öffentliche und Versteckte Videos auf bestimmte Rollen einschränken.
 mediapermissions#:#Medienberechtigungen
 upload_select#:#Datei auswählen
 upload_clear#:#Zurücksetzen
@@ -120,7 +126,6 @@ data#:#Daten
 categories#:#Kategorien
 user#:#Benutzer
 required#:#Erforderlich
-hidden#:#Versteckt
 form_msg_select#:#Bitte wählen Sie eine Datei zum Hochladen aus.
 form_msg_not_supported#:#Dateityp nicht unterstützt.
 msg_incomplete#:#Einige Felder dieses Formulares sind Pflichtfelder und müssen ausgefüllt werden. Bitte ergänzen Sie diese Felder.

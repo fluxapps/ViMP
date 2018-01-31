@@ -33,7 +33,7 @@ var VimpObserver = {
 			url: VimpContent.ajax_base_url + '&cmd=updateProgress',
 			data: {
 				"mid": VimpObserver.mid,
-				"time_ranges": JSON.stringify(VimpObserver.time_ranges)
+				"ranges": JSON.stringify(VimpObserver.time_ranges)
 			}
 		}).always(function(response){
 			console.log(response);

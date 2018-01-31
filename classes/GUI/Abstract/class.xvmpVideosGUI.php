@@ -42,11 +42,11 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 				}
 				break;
 			case self::CMD_TOGGLE_VIDEO:
-				$mid = $_GET['mid'];
+				$mid = $_GET[xvmpMedium::F_MID];
 				$medium = xvmpMedium::find($mid);
 				$checked = $_GET['checked'];
 
-				if ($checked && ($medium->getPublished() == 'private') && ($medium->getUid() != xvmpUser::getVimpUser($this->user)->getUid())) {
+				if ($checked && ($medium->getPublished() == xvmpMedium::PUBLISHED_PRIVATE) && ($medium->getUid() != xvmpUser::getVimpUser($this->user)->getUid())) {
 					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
 					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
 				}
@@ -116,9 +116,9 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	}
 
 	public function toggleVideo() {
-		$mid = $_GET['mid'];
+		$mid = $_GET[xvmpMedium::F_MID];
 		$checked = $_GET['checked'];
-		$visible = $_GET['visible'];
+		$visible = $_GET[xvmpSelectedMedia::F_VISIBLE];
 		if ($checked) {
 			xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
 		} else {
@@ -132,8 +132,8 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 * ajax
 	 */
 	public function addVideo() {
-		$mid = $_GET['mid'];
-		$visible = $_GET['visible'];
+		$mid = $_GET[xvmpMedium::F_MID];
+		$visible = $_GET[xvmpSelectedMedia::F_VISIBLE];
 		xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
 		echo "{\"success\": true}";
 		exit;
@@ -143,7 +143,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 * ajax
 	 */
 	public function removeVideo() {
-		$mid = $_GET['mid'];
+		$mid = $_GET[xvmpMedium::F_MID];
 		xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
 		echo "{\"success\": true}";
 		exit;

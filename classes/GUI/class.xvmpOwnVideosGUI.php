@@ -20,7 +20,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const CMD_UPDATE_VIDEO = 'updateVideo';
 	const CMD_DELETE_VIDEO = 'deleteVideo';
 	const CMD_UPLOAD_VIDEO_FORM = 'uploadVideoForm';
-	const CMD_CREATE = 'create';
+	const CMD_CREATE = 'createVideo';
 	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
 	const CMD_UPLOAD_CHUNKS = 'uploadChunks';
 
@@ -29,6 +29,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	 *
 	 */
 	public function executeCommand() {
+//		echo '<iframe src="http://localhost/media/embed?key=5350eb8bd4d60f6b668764022113f25b&width=350&height=200&autoplay=false&autolightsoff=false&loop=false&chapters=false&related=false&responsive=false" width="350" height="200" frameborder="0" allowfullscreen="allowfullscreen" allowtransparency="true" scrolling="no"></iframe>';exit;
 		if (!ilObjViMPAccess::hasWriteAccess() && !ilObjViMPAccess::hasUploadPermission()) {
 			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
 			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
@@ -174,7 +175,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	/**
 	 *
 	 */
-	public function create() {
+	public function createVideo() {
 		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpEditVideoFormGUI->setValuesByPost();
 		if ($xvmpEditVideoFormGUI->uploadVideo()) {

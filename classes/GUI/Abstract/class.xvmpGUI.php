@@ -141,17 +141,16 @@ abstract class xvmpGUI {
 		$mid = $_GET['mid'];
 		$video = xvmpMedium::find($mid);
 		$video_infos = "				
-			<p>{$this->pl->txt('duration')}: {$video->getDurationFormatted()}</p>
-			<p>{$this->pl->txt('author')}: {$video->getCustomAuthor()}</p>
-			<p>{$this->pl->txt('created_at')}: {$video->getCreatedAt('m.d.Y, H:i')}</p>
-			<p class='xvmp_ellipsis'>{$this->pl->txt('description')}: {$video->getDescription()}</p>
+			<p>{$this->pl->txt(xvmpMedium::F_DURATION)}: {$video->getDurationFormatted()}</p>
+			<p>{$this->pl->txt(xvmpMedium::F_CREATED_AT)}: {$video->getCreatedAt('m.d.Y, H:i')}</p>
+			<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>
 		";
 		$response = new stdClass();
-//		$response->html = $video->getEmbedCode() . $video_infos;
 		$video_player = new xvmpVideoPlayer($video);
 		$response->html = $video_player->getHTML() . $video_infos;
 		$response->video_title = $video->getTitle();
-		$progress = xvmpUserProgress::where(array('usr_id' => $this->user->getId(), 'mid' => $mid))->first();
+		/** @var xvmpUserProgress $progress */
+		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->user->getId(), xvmpMedium::F_MID => $mid))->first();
 		if ($progress) {
 			$response->time_ranges = json_decode($progress->getRanges());
 		} else {
@@ -169,8 +168,8 @@ abstract class xvmpGUI {
 	public function updateProgress() {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
-		$mid = $_POST['mid'];
-		$ranges = $_POST['time_ranges'];
+		$mid = $_POST[xvmpMedium::F_MID];
+		$ranges = $_POST[xvmpUserProgress::F_RANGES];
 		xvmpUserProgress::storeProgress($ilUser->getid(), $mid, $ranges);
 		echo "ok";
 		exit;

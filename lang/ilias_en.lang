@@ -65,14 +65,19 @@ status#:#Status
 upload_video#:#Upload Video
 edit_video#:#Edit Video
 tags#:#Tags
+tags_info#:#Enter values comma-separated
 private#:#Private
+private_info#:#Video can only be watched by its owner. Therefore it can not be used in ILIAS.
 public#:#Public
+public_info#:#Video can be watched and added in ILIAS by any user.
+hidden#:#Hidden
+hidden_info#:#Video can be watched by any user, but can only be added in ILIAS by its owner.
 layout#:#Layout
 notification#:#Notification
 notification_info#:#You will receive an email notification when the video is transcoded.
 add_automatically#:#Add Automatically
 add_automatically_info#:#The video will be automatically added to this video container.
-video_uploaded#:#Video uploaded successfully.
+video_uploaded#:#Video uploaded successfully. Please note that the video must be transcoded before it can be watched. This process can take some time, depending on the video's size.
 form_saved#:#Changes saved successfully.
 duration#:#Duration
 author#:#Author
@@ -100,6 +105,7 @@ not_available_description#:#This video was not found in ViMP, it may have been d
 confirm_delete_text#:#Warning: this action will delete the video in ViMP and make the video unavailable in every ILIAS object using it. Are you sure that you want to delete this video?
 video_deleted#:#Video deleted successfully.
 media_permissions#:#Media Permissions
+media_permissions_info#:#Restrict public and hidden videos to certain roles.
 mediapermissions#:#Media Permissions
 upload_select#:#Select file
 upload_clear#:#Reset
@@ -120,7 +126,6 @@ data#:#Data
 categories#:#Categories
 user#:#User
 required#:#Required
-hidden#:#Hidden
 form_msg_select#:#Please choose a file to upload.
 form_msg_not_supported#:#File type not supported.
 form_incomplete#:#Some of this forms fields are mandatory and need to be filled out. Please complete these fields.

@@ -14,6 +14,42 @@ class xvmpMedium extends xvmpObject {
 	const PUBLISHED_PRIVATE = 'private';
 	const PUBLISHED_HIDDEN = 'hidden';
 
+	const F_MID = 'mid';
+	const F_UID = 'uid';
+	const F_USERNAME = 'username';
+	const F_MEDIAKEY = 'mediakey';
+	const F_MEDIAPERMISSIONS = 'mediapermissions';
+	const F_MEDIATYPE = 'mediatype';
+	const F_MEDIASUBTYPE = 'mediasubtype';
+	const F_PUBLISHED = 'published';
+	const F_STATUS = 'status';
+	const F_FEATURED = 'featured';
+	const F_CULTURE = 'culture';
+	const F_PROPERTIES = 'properties';
+	const F_TITLE = 'title';
+	const F_DESCRIPTION = 'description';
+	const F_DURATION = 'duration';
+	const F_THUMBNAIL = 'thumbnail';
+	const F_EMBED_CODE = 'embed_code';
+	const F_MEDIUM = 'medium';
+	const F_SOURCE = 'source';
+	const F_META_TITLE = 'meta_title';
+	const F_META_DESCRIPTION = 'meta_description';
+	const F_META_KEYWORDS = 'meta_keywords';
+	const F_META_AUTHOR = 'meta_author';
+	const F_META_COPYRIGHT = 'meta_copyright';
+	const F_SUM_RATING = 'sum_rating';
+	const F_COUNT_VIEWS = 'count_views';
+	const F_COUNT_RATING = 'count_rating';
+	const F_COUNT_FAVORITES = 'count_favorites';
+	const F_COUNT_COMMENTS = 'count_comments';
+	const F_COUNT_FLAGS = 'count_flags';
+	const F_CREATED_AT = 'created_at';
+	const F_UPDATED_AT = 'updated_at';
+	const F_TAGS = 'tags';
+	const F_CATEGORIES = 'categories';
+
+
 	public static $published_id_mapping = array(
 		'public' => "0",
 		'private' => "1",
@@ -401,10 +437,6 @@ class xvmpMedium extends xvmpObject {
 	 * @var array
 	 */
 	protected $tags;
-	/**
-	 * @var String
-	 */
-	protected $custom_author;
 
 
 	/**
@@ -709,9 +741,14 @@ class xvmpMedium extends xvmpObject {
 	/**
 	 * @return String
 	 */
-	public function getEmbedCode() {
-		$detect_mobile = new MobileDetect();
-		if ($detect_mobile->isMobile()) {
+	public function getEmbedCode($width = 0, $height = 0) {
+//		$detect_mobile = new MobileDetect();
+//		if ($detect_mobile->isMobile()) {
+//			return str_replace('responsive=false', 'responsive=true', $this->embed_code);
+//		}
+		if ($width && $height) {
+			$embed_code = preg_replace('/width=[d]*/', "width=$width", $this->embed_code);
+		} else {
 			return str_replace('responsive=false', 'responsive=true', $this->embed_code);
 		}
 		return $this->embed_code;
@@ -999,21 +1036,5 @@ class xvmpMedium extends xvmpObject {
 	 */
 	public function setTags($tags) {
 		$this->tags = $tags;
-	}
-
-
-	/**
-	 * @return String
-	 */
-	public function getCustomAuthor() {
-		return $this->custom_author;
-	}
-
-
-	/**
-	 * @param String $custom_author
-	 */
-	public function setCustomAuthor($custom_author) {
-		$this->custom_author = $custom_author;
 	}
 }

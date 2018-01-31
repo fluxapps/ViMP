@@ -121,7 +121,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		$filter = array_filter($filter);
 		if (empty($filter)) {
 			ilUtil::sendQuestion($this->pl->txt('msg_please_enter_filter'), true);
-			$this->ctrl->redirect($this->parent_obj, xvmpSearchVideosGUI::CMD_STANDARD);
+			$this->redirectToParent();
 		}
 		// TODO: mediapermissions
 		$current_user = xvmpUser::getOrCreateVimpUser($this->user);
@@ -214,5 +214,13 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 			}
 
 		}
+	}
+
+
+	/**
+	 *
+	 */
+	protected function redirectToParent() {
+		$this->ctrl->redirect($this->parent_obj, xvmpSearchVideosGUI::CMD_STANDARD);
 	}
 }

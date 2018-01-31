@@ -44,7 +44,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	/**
 	 * xvmpOwnVideosTableGUI constructor.
 	 *
-	 * @param int    $parent_gui
+	 * @param     $ parent_gui
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
@@ -125,6 +125,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		}
 
 		$filter['userid'] = xvmpUser::getVimpUser($this->user)->getId();
+		$filter['hidden'] = 'true';
 
 		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
 //		$videos = xvmpMedium::getUserMedia($this->user);

@@ -86,13 +86,11 @@ class xvmpContentGUI extends xvmpGUI {
 			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription(50)));
 
 			if (!$video instanceof xvmpDeletedMedium) {
-				$tpl->setVariable('LABEL_TITLE', $this->pl->txt('title') . ':');
-				$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt('description') . ':');
-				$tpl->setVariable('LABEL_DURATION', $this->pl->txt('duration') . ':');
+				$tpl->setVariable('LABEL_TITLE', $this->pl->txt( xvmpMedium::F_TITLE) . ':');
+				$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt(xvmpMedium::F_DESCRIPTION) . ':');
+				$tpl->setVariable('LABEL_DURATION', $this->pl->txt(xvmpMedium::F_DURATION) . ':');
 				$tpl->setVariable('DURATION', $video->getDurationFormatted());
-				$tpl->setVariable('LABEL_AUTHOR', $this->pl->txt('author') . ':');
-				$tpl->setVariable('AUTHOR', $video->getCustomAuthor());
-				$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt('created_at') . ':');
+				$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt(xvmpMedium::F_CREATED_AT) . ':');
 				$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
 				$tpl->setVariable('LABEL_WATCHED', $this->pl->txt('watched') . ':');
 				$tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');

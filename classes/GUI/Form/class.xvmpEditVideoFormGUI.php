@@ -33,27 +33,47 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 
 		parent::__construct($parent_gui);
 
-		$this->ctrl->setParameter($this->parent_gui, 'mid', $mid);
+		$this->ctrl->setParameter($this->parent_gui, xvmpMedium::F_MID, $mid);
 		$this->setTitle($this->pl->txt('edit_video'));
 	}
 
 	protected function initForm() {
 
 		// HIDDEN ID
-		$input = new ilHiddenInputGUI('mid');
+		$input = new ilHiddenInputGUI(xvmpMedium::F_MID);
 		$this->addItem($input);
 
 		// TITLE
-		$input = new ilTextInputGUI($this->pl->txt('title'), 'title');
+		$input = new ilTextInputGUI($this->pl->txt(xvmpMedium::F_TITLE), xvmpMedium::F_TITLE);
 		$input->setRequired(true);
 		$input->setMaxLength(128);
 		$this->addItem($input);
 
 		// DESCRIPTION
-		$input = new ilTextAreaInputGUI($this->pl->txt('description'), 'description');
+		$input = new ilTextAreaInputGUI($this->pl->txt(xvmpMedium::F_DESCRIPTION), xvmpMedium::F_DESCRIPTION);
 		$input->setRequired(true);
 		$this->addItem($input);
 
+		// CATEGORIES
+		$input = new ilMultiSelectSearchInputGUI($this->lng->txt(xvmpMedium::F_CATEGORIES), xvmpMedium::F_CATEGORIES);
+		$categories = xvmpCategory::getAll();
+		$options = array();
+		/** @var xvmpCategory $category */
+		foreach ($categories as $category) {
+			$options[$category->getId()] = $category->getNameWithPath();
+		}
+		asort($options);
+		$input->setOptions($options);
+		$input->setRequired(true);
+		$this->addItem($input);
+
+		// TAGS
+		$input = new ilTextInputGUI($this->pl->txt(xvmpMedium::F_TAGS), xvmpMedium::F_TAGS);
+		$input->setInfo($this->pl->txt(xvmpMedium::F_TAGS . '_info'));
+		$input->setRequired(true);
+		$this->addItem($input);
+
+		$this->addCommandButtons();
 		// custom fields
 		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
 			if (!$field[xvmpConf::F_FORM_FIELD_ID]) {
@@ -65,19 +85,23 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 		}
 
 		// PUBLISHED (Zugriff)
-		$input = new ilRadioGroupInputGUI($this->pl->txt('published'), 'published');
-		$radio_item = new ilRadioOption($this->pl->txt('public'), xvmpMedium::PUBLISHED_PUBLIC);
+		$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpMedium::F_PUBLISHED), xvmpMedium::F_PUBLISHED);
+		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC), xvmpMedium::PUBLISHED_PUBLIC);
+		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC . '_info'));
 		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt('private'), xvmpMedium::PUBLISHED_PRIVATE);
+		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN), xvmpMedium::PUBLISHED_HIDDEN);
+		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN . '_info'));
 		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt('hidden'), xvmpMedium::PUBLISHED_HIDDEN);
+		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE), xvmpMedium::PUBLISHED_PRIVATE);
+		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE . '_info'));
 		$input->addOption($radio_item);
 		$this->addItem($input);
 
 		// MEDIA PERMISSIONS
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
 		if ($media_permissions) {
-			$input = new ilMultiSelectSearchInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), 'mediapermissions');
+			$input = new ilMultiSelectSearchInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), xvmpMedium::F_MEDIAPERMISSIONS);
+			$input->setInfo($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS . '_info'));
 			$input->setRequired(true);
 			$options = array();
 			if ($media_permissions == xvmpConf::MEDIA_PERMISSION_SELECTION) {
@@ -95,30 +119,11 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 			}
 		}
 
-		// CATEGORIES
-		$input = new ilMultiSelectSearchInputGUI($this->lng->txt('categories'), 'categories');
-		$categories = xvmpCategory::getAll();
-		$options = array();
-		/** @var xvmpCategory $category */
-		foreach ($categories as $category) {
-			$options[$category->getId()] = $category->getNameWithPath();
-		}
-		asort($options);
-		$input->setOptions($options);
-		$input->setRequired(true);
-		$this->addItem($input);
-
-		// TAGS
-		$input = new ilTextInputGUI($this->pl->txt('tags'), 'tags');
-		$input->setRequired(true);
-		$this->addItem($input);
-
-		$this->addCommandButtons();
 	}
 
 	public function fillForm() {
 		$array = $this->video;
-		$array['categories'] = array_keys($this->video['categories']);
+		$array[xvmpMedium::F_CATEGORIES] = array_keys($this->video[xvmpMedium::F_CATEGORIES]);
 		$this->setValuesByArray($array);
 	}
 

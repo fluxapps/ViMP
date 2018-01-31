@@ -104,6 +104,7 @@ class xvmpRequest {
 		$xvmpCurl = new xvmpCurl(self::GET_MEDIUM);
 		$params['mediumid'] = $mediumid;
 		$params['token'] = xvmp::getToken();
+//		$params['reponsive'] = 'true';
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}
@@ -279,7 +280,7 @@ class xvmpRequest {
 		$xvmpCurl = new xvmpCurl(self::EXTENDED_SEARCH);
 
 		$xvmpCurl->addPostField('token', xvmp::getToken());
-		$xvmpCurl->addPostField('hidden', 'true');
+//		$xvmpCurl->addPostField('hidden', 'true');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

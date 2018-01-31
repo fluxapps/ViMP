@@ -9,6 +9,12 @@
 class xvmpUserProgress extends ActiveRecord {
 	const DB_TABLE_NAME = 'xvmp_user_progress';
 
+	const F_USR_ID = 'usr_id';
+	const F_MID = xvmpMedium::F_MID;
+	const F_RANGES = 'ranges';
+	const F_TOTAL_WATCHED = 'total_watched';
+	const F_VIDEO_DURATION = 'video_duration';
+
 
 	public static function returnDbTableName() {
 		return self::DB_TABLE_NAME;

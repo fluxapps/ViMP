@@ -8,6 +8,10 @@
  */
 class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
+	const F_SOURCE_URL = 'source_url';
+	const F_ADD_AUTOMATICALLY = 'add_automatically';
+	const F_NOTIFICATION = 'notification';
+
 	/**
 	 * @var ilLanguage
 	 */
@@ -50,11 +54,11 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 
 		// HIDDEN ID
-		$input = new ilHiddenInputGUI('mid');
+		$input = new ilHiddenInputGUI(xvmpMedium::F_MID);
 		$this->addItem($input);
 
 		// FILE
-		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), 'source_url');
+		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), self::F_SOURCE_URL);
 
 		$input->setUrl($this->ctrl->getLinkTarget($this->parent_gui, xvmpOwnVideosGUI::CMD_UPLOAD_CHUNKS));
 		$input->setSuffixes(array(
@@ -81,24 +85,32 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		$input->setRequired(true);
 		$this->addItem($input);
 
-		// ADD AUTOMATICALLY
-		$input = new ilCheckboxInputGUI($this->pl->txt('add_automatically'), 'add_automatically');
-		$input->setInfo($this->pl->txt('add_automatically_info'));
-		$this->addItem($input);
-
-		// NOTIFICATION
-		$input = new ilCheckboxInputGUI($this->pl->txt('notification'), 'notification');
-		$input->setInfo($this->pl->txt('notification_info'));
-		$this->addItem($input);
-
 		// TITLE
-		$input = new ilTextInputGUI($this->pl->txt('title'), 'title');
+		$input = new ilTextInputGUI($this->pl->txt(xvmpMedium::F_TITLE), xvmpMedium::F_TITLE);
 		$input->setRequired(true);
 		$input->setMaxLength(128);
 		$this->addItem($input);
 
 		// DESCRIPTION
-		$input = new ilTextAreaInputGUI($this->pl->txt('description'), 'description');
+		$input = new ilTextAreaInputGUI($this->pl->txt(xvmpMedium::F_DESCRIPTION), xvmpMedium::F_DESCRIPTION);
+		$input->setRequired(true);
+		$this->addItem($input);
+
+		// CATEGORIES
+		$input = new ilMultiSelectSearchInputGUI($this->lng->txt(xvmpMedium::F_CATEGORIES), xvmpMedium::F_CATEGORIES);
+		$categories = xvmpCategory::getAll();
+		$options = array();
+		/** @var xvmpCategory $category */
+		foreach ($categories as $category) {
+			$options[$category->getId()] = $category->getNameWithPath();
+		}
+		$input->setOptions($options);
+		$input->setRequired(true);
+		$this->addItem($input);
+
+		// TAGS
+		$input = new ilTextInputGUI($this->pl->txt(xvmpMedium::F_TAGS), xvmpMedium::F_TAGS);
+		$input->setInfo($this->pl->txt(xvmpMedium::F_TAGS . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
@@ -116,12 +128,15 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		// PUBLISHED (Zugriff)
-		$input = new ilRadioGroupInputGUI($this->pl->txt('published'), 'hidden');
-		$radio_item = new ilRadioOption($this->lng->txt('public'), 0);
+		$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpMedium::F_PUBLISHED), xvmpMedium::PUBLISHED_HIDDEN);
+		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC), 0);
+		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC . '_info'));
 		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt('private'), 1);
+		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN), 2);
+		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN . '_info'));
 		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt('hidden'), 2);
+		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE), 1);
+		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE . '_info'));
 		$input->addOption($radio_item);
 		$input->setRequired(true);
 		$this->addItem($input);
@@ -129,7 +144,8 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		// MEDIA PERMISSIONS
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
 		if ($media_permissions) {
-			$input = new ilMultiSelectSearchInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), 'mediapermissions');
+			$input = new ilMultiSelectSearchInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS), xvmpMedium::F_MEDIAPERMISSIONS);
+			$input->setInfo($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS . '_info'));
 			$input->setRequired(true);
 			$options = array();
 			if ($media_permissions == xvmpConf::MEDIA_PERMISSION_SELECTION) {
@@ -148,22 +164,16 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 			}
 		}
 
-		// CATEGORIES
-		$input = new ilMultiSelectSearchInputGUI($this->lng->txt('categories'), 'categories');
-		$categories = xvmpCategory::getAll();
-		$options = array();
-		/** @var xvmpCategory $category */
-		foreach ($categories as $category) {
-			$options[$category->getId()] = $category->getNameWithPath();
-		}
-		$input->setOptions($options);
-		$input->setRequired(true);
+		// ADD AUTOMATICALLY
+		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_ADD_AUTOMATICALLY), self::F_ADD_AUTOMATICALLY);
+		$input->setInfo($this->pl->txt(self::F_ADD_AUTOMATICALLY . '_info'));
 		$this->addItem($input);
 
-		// TAGS
-		$input = new ilTextInputGUI($this->pl->txt('tags'), 'tags');
-		$input->setRequired(true);
+		// NOTIFICATION
+		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_NOTIFICATION), self::F_NOTIFICATION);
+		$input->setInfo($this->pl->txt(self::F_NOTIFICATION . '_info'));
 		$this->addItem($input);
+
 
 	}
 
@@ -186,11 +196,11 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 			$value = $this->getInput($item->getPostVar());
 
 			switch ($item->getPostVar()) {
-				case 'categories[]':
+				case xvmpMedium::F_CATEGORIES . '[]':
 					$post_var = rtrim($item->getPostVar(), '[]');
 					$video[$post_var] = implode(',', $this->getInput($post_var));
 					break;
-				case 'source_url':
+				case self::F_SOURCE_URL:
 					$tmp_id = $_GET['tmp_id'];
 					$dir = ilUtil::getWebspaceDir() . '/vimp/' . $tmp_id;
 					$source_url = ltrim($dir, '.') . '/' . rawurlencode($value['name']);
@@ -199,10 +209,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 					$source_url .= '&' . ilWebAccessChecker::DISPOSITION . '=' . ilFileDelivery::DISP_ATTACHMENT;
 					$video[$item->getPostVar()] =  ILIAS_HTTP_PATH . ltrim($source_url, '.');
 					break;
-				case 'add_automatically':
+				case self::F_ADD_AUTOMATICALLY:
 					$add_automatically = (int) $value;
 					break;
-				case 'notification':
+				case self::F_NOTIFICATION:
 					$notification = (int) $value;
 					break;
 				default:
@@ -226,7 +236,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		// the object has to be loaded again, since the response from "upload" has another format for the categories
 		// also, this adds it to the cache
-		$video = xvmpMedium::getObjectAsArray($video['mid']);
+		$video = xvmpMedium::getObjectAsArray($video[xvmpMedium::F_MID]);
 
 		xvmpEventLog::logEvent(xvmpEventLog::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
 
