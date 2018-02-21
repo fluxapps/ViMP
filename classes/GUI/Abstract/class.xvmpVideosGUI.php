@@ -45,14 +45,14 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 				$mid = $_GET[xvmpMedium::F_MID];
 				$medium = xvmpMedium::find($mid);
 				$checked = $_GET['checked'];
-
-				if ($checked && ($medium->getPublished() == xvmpMedium::PUBLISHED_PRIVATE) && ($medium->getUid() != xvmpUser::getVimpUser($this->user)->getUid())) {
-					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+				if ($checked) {
+					ilObjViMPAccess::checkAction(ilObjViMPAccess::ACTION_ADD_VIDEO, $this, $medium);
+				} else {
+					ilObjViMPAccess::checkAction(ilObjViMPAccess::ACTION_REMOVE_VIDEO, $this, $medium);
 				}
 				break;
 		}
-		$this->{$cmd}();
+		parent::performCommand($cmd);
 	}
 
 	/**

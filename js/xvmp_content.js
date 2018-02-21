@@ -47,7 +47,6 @@ var VimpContent = {
 		$('#xoct_waiter_modal').show();
 		var $modal = $('#xvmp_modal_player');
 		$modal.modal('show');
-
 		$.get({
 			url: this.ajax_base_url,
 			data: {

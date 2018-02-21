@@ -53,7 +53,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	public function executeCommand() {
 		$next_class = $this->ctrl->getNextClass();
 		$cmd = $this->ctrl->getCmd();
-		if (!ilObjViMPAccess::hasReadAccess() && $next_class != "ilinfoscreengui" && $cmd != "infoScreen") {
+		if (!ilObjViMPAccess::hasReadAccess() && $next_class != "ilinfoscreengui" && $cmd != "infoScreen" && $cmd != xvmpGUI::CMD_FILL_MODAL) {
 			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
 			$this->ctrl->returnToParent($this);
 		}
@@ -107,8 +107,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					$this->tpl->show();
 					break;
 				case 'xvmpownvideosgui':
-					$this->initHeader();
 					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
 						$this->setTabs();
 					}
 					$xvmpGUI = new xvmpOwnVideosGUI($this);
@@ -116,8 +116,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					$this->tpl->show();
 					break;
 				case 'xvmplearningprogressgui':
-					$this->initHeader();
 					if (!$this->ctrl->isAsynch()) {
+						$this->initHeader();
 						$this->setTabs();
 					}
 					$xvmpGUI = new xvmpLearningProgressGUI($this);

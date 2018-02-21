@@ -65,10 +65,9 @@ abstract class xvmpGUI {
 		switch ($cmd) {
 			case self::CMD_FILL_MODAL:
 				$mid = $_GET['mid'];
-				if (!$mid || !xvmpSelectedMedia::isSelected($mid, $this->getObjId())) {
-					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
-				}
+				$medium = xvmpMedium::find($mid);
+				ilObjViMPAccess::checkAction(ilObjViMPAccess::ACTION_PLAY_VIDEO, $this, $medium);
+				break;
 		}
 
 		$this->{$cmd}();
@@ -121,10 +120,19 @@ abstract class xvmpGUI {
 		return $this->parent_gui->obj_id;
 	}
 
+
 	/**
+	 * called by ilObjViMPAccess
+	 */
+	public function accessDenied() {
+		ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+		$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+	}
+
+		/**
 	 * @return ilModalGUI
 	 */
-	public function getModalPlayer() {
+	public static function getModalPlayer() {
 		$modal = ilModalGUI::getInstance();
 		$modal->setId('xvmp_modal_player');
 		$modal->setType(ilModalGUI::TYPE_LARGE);
@@ -143,8 +151,14 @@ abstract class xvmpGUI {
 		$video_infos = "				
 			<p>{$this->pl->txt(xvmpMedium::F_DURATION)}: {$video->getDurationFormatted()}</p>
 			<p>{$this->pl->txt(xvmpMedium::F_CREATED_AT)}: {$video->getCreatedAt('m.d.Y, H:i')}</p>
-			<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>
+			
 		";
+		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+			if ($value = $video->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
+				$video_infos .= "<p>{$field[xvmpConf::F_FORM_FIELD_TITLE]}: {$value}</p>";
+			}
+		}
+		$video_infos .= "<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>";
 		$response = new stdClass();
 		$video_player = new xvmpVideoPlayer($video);
 		$response->html = $video_player->getHTML() . $video_infos;

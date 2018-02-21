@@ -209,9 +209,9 @@ class xvmpMedium extends xvmpObject {
 			'hidden' => $this->getPublishedId(),
 		);
 		// TODO: uncomment when fixed by vimp
-//		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-//			$params[$field[xvmpConf::F_FORM_FIELD_ID]] = $this->$field[xvmpConf::F_FORM_FIELD_ID];
-//		}
+		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+			$params[$field[xvmpConf::F_FORM_FIELD_ID]] = $this->getField($field[xvmpConf::F_FORM_FIELD_ID]);
+		}
 		$response = xvmpRequest::editMedium($this->getId(), $params);
 		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $this->getMid());
 		self::cache(self::class . '-' . $this->getMid(),$this->__toArray());
@@ -485,6 +485,12 @@ class xvmpMedium extends xvmpObject {
 	}
 
 
+	public function isCurrentUserOwner() {
+		global $DIC;
+		$user = $DIC['ilUser'];
+		return (xvmpUser::getVimpUser($user)->getUid() == $this->getUid());
+	}
+
 	/**
 	 * @return int
 	 */
@@ -564,6 +570,13 @@ class xvmpMedium extends xvmpObject {
 		$this->mediasubtype = $mediasubtype;
 	}
 
+
+	/**
+	 * @return bool
+	 */
+	public function isPublic() {
+		return $this->published == self::PUBLISHED_PUBLIC;
+	}
 
 	/**
 	 * @return String

@@ -59,10 +59,8 @@ class xvmpContentGUI extends xvmpGUI {
 		switch ($cmd) {
 			case self::CMD_RENDER_ITEM:
 				$mid = $_GET['mid'];
-				// check if current user is owner of this video
 				if (!$mid || !xvmpSelectedMedia::isSelected($mid, $this->getObjId())) {
-					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+					$this->accessDenied();
 				}
 				break;
 		}
@@ -71,7 +69,7 @@ class xvmpContentGUI extends xvmpGUI {
 
 
 	/**
-	 *
+	 * ajax
 	 */
 	public function renderItem() {
 		$mid = $_GET['mid'];

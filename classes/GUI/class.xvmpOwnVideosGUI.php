@@ -29,12 +29,6 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	 *
 	 */
 	public function executeCommand() {
-//		echo '<iframe src="http://localhost/media/embed?key=5350eb8bd4d60f6b668764022113f25b&width=350&height=200&autoplay=false&autolightsoff=false&loop=false&chapters=false&related=false&responsive=false" width="350" height="200" frameborder="0" allowfullscreen="allowfullscreen" allowtransparency="true" scrolling="no"></iframe>';exit;
-		if (!ilObjViMPAccess::hasWriteAccess() && !ilObjViMPAccess::hasUploadPermission()) {
-			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-			$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
-		}
-
 		parent::executeCommand();
 	}
 
@@ -49,12 +43,17 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			case self::CMD_CONFIRMED_DELETE_VIDEO:
 				$mid = max($_GET['mid'], $_POST['mid']);
 				$medium = xvmpMedium::find($mid);
-				// check if current user is owner of this video
-				if (!$mid || ($medium->getMediatype() != 'video') || ($medium->getUid() != xvmpUser::getVimpUser($this->user)->getUid())) {
-					ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-					$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
-				}
+				ilObjViMPAccess::checkAction(ilObjViMPAccess::ACTION_MANIPULATE_VIDEO, $this, $medium);
 				break;
+			case self::CMD_FILL_MODAL:
+				$mid = max($_GET['mid'], $_POST['mid']);
+				$medium = xvmpMedium::find($mid);
+				ilObjViMPAccess::checkAction(ilObjViMPAccess::ACTION_PLAY_VIDEO, $this, $medium);
+				break;
+			default:
+				if (!ilObjViMPAccess::hasWriteAccess() && !ilObjViMPAccess::hasUploadPermission()) {
+					$this->accessDenied();
+				}
 		}
 		if ($cmd != self::CMD_UPLOAD_CHUNKS) {
 			/**

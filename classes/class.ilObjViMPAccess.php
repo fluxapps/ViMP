@@ -10,6 +10,15 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class ilObjViMPAccess extends ilObjectPluginAccess {
 
 	const ACTION_ADD_VIDEO = 'add_video';
+	const ACTION_REMOVE_VIDEO = 'remove_video';
+	const ACTION_PLAY_VIDEO = 'play_video';
+	/**
+	 * delete / edit / change owner
+	 */
+	const ACTION_MANIPULATE_VIDEO = 'manipulate_video'; // delete, edit, change owner
+
+	const CONTEXT_OBJECT = 'context_object';
+	const CONTEXT_PAGE_EDITOR = 'context_page_editor';
 
 	/**
 	 * @param string $a_cmd
@@ -108,10 +117,52 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 	}
 
 
-	public static function checkAction($action) {
+	/**
+	 * @param                 $action
+	 * @param xvmpGUI         $GUI
+	 * @param xvmpMedium|NULL $medium
+	 */
+	public static function checkAction($action, $GUI, xvmpMedium $medium = null) {
+		if (ilObject2::_lookupType($_GET['ref_id'], true) == 'xvmp') {
+			$context = self::CONTEXT_OBJECT;
+		} else {
+			$context = self::CONTEXT_PAGE_EDITOR;
+		}
+
+		if (!self::isActionAllowed($action, $GUI, $context, $medium)) {
+			$GUI->accessDenied();
+		}
 
 	}
 
+	public static function isActionAllowed($action, $GUI, $context, xvmpMedium $medium = null) {
+		switch ($action) {
+			case self::ACTION_PLAY_VIDEO:
+				if ($medium->isPublic() || $medium->isCurrentUserOwner()) {
+					return true;
+				}
+				if ($context == self::CONTEXT_OBJECT && xvmpSelectedMedia::isSelected($medium->getId(), $GUI->getObjId()) && self::hasReadAccess()) {
+					return true;
+				}
+				break;
+			case self::ACTION_ADD_VIDEO:
+				if ($medium->isPublic() || $medium->isCurrentUserOwner() && (self::hasWriteAccess() || self::hasUploadPermission())) {
+					return true;
+				}
+				break;
+			case self::ACTION_REMOVE_VIDEO:
+				if (self::hasWriteAccess() || self::hasUploadPermission()) {
+					return true;
+				}
+				break;
+			case self::ACTION_MANIPULATE_VIDEO:
+				if ($medium->isCurrentUserOwner() && (self::hasWriteAccess() || self::hasUploadPermission())) {
+					return true;
+				}
+				break;
+		}
+		return false;
+	}
 
 	/**
 	 * @param $obj_id

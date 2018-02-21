@@ -17,7 +17,7 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	 */
 	protected $pl;
 	/**
-	 * @var xvmpOwnVideosGUI
+	 * @var xvmpOwnVideosGUI | ilVimpPageComponentPluginGUI
 	 */
 	protected $parent_gui;
 	/**
@@ -156,8 +156,13 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 	}
 
 	protected function addCommandButtons() {
-		$this->addCommandButton(xvmpOwnVideosGUI::CMD_UPDATE_VIDEO, $this->lng->txt('save'));
-		$this->addCommandButton(xvmpOwnVideosGUI::CMD_CANCEL, $this->lng->txt(xvmpOwnVideosGUI::CMD_CANCEL));
+		if ($this->parent_gui instanceof xvmpOwnVideosGUI) {
+			$this->addCommandButton(xvmpOwnVideosGUI::CMD_UPDATE_VIDEO, $this->lng->txt('save'));
+			$this->addCommandButton(xvmpOwnVideosGUI::CMD_CANCEL, $this->lng->txt(xvmpOwnVideosGUI::CMD_CANCEL));
+		} else {
+			$this->addCommandButton(ilVimpPageComponentPluginGUI::CMD_STANDARD, $this->lng->txt('save'));
+			$this->addCommandButton(ilVimpPageComponentPluginGUI::CMD_OWN_VIDEOS, $this->lng->txt(xvmpOwnVideosGUI::CMD_CANCEL));
+		}
 	}
 
 
