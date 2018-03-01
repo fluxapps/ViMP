@@ -20,6 +20,10 @@ class xvmpVideoPlayer {
 	 * @var xvmpMedium
 	 */
 	protected $video;
+	/**
+	 * @var bool
+	 */
+	protected $embed = true;
 
 	/**
 	 * @var array
@@ -60,9 +64,10 @@ class xvmpVideoPlayer {
 	}
 
 	public function getHTML() {
-//		if ($this->video->getPublished() == xvmpMedium::PUBLISHED_PRIVATE) {
-//			return $this->video->getEmbedCode();
-//		}
+		if ($this->embed) {
+			return $this->video->getEmbedCode($this->options['width'], $this->options['height']);
+		}
+
 		$template = $this->pl->getTemplate('default/tpl.video.html');
 
 		$medium = $this->video->getMedium();

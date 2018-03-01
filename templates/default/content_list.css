@@ -96,14 +96,7 @@ div.xvmp_image_container img.xvmp_play_icon {
 	display: inline-block;
 }
 
-
-
 div.xvmp_image_container img.xvmp_preview_image {
-	background: black url('../images/vimp_logo.svg') center no-repeat;
-	background-size: contain;
-}
-
-div.modal-body > section > iframe {
 	background: black url('../images/vimp_logo.svg') center no-repeat;
 	background-size: contain;
 }

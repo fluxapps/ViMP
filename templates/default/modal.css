@@ -1,0 +1,28 @@
+div.modal-body > section > iframe {
+	background: black url('../images/vimp_logo.svg') center no-repeat;
+	background-size: contain;
+	width: 100%;
+}
+
+div.modal-content {
+	width: 100%;
+	/*height: fit-content;*/
+	max-width: 800px;
+	margin: auto;
+}
+
+
+div#xvmp_video_container iframe{
+	width: 100%;
+}
+
+div#xvmp_video_container {
+	width: 100%;
+}
+
+h4.modal-title {
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow:     ellipsis;
+}

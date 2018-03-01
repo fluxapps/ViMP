@@ -280,7 +280,7 @@ class xvmpRequest {
 		$xvmpCurl = new xvmpCurl(self::EXTENDED_SEARCH);
 
 		$xvmpCurl->addPostField('token', xvmp::getToken());
-//		$xvmpCurl->addPostField('hidden', 'true');
+		$xvmpCurl->addPostField('hidden', 'true');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

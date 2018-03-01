@@ -755,16 +755,11 @@ class xvmpMedium extends xvmpObject {
 	 * @return String
 	 */
 	public function getEmbedCode($width = 0, $height = 0) {
-//		$detect_mobile = new MobileDetect();
-//		if ($detect_mobile->isMobile()) {
-//			return str_replace('responsive=false', 'responsive=true', $this->embed_code);
-//		}
-		if ($width && $height) {
-			$embed_code = preg_replace('/width=[d]*/', "width=$width", $this->embed_code);
-		} else {
-			return str_replace('responsive=false', 'responsive=true', $this->embed_code);
+		if ($width || $height) {
+
+			return '<div class="xvmp_embed_wrapper" style="width:' . $width . ';height:' . $height . ';">' . $this->embed_code . '</div>';
 		}
-		return $this->embed_code;
+		return str_replace('responsive=false', 'responsive=true', $this->embed_code);
 	}
 
 

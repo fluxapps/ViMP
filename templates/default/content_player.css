@@ -8,6 +8,13 @@ div#xvmp_video_container {
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
 }
 
+div#xvmp_video_container iframe {
+	width: 100%;
+	max-width: 700px;
+	background: black;
+	margin-right: 20px;
+}
+
 div.xvmp_image_container img.xvmp_preview_image {
 	background: url('../images/vimp_logo.svg') center no-repeat;
 	background-size: contain;
@@ -188,6 +195,14 @@ div.xvmp_image_container img.xvmp_play_icon {
 		float: left;
 		margin-right: 20px;
 		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+	}
+
+	div#xvmp_video_container iframe {
+		/*margin: auto;*/
+		width: 100%;
+		max-width:100%;
+		background: black;
+		/*margin-right: 20px;*/
 	}
 }
 
