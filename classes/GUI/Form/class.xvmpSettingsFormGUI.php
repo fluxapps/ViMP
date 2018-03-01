@@ -14,6 +14,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 	const F_ONLINE = 'online';
 	const F_LAYOUT = 'layout';
 	const F_REPOSITORY_PREVIEW = 'repository_preview';
+	const F_LEARNING_PROGRESS = 'enable_learning_progress';
 	/**
 	 * @var ilObjViMP
 	 */
@@ -75,6 +76,11 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 		));
 		$this->addItem($input);
 
+		// LEARNING PROGRESS
+		$input = new ilCheckboxInputGUI($this->pl->txt(self::F_LEARNING_PROGRESS), self::F_LEARNING_PROGRESS);
+		$input->setInfo($this->pl->txt(self::F_LEARNING_PROGRESS . '_info'));
+		$input->setDisabled(!xvmp::isLearningProgressPossible($this->parent_gui->getObjId()));
+		$this->addItem($input);
 
 		$this->initCommandButtons();
 	}
@@ -99,6 +105,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 			self::F_ONLINE => $this->settings->getIsOnline(),
 			self::F_LAYOUT => $this->settings->getLayoutType(),
 			self::F_REPOSITORY_PREVIEW => $this->settings->getRepositoryPreview(),
+			self::F_LEARNING_PROGRESS => $this->settings->getLpActive()
 		);
 		$this->setValuesByArray($values);
 	}
@@ -119,6 +126,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 		$this->settings->setIsOnline($this->getInput(self::F_ONLINE));
 		$this->settings->setLayoutType($this->getInput(self::F_LAYOUT));
 		$this->settings->setRepositoryPreview($this->getInput(self::F_REPOSITORY_PREVIEW));
+		$this->settings->setLpActive($this->getInput(self::F_LEARNING_PROGRESS));
 		$this->settings->update();
 
 		return true;

@@ -48,6 +48,14 @@ class xvmpSettings extends ActiveRecord {
 	 * @db_length           2
 	 */
 	protected $repository_preview = 0;
+	/**
+	 * @var int
+	 *
+	 * @db_has_field        true
+	 * @db_fieldtype        integer
+	 * @db_length           1
+	 */
+	protected $lp_active = 0;
 
 
 	/**
@@ -114,6 +122,21 @@ class xvmpSettings extends ActiveRecord {
 		$this->repository_preview = $repository_preview;
 	}
 
+
+	/**
+	 * @return int
+	 */
+	public function getLpActive() {
+		return $this->lp_active && xvmp::isLearningProgressPossible($this->getObjId());
+	}
+
+
+	/**
+	 * @param int $lp_active
+	 */
+	public function setLpActive($lp_active) {
+		$this->lp_active = $lp_active;
+	}
 
 
 	public static function returnDbTableName() {

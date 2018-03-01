@@ -94,7 +94,7 @@ class xvmp {
 	 *
 	 * @return bool
 	 */
-	public static function isLearningProgressActive($obj_id) {
+	public static function isLearningProgressPossible($obj_id) {
 		$ref_id = self::lookupRefId($obj_id);
 		return (ilObjUserTracking::_enabledLearningProgress() && self::getParentCourseRefId($ref_id));
 	}

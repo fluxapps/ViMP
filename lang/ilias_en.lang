@@ -154,3 +154,5 @@ xvmp_edit_permission#:#Change Permissions: User can change permission settings
 form_title_change_owner#:#Search User
 search#:#Search
 permission_denied#:#Permission denied.
+enable_learning_progress#:#Learning Progress Active
+enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, wenn das Objekt innerhalb eines Kurses liegt und der Lernfortschritt global aktiviert ist.
