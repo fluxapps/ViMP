@@ -23,7 +23,7 @@ class xvmpVideoPlayer {
 	/**
 	 * @var bool
 	 */
-	protected $embed = true;
+	protected $embed;
 
 	/**
 	 * @var array
@@ -40,7 +40,7 @@ class xvmpVideoPlayer {
 
 
 
-	public function __construct($video) {
+	public function __construct($video, $embed = false) {
 		global $DIC;
 		$tpl = $DIC['tpl'];
 		$this->tpl = $tpl;
@@ -49,6 +49,7 @@ class xvmpVideoPlayer {
 			$video = xvmpMedium::find($video);
 		}
 		$this->video = $video;
+		$this->embed = $embed;
 	}
 
 	public static function loadVideoJSAndCSS($load_observer) {

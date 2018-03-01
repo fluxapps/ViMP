@@ -135,6 +135,15 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 
 	}
 
+
+	/**
+	 * @param                 $action
+	 * @param                 $GUI
+	 * @param                 $context
+	 * @param xvmpMedium|NULL $medium
+	 *
+	 * @return bool
+	 */
 	public static function isActionAllowed($action, $GUI, $context, xvmpMedium $medium = null) {
 		switch ($action) {
 			case self::ACTION_PLAY_VIDEO:

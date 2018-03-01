@@ -40,6 +40,8 @@ conf_cache_ttl_token#:#TTL Token
 conf_cache_ttl_token_info#:#Time-To-Live in Sekunden
 conf_cache#:#Caching
 conf_cache_info#:#Objekte werden zur Verbesserung der Performanz zwischengespeichert. Nach Ablauf der TTL wird ein Objekt aus dem Cache entfernt und neu geladen (bei Eingabe von 0 werden sie nicht automatisch entfernt). Der gesamte Cache kann mithilfe der Schaltfläche oben auf dieser Seite geleert werden. Innerhalb von ViMP-Objekten im Magazin können ausserdem die Videos dieser Objekte aus dem Cache entfernt und neu geladen werden.
+conf_embed_player#:#Embedded Videoplayer nutzen
+conf_embed_player_info#:#Wenn aktiviert, wird der eingebettete Videoplayer von ViMP genutzt. Wenn der Lernfortschritt für ein Objekt aktiviert ist, wird jedoch dennoch der Plugin-eigene Player verwendet, da der Lernfortschritt mit dem eingebetteten Player nicht gemessen werden kann.
 msg_success#:#Änderungen erfolgreich gespeichert.
 selection#:#Auswahl
 all#:#Ja, alle

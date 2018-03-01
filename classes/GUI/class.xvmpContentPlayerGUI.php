@@ -44,10 +44,12 @@ class xvmpContentPlayerGUI {
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
-
-//		ilTooltipGUI::initLibrary();
 	}
 
+
+	/**
+	 * @throws xvmpException
+	 */
 	public function show() {
 		$selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
 		if (!$selected_media->hasSets()) {
@@ -67,7 +69,7 @@ class xvmpContentPlayerGUI {
 		}
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
-		$video_player = new xvmpVideoPlayer($video);
+		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->parent_gui->getObjId()));
 		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', $video->getDescription(50));
@@ -90,6 +92,12 @@ class xvmpContentPlayerGUI {
 			$player_tpl->setCurrentBlock('video_info');
 			$player_tpl->setVariable('VALUE', $this->pl->txt('created_at') . ': ' . $video->getCreatedAt('d.m.Y, H:i'));
 			$player_tpl->parseCurrentBlock();
+
+			if (xvmp::showWatched($this->parent_gui->getObjId())) {
+				$player_tpl->setCurrentBlock('video_info');
+				$player_tpl->setVariable('VALUE', $this->pl->txt('watched') . ': ' . xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
+				$player_tpl->parseCurrentBlock();
+			}
 		}
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
@@ -106,14 +114,6 @@ class xvmpContentPlayerGUI {
 			$this->ctrl->setParameter($this->parent_gui, 'mid', $media->getMid());
 			$tiles_tpl->setVariable('PLAY_LINK', $this->ctrl->getLinkTarget($this->parent_gui, xvmpContentGUI::CMD_STANDARD));
 			$tiles_tpl->parseCurrentBlock();
-
-//			$tooltip = "Title: {$video->getTitle()} \n
-//			Description: {$video->getDescription()}
-//			Duration: {$video->getDurationFormatted()}
-//			Author: {$video->getCustomAuthor()}
-//			Created At: {$video->getCreatedAt('d.m.Y, H:i')}";
-//
-//			ilTooltipGUI::addTooltip('box_' . $media->getMid(), $tooltip);
 
 		}
 

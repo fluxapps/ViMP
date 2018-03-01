@@ -101,6 +101,26 @@ class xvmp {
 
 
 	/**
+	 * @param $obj_id
+	 *
+	 * @return bool
+	 */
+	public static function useEmbeddedPlayer($obj_id) {
+		return !xvmpSettings::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER);
+	}
+
+
+	/**
+	 * @param $obj_id
+	 *
+	 * @return bool
+	 */
+	public static function showWatched($obj_id) {
+		return !self::useEmbeddedPlayer($obj_id);
+	}
+
+
+	/**
 	 * @param $ref_id
 	 *
 	 * @return bool|int

@@ -162,7 +162,7 @@ abstract class xvmpGUI {
 		}
 		$video_infos .= "<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>";
 		$response = new stdClass();
-		$video_player = new xvmpVideoPlayer($video);
+		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId()));
 		$response->html = $video_player->getHTML() . $video_infos;
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */

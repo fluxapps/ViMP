@@ -149,6 +149,12 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($input);
 
 
+		// Embedded Player
+		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_EMBED_PLAYER), xvmpConf::F_EMBED_PLAYER);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_EMBED_PLAYER . '_info'));
+		$this->addItem($input);
+
+
 		// *** NOTIFICATION ***
 		$header = new ilFormSectionHeaderGUI();
 		$header->setTitle($this->pl->txt('notification'));
