@@ -69,17 +69,6 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	/**
 	 *
 	 */
-	protected function index() {
-		$class_name = static::TABLE_CLASS;
-		/** @var xvmpTableGUI $table_gui */
-		$table_gui = new $class_name($this, self::CMD_STANDARD);
-		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
-	}
-
-
-	/**
-	 *
-	 */
 	public function editVideo() {
 		$mid = $_GET['mid'];
 		$xvmpEditVideoFormGUI = new xvmpEditVideoFormGUI($this, $mid);

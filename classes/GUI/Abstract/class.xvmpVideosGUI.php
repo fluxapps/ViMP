@@ -15,6 +15,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	const SUBTAB_SELECTED = 'selected_videos';
 	const SUBTAB_OWN = 'own_videos';
 
+	const CMD_SHOW = 'show';
 	const CMD_SHOW_FILTERED = 'showFiltered';
 	const CMD_APPLY_FILTER = 'applyFilter';
 	const CMD_RESET_FILTER = 'resetFilter';
@@ -34,6 +35,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 
 		switch ($cmd) {
 			case self::CMD_STANDARD:
+			case self::CMD_SHOW:
 			case self::CMD_SHOW_FILTERED:
 				if (!$this->ctrl->isAsynch()) {
 					$this->setSubTabs();
@@ -73,7 +75,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	protected function index() {
 		$class_name = static::TABLE_CLASS;
 		/** @var xvmpTableGUI $table_gui */
-		$table_gui = new $class_name($this, self::CMD_STANDARD);
+		$table_gui = new $class_name($this, self::CMD_SHOW);
 		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
@@ -81,11 +83,24 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	/**
 	 *
 	 */
+	protected function show() {
+		$class_name = static::TABLE_CLASS;
+		/** @var xvmpTableGUI $table_gui */
+		$table_gui = new $class_name($this, self::CMD_SHOW);
+		$table_gui->parseData();
+		$table_gui->determineOffsetAndOrder();
+		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
+	}
+
+	/**
+	 *
+	 */
 	protected function showFiltered() {
 		$class_name = static::TABLE_CLASS;
 		/** @var xvmpTableGUI $table_gui */
-		$table_gui = new $class_name($this, self::CMD_STANDARD);
+		$table_gui = new $class_name($this, self::CMD_SHOW);
 		$table_gui->parseData();
+		$table_gui->determineOffsetAndOrder();
 		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 

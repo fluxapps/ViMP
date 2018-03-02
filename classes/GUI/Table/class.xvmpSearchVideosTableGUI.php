@@ -47,8 +47,16 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {
-		$this->setPrefix(ilViMPPlugin::XVMP . '_search_');
-		$this->setId('xvmp_search_' . $_GET['ref_id']);
+		global $DIC;
+		$ilCtrl = $DIC['ilCtrl'];
+		$ilUser = $DIC['ilUser'];
+
+		$id = ilViMPPlugin::XVMP . '_search_' . $_GET['ref_id'] . $ilUser->getId();
+		$this->setId($id);
+		$this->setPrefix($id);
+		$this->setFormName($id);
+
+		$ilCtrl->saveParameter($parent_gui, $this->getNavParameter());
 
 		parent::__construct($parent_gui, $parent_cmd);
 
@@ -127,8 +135,9 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		$current_user = xvmpUser::getOrCreateVimpUser($this->user);
 		$filter['mediapermissions'] = implode(',', array_keys($current_user->getRoles()));
 
-		$data = xvmpMedium::getFilteredAsArray($filter);
-		$this->setData(array_filter($data));
+		$data = array_filter(xvmpMedium::getFilteredAsArray($filter));
+		$this->setData($data);
+		$this->setMaxCount(count($data));
 	}
 
 

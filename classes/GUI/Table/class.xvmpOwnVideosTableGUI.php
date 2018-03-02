@@ -50,8 +50,15 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	public function __construct($parent_gui, $parent_cmd) {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
-		$this->setId('own_' . $_GET['ref_id']);
+		$ilCtrl = $DIC['ilCtrl'];
+		$id = 'xvmp_own_' . $_GET['ref_id'] . '_' . $ilUser->getId();
+		$this->setId($id);
+		$this->setPrefix($id);
+		$this->setFormName($id);
+		$ilCtrl->saveParameter($parent_gui, $this->getNavParameter());
+
 		parent::__construct($parent_gui, $parent_cmd);
+
 		$this->setDisableFilterHiding(true);
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
@@ -152,6 +159,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 		$this->tpl_global->addOnLoadCode('VimpSearch.videos = ' . json_encode($data) . ';');
 		$this->setData($data);
+		$this->setMaxCount(count($data));
 	}
 
 	/**

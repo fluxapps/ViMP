@@ -52,7 +52,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->tpl_global = $tpl;
-		$this->setPrefix(ilViMPPlugin::XVMP . '_table_');
+//		$this->setPrefix(ilViMPPlugin::XVMP . '_table_');
 
 		parent::__construct($parent_gui, $parent_cmd);
 

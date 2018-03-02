@@ -139,23 +139,6 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 
 		$item = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$this->addAndReadFilterItem($item);
-
-//		if ($this->isColumnSelected('created_at')) {
-//			$item = new ilCombinationInputGUI($this->pl->txt('modified_between'), 'created_at');
-//			$from = new ilDateTimeInputGUI("", 'created_at_from');
-//			//$from->setMode(ilDateTimeInputGUI::MODE_INPUT);
-//			$item->addCombinationItem("from", $from, '');
-//			$to = new ilDateTimeInputGUI("", 'created_at_to');
-//			//$to->setMode(ilDateTimeInputGUI::MODE_INPUT);
-//			$item->addCombinationItem("to", $to, '');
-//			$item->setComparisonMode(ilCombinationInputGUI::COMPARISON_ASCENDING);
-//			$this->addFilterItemWithValue($item);
-//		}
-//
-//		if ($this->isColumnSelected('created_user_id')) {
-//			$item = new ilTextInputGUI($this->pl->txt('mod_col_created_user_id'), 'created_user_id');
-//			$this->addFilterItemWithValue($item);
-//		}
 	}
 
 }
