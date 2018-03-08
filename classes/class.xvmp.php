@@ -101,6 +101,13 @@ class xvmp {
 
 
 	/**
+	 * @return bool
+	 */
+	public static function isAllowedToSetPublic() {
+		return ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD));
+	}
+
+	/**
 	 * @param $obj_id
 	 *
 	 * @return bool

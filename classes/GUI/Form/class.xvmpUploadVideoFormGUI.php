@@ -128,18 +128,20 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		// PUBLISHED (Zugriff)
-		$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpMedium::F_PUBLISHED), xvmpMedium::PUBLISHED_HIDDEN);
-		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC), 0);
-		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC . '_info'));
-		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN), 2);
-		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN . '_info'));
-		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE), 1);
-		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE . '_info'));
-		$input->addOption($radio_item);
-		$input->setRequired(true);
-		$this->addItem($input);
+		if (xvmp::isAllowedToSetPublic()) {
+			$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpMedium::F_PUBLISHED), xvmpMedium::PUBLISHED_HIDDEN);
+			$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC), xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_PUBLIC]);
+			$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC . '_info'));
+			$input->addOption($radio_item);
+			$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN), xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN]);
+			$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN . '_info'));
+			$input->addOption($radio_item);
+			$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE), xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_PRIVATE]);
+			$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE . '_info'));
+			$input->addOption($radio_item);
+			$input->setRequired(true);
+			$this->addItem($input);
+		}
 
 		// MEDIA PERMISSIONS
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
@@ -221,8 +223,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 					}
 					break;
 			}
+		}
 
-
+		if (!xvmp::isAllowedToSetPublic()) {
+			$video[xvmpMedium::F_PUBLISHED] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];
 		}
 
 		try {

@@ -13,7 +13,7 @@ conf_user_mapping_ext_info#:#The formula, with which external ILIAS users are cr
 conf_user_mapping_local#:#User Mapping (local users)
 conf_user_mapping_local_info#:#The formula, with which local ILIAS users are created in ViMP, if no ViMP account with the same email address is found. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_allow_public_upload#:#Permission „Upload“ can set Videos public
-conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Private".
+conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Hidden".
 conf_form_fields#:#Additional Form Fields
 conf_form_fields_info#:#Additional in ViMP defined media fields can be configured here and will thereby be available in the form for editing and uploading videos.<br>Textfield 1: Field name<br>Textfield 2: Display name<br>Checkbox 1: Required<br>Checkbox 2: Fill field automatically with username
 conf_filter_fields#:#Additional Table Filters

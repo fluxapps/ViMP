@@ -110,7 +110,7 @@ class xvmpCron {
 	 * @param xvmpUploadedMedia $uploaded_medium
 	 */
 	protected function sendNotification(xvmpMedium $medium, xvmpUploadedMedia $uploaded_medium, $transcoding_succeeded) {
-		xvmpLog::getInstance()->write('Medium transcoding ' . ($transcoding_succeeded ? 'succeeded:' : 'failed:') . $medium->getTitle() . ' (' . $medium->getMid() . ')');
+//		xvmpLog::getInstance()->write('Medium transcoding ' . ($transcoding_succeeded ? 'succeeded:' : 'failed:') . $medium->getTitle() . ' (' . $medium->getMid() . ')');
 
 		$subject = xvmpConf::getConfig($transcoding_succeeded ? xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL : xvmpConf::F_NOTIFICATION_SUBJECT_FAILED);
 		$body = xvmpConf::getConfig($transcoding_succeeded ? xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL : xvmpConf::F_NOTIFICATION_BODY_FAILED);
@@ -136,7 +136,7 @@ class xvmpCron {
 			1
 		);
 
-		xvmpLog::getInstance()->write('Notification sent to user: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()) . ' (' . $uploaded_medium->getUserId() . ')');
+//		xvmpLog::getInstance()->write('Notification sent to user: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()) . ' (' . $uploaded_medium->getUserId() . ')');
 	}
 
 

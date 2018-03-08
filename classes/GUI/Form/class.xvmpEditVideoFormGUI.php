@@ -85,17 +85,19 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 		}
 
 		// PUBLISHED (Zugriff)
-		$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpMedium::F_PUBLISHED), xvmpMedium::F_PUBLISHED);
-		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC), xvmpMedium::PUBLISHED_PUBLIC);
-		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC . '_info'));
-		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN), xvmpMedium::PUBLISHED_HIDDEN);
-		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN . '_info'));
-		$input->addOption($radio_item);
-		$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE), xvmpMedium::PUBLISHED_PRIVATE);
-		$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE . '_info'));
-		$input->addOption($radio_item);
-		$this->addItem($input);
+		if (xvmp::isAllowedToSetPublic()) {
+			$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpMedium::F_PUBLISHED), xvmpMedium::F_PUBLISHED);
+			$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC), xvmpMedium::PUBLISHED_PUBLIC);
+			$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PUBLIC . '_info'));
+			$input->addOption($radio_item);
+			$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN), xvmpMedium::PUBLISHED_HIDDEN);
+			$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_HIDDEN . '_info'));
+			$input->addOption($radio_item);
+			$radio_item = new ilRadioOption($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE), xvmpMedium::PUBLISHED_PRIVATE);
+			$radio_item->setInfo($this->pl->txt(xvmpMedium::PUBLISHED_PRIVATE . '_info'));
+			$input->addOption($radio_item);
+			$this->addItem($input);
+		}
 
 		// MEDIA PERMISSIONS
 		$media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
@@ -140,6 +142,10 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 		foreach ($this->getItems() as $item) {
 			$post_var = rtrim($item->getPostVar(), '[]');
 			$this->video[$post_var] = $this->getInput($post_var);
+		}
+
+		if (!xvmp::isAllowedToSetPublic()) {
+			$this->video[xvmpMedium::F_PUBLISHED] = xvmpMedium::PUBLISHED_HIDDEN;
 		}
 
 		$video = new xvmpMedium();
