@@ -226,7 +226,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		}
 
 		if (!xvmp::isAllowedToSetPublic()) {
-			$video[xvmpMedium::F_PUBLISHED] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];
+			$video[xvmpMedium::PUBLISHED_HIDDEN] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];
 		}
 
 		try {

@@ -20,7 +20,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	const CMD_UPDATE_VIDEO = 'updateVideo';
 	const CMD_DELETE_VIDEO = 'deleteVideo';
 	const CMD_UPLOAD_VIDEO_FORM = 'uploadVideoForm';
-	const CMD_CREATE = 'createVideo';
+	const CMD_CREATE = 'create';
 	const CMD_CONFIRMED_DELETE_VIDEO = 'confirmedDeleteVideo';
 	const CMD_UPLOAD_CHUNKS = 'uploadChunks';
 
@@ -145,7 +145,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$xvmpEditVideoFormGUI->setValuesByPost();
 		if ($xvmpEditVideoFormGUI->saveForm()) {
 			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-			$this->ctrl->redirect($this, self::CMD_EDIT_VIDEO);
+			$this->ctrl->redirect($this, self::CMD_STANDARD);
 		}
 		ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
 		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
@@ -163,7 +163,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	/**
 	 *
 	 */
-	public function createVideo() {
+	public function create() {
 		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpEditVideoFormGUI->setValuesByPost();
 		if ($xvmpEditVideoFormGUI->uploadVideo()) {

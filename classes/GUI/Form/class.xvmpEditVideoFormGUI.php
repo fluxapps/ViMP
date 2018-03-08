@@ -144,10 +144,6 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 			$this->video[$post_var] = $this->getInput($post_var);
 		}
 
-		if (!xvmp::isAllowedToSetPublic()) {
-			$this->video[xvmpMedium::F_PUBLISHED] = xvmpMedium::PUBLISHED_HIDDEN;
-		}
-
 		$video = new xvmpMedium();
 		$video->buildObjectFromArray($this->video);
 		$video->update();
