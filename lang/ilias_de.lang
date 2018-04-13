@@ -95,7 +95,7 @@ status_converting#:#Transkodierung läuft
 status_error#:#Fehler in der Transkodierung
 status_uploaded#:#Hochgeladen
 relevant#:#Erfordert
-required_percentage#:#Anteil
+required_percentage#:#Anteil in %
 from#:#Von
 to#:#Bis
 category#:#Kategorie

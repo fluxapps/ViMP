@@ -279,7 +279,7 @@ class xvmpRequest {
 	public static function extendedSearch($params) {
 		$xvmpCurl = new xvmpCurl(self::EXTENDED_SEARCH);
 
-		$xvmpCurl->addPostField('token', xvmp::getToken());
+//		$xvmpCurl->addPostField('token', xvmp::getToken()); // mit token wird das feld userid ignoriert
 		$xvmpCurl->addPostField('hidden', 'true');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);

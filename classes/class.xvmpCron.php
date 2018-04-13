@@ -139,6 +139,14 @@ class xvmpCron {
 //		xvmpLog::getInstance()->write('Notification sent to user: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()) . ' (' . $uploaded_medium->getUserId() . ')');
 	}
 
+	/**
+	 *
+	 */
+	public function logout() {
+		global $DIC;
+		$ilAuth = $DIC["ilAuthSession"];
+		$ilAuth->logout();
+	}
 
 }
 

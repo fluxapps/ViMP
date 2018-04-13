@@ -33,6 +33,12 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 	 */
 	protected $user;
 
+
+	/**
+	 * xvmpUploadVideoFormGUI constructor.
+	 *
+	 * @param $parent_gui
+	 */
 	public function __construct($parent_gui) {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
@@ -48,6 +54,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 	}
 
+
+	/**
+	 *
+	 */
 	protected function initForm() {
 		$tmp_id = ilUtil::randomhash();
 		$this->ctrl->setParameter($this->parent_gui, 'tmp_id', $tmp_id);
@@ -179,6 +189,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 	}
 
+
+	/**
+	 *
+	 */
 	protected function addCommandButtons() {
 		$this->addCommandButton(xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('save'));
 		$this->addCommandButton(xvmpOwnVideosGUI::CMD_CANCEL, $this->lng->txt(xvmpOwnVideosGUI::CMD_CANCEL));
