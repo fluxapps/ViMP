@@ -134,7 +134,7 @@ class xvmpUser extends xvmpObject {
 		}
 
 		$mapping = str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping);
-		$mapping = str_replace('{UNIFR}', str_replace($ilObjUser->getExternalAccount()),0,-12), $mapping); //jh
+		$mapping = str_replace('{UNIFR}', str_replace($ilObjUser->getExternalAccount()),0,-13), $mapping); //jh
 		$mapping = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping);
 		$mapping = str_replace('{EMAIL}', $ilObjUser->getEmail(), $mapping);
 		$mapping = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping);
