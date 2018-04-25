@@ -243,6 +243,8 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 			$video[xvmpMedium::PUBLISHED_HIDDEN] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];
 		}
 
+		$video['uid'] = xvmpUser::getOrCreateVimpUser($this->user)->getUid();
+
 		try {
 			$video = xvmpMedium::upload($video, $this->parent_gui->getObjId(), $tmp_id,$add_automatically, $notification);
 			ilUtil::delDir($dir);

@@ -188,9 +188,14 @@ class xvmpCategory extends xvmpObject {
 	public function getNameWithPath() {
 		$path = array($this->getName());
 		$category = $this;
+		$already_handled = array($this->getId());
 		while ($parent = $category->getParent()) {
+			if (in_array($parent, $already_handled)) {
+				break;
+			}
 			$category = xvmpCategory::find($parent);
 			array_unshift($path, $category->getName());
+			$already_handled[] = $parent;
 		}
 		return implode(' » ', $path);
 	}

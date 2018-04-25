@@ -17,6 +17,10 @@ class xvmpVideoPlayer {
 	 */
 	protected $tpl;
 	/**
+	 * @var ilCtrl
+	 */
+	protected $ctrl;
+	/**
 	 * @var xvmpMedium
 	 */
 	protected $video;
@@ -43,6 +47,7 @@ class xvmpVideoPlayer {
 	public function __construct($video, $embed = false) {
 		global $DIC;
 		$tpl = $DIC['tpl'];
+		$this->ctrl = $DIC['ilCtrl'];
 		$this->tpl = $tpl;
 		$this->pl = ilViMPPlugin::getInstance();
 		if (is_int($video)) {
@@ -80,6 +85,9 @@ class xvmpVideoPlayer {
 
 		$template->setVariable('ID', $id);
 		$template->setVariable('SOURCE', $medium);
+		// TODO: uncomment to proxy video url
+//		$this->ctrl->setParameterByClass(xvmpContentGUI::class, 'mid', $this->video->getId());
+//		$template->setVariable('SOURCE', $this->ctrl->getLinkTargetByClass(array(ilObjViMPGUI::class, xvmpContentGUI::class), xvmpContentGUI::CMD_DELIVER_VIDEO));
 		$template->setVariable('THUMBNAIL', $this->video->getThumbnail());
 		$template->setVariable('TYPE', $pathinfo['extension']);
 
