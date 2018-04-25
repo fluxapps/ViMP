@@ -26,6 +26,7 @@ class xvmpUser extends xvmpObject {
 
 
 		$response = xvmpRequest::extendedSearch(array(
+			'token' => xvmp::getToken(),
 			'searchrange' => 'user',
 			'title' => $ilObjUser->getEmail(),
 		))->getResponseArray();
