@@ -23,20 +23,14 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
-//		try {
-			xvmpRequest::version();
-//		} catch (xvmpException $e) {
-//
-//		}
+		xvmpRequest::version();
 
-		xvmpVideoPlayer::loadVideoJSAndCSS(true);
+		xvmpVideoPlayer::loadVideoJSAndCSS(!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
 
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
 		}
-//		$detect_mobile = new MobileDetect();
 
-//		$layout_type = $detect_mobile->isMobile() ? xvmpSettings::LAYOUT_TYPE_TILES : xvmpSettings::find($this->getObjId())->getLayoutType();
 		$layout_type = xvmpSettings::find($this->getObjId())->getLayoutType();
 
 		switch ($layout_type) {

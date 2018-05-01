@@ -58,14 +58,30 @@ var VimpContent = {
 			$modal.find('div#xvmp_video_container').html(response_object.html);
 			$modal.find('h4.modal-title').html(response_object.video_title);
 			$('#xoct_waiter_modal').show();
-			VimpObserver.init(mid, response_object.time_ranges);
+			if (typeof VimpObserver != 'undefined') {
+				VimpObserver.init(mid, response_object.time_ranges);
+			}
 
 			$modal.on('hidden', function() { // bootstrap 2.3.2
-				$('video')[0].pause();
+				$video = $('video')[0];
+				if(typeof $video != 'undefined') {
+					$video.pause();
+				}
+				$iframe = $('iframe');
+				if (typeof $iframe != 'undefined') {
+					$iframe.attr('src', '');
+				}
 			});
 
 			$modal.on('hidden.bs.modal', function() {  // bootstrap 3
-				$('video')[0].pause();
+				$video = $('video')[0];
+				if(typeof $video != 'undefined') {
+					$video.pause();
+				}
+				$iframe = $('iframe');
+				if (typeof $iframe != 'undefined') {
+					$iframe.attr('src', '');
+				}
 			});
 		});
 	}

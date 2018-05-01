@@ -126,7 +126,9 @@ class xvmpContentPlayerGUI {
 			$time_ranges = '[]';
 		}
 
-		$this->tpl->addOnLoadCode('VimpObserver.init(' . $mid  . ', ' . $time_ranges . ');');
+		if (!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
+			$this->tpl->addOnLoadCode('VimpObserver.init(' . $mid  . ', ' . $time_ranges . ');');
+		}
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
 		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
 		$this->tpl->addOnLoadCode("VimpContent.template = 'tiles';");
