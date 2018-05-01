@@ -83,7 +83,14 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input->setRequired(true);
 		$this->addItem($input);
 
-
+		// Mapping Priority
+		$input = new ilRadioGroupInputGUI($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY), xvmpConf::F_MAPPING_PRIORITY);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY . '_info'));
+		$opt = new ilRadioOption($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY . '_' . xvmpConf::PRIORITIZE_EMAIL), xvmpConf::PRIORITIZE_EMAIL);
+		$input->addOption($opt);
+		$opt = new ilRadioOption($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY . '_' . xvmpConf::PRIORITIZE_MAPPING), xvmpConf::PRIORITIZE_MAPPING);
+		$input->addOption($opt);
+		$this->addItem($input);
 
 		// *** GENERAL SETTINGS ***
 		$header = new ilFormSectionHeaderGUI();

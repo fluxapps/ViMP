@@ -21,6 +21,11 @@ class xvmpConf extends ActiveRecord {
 	const F_API_URL = 'api_url';
 	const F_USER_MAPPING_EXTERNAL = 'user_mapping_ext';
 	const F_USER_MAPPING_LOCAL = 'user_mapping_local';
+
+	const F_MAPPING_PRIORITY = 'mapping_priority';
+	const PRIORITIZE_EMAIL = 0;
+	const PRIORITIZE_MAPPING = 1;
+
 	const F_ALLOW_PUBLIC_UPLOAD = 'allow_public_upload';
 	const F_MEDIA_PERMISSIONS = 'media_permissions';
 	const F_MEDIA_PERMISSIONS_SELECTION = 'media_permissions_selection';

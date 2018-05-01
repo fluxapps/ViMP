@@ -12,9 +12,11 @@ class xvmpUser extends xvmpObject {
 	 * @param ilObjUser $ilObjUser
 	 *
 	 * @return bool|xvmpUser
+	 * @internal param bool $omit_creation
+	 *
 	 */
 	public static function getVimpUser(ilObjUser $ilObjUser) {
-		$key = self::class . '-' . $ilObjUser->getEmail();
+		$key = self::class . '-' . $ilObjUser->getId();
 		$existing = xvmpCacheFactory::getInstance()->get($key);
 
 		if ($existing) {
@@ -24,7 +26,63 @@ class xvmpUser extends xvmpObject {
 
 		xvmpCurlLog::getInstance()->write('CACHE: cache not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
 
+		switch (xvmpConf::getConfig(xvmpConf::F_MAPPING_PRIORITY)) {
+			case xvmpConf::PRIORITIZE_EMAIL:
+				$xvmpUser = self::getVimpUserByEmail($ilObjUser);
+				if (!$xvmpUser) {
+					$xvmpUser = self::getVimpUserByMapping($ilObjUser);
+				}
+				break;
+			case xvmpConf::PRIORITIZE_MAPPING:
+				$xvmpUser = self::getVimpUserByMapping($ilObjUser);
+				if (!$xvmpUser) {
+					$xvmpUser = self::getVimpUserByEmail($ilObjUser);
+				}
+				break;
+		}
 
+		if ($xvmpUser) {
+			self::cache($key, $xvmpUser, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_USERS));
+		}
+
+		return $xvmpUser;
+	}
+
+	/**
+	 * @param ilObjUser $ilObjUser
+	 *
+	 * @return bool|xvmpUser
+	 * @internal param bool $omit_creation
+	 *
+	 */
+	public static function getVimpUserByMapping(ilObjUser $ilObjUser) {
+		$mapping = self::getMappedUsername($ilObjUser);
+
+		$response = xvmpRequest::getUsers(array('filterbyname' => $mapping))->getResponseArray();
+		$count = $response['users']['count'];
+		switch ($count) {
+			case 0:
+				return false;
+			case 1:
+				$xvmpUser = self::getVimpUserById($response['users']['user']['uid']);
+				return $xvmpUser;
+			default:
+				foreach ($response['users']['user'] as $user) {
+					if ($user['username'] == $mapping) {
+						$xvmpUser = self::getVimpUserById($user['uid']);
+						return $xvmpUser;
+					}
+				}
+				return false;
+		}
+	}
+
+	/**
+	 * @param ilObjUser $ilObjUser
+	 *
+	 * @return bool|xvmpUser
+	 */
+	public static function getVimpUserByEmail(ilObjUser $ilObjUser) {
 		$response = xvmpRequest::extendedSearch(array(
 			'token' => xvmp::getToken(),
 			'searchrange' => 'user',
@@ -38,15 +96,13 @@ class xvmpUser extends xvmpObject {
 
 		if ($uid = $users['user']['uid']) {
 
-			$xvmpUser = self::getVimpUserWithId($uid);
-			self::cache($key, $xvmpUser, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_USERS));
+			$xvmpUser = self::getVimpUserById($uid);
 			return $xvmpUser;
 		}
 
 		foreach ($users['user'] as $user) {
 			if ($user['email'] == $ilObjUser->getEmail()) {
-				$xvmpUser = self::getVimpUserWithId($user['uid']);
-				self::cache($key, $xvmpUser, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_USERS));
+				$xvmpUser = self::getVimpUserById($user['uid']);
 				return $xvmpUser;
 			}
 		}
@@ -54,7 +110,7 @@ class xvmpUser extends xvmpObject {
 		return false;
 	}
 
-	public static function getVimpUserWithId($uid) {
+	public static function getVimpUserById($uid) {
 		$response = xvmpRequest::getUser($uid, array(
 			'roles' => 'true'
 		))->getResponseArray();
@@ -72,8 +128,8 @@ class xvmpUser extends xvmpObject {
 	public static function getOrCreateVimpUser(ilObjUser $ilObjUser) {
 		$xvmpUser = self::getVimpUser($ilObjUser);
 		if (!$xvmpUser) {
-			self::createShadowUser($ilObjUser);
-			$xvmpUser = self::getVimpUser($ilObjUser);
+			$uid = self::createShadowUser($ilObjUser);
+			$xvmpUser = self::getVimpUserById($uid);
 		}
 		return $xvmpUser;
 	}
@@ -97,6 +153,7 @@ class xvmpUser extends xvmpObject {
 	/**
 	 * @param ilObjUser $ilObjUser
 	 *
+	 * @return integer $user_id
 	 */
 	public static function createShadowUser(ilObjUser $ilObjUser) {
 		$params = array(
@@ -111,8 +168,8 @@ class xvmpUser extends xvmpObject {
 			$params['lastname'] = $lastname;
 		}
 
-		xvmpRequest::registerUser($params);
-
+		$response = xvmpRequest::registerUser($params);
+		return $response->getResponseArray()['user']['uid'];
 	}
 
 
@@ -139,9 +196,6 @@ class xvmpUser extends xvmpObject {
 		$mapping = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping);
 		$mapping = str_replace('{EMAIL}', $ilObjUser->getEmail(), $mapping);
 		$mapping = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping);
-
-
-//		preg_match('/[.]*/')
 
 		return $mapping;
 	}

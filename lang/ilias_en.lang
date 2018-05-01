@@ -9,9 +9,9 @@ conf_api_password_info#:#Password of the above user.
 conf_api_url#:#API URL
 conf_api_url_info#:#Base URL of the ViMP API. E.g.: https://my-vimp.com/api
 conf_user_mapping_ext#:#User Mapping (external users)
-conf_user_mapping_ext_info#:#The formula, with which external ILIAS users are created in ViMP, if no ViMP account with the same email address is found. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
+conf_user_mapping_ext_info#:#The formula, with which the ViMP logins of external ILIAS users are composed. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_user_mapping_local#:#User Mapping (local users)
-conf_user_mapping_local_info#:#The formula, with which local ILIAS users are created in ViMP, if no ViMP account with the same email address is found. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
+conf_user_mapping_local_info#:#The formula, with which the ViMP logins of local ILIAS users are composed. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_allow_public_upload#:#Permission „Upload“ can set Videos public
 conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Hidden".
 conf_form_fields#:#Additional Form Fields
@@ -20,6 +20,10 @@ conf_filter_fields#:#Additional Table Filters
 conf_filter_fields_info#:#The additional media fields can be configured here to make them available as filters in tables.<br>Textfield 1: Field name<br>Textfield 2: Display name
 conf_media_permissions#:#Use Media Permissions
 conf_media_permissions_info#:#Defines if and which media permissions can be set when uploading or editing a video.
+conf_mapping_priority#:#Mapping Priority
+conf_mapping_priority_info#:#Defines which way the plugin tries to find a user first. If no user is found this way, the plugin will search for the other field. If again nothing is found, a user will be created.
+conf_mapping_priority_0#:#Email
+conf_mapping_priority_1#:#User-Mapping (as defined above)
 conf_api_settings#:#API
 conf_general_settings#:#General
 conf_notification_subject#:#Subject (transcoding successful)
