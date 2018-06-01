@@ -164,7 +164,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 				$selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
 			}
 			foreach (xvmpUserRoles::getAll() as $role) {
-				if ($selectable_roles && !in_array($role->getId(), $selectable_roles)) {
+				if (!$role->getField('visible') || ($selectable_roles && !in_array($role->getId(), $selectable_roles))) {
 					continue;
 				}
 				$options[$role->getId()] = $role->getName();
@@ -213,6 +213,7 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 			switch ($item->getPostVar()) {
 				case xvmpMedium::F_CATEGORIES . '[]':
+                case xvmpMedium::F_MEDIAPERMISSIONS . '[]';
 					$post_var = rtrim($item->getPostVar(), '[]');
 					$video[$post_var] = implode(',', $this->getInput($post_var));
 					break;
@@ -238,6 +239,15 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 					break;
 			}
 		}
+
+		// add default & invisible roles as media permissions
+		$media_permissions = $video[xvmpMedium::F_MEDIAPERMISSIONS] ? explode(',', $video[xvmpMedium::F_MEDIAPERMISSIONS]) : array();
+        foreach (xvmpUserRoles::getAll() as $role) {
+            if ($role->isInvisibleDefault()) {
+                $media_permissions[] = $role->getId();
+            }
+        }
+        $video[xvmpMedium::F_MEDIAPERMISSIONS] = implode(',', $media_permissions);
 
 		if (!xvmp::isAllowedToSetPublic()) {
 			$video[xvmpMedium::PUBLISHED_HIDDEN] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];

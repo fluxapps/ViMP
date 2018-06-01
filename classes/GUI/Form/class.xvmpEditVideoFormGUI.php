@@ -110,7 +110,7 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 				$selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
 			}
 			foreach (xvmpUserRoles::getAll() as $role) {
-				if ($selectable_roles && !in_array($role->getId(), $selectable_roles)) {
+                if (!$role->getField('visible') || ($selectable_roles && !in_array($role->getId(), $selectable_roles))) {
 					continue;
 				}
 				$options[$role->getId()] = $role->getName();
@@ -143,6 +143,15 @@ class xvmpEditVideoFormGUI extends xvmpFormGUI {
 			$post_var = rtrim($item->getPostVar(), '[]');
 			$this->video[$post_var] = $this->getInput($post_var);
 		}
+
+        // add default & invisible roles as media permissions
+        $media_permissions = is_array($this->video[xvmpMedium::F_MEDIAPERMISSIONS]) ? $this->video[xvmpMedium::F_MEDIAPERMISSIONS] : array();
+        foreach (xvmpUserRoles::getAll() as $role) {
+            if ($role->isInvisibleDefault() && !in_array($role->getId(), $media_permissions)) {
+                $media_permissions[] = $role->getId();
+            }
+        }
+        $this->video[xvmpMedium::F_MEDIAPERMISSIONS] = $media_permissions;
 
 		$video = new xvmpMedium();
 		$video->buildObjectFromArray($this->video);
