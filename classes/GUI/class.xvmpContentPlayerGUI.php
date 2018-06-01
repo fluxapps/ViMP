@@ -61,7 +61,7 @@ class xvmpContentPlayerGUI {
 
 		try {
 			$video = xvmpMedium::find($mid);
-		} catch (xvmpException $e) {
+		} catch (Exception $e) {
 			if ($e->getCode() != 404) {
 				throw $e;
 			}

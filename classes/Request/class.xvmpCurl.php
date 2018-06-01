@@ -116,12 +116,16 @@ class xvmpCurl {
 		xvmpCurlLog::getInstance()->write('CURLINFO_PRETRANSFER_TIME: ' . round(curl_getinfo($ch, CURLINFO_PRETRANSFER_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
 		xvmpCurlLog::getInstance()->write('CURLINFO_TOTAL_TIME: ' . round(curl_getinfo($ch, CURLINFO_TOTAL_TIME) * $i, 2) . ' ms', xvmpCurlLog::DEBUG_LEVEL_1);
 
-		if ($this->getResponseStatus() > 299) {
+		if ($this->getResponseStatus() > 299 || is_array($this->getResponseArray()['errors'])) {
 			xvmpCurlLog::getInstance()->write('ERROR ' . $this->getResponseStatus(), xvmpCurlLog::DEBUG_LEVEL_1);
 			xvmpCurlLog::getInstance()->write('Response:' . $resp_orig, xvmpCurlLog::DEBUG_LEVEL_3);
 
 			$error_msg = $this->getResponseArray()['errors']['error'];
 			$error_msg = is_array($error_msg) ? implode(".\n", $error_msg) : $error_msg;
+
+			if ($error_msg == "Medium doesn't exist") {
+                throw new xvmpException(xvmpException::API_CALL_STATUS_404, $error_msg);
+            }
 
 			switch ($this->getResponseStatus()) {
 				case 403:

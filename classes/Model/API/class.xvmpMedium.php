@@ -66,7 +66,7 @@ class xvmpMedium extends xvmpObject {
 	public static function find($id) {
 		try {
 			return parent::find($id);
-		} catch (xvmpException $e) {
+		} catch (Exception $e) {
 			if ($e->getCode() == 404) {
 				$deleted = new xvmpDeletedMedium();
 				$deleted->setMid($id);
@@ -177,7 +177,8 @@ class xvmpMedium extends xvmpObject {
 
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
 
-		$response = xvmpRequest::getMedium($id)->getResponseArray()['medium'];
+        $response = xvmpRequest::getMedium($id)->getResponseArray();
+		$response = $response['medium'];
 		$response = self::formatResponse($response);
 
 		if ($response['status'] == 'legal') { // do not cache transcoding videos, we need to fetch them again to check the status
