@@ -129,7 +129,11 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 			if (!$field[xvmpConf::F_FORM_FIELD_ID]) {
 				continue;
 			}
-			$input = new ilTextInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+			if ($field[xvmpConf::F_FORM_FIELD_TYPE]) {
+                $input = new ilCheckboxInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+            } else {
+                $input = new ilTextInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+            }
 			$input->setRequired($field[xvmpConf::F_FORM_FIELD_REQUIRED]);
 			if ($field[xvmpConf::F_FORM_FIELD_FILL_USER_DATA]) {
 				$input->setValue($this->user->getFirstname() . ' ' . $this->user->getLastname());

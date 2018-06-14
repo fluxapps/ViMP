@@ -31,7 +31,10 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_config.js');
 	}
 
-	protected function initForm(){
+    /**
+     *
+     */
+    protected function initForm(){
 		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 
 		// *** API SETTINGS ***
@@ -120,6 +123,12 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_REQUIRED);
 		$input->addInput($subinput);
 		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_FILL_USER_DATA);
+		$input->addInput($subinput);
+		$subinput = new ilSelectInputGUI('', xvmpConf::F_FORM_FIELD_TYPE);
+		$subinput->setOptions(array(
+		    0 => $this->pl->confTxt(xvmpConf::F_FORM_FIELD_TYPE_0),
+		    1 => $this->pl->confTxt(xvmpConf::F_FORM_FIELD_TYPE_1)
+        ));
 		$input->addInput($subinput);
 		$this->addItem($input);
 
@@ -224,7 +233,10 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	}
 
 
-	protected function getMediaPermissionOptions() {
+    /**
+     * @return array
+     */
+    protected function getMediaPermissionOptions() {
 		$options = array();
 		if ($this->pl->hasConnection()) {
 			$roles = xvmpUserRoles::getAll();
@@ -236,7 +248,10 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		return $options;
 	}
 
-	public function fillForm() {
+    /**
+     *
+     */
+    public function fillForm() {
 		$array = array();
 		foreach ($this->getItems() as $item) {
 			$this->getValuesForItem($item, $array);

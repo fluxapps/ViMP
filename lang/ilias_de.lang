@@ -15,7 +15,7 @@ conf_user_mapping_local_info#:#Nach dieser Formel werden die ViMP-Benutzernamen 
 conf_allow_public_upload#:#Recht „Upload“ darf Videos öffentlich schalten
 conf_allow_public_upload_info#:#Wenn aktiviert: Benutzer mit dem Recht "Upload" dürfen beim Hochladen eines Videos auswählen, ob das Video den Status "Öffentlich" oder "Versteckt" hat. Ansonsten wird automatisch der Status "Versteckt" gesetzt.
 conf_form_fields#:#Zusätzliche Formular-Felder
-conf_form_fields_info#:#Zusätzliche in ViMP konfigurierte Medienfelder können hier angegeben werden, um diese im Formular zum Hochladen und Bearbeiten eines Videos zur Verfügung zu stellen.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name<br>Checkbox 1: Pflichtfeld<br>Checkbox 2: Feld wird beim Hochladeformular automatisch mit dem Benutzernamen gefüllt.
+conf_form_fields_info#:#Zusätzliche in ViMP konfigurierte Medienfelder können hier angegeben werden, um diese im Formular zum Hochladen und Bearbeiten eines Videos zur Verfügung zu stellen.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name<br>Checkbox 1: Pflichtfeld<br>Checkbox 2: Feld wird beim Hochladeformular automatisch mit dem Benutzernamen gefüllt.<br>Auswahlfeld: Feldtyp
 conf_filter_fields#:#Zusätzliche Tabellen-Filter
 conf_filter_fields_info#:#Werden die zusätzlichen Medienfelder hier angegeben, stehen Sie anschliessend als Filter in Tabellen zur Verfügung.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name
 conf_media_permissions#:#Medienberechtigungen nutzen
@@ -46,6 +46,8 @@ conf_cache#:#Caching
 conf_cache_info#:#Objekte werden zur Verbesserung der Performanz zwischengespeichert. Nach Ablauf der TTL wird ein Objekt aus dem Cache entfernt und neu geladen (bei Eingabe von 0 werden sie nicht automatisch entfernt). Der gesamte Cache kann mithilfe der Schaltfläche oben auf dieser Seite geleert werden. Innerhalb von ViMP-Objekten im Magazin können ausserdem die Videos dieser Objekte aus dem Cache entfernt und neu geladen werden.
 conf_embed_player#:#Embedded Videoplayer nutzen
 conf_embed_player_info#:#Wenn aktiviert, wird der eingebettete Videoplayer von ViMP genutzt. Wenn der Lernfortschritt für ein Objekt aktiviert ist, wird jedoch dennoch der Plugin-eigene Player verwendet, da der Lernfortschritt mit dem eingebetteten Player nicht gemessen werden kann.
+conf_text#:#Textfeld
+conf_checkbox#:#Checkbox
 msg_success#:#Änderungen erfolgreich gespeichert.
 selection#:#Auswahl
 all#:#Ja, alle
