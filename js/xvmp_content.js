@@ -7,14 +7,13 @@ var VimpContent = {
 	template: '',
 
 	loadTiles: function () {
-		// console.log(this.selected_media);
-		$(this.selected_media).each(function(key, mid) {
+		$(VimpContent.selected_media).each(function(key, mid) {
 			$.get({
-				url: this.ajax_base_url,
+				url: VimpContent.ajax_base_url,
 				data: {
 					"cmd": "renderItem",
-					"tpl": this.template,
-					"mid": mid
+					"tpl": VimpContent.template,
+					"mid": mid,
 				}
 			}).always(function(response) {
 				$('div#xvmp_tile_'+mid).html(response);
@@ -24,13 +23,12 @@ var VimpContent = {
 	},
 
 	loadTilesInOrder: function(key) {
-		// console.log('loadTilesInOrder ' + key);
 		var mid = VimpContent.selected_media[key];
 		$.get({
-			url: this.ajax_base_url,
+			url: VimpContent.ajax_base_url,
 			data: {
 				"cmd": "renderItem",
-				"tpl": this.template,
+				"tpl": VimpContent.template,
 				"mid": mid
 			}
 		}).always(function(response) {
