@@ -65,6 +65,7 @@ class xvmpVideoPlayer {
 
 		}
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-6.4.0/video.min.js');
+		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/videojs-contrib-hls/videojs-contrib-hls.min.js');
 		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-6.4.0/video-js.min.css');
 		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/video.css');
 	}
@@ -81,7 +82,14 @@ class xvmpVideoPlayer {
 			$medium = $medium[0];
 		}
 		$id = ilUtil::randomhash();
-		$pathinfo = pathinfo($medium);
+        $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
+
+        $sources = xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
+        if(!empty($sources))
+        {
+            $medium = $sources[0][1];
+            $pathinfo['extension'] = 'application/x-mpegURL';
+        }
 
 		$template->setVariable('ID', $id);
 		$template->setVariable('SOURCE', $medium);

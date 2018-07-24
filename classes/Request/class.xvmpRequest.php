@@ -25,7 +25,7 @@ class xvmpRequest {
 	const GET_USER_MEDIA = 'getUserMedia';
 	const EXTENDED_SEARCH = 'extendedSearch';
 	const GET_PICTURE = 'getPicture';
-
+    const GET_VIDEOSOURCES = '../media/ajax';
 
 	/**
 	 * @return xvmpCurl
@@ -303,5 +303,23 @@ class xvmpRequest {
 
 		return $xvmpCurl;
 	}
+
+	// Non-API request
+    /**
+     * @param $key
+     * @param $url
+     *
+     * @return xvmpCurl
+     */
+	public static function getVideoSources($key, $url) {
+        $xvmpCurl = new xvmpCurl(self::GET_VIDEOSOURCES);
+
+        $xvmpCurl->addPostField('action','embedMedia');
+        $xvmpCurl->addPostField('mediakey', $key);
+        $xvmpCurl->addPostField('url', $url);
+
+        $xvmpCurl->post();
+        return $xvmpCurl;
+    }
 
 }
