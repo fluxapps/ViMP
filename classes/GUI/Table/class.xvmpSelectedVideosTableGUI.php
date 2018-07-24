@@ -71,7 +71,7 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 
 
 		$this->parseData();
-	}
+    }
 
 	protected function initColumns() {
 		$this->addColumn('', '', 75, true);
@@ -125,6 +125,9 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		$this->tpl->parseCurrentBlock();
 	}
 
+    /**
+     * @param $number
+     */
 	protected function addRepositoryPreviewCss($number) {
 		$css = "
 		div.ilTableOuter table {
@@ -135,7 +138,9 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 			border-top: 2px solid black;
 		}
 		
-		div.ilTableOuter table tbody tr:nth-child($number) {
+		div.ilTableOuter table tbody tr:nth-child($number),
+		div.ilTableOuter table tbody tr:nth-child(-n+$number):last-child
+	    {
 			border-bottom: 2px solid black;
 		}
 		
