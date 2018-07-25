@@ -69,8 +69,8 @@ class xvmpContentListGUI {
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
 		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
 		$this->tpl->addOnLoadCode("VimpContent.template = 'list';");
-//		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
-        $this->tpl->addOnLoadCode('VimpContent.loadTiles();');
+		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
+//        $this->tpl->addOnLoadCode('VimpContent.loadTiles();');
 //        $this->tpl->addOnLoadCode('$("div.xoctWaiter").each(function() { $(this).show(); });');
 //
 		$modal = $this->parent_gui->getModalPlayer();
