@@ -80,21 +80,38 @@ class xvmpCron {
 		foreach (xvmpUploadedMedia::get() as $uploaded_medium) {
 			try {
 				$medium = xvmpMedium::find($uploaded_medium->getMid());
-				if ($medium->getStatus() == 'legal') {
-					$this->sendNotification($medium, $uploaded_medium, true);
+                                switch($medium->getStatus()) {
+                                        case "legal":
+                                                if($uploaded_medium->getNotification()) {
+                                                        $this->sendNotification($medium, $uploaded_medium, true);
+                                                }
 
-					// set visible
-					/** @var xvmpSelectedMedia $selected */
-					foreach (xvmpSelectedMedia::where(array('mid' => $medium->getId()))->get() as $selected) {
-						$selected->setVisible(1);
-						$selected->update();
-					}
-				} elseif ($medium->getStatus() == 'error') {
-					$this->sendNotification($medium, $uploaded_medium, false);
-				}
+                                                foreach (xvmpSelectedMedia::where(array('mid' => $medium->getId()))->get() as $selected) {
+                                                       $selected->setVisible(1);
+                                                       $selected->update();
+                                                }
 
-				// delete entry
-				$uploaded_medium->delete();
+                                                $uploaded_medium->delete();
+                                                break;
+
+                                        case "error":
+                                                if($uploaded_medium->getNotification()) {
+                                                        $this->sendNotification($medium, $uploaded_medium, false);
+                                                }
+
+                                                $uploaded_medium->delete();
+                                                break;
+
+                                        case "uploaded":
+                                                break;
+
+                                        case "converting":
+                                                break;
+
+                                        default:
+                                                $uploaded_medium->delete();
+                                }
+				
 			} catch (xvmpException $e) {
 				if ($e->getCode() == 404 && strpos($e->getMessage(), "Medium not exist") !== false) {
 					$uploaded_medium->delete();
