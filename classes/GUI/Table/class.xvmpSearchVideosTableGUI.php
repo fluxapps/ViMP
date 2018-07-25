@@ -34,6 +34,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		)
 	);
 
+
 	/**
 	 * @var xvmpSearchVideosGUI|ilVimpPageComponentPluginGUI
 	 */
@@ -211,18 +212,16 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 		foreach ($this->available_columns as $title => $props)
 		{
-			if ($title == 'thumbnail') {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
-				continue;
-			} elseif ($title == 'description' && strlen($a_set[$title]) > 95) {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 90) . '...');
-			} elseif ($title == 'title' && strlen($a_set[$title]) > 50) {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), substr($a_set[$title], 0, 45) . '...');
-			} else {
-				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
-			}
-
+            $this->tpl->setVariable('VAL_' . strtoupper($title), $this->parseColumnValue($title, $a_set[$title]));
 		}
+
+		foreach ($this->getSelectableColumns() as $title => $props) {
+		    if ($this->isColumnSelected($title)) {
+                $this->tpl->setCurrentBlock('generic');
+                $this->tpl->setVariable('VAL_GENERIC', $this->parseColumnValue($title, $a_set[$title]));
+                $this->tpl->parseCurrentBlock();
+            }
+        }
 	}
 
 
@@ -232,4 +231,25 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	protected function redirectToParent() {
 		$this->ctrl->redirect($this->parent_obj, xvmpSearchVideosGUI::CMD_STANDARD);
 	}
+
+    /**
+     * @return array
+     */
+    function getSelectableColumns() {
+        $selectable_columns = array(
+            'categories' => array(
+                'sort_field' => 'categories',
+                'txt' => $this->pl->txt('categories')
+            )
+        );
+        foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $filter_field) {
+            $selectable_columns[$filter_field[xvmpConf::F_FILTER_FIELD_ID]] = array(
+                'sort_field' => $filter_field[xvmpConf::F_FILTER_FIELD_ID],
+                'txt' => $filter_field[xvmpConf::F_FILTER_FIELD_TITLE]
+            );
+        }
+        return $selectable_columns;
+    }
+
+
 }

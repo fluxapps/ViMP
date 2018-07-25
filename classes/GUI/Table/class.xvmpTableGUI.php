@@ -29,6 +29,10 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 	 * @var array
 	 */
 	protected $available_columns = array();
+    /**
+     * @var array
+     */
+	protected $selectable_columns = array();
 	/**
 	 * @var array
 	 */
@@ -79,6 +83,12 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 				$this->addColumn($this->pl->txt($title), $props['sort_field'], $props['width']);
 			}
 		}
+
+		foreach ($this->getSelectableColumns() as $title => $props) {
+		    if ($this->isColumnSelected($title)) {
+		        $this->addColumn($props['txt'], $props['sort_field'], $props['width']);
+            }
+        }
 	}
 
 	public function initFilter() {
@@ -116,6 +126,42 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		}
 	}
 
+    /**
+     * @param $column
+     *
+     * @return bool
+     */
+    public function isColumnSelected($column) {
+        if (!array_key_exists($column, $this->getSelectableColumns())) {
+            return true;
+        }
 
-	public abstract function parseData();
+        return in_array($column, $this->getSelectedColumns());
+    }
+
+    /**
+     * @param $column
+     * @param $value
+     * @return string
+     */
+    protected function parseColumnValue($column, $value) {
+        switch ($column) {
+            case 'categories':
+                return implode(', ', $value);
+            case 'description':
+                if (strlen($value) > 95) {
+                    $value = substr($value, 0, 90) . '...';
+                }
+                return $value;
+            case 'title':
+                if (strlen($value) > 45) {
+                    $value = substr($value, 0, 90) . '...';
+                }
+                return $value;
+            default:
+                return $value ? $value : '&nbsp';
+        }
+    }
+
+    public abstract function parseData();
 }

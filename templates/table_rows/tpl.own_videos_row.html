@@ -1,8 +1,8 @@
-<!-- BEGIN transcoded -->
 <tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
 	<td class="std small xvmp_action">
 		<input id="xvmp_checkbox_{VAL_MID}" type="checkbox" {VAL_CHECKED} {VAL_DISABLED} onclick="VimpSearch.toggle({VAL_MID}, {VAL_VISIBLE});">
 	</td>
+	<!-- BEGIN transcoded -->
 	<td class="std small">
 		<a onclick="VimpContent.playVideo({VAL_MID});">
 			<div class="xvmp_image_container">
@@ -14,33 +14,14 @@
 			</div>
 		</a>
 	</td>
-	<td class="std small">
-		{VAL_TITLE}
-	</td>
-	<td class="std small">
-		{VAL_PUBLISHED}
-	</td>
-	<td class="std small">
-		{VAL_STATUS_TEXT}
-	</td>
-	<td class="std small">
-		{VAL_CREATED_AT}
-	</td>
-	<td class="std small">
-		{VAL_ACTIONS}
-	</td>
-</tr>
-<!-- END transcoded -->
-<!-- BEGIN transcoding -->
-<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row" id="xvmp_row_{VAL_MID}">
-	<td class="std small xvmp_action">
-		<input id="xvmp_checkbox_{VAL_MID}" type="checkbox" {VAL_CHECKED} {VAL_DISABLED} onclick="VimpSearch.toggle({VAL_MID}, {VAL_VISIBLE});">
-	</td>
+	<!-- END transcoded -->
+	<!-- BEGIN transcoding -->
 	<td class="std small">
 		<div class="xvmp_image_container">
 			<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
 		</div>
 	</td>
+	<!-- END transcoding -->
 	<td class="std small">
 		{VAL_TITLE}
 	</td>
@@ -53,8 +34,12 @@
 	<td class="std small">
 		{VAL_CREATED_AT}
 	</td>
+	<!-- BEGIN generic -->
+	<td class="std small">
+		{VAL_GENERIC}
+	</td>
+	<!-- END generic -->
 	<td class="std small">
 		{VAL_ACTIONS}
 	</td>
 </tr>
-<!-- END transcoding -->

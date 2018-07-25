@@ -166,12 +166,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @param xvmpObject $a_set
 	 */
 	protected function fillRow($a_set) {
-		$transcoded = ($a_set['status'] == 'legal');
-		if ($transcoded) {
-			$this->tpl->setCurrentBlock('transcoded');
-		} else {
-			$this->tpl->setCurrentBlock('transcoding');
-		}
+        $transcoded = ($a_set['status'] == 'legal');
 
 		if ($a_set['status'] == 'error') {
 			$this->tpl->setVariable('VAL_DISABLED', 'disabled');
@@ -188,15 +183,51 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$this->tpl->setVariable('VAL_VISIBLE', (int) $transcoded);
 
 
-		foreach ($this->available_columns as $title => $props)
+        foreach ($this->available_columns as $title => $props)
 		{
-			$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
-		}
+		    if ($title == 'thumbnail') {
+                if ($transcoded) {
+                    $this->tpl->setCurrentBlock('transcoded');
+                } else {
+                    $this->tpl->setCurrentBlock('transcoding');
+                }
+                $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
+                $this->tpl->parseCurrentBlock();
+            } else {
+                $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
+            }
+        }
+
+        foreach ($this->getSelectableColumns() as $title => $props) {
+            if ($this->isColumnSelected($title)) {
+                $this->tpl->setCurrentBlock('generic');
+                $this->tpl->setVariable('VAL_GENERIC', $this->parseColumnValue($title, $a_set[$title]));
+                $this->tpl->parseCurrentBlock();
+            }
+        }
+
 
 		$this->tpl->setVariable('VAL_ACTIONS', $this->buildActionList($a_set));
-		$this->tpl->parseCurrentBlock();
 	}
 
+    /**
+     * @return array
+     */
+    function getSelectableColumns() {
+        $selectable_columns = array(
+            'categories' => array(
+                'sort_field' => 'categories',
+                'txt' => $this->pl->txt('categories')
+            )
+        );
+        foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $filter_field) {
+            $selectable_columns[$filter_field[xvmpConf::F_FILTER_FIELD_ID]] = array(
+                'sort_field' => $filter_field[xvmpConf::F_FILTER_FIELD_ID],
+                'txt' => $filter_field[xvmpConf::F_FILTER_FIELD_TITLE]
+            );
+        }
+        return $selectable_columns;
+    }
 
 	/**
 	 * @param $a_set
