@@ -91,6 +91,10 @@ class xvmpCurl {
 		curl_setopt($ch, CURLOPT_URL, $this->getUrl());
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->getRequestType());
 
+        curl_setopt($ch, CURLOPT_COOKIESESSION, true);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "/tmp/vimp_cookie.txt");
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "/tmp/vimp_cookie.txt");
+
 		$this->prepare($ch);
 
 		if ($this->getRequestContentType()) {
