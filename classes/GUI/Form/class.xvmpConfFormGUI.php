@@ -100,6 +100,11 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$header->setTitle($this->pl->confTxt('general_settings'));
 		$this->addItem($header);
 
+		// Upload Limit
+        $input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_UPLOAD_LIMIT), xvmpConf::F_UPLOAD_LIMIT);
+        $input->setInfo($this->pl->confTxt(xvmpConf::F_UPLOAD_LIMIT . '_info'));
+        $this->addItem($input);
+
 		// Object Title
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_OBJECT_TITLE), xvmpConf::F_OBJECT_TITLE);
 		$input->setRequired(true);

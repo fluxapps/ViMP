@@ -69,6 +69,9 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		// FILE
 		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), self::F_SOURCE_URL);
+		if ($max_filesize = xvmpConf::getConfig(xvmpConf::F_UPLOAD_LIMIT)) {
+		    $input->setMaxFileSize($max_filesize . 'MB');
+        }
 
 		$input->setUrl($this->ctrl->getLinkTarget($this->parent_gui, xvmpOwnVideosGUI::CMD_UPLOAD_CHUNKS));
 		$input->setSuffixes(array(
@@ -278,4 +281,13 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 		return true;
 
 	}
+
+    function checkInput() {
+        $ok = parent::checkInput();
+
+
+        return $ok;
+    }
+
+
 }

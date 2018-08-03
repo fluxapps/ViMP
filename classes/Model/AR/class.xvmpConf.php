@@ -49,7 +49,8 @@ class xvmpConf extends ActiveRecord {
 	const F_FORM_FIELD_TYPE_0 = 'text';
 	const F_FORM_FIELD_TYPE_1 = 'checkbox';
 
-	const F_TOKEN = 'token';
+	const F_UPLOAD_LIMIT = 'upload_limit';
+    const F_TOKEN = 'token';
 	const F_EMBED_PLAYER = 'embed_player';
 
 	const MEDIA_PERMISSION_OFF = 0;

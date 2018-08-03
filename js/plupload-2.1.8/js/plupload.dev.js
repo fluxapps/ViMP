@@ -670,6 +670,7 @@ plupload.addFileFilter('max_file_size', function(maxSize, file, cb) {
 
 	// Invalid file size
 	if (file.size !== undef && maxSize && file.size > maxSize) {
+        window.alert('Datei übersteigt die maximale Dateigröße von ' + this.settings.filters.max_file_size)
 		this.trigger('Error', {
 			code : plupload.FILE_SIZE_ERROR,
 			message : plupload.translate('File size error.'),

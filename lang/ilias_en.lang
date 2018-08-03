@@ -48,6 +48,8 @@ conf_embed_player#:#Embedded Video Player
 conf_embed_player_info#:#Use ViMP's embedded video player. If the learning progress is active, the plugin will still use it's own player, since the learning progress can not be tracked with the embedded player.
 conf_text#:#Text Field
 conf_checkbox#:#Checkbox
+conf_upload_limit#:#Upload Limit (MB)
+conf_upload_limit_info#:#Limit for the uploaded filesize in MB. Enter '0' for no limit.
 msg_success#:#Changes saved successfully.
 selection#:#Selection
 all#:#Yes, all
@@ -165,3 +167,4 @@ permission_denied#:#Permission denied.
 enable_learning_progress#:#Learning Progress Active
 enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, wenn das Objekt innerhalb eines Kurses liegt und der Lernfortschritt global aktiviert ist.
 added#:#Added
+max_filesize#:#Max. Filesize

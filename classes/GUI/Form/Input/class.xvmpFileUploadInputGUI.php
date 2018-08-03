@@ -78,6 +78,7 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 		$tpl->setVariable('BUTTON_CLEAR', $this->pl->txt('upload_clear'));
 		$tpl->setVariable('POSTVAR', $this->getPostVar());
 		$tpl->setVariable('FILETYPES', $this->pl->txt('supported_filetypes') . ': ' . implode(', ', $this->getSuffixes()));
+		$tpl->setVariable('MAX_FILESIZE', $this->pl->txt('max_filesize') . ': ' . $this->getMaxFileSize());
 
 		return $tpl->get();
 	}
