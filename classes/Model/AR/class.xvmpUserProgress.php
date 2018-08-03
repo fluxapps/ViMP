@@ -16,7 +16,10 @@ class xvmpUserProgress extends ActiveRecord {
 	const F_VIDEO_DURATION = 'video_duration';
 
 
-	public static function returnDbTableName() {
+    /**
+     * @return string|void
+     */
+    public static function returnDbTableName() {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -186,7 +189,10 @@ class xvmpUserProgress extends ActiveRecord {
 	}
 
 
-	public function store() {
+    /**
+     *
+     */
+    public function store() {
 		$this->calcTotalWatched();
 		parent::store();
 
@@ -194,13 +200,16 @@ class xvmpUserProgress extends ActiveRecord {
 		xvmpUserLPStatus::updateLPStatuses();
 	}
 
-	protected function calcTotalWatched() {
+    /**
+     *
+     */
+    protected function calcTotalWatched() {
 		$ranges = json_decode($this->getRanges());
 		$watched_seconds = 0;
 		foreach ($ranges as $range) {
 			$watched_seconds += ceil($range->e - $range->s);
 		}
-		$this->total_watched = $watched_seconds;
+		$this->total_watched = min($watched_seconds, $this->getVideoDuration());
 	}
 
 	/**
