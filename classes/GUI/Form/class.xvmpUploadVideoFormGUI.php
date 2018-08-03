@@ -69,7 +69,15 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		// FILE
 		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), self::F_SOURCE_URL);
-		if ($max_filesize = xvmpConf::getConfig(xvmpConf::F_UPLOAD_LIMIT)) {
+		$max_filesize_vimp = trim(xvmpRequest::config('upload_max_size')->getResponseArray()['config']['value'], "'");
+        $max_filesize_plugin = xvmpConf::getConfig(xvmpConf::F_UPLOAD_LIMIT);
+		if ($max_filesize_vimp || $max_filesize_plugin) {
+		    $max_filesize_vimp = $this->getSizeInMB($max_filesize_vimp);
+		    if (!$max_filesize_vimp || !$max_filesize_plugin) {
+		        $max_filesize = max($max_filesize_vimp, $max_filesize_plugin);
+            }  else {
+		        $max_filesize = min($max_filesize_vimp, $max_filesize_plugin);
+            }
 		    $input->setMaxFileSize($max_filesize . 'MB');
         }
 
@@ -282,12 +290,20 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 	}
 
-    function checkInput() {
-        $ok = parent::checkInput();
-
-
-        return $ok;
+    /**
+     * @param $size
+     * @return bool|float|int|string
+     */
+    protected function getSizeInMB($size) {
+        switch (substr($size, -2)) {
+            case 'GB':
+                return substr($size, 0, (strlen($size) - 2)) * 1024;
+            case 'MB':
+                return substr($size, 0, (strlen($size) - 2));
+            case 'KB':
+                return substr($size, 0, (strlen($size) - 2)) / 1024;
+            default:
+                return 0;
+        }
     }
-
-
 }

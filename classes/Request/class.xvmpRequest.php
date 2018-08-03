@@ -26,6 +26,7 @@ class xvmpRequest {
 	const EXTENDED_SEARCH = 'extendedSearch';
 	const GET_PICTURE = 'getPicture';
     const GET_VIDEOSOURCES = '../media/ajax';
+    const CONFIG = 'config';
 
 	/**
 	 * @return xvmpCurl
@@ -322,4 +323,16 @@ class xvmpRequest {
         return $xvmpCurl;
     }
 
+    /**
+     * @param $name
+     * @return xvmpCurl
+     */
+    public static function config($name) {
+        $xvmpCurl = new xvmpCurl(self::CONFIG);
+
+        $xvmpCurl->addPostField('name', $name);
+
+        $xvmpCurl->post();
+        return $xvmpCurl;
+    }
 }
