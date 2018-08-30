@@ -206,6 +206,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
             }
         }
 
+        // for some reason, we have to do this a second time, because of the blocks i guess
+        $this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
 		$this->tpl->setVariable('VAL_ACTIONS', $this->buildActionList($a_set));
 	}
