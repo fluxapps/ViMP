@@ -92,16 +92,28 @@ class xvmpMedium extends xvmpObject {
 		}
 
 		$uid = xvmpUser::getVimpUser($ilObjUser)->getUid();
-		$response = xvmpRequest::getUserMedia($uid, $filter)->getResponseArray()['media']['medium'];
+		$response = xvmpRequest::getUserMedia($uid, $filter)->getResponseArray();
 		if (!$response) {
 			return array();
 		}
-		foreach ($response as $key => $medium) {
+
+		foreach ($response['media']['medium'] as $key => $medium) {
 			if ($medium['mediatype'] != 'video') {
 				unset($response[$key]);
 			}
 		}
-		return $response;
+
+		if (isset($response['media']['medium']['mid'])) {
+			return array(self::formatResponse($response['media']['medium']));
+		}
+		
+		$return = array();
+		foreach ($response['media']['medium'] as $medium) {
+			$return[] = self::formatResponse($medium);
+		}
+		
+		return $return;
+
 	}
 
 
