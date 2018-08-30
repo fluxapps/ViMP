@@ -23,14 +23,13 @@ class xvmpCron {
 	 * @param array $data
 	 */
 	function __construct($data) {
-		$_COOKIE['ilClientId'] = $data[3];
+        $_COOKIE['ilClientId'] = $data[3];
 		$_POST['username'] = $data[1];
 		$_POST['password'] = $data[2];
 		$this->initILIAS();
 
 		global $DIC;
 		$ilDB = $DIC['ilDB'];
-		$ilUser = $DIC['ilUser'];
 		$ilCtrl = $DIC['ilCtrl'];
 		$ilLog = $DIC['ilLog'];
 		$ilias = $DIC['ilias'];
@@ -43,7 +42,6 @@ class xvmpCron {
 		 * @var $ilCtrl ilCtrl
 		 */
 		$this->db = $ilDB;
-		$this->user = $ilUser;
 		$this->ctrl = $ilCtrl;
 		$this->ilias = $ilias;
 		$this->pl = ilViMPPlugin::getInstance();
@@ -76,6 +74,7 @@ class xvmpCron {
 	 *
 	 */
 	public function run() {
+	    // notifications
 		/** @var xvmpUploadedMedia $uploaded_medium */
 		foreach (xvmpUploadedMedia::get() as $uploaded_medium) {
 			try {
@@ -113,6 +112,18 @@ class xvmpCron {
 				continue;
 			}
 		}
+
+		// delete abandoned uploads (older than 24 hours)
+        $path = ilUtil::getWebspaceDir() . '/vimp';
+        if (is_dir($path)) {
+            foreach (new DirectoryIterator($path) as $directory) {
+                if (!$directory->isDot()) {
+                    if ((time() - $directory->getCTime()) > (24 * 60 * 60)) {
+                        ilUtil::delDir($directory->getPathname());
+                    }
+                }
+            }
+        }
 	}
 
 
