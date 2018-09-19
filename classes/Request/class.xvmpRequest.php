@@ -263,6 +263,7 @@ class xvmpRequest {
 	public static function getUserMedia($user_id, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_USER_MEDIA);
 		$xvmpCurl->addPostField('userid', $user_id);
+		$xvmpCurl->addPostField('filterbytype', 'video');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}

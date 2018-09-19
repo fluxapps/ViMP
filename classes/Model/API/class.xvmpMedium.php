@@ -270,7 +270,7 @@ class xvmpMedium extends xvmpObject {
 	/**
 	 * some attributes have to be formatted to fill the form correctly
 	 */
-	protected static function formatResponse($response) {
+	public static function formatResponse($response) {
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
 		$response['description'] = strip_tags($response['description']);
 
