@@ -316,10 +316,16 @@ class xvmpRequest {
 	public static function getVideoSources($key, $url) {
         $xvmpCurl = new xvmpCurl(self::GET_VIDEOSOURCES);
 
-        $xvmpCurl->addPostField('action','fetchMediaSources');
         $xvmpCurl->addPostField('mediakey', $key);
-        $xvmpCurl->addPostField('sign', 'true');
-        $xvmpCurl->addPostField('format', '');
+        if (xvmp::ViMPVersionGreaterEqual('4.0.4')) {
+            $xvmpCurl->addPostField('action','fetchMediaSources');
+            $xvmpCurl->addPostField('sign', 'true');
+            $xvmpCurl->addPostField('format', '');
+        } else {
+            $xvmpCurl->addPostField('action','embedMedia');
+            $xvmpCurl->addPostField('url', $url);
+        }
+
         $xvmpCurl->post();
         return $xvmpCurl;
     }

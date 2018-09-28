@@ -43,8 +43,13 @@ class xvmpVideoPlayer {
 	protected static $count = 1;
 
 
-
-	public function __construct($video, $embed = false) {
+    /**
+     * xvmpVideoPlayer constructor.
+     * @param $video
+     * @param bool $embed
+     * @throws xvmpException
+     */
+    public function __construct($video, $embed = false) {
 		global $DIC;
 		$tpl = $DIC['tpl'];
 		$this->ctrl = $DIC['ilCtrl'];
@@ -57,7 +62,10 @@ class xvmpVideoPlayer {
 		$this->embed = $embed;
 	}
 
-	public static function loadVideoJSAndCSS($load_observer) {
+    /**
+     * @param $load_observer
+     */
+    public static function loadVideoJSAndCSS($load_observer) {
 		global $DIC;
 		$tpl = $DIC['tpl'];
 		if ($load_observer) {
@@ -70,7 +78,11 @@ class xvmpVideoPlayer {
 		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/video.css');
 	}
 
-	public function getHTML() {
+    /**
+     * @return string
+     * @throws ilTemplateException
+     */
+    public function getHTML() {
 		if ($this->embed) {
 			return $this->video->getEmbedCode($this->options['width'], $this->options['height']);
 		}
@@ -84,10 +96,14 @@ class xvmpVideoPlayer {
 		$id = ilUtil::randomhash();
         $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
 
-        $sources = xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray();
+        xvmp::ViMPVersionGreaterEqual('4.0.2');
+        $sources = xvmp::ViMPVersionGreaterEqual('4.0.4') ?
+            xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray() :
+            xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
+
         if(!empty($sources))
         {
-            $medium = base64_decode($sources[0][1]);
+            $medium = xvmp::ViMPVersionGreaterEqual('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
             $pathinfo['extension'] = 'application/x-mpegURL';
         }
 
@@ -118,7 +134,11 @@ class xvmpVideoPlayer {
 	}
 
 
-	public function setOption($option, $value) {
+    /**
+     * @param $option
+     * @param $value
+     */
+    public function setOption($option, $value) {
 		if ($value === null) {
 			unset($this->options[$option]);
 		} else {
