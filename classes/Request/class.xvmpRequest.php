@@ -38,19 +38,31 @@ class xvmpRequest {
 		return $xvmpCurl;
 	}
 
-	public static function getUserRoles() {
+    /**
+     * @return xvmpCurl
+     */
+    public static function getUserRoles() {
 		$xvmpCurl = new xvmpCurl(self::GET_USER_ROLES);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}
 
-	public static function getCategories($params = array()) {
+    /**
+     * @param array $params
+     * @return xvmpCurl
+     */
+    public static function getCategories($params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORIES);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}
 
-	public static function getCategory($categoryid, $params = array()) {
+    /**
+     * @param $categoryid
+     * @param array $params
+     * @return xvmpCurl
+     */
+    public static function getCategory($categoryid, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORY);
 		$xvmpCurl->addPostField('categoryid', $categoryid);
 		$xvmpCurl->post();
