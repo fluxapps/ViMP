@@ -58,7 +58,7 @@ class xvmpRequest {
 	}
 
     /**
-     * @param $categoryid
+     * @param int $categoryid
      * @param array $params
      * @return xvmpCurl
      */
@@ -108,7 +108,7 @@ class xvmpRequest {
 	 * $responsive
 	 * $language
 	 *
-	 * @param       $mediumid
+	 * @param int   $mediumid
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -134,7 +134,7 @@ class xvmpRequest {
 	 * $categories
 	 * $mediapermissions
 	 *
-	 * @param       $mediumid
+	 * @param int   $mediumid
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -179,7 +179,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param $mediumid
+	 * @param int $mediumid
 	 *
 	 * @return xvmpCurl
 	 */
@@ -192,8 +192,8 @@ class xvmpRequest {
 	}
 
 	/**
-	 * @param $username
-	 * @param $password
+	 * @param String $username
+	 * @param String $password
 	 *
 	 * @return xvmpCurl
 	 */
@@ -232,7 +232,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param       $userid
+	 * @param int   $userid
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -251,7 +251,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param $params
+	 * @param array $params
 	 *
 	 * @return xvmpCurl
 	 */
@@ -267,7 +267,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param       $user_id
+	 * @param int   $user_id
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -286,7 +286,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param $params
+	 * @param array $params
 	 *
 	 * @return xvmpCurl
 	 */
@@ -304,9 +304,10 @@ class xvmpRequest {
 	}
 
 
-	/**
-	 * @param $key
-	 */
+    /**
+     * @param $key
+     * @return xvmpCurl
+     */
 	public static function getPicture($key) {
 		$xvmpCurl = new xvmpCurl(self::GET_PICTURE);
 
@@ -321,7 +322,7 @@ class xvmpRequest {
 	// Non-API request
     /**
      * @param $key
-     * @param $url
+     * @param String $url
      *
      * @return xvmpCurl
      */
@@ -343,7 +344,7 @@ class xvmpRequest {
     }
 
     /**
-     * @param $name
+     * @param String $name
      * @return xvmpCurl
      */
     public static function config($name) {
