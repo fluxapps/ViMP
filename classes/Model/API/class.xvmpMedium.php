@@ -91,7 +91,7 @@ class xvmpMedium extends xvmpObject {
 			$ilObjUser = $ilUser;
 		}
 
-		$uid = xvmpUser::getVimpUser($ilObjUser)->getUid();
+		$uid = xvmpUser::getOrCreateVimpUser($ilObjUser)->getUid();
 		$response = xvmpRequest::getUserMedia($uid, $filter)->getResponseArray()['media']['medium'];
 		if (!$response) {
 			return array();
@@ -493,7 +493,8 @@ class xvmpMedium extends xvmpObject {
 	public function isCurrentUserOwner() {
 		global $DIC;
 		$user = $DIC['ilUser'];
-		return (xvmpUser::getOrCreateVimpUser($user)->getUid() == $this->getUid());
+		$vimp_user = xvmpUser::getVimpUser($user);
+		return ($vimp_user && ($vimp_user->getUid() == $this->getUid()));
 	}
 
 	/**
