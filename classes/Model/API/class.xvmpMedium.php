@@ -493,7 +493,7 @@ class xvmpMedium extends xvmpObject {
 	public function isCurrentUserOwner() {
 		global $DIC;
 		$user = $DIC['ilUser'];
-		return (xvmpUser::getVimpUser($user)->getUid() == $this->getUid());
+		return (xvmpUser::getOrCreateVimpUser($user)->getUid() == $this->getUid());
 	}
 
 	/**
