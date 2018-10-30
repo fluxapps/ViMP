@@ -94,17 +94,24 @@ class xvmpVideoPlayer {
 			$medium = $medium[0];
 		}
 		$id = ilUtil::randomhash();
-        $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
 
-        $sources = xvmp::ViMPVersionEquals('4.0.4') ?
-            xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray() :
-            xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
+		if (xvmp::ViMPVersionGreaterEquals('4.0.5')) {
+		    $pathinfo['extension'] = 'application/x-mpegURL';
+		    $medium = urldecode($medium);
+        } else {
+            $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
 
-        if(!empty($sources))
-        {
-            $medium = xvmp::ViMPVersionEquals('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
-            $pathinfo['extension'] = 'application/x-mpegURL';
+            $sources = xvmp::ViMPVersionEquals('4.0.4') ?
+                xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray() :
+                xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
+
+            if(!empty($sources))
+            {
+                $medium = xvmp::ViMPVersionEquals('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
+                $pathinfo['extension'] = 'application/x-mpegURL';
+            }
         }
+
 
 		$template->setVariable('ID', $id);
 		$template->setVariable('SOURCE', $medium);
