@@ -96,14 +96,13 @@ class xvmpVideoPlayer {
 		$id = ilUtil::randomhash();
         $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
 
-        xvmp::ViMPVersionGreaterEqual('4.0.2');
-        $sources = xvmp::ViMPVersionGreaterEqual('4.0.4') ?
+        $sources = xvmp::ViMPVersionEquals('4.0.4') ?
             xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray() :
             xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
 
         if(!empty($sources))
         {
-            $medium = xvmp::ViMPVersionGreaterEqual('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
+            $medium = xvmp::ViMPVersionEquals('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
             $pathinfo['extension'] = 'application/x-mpegURL';
         }
 

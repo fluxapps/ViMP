@@ -330,7 +330,7 @@ class xvmpRequest {
         $xvmpCurl = new xvmpCurl(self::GET_VIDEOSOURCES);
 
         $xvmpCurl->addPostField('mediakey', $key);
-        if (xvmp::ViMPVersionGreaterEqual('4.0.4')) {
+        if (xvmp::ViMPVersionEquals('4.0.4')) {
             $xvmpCurl->addPostField('action','fetchMediaSources');
             $xvmpCurl->addPostField('sign', 'true');
             $xvmpCurl->addPostField('format', '');
