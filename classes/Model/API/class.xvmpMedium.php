@@ -96,6 +96,11 @@ class xvmpMedium extends xvmpObject {
 		if (!$response) {
 			return array();
 		}
+
+        if (isset($response['mid'])) {
+            $response = array($response);
+        }
+
 		foreach ($response as $key => $medium) {
 			if ($medium['mediatype'] != 'video') {
 				unset($response[$key]);
