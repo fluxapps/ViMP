@@ -48,6 +48,7 @@ class xvmpMedium extends xvmpObject {
 	const F_UPDATED_AT = 'updated_at';
 	const F_TAGS = 'tags';
 	const F_CATEGORIES = 'categories';
+	const F_SUBTITLES = 'subtitles';
 
 
 	public static $published_id_mapping = array(

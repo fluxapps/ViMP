@@ -112,6 +112,16 @@ class xvmpVideoPlayer {
             }
         }
 
+        $subtitles = $this->video->getField(xvmpMedium::F_SUBTITLES);
+
+        if($subtitles) {
+            foreach($subtitles as $lang => $url) {
+                $template->setCurrentBlock('captions');
+                $template->setVariable('CAPTION_LANG', $lang);
+                $template->setVariable('CAPTION_SOURCE', $url);
+                $template->parseCurrentBlock();
+            }
+        }
 
 		$template->setVariable('ID', $id);
 		$template->setVariable('SOURCE', $medium);
