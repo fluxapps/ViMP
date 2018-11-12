@@ -118,10 +118,24 @@ class xvmpVideoPlayer {
             foreach($subtitles as $lang => $url) {
                 $template->setCurrentBlock('captions');
                 $template->setVariable('CAPTION_LANG', $lang);
-                $template->setVariable('CAPTION_SOURCE', $url);
+		$template->setVariable('CAPTION_SOURCE', 'data:text/vtt;base64,' . base64_encode(xvmpRequest::getCaptions($url)->getResponseBody()));
                 $template->parseCurrentBlock();
             }
         }
+
+       $chapters = json_decode(xvmpRequest::getChapters($this->video->getMediakey())->getResponseBody());
+
+       if($chapters->chapters) {
+               $output = "WEBVTT \n\n";
+               foreach($chapters->chapters as $chapter) {
+                       $output .= gmdate("H:i:s", $chapter->time) . ".000 --> " . gmdate("H:i:s", $chapter->time) . ".000\n" . $chapter->title . "\n\n";
+               }
+
+               $template->setCurrentBlock('chapters');
+               $template->setVariable('CHAPTER_SOURCE', 'data:text/vtt;base64,' . base64_encode($output));
+               $template->parseCurrentBlock();
+       }
+
 
 		$template->setVariable('ID', $id);
 		$template->setVariable('SOURCE', $medium);
