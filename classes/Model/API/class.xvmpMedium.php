@@ -48,6 +48,7 @@ class xvmpMedium extends xvmpObject {
 	const F_UPDATED_AT = 'updated_at';
 	const F_TAGS = 'tags';
 	const F_CATEGORIES = 'categories';
+	const F_SUBTITLES = 'subtitles';
 
 
 	public static $published_id_mapping = array(
@@ -91,11 +92,16 @@ class xvmpMedium extends xvmpObject {
 			$ilObjUser = $ilUser;
 		}
 
-		$uid = xvmpUser::getVimpUser($ilObjUser)->getUid();
+		$uid = xvmpUser::getOrCreateVimpUser($ilObjUser)->getUid();
 		$response = xvmpRequest::getUserMedia($uid, $filter)->getResponseArray()['media']['medium'];
 		if (!$response) {
 			return array();
 		}
+
+        if (isset($response['mid'])) {
+            $response = array($response);
+        }
+
 		foreach ($response as $key => $medium) {
 			if ($medium['mediatype'] != 'video') {
 				unset($response[$key]);
@@ -270,7 +276,7 @@ class xvmpMedium extends xvmpObject {
 	/**
 	 * some attributes have to be formatted to fill the form correctly
 	 */
-	protected static function formatResponse($response) {
+	public static function formatResponse($response) {
 		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
 		$response['description'] = strip_tags($response['description']);
 
@@ -493,7 +499,8 @@ class xvmpMedium extends xvmpObject {
 	public function isCurrentUserOwner() {
 		global $DIC;
 		$user = $DIC['ilUser'];
-		return (xvmpUser::getVimpUser($user)->getUid() == $this->getUid());
+		$vimp_user = xvmpUser::getVimpUser($user);
+		return ($vimp_user && ($vimp_user->getUid() == $this->getUid()));
 	}
 
 	/**

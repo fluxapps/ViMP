@@ -132,9 +132,9 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 			ilUtil::sendQuestion($this->pl->txt('msg_please_enter_filter'), true);
 			$this->redirectToParent();
 		}
-		// TODO: mediapermissions
+		
 		$current_user = xvmpUser::getOrCreateVimpUser($this->user);
-		$filter['mediapermissions'] = implode(',', array_keys($current_user->getRoles()));
+        $filter['mediapermissions'] = '0, ' . implode(',', array_keys($current_user->getRoles()));  //PLVIMP-37
 
 		$data = array_filter(xvmpMedium::getFilteredAsArray($filter));
 		$this->setData($data);

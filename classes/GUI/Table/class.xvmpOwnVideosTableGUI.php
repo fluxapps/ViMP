@@ -83,7 +83,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$this->addAndReadFilterItem($filter_item);
 
-		$filter_item = new ilMultiSelectSearchInputGUI($this->pl->txt('category'), 'categories');
+		$filter_item = new ilMultiSelectSearchInputGUI($this->pl->txt('category'), 'category');
 		$categories = xvmpCategory::getAll();
 		$options = array();
 		/** @var xvmpCategory $category */
@@ -117,32 +117,42 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 *
 	 */
 	public function parseData() {
+	    $pre_filter = array();
+	    $post_filter = array();
+
 		foreach ($this->filters as $filter_item) {
 			$value = $filter_item->getValue();
 			$postvar = $filter_item->getPostVar();
 			switch ($postvar) {
+                case 'title':
+                    $pre_filter['filterbyname'] = $post_filter[$postvar] = is_array($value) ? implode(',', $value) : $value;
+                    break;
+                case 'category[]':
+                    $pre_filter['filterbycategory'] = is_array($value) ? implode(',', $value) : $value;
+                    $post_filter['category'] = $value;
+                    break;
 				case 'created':
-					$filter[$postvar.'_min'] = $value['start'];
-					$filter[$postvar.'_max'] = $value['end'];
+                    $post_filter[$postvar.'_min'] = $value['start'];
+                    $post_filter[$postvar.'_max'] = $value['end'];
 					break;
+                case 'tags':
+                    $post_filter[$postvar] = array_map('trim', array_filter(explode(',', $value)));
+                    break;
 				default:
-					$filter[$postvar] = is_array($value) ? implode(',', $value) : $value;
+                    $post_filter[$postvar] = is_array($value) ? implode(',', $value) : $value;
 					break;
 			}
 		}
 
-		$filter['userid'] = xvmpUser::getVimpUser($this->user)->getId();
-		$filter['hidden'] = 'true';
-
-		$videos = xvmpMedium::getFilteredAsArray(array_filter($filter));
-//		$videos = xvmpMedium::getUserMedia($this->user);
+		// fetch data with pre filter
+        $pre_filter = array_filter($pre_filter);
+		$videos = xvmpMedium::getUserMedia($this->user, $pre_filter);
 
 		$data = array();
 
 		foreach ($videos as $video) {
-			$data[$video['mid']] = $video;
+			$data[$video['mid']] = xvmpMedium::formatResponse($video);
 		}
-
 
 		foreach (xvmpUploadedMedia::where(array('email' => $this->user->getEmail()))->get() as $uploaded_media) {
 			if (!in_array($uploaded_media->getMid(), array_keys($data))) {
@@ -157,7 +167,10 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 			}
 		}
 
-		$this->tpl_global->addOnLoadCode('VimpSearch.videos = ' . json_encode($data) . ';');
+		// post filter data
+        $data = $this->postFilterData($post_filter, $data);
+
+        $this->tpl_global->addOnLoadCode('VimpSearch.videos = ' . json_encode($data) . ';');
 		$this->setData($data);
 		$this->setMaxCount(count($data));
 	}
@@ -247,4 +260,53 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$actions->addItem($this->lng->txt('delete'), 'delete', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_DELETE_VIDEO));
 		return $actions->getHTML();
 	}
+
+    /**
+     * @param $post_filter
+     * @param $data
+     * @return array
+     */
+    protected function postFilterData($post_filter, $data) {
+        if (!empty($post_filter['title'])) {
+            $data = array_filter($data, function ($video) use ($post_filter) {
+                return strpos(strtolower($video['title']), strtolower($post_filter['title'])) !== false;
+            });
+        }
+
+        if (!empty(array_filter($post_filter['category']))) {
+            $data = array_filter($data, function ($video) use ($post_filter) {
+                $categories = array_keys($video['categories']);
+                return !empty(array_intersect($categories, $post_filter['category']));
+            });
+        }
+
+        if (!empty($post_filter['tags'])) {
+            $data = array_filter($data, function ($video) use ($post_filter) {
+                $tags = array_map('trim', array_filter(explode(',', $video['tags'])));
+                return !empty(array_intersect($tags, $post_filter['tags']));
+            });
+        }
+
+        if ($post_filter['created_min']) {
+            $data = array_filter($data, function ($video) use ($post_filter) {
+                return strtotime($video['created_at']) > $post_filter['created_min'];
+            });
+        }
+
+        if ($post_filter['created_max']) {
+            $data = array_filter($data, function ($video) use ($post_filter) {
+                return strtotime($video['created_at']) < $post_filter['created_max'];
+            });
+        }
+
+        foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $custom_filter_field) {
+            $field_id = $custom_filter_field[xvmpConf::F_FILTER_FIELD_ID];
+            if ($post_filter[$field_id]) {
+                $data = array_filter($data, function ($video) use ($post_filter, $field_id) {
+                    return strpos(strtolower($video[$field_id]), strtolower($post_filter[$field_id])) !== false;
+                });
+            }
+        }
+        return $data;
+    }
 }

@@ -38,19 +38,31 @@ class xvmpRequest {
 		return $xvmpCurl;
 	}
 
-	public static function getUserRoles() {
+    /**
+     * @return xvmpCurl
+     */
+    public static function getUserRoles() {
 		$xvmpCurl = new xvmpCurl(self::GET_USER_ROLES);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}
 
-	public static function getCategories($params = array()) {
+    /**
+     * @param array $params
+     * @return xvmpCurl
+     */
+    public static function getCategories($params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORIES);
 		$xvmpCurl->post();
 		return $xvmpCurl;
 	}
 
-	public static function getCategory($categoryid, $params = array()) {
+    /**
+     * @param int $categoryid
+     * @param array $params
+     * @return xvmpCurl
+     */
+    public static function getCategory($categoryid, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_CATEGORY);
 		$xvmpCurl->addPostField('categoryid', $categoryid);
 		$xvmpCurl->post();
@@ -96,7 +108,7 @@ class xvmpRequest {
 	 * $responsive
 	 * $language
 	 *
-	 * @param       $mediumid
+	 * @param int   $mediumid
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -122,7 +134,7 @@ class xvmpRequest {
 	 * $categories
 	 * $mediapermissions
 	 *
-	 * @param       $mediumid
+	 * @param int   $mediumid
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -167,7 +179,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param $mediumid
+	 * @param int $mediumid
 	 *
 	 * @return xvmpCurl
 	 */
@@ -180,8 +192,8 @@ class xvmpRequest {
 	}
 
 	/**
-	 * @param $username
-	 * @param $password
+	 * @param String $username
+	 * @param String $password
 	 *
 	 * @return xvmpCurl
 	 */
@@ -220,7 +232,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param       $userid
+	 * @param int   $userid
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -239,7 +251,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param $params
+	 * @param array $params
 	 *
 	 * @return xvmpCurl
 	 */
@@ -255,7 +267,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param       $user_id
+	 * @param int   $user_id
 	 * @param array $params
 	 *
 	 * @return xvmpCurl
@@ -263,6 +275,7 @@ class xvmpRequest {
 	public static function getUserMedia($user_id, $params = array()) {
 		$xvmpCurl = new xvmpCurl(self::GET_USER_MEDIA);
 		$xvmpCurl->addPostField('userid', $user_id);
+		$xvmpCurl->addPostField('filterbytype', 'video');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
 		}
@@ -273,7 +286,7 @@ class xvmpRequest {
 
 
 	/**
-	 * @param $params
+	 * @param array $params
 	 *
 	 * @return xvmpCurl
 	 */
@@ -291,9 +304,10 @@ class xvmpRequest {
 	}
 
 
-	/**
-	 * @param $key
-	 */
+    /**
+     * @param $key
+     * @return xvmpCurl
+     */
 	public static function getPicture($key) {
 		$xvmpCurl = new xvmpCurl(self::GET_PICTURE);
 
@@ -308,23 +322,29 @@ class xvmpRequest {
 	// Non-API request
     /**
      * @param $key
-     * @param $url
+     * @param String $url
      *
      * @return xvmpCurl
      */
 	public static function getVideoSources($key, $url) {
         $xvmpCurl = new xvmpCurl(self::GET_VIDEOSOURCES);
 
-        $xvmpCurl->addPostField('action','embedMedia');
         $xvmpCurl->addPostField('mediakey', $key);
-        $xvmpCurl->addPostField('url', $url);
+        if (xvmp::ViMPVersionEquals('4.0.4')) {
+            $xvmpCurl->addPostField('action','fetchMediaSources');
+            $xvmpCurl->addPostField('sign', 'true');
+            $xvmpCurl->addPostField('format', '');
+        } else {
+            $xvmpCurl->addPostField('action','embedMedia');
+            $xvmpCurl->addPostField('url', $url);
+        }
 
         $xvmpCurl->post();
         return $xvmpCurl;
     }
 
     /**
-     * @param $name
+     * @param String $name
      * @return xvmpCurl
      */
     public static function config($name) {

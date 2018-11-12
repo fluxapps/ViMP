@@ -58,6 +58,26 @@ class xvmp {
 		return self::getILIASVersion() >= self::ILIAS_52;
 	}
 
+    /**
+     * @param $version
+     * @return mixed
+     */
+	public static function ViMPVersionEquals($version) {
+	    $response = xvmpRequest::version()->getResponseArray()['info']['version'];
+	    $vimp_version = substr($response, 0, strpos($response, ' '));
+        return version_compare($vimp_version, $version, '=');
+    }
+
+    /**
+     *
+     * @param $version
+     * @return mixed
+     */
+	public static function ViMPVersionGreaterEquals($version) {
+	    $response = xvmpRequest::version()->getResponseArray()['info']['version'];
+	    $vimp_version = substr($response, 0, strpos($response, ' '));
+        return version_compare($vimp_version, $version, '>=');
+    }
 
 	/**
 	 * @return mixed
