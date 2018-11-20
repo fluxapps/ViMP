@@ -25,7 +25,8 @@ class xvmpRequest {
 	const GET_USER_MEDIA = 'getUserMedia';
 	const EXTENDED_SEARCH = 'extendedSearch';
 	const GET_PICTURE = 'getPicture';
-    const GET_VIDEOSOURCES = '../media/ajax';
+        const GET_VIDEOSOURCES = '../media/ajax';
+        const GET_CHAPTERS = '../webplayer/getchapters/key/';
     const CONFIG = 'config';
 
 	/**
@@ -342,6 +343,31 @@ class xvmpRequest {
         $xvmpCurl->post();
         return $xvmpCurl;
     }
+
+    // Non-API request
+    /**
+     * @param $key
+     *
+     * @return xvmpCurl
+     */
+     public static function getChapters($key) {
+        $xvmpCurl = new xvmpCurl(self::GET_CHAPTERS . $key);
+        $xvmpCurl->get();
+        return $xvmpCurl;
+    }
+
+    // Non-API request
+    /**
+     * @param $url
+     *
+     * @return xvmpCurl
+     */
+     public static function getCaptions($url) {
+        $xvmpCurl = new xvmpCurl($url);
+        $xvmpCurl->get();
+        return $xvmpCurl;
+    }
+
 
     /**
      * @param String $name
