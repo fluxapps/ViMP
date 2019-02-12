@@ -45,10 +45,17 @@ class xvmpCategory extends xvmpObject {
 
 		$response = xvmpRequest::getCategories()->getResponseArray()['categories']['category'];
 		$response['loaded'] = 1;
-		self::cache($key, $response);
 
-		unset($response['loaded']);
-		return $response;
+		// response has the wrong keys -> format array
+		$cache_array = [];
+		foreach ($response as $key => $item) {
+		    $cache_array[($key == 'loaded' ? $key : $item['cid'])] = $item;
+        }
+
+		self::cache($key, $cache_array);
+
+		unset($cache_array['loaded']);
+		return $cache_array;
 	}
 
 

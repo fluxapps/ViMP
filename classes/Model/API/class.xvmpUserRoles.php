@@ -30,8 +30,14 @@ class xvmpUserRoles extends xvmpObject {
 		$response = xvmpRequest::getUserRoles()->getResponseArray();
 		$user_roles = $response['roles']['role'];
 
-		self::cache(self::class, $user_roles);
-		return $user_roles;
+        // response has the wrong keys -> format array
+        $cache_array = [];
+        foreach ($user_roles as $item) {
+            $cache_array[$item['id']] = $item;
+        }
+
+		self::cache(self::class, $cache_array);
+		return $cache_array;
 	}
 
     /**
