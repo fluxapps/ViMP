@@ -11,8 +11,8 @@
       "role": "Project Manager, Software Engineer"
     }
   ],
-  "support": {
-    "email": "info@studer-raimann.ch"
+ "support": {
+    "issues": "https://plugins.studer-raimann.ch/goto.php?target=uihk_srsu_PLVIMP"
   },
   "minimum-stability": "beta",
   "prefer-stable": true,
