@@ -74,6 +74,12 @@ class xvmpContentPlayerGUI {
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', $video->getDescription(50));
 
+		if ($video->getStatus() !== 'legal') {
+			$player_tpl->setCurrentBlock('info_transcoding');
+			$player_tpl->setVariable('INFO_TRANSCODING', $this->pl->txt('info_transcoding_full'));
+			$player_tpl->parseCurrentBlock();
+		}
+
 		if (!$video instanceof xvmpDeletedMedium) {
 			$player_tpl->setCurrentBlock('video_info');
 			$player_tpl->setVariable('VALUE', $this->pl->txt('duration') . ': ' . strip_tags($video->getDurationFormatted()));

@@ -168,3 +168,5 @@ enable_learning_progress#:#Lernfortschritt aktiviert
 enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, wenn das Objekt innerhalb eines Kurses liegt und der Lernfortschritt global aktiviert ist.
 added#:#Hinzugefügt
 max_filesize#:#Max. Dateigröße
+info_transcoding_short#:#Wird Transkodiert
+info_transcoding_full#:#Dieses Video wird momentan transkodiert und lässt sich möglicherweise nicht abspielen.

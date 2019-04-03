@@ -150,7 +150,13 @@ abstract class xvmpGUI {
 	public function fillModalPlayer() {
 		$mid = $_GET['mid'];
 		$video = xvmpMedium::find($mid);
-		$video_infos = "				
+		$video_infos = '';
+		if ($video->getStatus() !== 'legal') {
+			$video_infos .= "
+				<p style='color:red'>".$this->pl->txt('info_transcoding_full')."</p>
+			";
+		}
+		$video_infos .= "				
 			<p>{$this->pl->txt(xvmpMedium::F_DURATION)}: {$video->getDurationFormatted()}</p>
 			<p>{$this->pl->txt(xvmpMedium::F_CREATED_AT)}: {$video->getCreatedAt('m.d.Y, H:i')}</p>
 			
