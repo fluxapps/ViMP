@@ -81,24 +81,26 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	 *
 	 */
 	public function changeOwner() {
-		$mid = $_GET['mid'];
-		$uid = $_GET['uid'];
-		$username = $_GET['username'];
-		if ($uid) {
+		$mid = filter_input(INPUT_GET, 'mid');
+		$login = filter_input(INPUT_POST, 'login');
+		$login_exists = ilObjUser::_loginExists($login);
+		if ($login && $login_exists) {
 			$ilConfirmationGUI = new ilConfirmationGUI();
 			$ilConfirmationGUI->setFormAction($this->ctrl->getFormAction($this));
 			$ilConfirmationGUI->setHeaderText($this->pl->txt('msg_warning_change_owner'));
 			$ilConfirmationGUI->addItem('mid', $mid, sprintf(
 				$this->pl->txt('confirmation_new_owner'),
 				xvmpMedium::find($mid)->getTitle(),
-				$username
+				$login
 			));
-			$ilConfirmationGUI->addHiddenItem('uid', $uid);
-			$ilConfirmationGUI->addHiddenItem('username', $username);
+			$ilConfirmationGUI->addHiddenItem('login', $login);
 			$ilConfirmationGUI->setConfirm($this->lng->txt('confirm'), self::CMD_CONFIRMED_CHANGE_OWNER);
 			$ilConfirmationGUI->setCancel($this->lng->txt('cancel'), self::CMD_STANDARD);
 			$this->tpl->setContent($ilConfirmationGUI->getHTML());
 		} else {
+			if ($login && !$login_exists) {
+				ilUtil::sendFailure($this->pl->txt('msg_error_login_not_found'));
+			}
 			$xvmpChangeOwnerFormGUI = new xvmpChangeOwnerFormGUI($this, $mid);
 			$this->tpl->setContent($xvmpChangeOwnerFormGUI->getHTML());
 		}
@@ -109,9 +111,8 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	 *
 	 */
 	public function confirmedChangeOwner() {
-		$mid = $_POST['mid'];
-		$uid = $_POST['uid'];
-		$username = $_POST['username'];
+		$mid = filter_input(INPUT_POST, 'mid');
+		$login = filter_input(INPUT_POST, 'login');
 
 		$medium = xvmpMedium::getObjectAsArray($mid);
 		if ($medium['uid'] !== xvmpUser::getVimpUser($this->user)->getUid()) {
@@ -119,14 +120,15 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			$this->ctrl->redirect($this, self::CMD_STANDARD);
 		}
 
-		$response = xvmpRequest::editMedium($mid, array('uid' => $uid))->getResponseBody();
+		$xvmpUser = xvmpUser::getOrCreateVimpUser(new ilObjUser(ilObjUser::getUserIdByLogin($login)));
+		$response = xvmpRequest::editMedium($mid, array('uid' => $xvmpUser->getUid()))->getResponseBody();
 		if ($response) {
 			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
 			$medium['uid'];
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
 			xvmpMedium::cache(xvmpMedium::class . '-' . $mid, $medium);
 			xvmpEventLog::logEvent(xvmpEventLog::ACTION_CHANGE_OWNER, $this->getObjId(), array(
-				'owner' => $username,
+				'owner' => $login,
 				'mid' => $mid,
 				'title' => $medium['title']
 			));

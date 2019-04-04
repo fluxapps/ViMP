@@ -16,9 +16,17 @@ class xvmpChangeOwnerFormGUI extends xvmpFormGUI {
 	 * @var mixed
 	 */
 	protected $global_tpl;
+	/**
+	 * @var xvmpOwnVideosGUI
+	 */
+	protected $parent_gui;
+
 
 	/**
-	 * xvmpChangeOwnerGUI constructor.
+	 * xvmpChangeOwnerFormGUI constructor.
+	 *
+	 * @param $parent_gui xvmpOwnVideosGUI
+	 * @param $mid
 	 */
 	public function __construct($parent_gui, $mid) {
 		global $DIC;
@@ -28,17 +36,9 @@ class xvmpChangeOwnerFormGUI extends xvmpFormGUI {
 
 		$this->setTitle($this->pl->txt('form_title_change_owner'));
 
-		$this->global_tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_change_owner.js');
-
-		$this->ctrl->setParameterByClass(ilObjViMPGUI::class, 'mid', $this->mid);
-		$ajax_url = $this->ctrl->getLinkTargetByClass(ilObjViMPGUI::class, ilObjViMPGUI::CMD_SEARCH_USER_AJAX, '', true);
-		$this->global_tpl->addOnLoadCode("VimpChangeOwner.ajax_base_url = '" . $ajax_url . "';");
-
 		$this->ctrl->setParameterByClass(xvmpOwnVideosGUI::class, 'mid', $this->mid);
-		$url = $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_CHANGE_OWNER);
-		$this->global_tpl->addOnLoadCode("VimpChangeOwner.base_url = '" . $url . "';");
-
 		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
+		$this->addCommandButton(xvmpOwnVideosGUI::CMD_CHANGE_OWNER, $this->lng->txt('save'));
 		$this->addCommandButton(xvmpOwnVideosGUI::CMD_STANDARD,$this->lng->txt('cancel'));
 	}
 
@@ -47,17 +47,14 @@ class xvmpChangeOwnerFormGUI extends xvmpFormGUI {
 	 *
 	 */
 	protected function initForm() {
-		// Search Field & Button
-		$input = new ilCustomInputGUI();
-		$input->setTitle($this->pl->txt('username'));
-		$input->setHtml(
-			"<input type='text' id='xvmp_username' onkeypress='if (event.keyCode==13) {VimpChangeOwner.search_user();return false;}'>
-					<a class='btn btn-default' id='xvmp_search' onclick='VimpChangeOwner.search_user()'>" . $this->pl->txt('search') . "</a>
-					<span id='xvmp_search_results' style='clear: both;display:block;'></span>
-					<img id='xvmp_spinner' hidden height='20px' width='20px' src='Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/spinner.gif'>
-					");
+		$input = new ilTextInputGUI($this->pl->txt('username'), 'login');
+		$input->setRequired(true);
+		$input->setInfo($this->pl->txt('info_autocomplete'));
+		$input->setDataSource($this->ctrl->getLinkTargetByClass(array(
+			ilUIPluginRouterGUI::class,
+			ilViMPPlugin::class
+		), ilViMPPlugin::CMD_ADD_USER_AUTO_COMPLETE, "", true));
+
 		$this->addItem($input);
-
-
 	}
 }

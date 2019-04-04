@@ -146,6 +146,7 @@ msg_username_not_found#:#The username could not be found.
 msg_warning_change_owner#:#Warning: You are changing the owner of one of your videos. After this action you are not able to edit this video anymore. Do you want to continue?
 msg_please_enter_filter#:#Please limit the search with the available filters.
 msg_no_videos#:#There are currently no videos in this object.
+msg_error_login_not_found#:#No user with the given username could be found in ILIAS.
 confirmation_new_owner#:#Video title: "%s", new owner: %s
 new_owner#:#New Owner
 xvmp_new#:#Create new ViMP object
@@ -171,3 +172,4 @@ max_filesize#:#Max. Filesize
 info_transcoding_short#:#Transcoding
 info_transcoding_full#:#This video is being transcoded and can not be viewed at the moment.
 info_transcoding_possible_full#:#This video is being transcoded and may not be viewable at the moment.
+info_autocomplete#:#Autocompletion: Suggestions are offered from the moment the third letter is entered. You can search by login, firstname, lastname and email address.
