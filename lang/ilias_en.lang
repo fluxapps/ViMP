@@ -169,4 +169,5 @@ enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, w
 added#:#Added
 max_filesize#:#Max. Filesize
 info_transcoding_short#:#Transcoding
-info_transcoding_full#:#This video is being transcoded and may not be viewable at the moment.
+info_transcoding_full#:#This video is being transcoded and can not be viewed at the moment.
+info_transcoding_possible_full#:#This video is being transcoded and may not be viewable at the moment.

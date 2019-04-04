@@ -152,8 +152,9 @@ abstract class xvmpGUI {
 		$video = xvmpMedium::find($mid);
 		$video_infos = '';
 		if ($video->getStatus() !== 'legal') {
+			$msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->pl->txt('info_transcoding_full') : $this->pl->txt('info_transcoding_possible_full');
 			$video_infos .= "
-				<p style='color:red'>".$this->pl->txt('info_transcoding_full')."</p>
+				<p style='color:red'>" . $msg . "</p>
 			";
 		}
 		$video_infos .= "				
@@ -168,8 +169,10 @@ abstract class xvmpGUI {
 		}
 		$video_infos .= "<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>";
 		$response = new stdClass();
-		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId()));
-		$response->html = $video_player->getHTML() . $video_infos;
+		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
+			$video_player_html = (new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId())))->getHTML();
+		}
+		$response->html = $video_player_html . $video_infos;
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->user->getId(), xvmpMedium::F_MID => $mid))->first();

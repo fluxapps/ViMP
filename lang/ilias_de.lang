@@ -169,4 +169,5 @@ enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, w
 added#:#Hinzugefügt
 max_filesize#:#Max. Dateigröße
 info_transcoding_short#:#Wird Transkodiert
-info_transcoding_full#:#Dieses Video wird momentan transkodiert und lässt sich möglicherweise nicht abspielen.
+info_transcoding_full#:#Dieses Video wird noch transkodiert und lässt sich daher momentan nicht abspielen.
+info_transcoding_possible_full#:#Dieses Video wird noch transkodiert und lässt sich daher möglicherweise nicht abspielen.
