@@ -146,6 +146,7 @@ msg_username_not_found#:#Der Benutzername konnte nicht gefunden werden.
 msg_warning_change_owner#:#Achtung: Sie sind im Begriff, den Besitzer eines Ihrer Videos zu ändern. Nach dem Besitzerwechsel können Sie dieses Video nicht mehr bearbeiten. Sind Sie sicher, dass Sie fortfahren möchten?
 msg_please_enter_filter#:#Bitte schränken Sie die Suche mithilfe der verfügbaren Filter ein.
 msg_no_videos#:#Diesem Objekt wurden noch keine Videos hinzugefügt.
+msg_error_login_not_found#:#Es konnte kein Benutzer mit diesem Benutzernamen in ILIAS gefunden werden.
 confirmation_new_owner#:#Video Titel: "%s", neuer Besitzer: %s
 new_owner#:#Neuer Besitzer
 xvmp_new#:#Neues ViMP-Objekt anlegen
@@ -168,3 +169,7 @@ enable_learning_progress#:#Lernfortschritt aktiviert
 enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, wenn das Objekt innerhalb eines Kurses liegt und der Lernfortschritt global aktiviert ist.
 added#:#Hinzugefügt
 max_filesize#:#Max. Dateigröße
+info_transcoding_short#:#Wird Transkodiert
+info_transcoding_full#:#Dieses Video wird noch transkodiert und lässt sich daher momentan nicht abspielen.
+info_transcoding_possible_full#:#Dieses Video wird noch transkodiert und lässt sich daher möglicherweise nicht abspielen.
+info_autocomplete#:#Autovervollständigung: Ab der Eingabe des dritten Buchstabens werden mögliche Benutzer vorgeschlagen. Es kann nach Benutzername, Email, Vor- oder Nachname gesucht werden.

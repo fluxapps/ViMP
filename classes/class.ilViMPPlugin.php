@@ -16,6 +16,8 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 
 	const DEV = true;
 
+	const CMD_ADD_USER_AUTO_COMPLETE = 'addUserAutoComplete';
+
 	/**
 	 * @var ilViMPPlugin
 	 */
@@ -98,7 +100,7 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	public function addUserAutoComplete() {
 		include_once './Services/User/classes/class.ilUserAutoComplete.php';
 		$auto = new ilUserAutoComplete();
-		$auto->setSearchFields(array('login','firstname','lastname'));
+		$auto->setSearchFields(array('login','firstname','lastname', 'email'));
 		$auto->setResultField('login');
 		$auto->enableFieldSearchableCheck(false);
 		$auto->setMoreLinkAvailable(true);

@@ -104,9 +104,10 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
 		$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSelectedVideosGUI::CMD_REMOVE_VIDEO, '', true));
 
-		if (!$transcoded) {
-			$this->tpl->setVariable('VAL_VISIBILITY_DISABLED', 'disabled');
-		}
+		// Videos can be transcoded multiple times. If they are being transcoded again, it should be possible to change the visibility.
+//		if (!$transcoded) {
+//			$this->tpl->setVariable('VAL_VISIBILITY_DISABLED', 'disabled');
+//		}
 
 		foreach ($this->available_columns as $title => $props)
 		{
