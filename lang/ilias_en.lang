@@ -121,7 +121,7 @@ upload_select#:#Select file
 upload_clear#:#Reset
 supported_filetypes#:#Supported Filetypes
 watched#:#Watched
-hint_learning_progress_gui#:#Hint: changes in this view are not instantly saved and must be saved with the button "Save Settings".
+hint_learning_progress_gui#:#Hint: changes in this view are not instantly saved and must be saved with the button "Save Settings". Videos imported from Youtube or Vimeo can not be used for the learning progress.
 log#:#Log
 log_action_1#:#Upload
 log_action_2#:#Edit

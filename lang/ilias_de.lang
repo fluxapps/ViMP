@@ -121,7 +121,7 @@ upload_select#:#Datei auswählen
 upload_clear#:#Zurücksetzen
 supported_filetypes#:#Unterstützte Dateitypen
 watched#:#Angesehen
-hint_learning_progress_gui#:#Hinweis: Änderungen in dieser Ansicht werden nicht direkt übernommen, sondern müssen über die Schaltfläche "Einstellungen speichern" abgespeichert werden.
+hint_learning_progress_gui#:#Hinweis: Änderungen in dieser Ansicht werden nicht direkt übernommen, sondern müssen über die Schaltfläche "Einstellungen speichern" abgespeichert werden. Videos, welche über Youtube oder Vimeo eingebunden wurden, können nicht für den Lernfortschritt verwendet werden.
 log#:#Log
 log_action_1#:#Upload
 log_action_2#:#Bearbeitet

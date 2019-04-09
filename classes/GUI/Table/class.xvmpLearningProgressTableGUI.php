@@ -82,7 +82,7 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 
 
 	public function parseData() {
-		$this->setData(xvmpMedium::getSelectedAsArray($this->parent_obj->getObjId()));
+		$this->setData(xvmpMedium::getAvailableForLP($this->parent_obj->getObjId()));
 	}
 
 	/**

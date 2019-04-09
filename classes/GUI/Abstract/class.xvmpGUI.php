@@ -168,9 +168,10 @@ abstract class xvmpGUI {
 			}
 		}
 		$video_infos .= "<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>";
+
 		$response = new stdClass();
 		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
-			$video_player_html = (new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId())))->getHTML();
+			$video_player_html = (new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId(), $video)))->getHTML();
 		}
 		$response->html = $video_player_html . $video_infos;
 		$response->video_title = $video->getTitle();
