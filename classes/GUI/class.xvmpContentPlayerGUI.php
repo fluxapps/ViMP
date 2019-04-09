@@ -69,7 +69,7 @@ class xvmpContentPlayerGUI {
 		}
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
-		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->parent_gui->getObjId()));
+		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->parent_gui->getObjId(), $video));
 		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', $video->getDescription(50));
@@ -99,7 +99,7 @@ class xvmpContentPlayerGUI {
 			$player_tpl->setVariable('VALUE', $this->pl->txt('created_at') . ': ' . $video->getCreatedAt('d.m.Y, H:i'));
 			$player_tpl->parseCurrentBlock();
 
-			if (xvmp::showWatched($this->parent_gui->getObjId())) {
+			if (xvmp::showWatched($this->parent_gui->getObjId(), $video)) {
 				$player_tpl->setCurrentBlock('video_info');
 				$player_tpl->setVariable('VALUE', $this->pl->txt('watched') . ': ' . xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
 				$player_tpl->parseCurrentBlock();

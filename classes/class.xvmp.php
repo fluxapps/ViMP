@@ -13,8 +13,8 @@ class xvmp {
 	const ILIAS_52 = 52;
 	const ILIAS_53 = 53;
 	const MIN_ILIAS_VERSION = self::ILIAS_50;
-
 	const TOKEN = 'token';
+
 
 	/**
 	 * @return int
@@ -37,12 +37,14 @@ class xvmp {
 		return 0;
 	}
 
+
 	/**
 	 * @return bool
 	 */
 	public static function is50() {
 		return self::getILIASVersion() >= self::ILIAS_50;
 	}
+
 
 	/**
 	 * @return bool
@@ -51,6 +53,7 @@ class xvmp {
 		return self::getILIASVersion() >= self::ILIAS_51;
 	}
 
+
 	/**
 	 * @return bool
 	 */
@@ -58,26 +61,33 @@ class xvmp {
 		return self::getILIASVersion() >= self::ILIAS_52;
 	}
 
-    /**
-     * @param $version
-     * @return mixed
-     */
-	public static function ViMPVersionEquals($version) {
-	    $response = xvmpRequest::version()->getResponseArray()['info']['version'];
-	    $vimp_version = substr($response, 0, strpos($response, ' '));
-        return version_compare($vimp_version, $version, '=');
-    }
 
-    /**
-     *
-     * @param $version
-     * @return mixed
-     */
+	/**
+	 * @param $version
+	 *
+	 * @return mixed
+	 */
+	public static function ViMPVersionEquals($version) {
+		$response = xvmpRequest::version()->getResponseArray()['info']['version'];
+		$vimp_version = substr($response, 0, strpos($response, ' '));
+
+		return version_compare($vimp_version, $version, '=');
+	}
+
+
+	/**
+	 *
+	 * @param $version
+	 *
+	 * @return mixed
+	 */
 	public static function ViMPVersionGreaterEquals($version) {
-	    $response = xvmpRequest::version()->getResponseArray()['info']['version'];
-	    $vimp_version = substr($response, 0, strpos($response, ' '));
-        return version_compare($vimp_version, $version, '>=');
-    }
+		$response = xvmpRequest::version()->getResponseArray()['info']['version'];
+		$vimp_version = substr($response, 0, strpos($response, ' '));
+
+		return version_compare($vimp_version, $version, '>=');
+	}
+
 
 	/**
 	 * @return mixed
@@ -86,12 +96,14 @@ class xvmp {
 		$token = xvmpCacheFactory::getInstance()->get(self::TOKEN);
 		if ($token) {
 			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . self::TOKEN, xvmpCurlLog::DEBUG_LEVEL_2);
+
 			return $token;
 		}
 
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . self::TOKEN, xvmpCurlLog::DEBUG_LEVEL_2);
 
-		$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER),xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))->getResponseArray();
+		$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER), xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))
+			->getResponseArray();
 		$token = $response[self::TOKEN];
 		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_TOKEN));
 
@@ -116,6 +128,7 @@ class xvmp {
 	 */
 	public static function isLearningProgressPossible($obj_id) {
 		$ref_id = self::lookupRefId($obj_id);
+
 		return (ilObjUserTracking::_enabledLearningProgress() && self::getParentCourseRefId($ref_id));
 	}
 
@@ -127,23 +140,30 @@ class xvmp {
 		return ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD));
 	}
 
+
 	/**
 	 * @param $obj_id
+	 * @param $video array|xvmpMedium
 	 *
 	 * @return bool
+	 * @throws xvmpException
 	 */
-	public static function useEmbeddedPlayer($obj_id) {
-		return !xvmpSettings::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER);
+	public static function useEmbeddedPlayer($obj_id, $video) {
+		return (!xvmpSettings::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER))
+			|| xvmpMedium::isVimeoOrYoutube($video);
 	}
 
 
 	/**
 	 * @param $obj_id
 	 *
+	 * @param $video
+	 *
 	 * @return bool
+	 * @throws xvmpException
 	 */
-	public static function showWatched($obj_id) {
-		return !self::useEmbeddedPlayer($obj_id);
+	public static function showWatched($obj_id, $video) {
+		return !self::useEmbeddedPlayer($obj_id, $video);
 	}
 
 
@@ -184,6 +204,7 @@ class xvmp {
 			$member_role = $crs->getDefaultMemberRole();
 			$members = $rbacreview->assignedUsers($member_role);
 		}
+
 		return $members;
 	}
 }

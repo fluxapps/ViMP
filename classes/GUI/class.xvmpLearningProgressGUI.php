@@ -34,7 +34,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 	}
 
 	protected function save() {
-		foreach ($_POST['lp_required_percentage'] as $mid => $percentage) {
+		foreach (filter_input(INPUT_POST, 'lp_required_percentage', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY) as $mid => $percentage) {
 			/** @var xvmpSelectedMedia $selected_medium */
 			$selected_medium = xvmpSelectedMedia::where(array('mid' => $mid, 'obj_id' => $this->getObjId()))->first();
 			$selected_medium->setLpReqPercentage($percentage);

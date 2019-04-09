@@ -140,6 +140,39 @@ class xvmpMedium extends xvmpObject {
 
 
 	/**
+	 * @param $obj_id
+	 *
+	 * @return array
+	 * @throws xvmpException
+	 */
+	public static function getAvailableForLP($obj_id) {
+		$selected = self::getSelectedAsArray($obj_id);
+		foreach ($selected as $key => $video) {
+			if (self::isVimeoOrYoutube($video)) {
+				unset($selected[$key]);
+			}
+		}
+		return $selected;
+	}
+
+
+	/**
+	 * @param $video array|xvmpMedium
+	 *
+	 * @return bool
+	 * @throws xvmpException
+	 */
+	public static function isVimeoOrYoutube($video) {
+		if (is_array($video)) {
+			return in_array($video['mediasubtype'], ['youtube', 'vimeo']);
+		} elseif ($video instanceof xvmpMedium) {
+			return in_array($video->getMediasubtype(), ['youtube', 'vimeo']);
+		} else {
+			throw new xvmpException(xvmpException::INTERNAL_ERROR, '$video must be of type array or xvmpMedium: ' . print_r($video, true));
+		}
+	}
+
+	/**
 	 * @param array $filter
 	 *
 	 * @return array
