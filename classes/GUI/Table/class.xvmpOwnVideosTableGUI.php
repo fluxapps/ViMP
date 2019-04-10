@@ -63,6 +63,15 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$this->tpl_global->addOnLoadCode('xoctWaiter.init("waiter");');
 		$base_link = $this->ctrl->getLinkTarget($this->parent_obj,'', '', true);
 		$this->tpl_global->addOnLoadCode('VimpSearch.base_link = "'.$base_link.'";');
+
+		if ($parent_cmd !== xvmpOwnVideosGUI::CMD_SHOW_FILTERED) {
+			$this->tpl = new ilTemplate("tpl.own_videos_table.html", true, true, $this->pl->getDirectory());
+			$this->tpl->setVariable('TABLE_CONTENT_HIDDEN', 'hidden');
+			$this->tpl->setCurrentBlock('xvmp_show_videos_button');
+			$this->tpl->setVariable('SHOW_VIDEOS_LINK', $this->ctrl->getLinkTarget($this->parent_obj, xvmpOwnVideosGUI::CMD_SHOW_FILTERED));
+			$this->tpl->setVariable('SHOW_VIDEOS_LABEL', $this->pl->txt('btn_show_own_videos'));
+			$this->tpl->parseCurrentBlock();
+		}
 	}
 
 
