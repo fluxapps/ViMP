@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.2]
+- Usability Fix: Own Videos table shows button (-zone) "Show My Videos"
+
 ## [1.0.1]
 - Bugfix: Youtube / Vimeo Videos could not be played in internal video player (embedded player is used now)
 - Bugfix: check video status 'legal' in content tab
