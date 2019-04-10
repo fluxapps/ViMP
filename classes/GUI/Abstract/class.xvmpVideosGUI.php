@@ -98,7 +98,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	protected function showFiltered() {
 		$class_name = static::TABLE_CLASS;
 		/** @var xvmpTableGUI $table_gui */
-		$table_gui = new $class_name($this, self::CMD_SHOW);
+		$table_gui = new $class_name($this, self::CMD_SHOW_FILTERED);
 		$table_gui->parseData();
 		$table_gui->determineOffsetAndOrder();
 		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
