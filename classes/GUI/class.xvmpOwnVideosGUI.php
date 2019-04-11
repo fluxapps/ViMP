@@ -132,6 +132,13 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 				'mid' => $mid,
 				'title' => $medium['title']
 			));
+			/** @var xvmpUploadedMedia $xvmpUploadedMedia */
+			foreach (xvmpUploadedMedia::where(['user_id' => $this->user->getId()])->get() as $xvmpUploadedMedia) {
+				$new_user_id = ilObjUser::_lookupId($login);
+				$xvmpUploadedMedia->setUserId($new_user_id);
+				$xvmpUploadedMedia->setEmail(ilObjUser::_lookupEmail($new_user_id));
+				$xvmpUploadedMedia->update();
+			}
 		} else {
 			ilUtil::sendFailure($this->pl->txt('failure'));
 		}
