@@ -121,10 +121,17 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		}
 
 		$xvmpUser = xvmpUser::getOrCreateVimpUser(new ilObjUser(ilObjUser::getUserIdByLogin($login)));
-		$response = xvmpRequest::editMedium($mid, array('uid' => $xvmpUser->getUid()))->getResponseBody();
+		$medium['uid'] = $xvmpUser->getUid();
+		$edit_fields = ['uid' => $xvmpUser->getUid()];
+		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $form_field) {
+			// workaround for vimp bug (see PLVIMP-53)
+			if ($form_field[xvmpConf::F_FORM_FIELD_REQUIRED] == 1 && $form_field[xvmpConf::F_FORM_FIELD_TYPE] == 1) {
+				$edit_fields[$form_field[xvmpConf::F_FORM_FIELD_ID]] = 1;
+			}
+		}
+		$response = xvmpRequest::editMedium($mid, $edit_fields)->getResponseBody();
 		if ($response) {
 			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-			$medium['uid'];
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
 			xvmpMedium::cache(xvmpMedium::class . '-' . $mid, $medium);
 			xvmpEventLog::logEvent(xvmpEventLog::ACTION_CHANGE_OWNER, $this->getObjId(), array(
@@ -132,6 +139,13 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 				'mid' => $mid,
 				'title' => $medium['title']
 			));
+			/** @var xvmpUploadedMedia $xvmpUploadedMedia */
+			foreach (xvmpUploadedMedia::where(['user_id' => $this->user->getId()])->get() as $xvmpUploadedMedia) {
+				$new_user_id = ilObjUser::_lookupId($login);
+				$xvmpUploadedMedia->setUserId($new_user_id);
+				$xvmpUploadedMedia->setEmail(ilObjUser::_lookupEmail($new_user_id));
+				$xvmpUploadedMedia->update();
+			}
 		} else {
 			ilUtil::sendFailure($this->pl->txt('failure'));
 		}

@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.3]
+- Bugfix: after changing owner of a video, it couldn't be changed a 2nd time
+- Bugfix: owner could not be changed if there's a required checkbox field
+
 ## [1.0.2]
 - Usability Fix: Own Videos table shows button (-zone) "Show My Videos"
 

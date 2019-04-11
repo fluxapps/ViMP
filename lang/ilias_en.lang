@@ -48,6 +48,8 @@ conf_embed_player#:#Embedded Video Player
 conf_embed_player_info#:#Use ViMP's embedded video player. If the learning progress is active, the plugin will still use it's own player, since the learning progress can not be tracked with the embedded player.
 conf_text#:#Text Field
 conf_checkbox#:#Checkbox
+conf_form_field_type_0#:#Text Field
+conf_form_field_type_1#:#Checkbox
 conf_upload_limit#:#Upload Limit (MB)
 conf_upload_limit_info#:#Limit for the uploaded filesize in MB. Enter '0' for no limit.
 msg_success#:#Changes saved successfully.

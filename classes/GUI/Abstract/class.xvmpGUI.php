@@ -18,7 +18,41 @@ abstract class xvmpGUI {
 	 * @var ilObjViMPGUI
 	 */
 	protected $parent_gui;
+	/**
+	 * @var ilTemplate
+	 */
+	protected $tpl;
+	/**
+	 * @var ilTabsGUI
+	 */
+	protected $tabs;
+	/**
+	 * @var ilCtrl
+	 */
+	protected $ctrl;
+	/**
+	 * @var ilToolbarGUI|mixed
+	 */
+	protected $toolbar;
+	/**
+	 * @var ilObjUser
+	 */
+	protected $user;
+	/**
+	 * @var ilViMPPlugin
+	 */
+	protected $pl;
+	/**
+	 * @var mixed
+	 */
+	protected $lng;
 
+
+	/**
+	 * xvmpGUI constructor.
+	 *
+	 * @param ilObjViMPGUI $parent_gui
+	 */
 	public function __construct(ilObjViMPGUI $parent_gui) {
 		global $DIC;
 		$tpl = $DIC['tpl'];
@@ -27,12 +61,6 @@ abstract class xvmpGUI {
 		$ilToolbar = $DIC['ilToolbar'];
 		$ilUser = $DIC['ilUser'];
 		$lng = $DIC['lng'];
-		/**
-		 * @var $ilCtrl    ilCtrl
-		 * @var $ilTabs    ilTabsGUI
-		 * @var $tpl       ilTemplate
-		 * @var $ilToolbar ilToolbarGUI
-		 */
 		$this->tpl = $tpl;
 		$this->tabs = $ilTabs;
 		$this->ctrl = $ilCtrl;
@@ -44,6 +72,9 @@ abstract class xvmpGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	public function executeCommand() {
 		if (!$this->ctrl->isAsynch()) {
 			$this->tabs->activateTab(static::TAB_ACTIVE);
@@ -73,6 +104,10 @@ abstract class xvmpGUI {
 		$this->{$cmd}();
 	}
 
+
+	/**
+	 *
+	 */
 	public function addFlushCacheButton () {
 		$button = ilLinkButton::getInstance();
 		$button->setUrl($this->ctrl->getLinkTarget($this,self::CMD_FLUSH_CACHE));
@@ -95,6 +130,9 @@ abstract class xvmpGUI {
 	}
 
 
+	/**
+	 * @return mixed
+	 */
 	abstract protected function index();
 
 
