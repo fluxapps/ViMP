@@ -48,6 +48,8 @@ conf_embed_player#:#Embedded Videoplayer nutzen
 conf_embed_player_info#:#Wenn aktiviert, wird der eingebettete Videoplayer von ViMP genutzt. Wenn der Lernfortschritt für ein Objekt aktiviert ist, wird jedoch dennoch der Plugin-eigene Player verwendet, da der Lernfortschritt mit dem eingebetteten Player nicht gemessen werden kann.
 conf_text#:#Textfeld
 conf_checkbox#:#Checkbox
+conf_form_field_type_0#:#Textfeld
+conf_form_field_type_1#:#Checkbox
 conf_upload_limit#:#Upload Limit (MB)
 conf_upload_limit_info#:#Begrenzung der Dateigröße in MB. Geben Sie '0' ein, um keine Begrenzung festzulegen.
 msg_success#:#Änderungen erfolgreich gespeichert.

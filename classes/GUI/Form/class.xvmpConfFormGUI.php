@@ -131,8 +131,8 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input->addInput($subinput);
 		$subinput = new ilSelectInputGUI('', xvmpConf::F_FORM_FIELD_TYPE);
 		$subinput->setOptions(array(
-		    0 => $this->pl->confTxt(xvmpConf::F_FORM_FIELD_TYPE_0),
-		    1 => $this->pl->confTxt(xvmpConf::F_FORM_FIELD_TYPE_1)
+		    0 => $this->pl->confTxt('form_field_type_' . xvmpConf::F_FORM_FIELD_TYPE_TEXT),
+		    1 => $this->pl->confTxt('form_field_type_' . xvmpConf::F_FORM_FIELD_TYPE_CHECKBOX)
         ));
 		$input->addInput($subinput);
 		$this->addItem($input);
