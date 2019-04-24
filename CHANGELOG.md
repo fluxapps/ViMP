@@ -1,5 +1,8 @@
 # Changelog
 
+## [x.x.x]
+- Bugfix: videos deleted in vimp show msg "Transcoding"
+
 ## [1.0.3]
 - Bugfix: after changing owner of a video, it couldn't be changed a 2nd time
 - Bugfix: owner could not be changed if there's a required checkbox field
