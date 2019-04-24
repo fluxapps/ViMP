@@ -78,13 +78,14 @@ class xvmpContentGUI extends xvmpGUI {
 			$tpl->setVariable('TITLE', $video->getTitle());
 			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription(50)));
 
-			if ($video->getStatus() !== 'legal') {
-				$tpl->setCurrentBlock('info_transcoding');
-				$tpl->setVariable('INFO_TRANSCODING', $this->pl->txt('info_transcoding_short'));
-				$tpl->parseCurrentBlock();
-			}
-
 			if (!$video instanceof xvmpDeletedMedium) {
+
+				if ($video->getStatus() !== 'legal') {
+					$tpl->setCurrentBlock('info_transcoding');
+					$tpl->setVariable('INFO_TRANSCODING', $this->pl->txt('info_transcoding_short'));
+					$tpl->parseCurrentBlock();
+				}
+
 				$tpl->setVariable('LABEL_TITLE', $this->pl->txt( xvmpMedium::F_TITLE) . ':');
 				$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt(xvmpMedium::F_DESCRIPTION) . ':');
 				$tpl->setVariable('LABEL_DURATION', $this->pl->txt(xvmpMedium::F_DURATION) . ':');
