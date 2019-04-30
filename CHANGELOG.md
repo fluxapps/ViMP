@@ -2,6 +2,7 @@
 
 ## [x.x.x]
 - Bugfix: videos deleted in vimp show msg "Transcoding"
+- Bugfix when changing owner (mediapermission were lost)
 
 ## [1.0.3]
 - Bugfix: after changing owner of a video, it couldn't be changed a 2nd time
