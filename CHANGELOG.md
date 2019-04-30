@@ -1,6 +1,6 @@
 # Changelog
 
-## [x.x.x]
+## [1.0.4]
 - Bugfix: videos deleted in vimp show msg "Transcoding"
 - Bugfix when changing owner (mediapermission were lost)
 
