@@ -181,23 +181,25 @@ class xvmpUser extends xvmpObject {
 	 */
 	protected static function getMappedUsername(ilObjUser $ilObjUser) {
 		static $mapping;
-		if ($mapping) {
-			return $mapping;
+		if (isset($mapping[$ilObjUser->getId()])) {
+			return $mapping[$ilObjUser->getId()];
 		}
+
+		$mapping = is_array($mapping) ?: [];
 
 		if ($ilObjUser->getAuthMode(true) != AUTH_LOCAL) {
-			$mapping = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_EXTERNAL);
+			$mapping[$ilObjUser->getId()] = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_EXTERNAL);
 		} else {
-			$mapping = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_LOCAL);
+			$mapping[$ilObjUser->getId()] = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_LOCAL);
 		}
 
-		$mapping = str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping);
-		$mapping = str_replace('{UNIFR}', (substr($ilObjUser->getExternalAccount(),0,-13)), $mapping); //jh
-		$mapping = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping);
-		$mapping = str_replace('{EMAIL}', $ilObjUser->getEmail(), $mapping);
-		$mapping = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping);
+		$mapping[$ilObjUser->getId()] = str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping[$ilObjUser->getId()]);
+		$mapping[$ilObjUser->getId()] = str_replace('{UNIFR}', (substr($ilObjUser->getExternalAccount(),0,-13)), $mapping[$ilObjUser->getId()]); //jh
+		$mapping[$ilObjUser->getId()] = str_replace('{LOGIN}', $ilObjUser->getLogin(), $mapping[$ilObjUser->getId()]);
+		$mapping[$ilObjUser->getId()] = str_replace('{EMAIL}', $ilObjUser->getEmail(), $mapping[$ilObjUser->getId()]);
+		$mapping[$ilObjUser->getId()] = str_replace('{CLIENT_ID}', CLIENT_ID, $mapping[$ilObjUser->getId()]);
 
-		return $mapping;
+		return $mapping[$ilObjUser->getId()];
 	}
 
 
