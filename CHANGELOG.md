@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.5]
+- Bugfix: PageComponent in ILIAS learning module not working correctly
+- Bugfix: Possible Error when changing owner
+
 ## [1.0.4]
 - Bugfix: videos deleted in vimp show msg "Transcoding"
 - Bugfix when changing owner (mediapermission were lost)
