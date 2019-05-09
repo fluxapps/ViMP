@@ -51,7 +51,7 @@ class xvmpVideoPlayer {
      */
     public function __construct($video, $embed = false) {
 		global $DIC;
-		$tpl = $DIC['tpl'];
+		$tpl = $GLOBALS['tpl']; // necessary because of LM Bug
 		$this->ctrl = $DIC['ilCtrl'];
 		$this->tpl = $tpl;
 		$this->pl = ilViMPPlugin::getInstance();
@@ -66,8 +66,7 @@ class xvmpVideoPlayer {
      * @param $load_observer
      */
     public static function loadVideoJSAndCSS($load_observer) {
-		global $DIC;
-		$tpl = $DIC['tpl'];
+		$tpl = $GLOBALS['tpl']; // necessary because of LM Bug
 		if ($load_observer) {
 			$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/js/xvmp_observer.js');
 
