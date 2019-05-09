@@ -185,7 +185,7 @@ class xvmpUser extends xvmpObject {
 			return $mapping[$ilObjUser->getId()];
 		}
 
-		$mapping = is_array($mapping) ?: [];
+		$mapping = is_array($mapping) ? $mapping : [];
 
 		if ($ilObjUser->getAuthMode(true) != AUTH_LOCAL) {
 			$mapping[$ilObjUser->getId()] = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_EXTERNAL);
