@@ -312,6 +312,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 
 			// exception: object title is stored in lng_data, not in config table
 			if ($key == xvmpConf::F_OBJECT_TITLE) {
+				// obj
 				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
 				$existing = $this->db->fetchObject($sql);
 
@@ -333,6 +334,32 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 						'lang_key' => array('text', 'en'),
 						'module' => array('text', 'rep_robj_xvmp'),
 						'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
+						'value' => array('text', $value)
+					));
+				}
+
+				// objs
+				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_objs_xvmp"');
+				$existing = $this->db->fetchObject($sql);
+
+				if ($existing) {
+					$this->db->update('lng_data',array(
+						'value' => array('text', $value)
+					), array(
+						'module' => array('text', 'rep_robj_xvmp'),
+						'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
+					));
+				} else {
+					$this->db->insert('lng_data',array(
+						'lang_key' => array('text', 'de'),
+						'module' => array('text', 'rep_robj_xvmp'),
+						'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
+						'value' => array('text', $value)
+					));
+					$this->db->insert('lng_data',array(
+						'lang_key' => array('text', 'en'),
+						'module' => array('text', 'rep_robj_xvmp'),
+						'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
 						'value' => array('text', $value)
 					));
 				}
