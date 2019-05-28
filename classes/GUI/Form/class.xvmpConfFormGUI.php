@@ -74,6 +74,11 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 					<span id='xvmp_connection_status' style='margin-left: 5px'></span>");
 		$this->addItem($input);
 
+		// ignore ssl
+	    $input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_DISABLE_VERIFY_PEER), xvmpConf::F_DISABLE_VERIFY_PEER);
+	    $input->setInfo($this->pl->confTxt(xvmpConf::F_DISABLE_VERIFY_PEER . '_info'));
+	    $this->addItem($input);
+
 		// External User Mapping
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL), xvmpConf::F_USER_MAPPING_EXTERNAL);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL . '_info'));

@@ -52,6 +52,8 @@ conf_form_field_type_0#:#Textfeld
 conf_form_field_type_1#:#Checkbox
 conf_upload_limit#:#Upload Limit (MB)
 conf_upload_limit_info#:#Begrenzung der Dateigröße in MB. Geben Sie '0' ein, um keine Begrenzung festzulegen.
+conf_disable_verify_peer#:#Peer-Verifizierung deaktivieren
+conf_disable_verify_peer_info#:#Deaktiviert für die Kommunikation mit ViMP die Verifizierung des Zertifikat-Herstellers.
 msg_success#:#Änderungen erfolgreich gespeichert.
 selection#:#Auswahl
 all#:#Ja, alle

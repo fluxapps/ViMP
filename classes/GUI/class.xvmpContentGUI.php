@@ -137,7 +137,9 @@ class xvmpContentGUI extends xvmpGUI {
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		if (xvmpConf::getConfig(xvmpConf::F_DISABLE_VERIFY_PEER)) {
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		}
 		curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
 		curl_setopt($ch, CURLOPT_NOBODY, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

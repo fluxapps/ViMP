@@ -52,6 +52,8 @@ conf_form_field_type_0#:#Text Field
 conf_form_field_type_1#:#Checkbox
 conf_upload_limit#:#Upload Limit (MB)
 conf_upload_limit_info#:#Limit for the uploaded filesize in MB. Enter '0' for no limit.
+conf_disable_verify_peer#:#Disable Peer Verification
+conf_disable_verify_peer_info#:#Deactivates the verification of the SSL certificate owner when communicating with the ViMP server.
 msg_success#:#Changes saved successfully.
 selection#:#Selection
 all#:#Yes, all
