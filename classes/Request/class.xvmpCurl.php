@@ -94,6 +94,9 @@ class xvmpCurl {
         curl_setopt($ch, CURLOPT_COOKIESESSION, true);
         curl_setopt($ch, CURLOPT_COOKIEJAR, CLIENT_DATA_DIR . "/temp/vimp_cookie.txt");
         curl_setopt($ch, CURLOPT_COOKIEFILE, CLIENT_DATA_DIR . "/temp/vimp_cookie.txt");
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+
 
         $this->addHeader('X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR']);
         

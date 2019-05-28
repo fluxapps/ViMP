@@ -141,6 +141,7 @@ class xvmpContentGUI extends xvmpGUI {
 		curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
 		curl_setopt($ch, CURLOPT_NOBODY, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$info = curl_exec($ch);
 		$size2 = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 		header("Content-Type: video/mp4");
@@ -196,6 +197,7 @@ class xvmpContentGUI extends xvmpGUI {
 		curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
 		curl_setopt($ch, CURLOPT_NOBODY, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_exec($ch);
 		exit;
 //		echo $out;
