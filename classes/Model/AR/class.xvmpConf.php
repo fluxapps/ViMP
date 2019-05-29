@@ -19,6 +19,7 @@ class xvmpConf extends ActiveRecord {
 	const F_API_USER = 'api_user';
 	const F_API_PASSWORD = 'api_password';
 	const F_API_URL = 'api_url';
+	const F_DISABLE_VERIFY_PEER = 'disable_verify_peer';
 	const F_USER_MAPPING_EXTERNAL = 'user_mapping_ext';
 	const F_USER_MAPPING_LOCAL = 'user_mapping_local';
 
