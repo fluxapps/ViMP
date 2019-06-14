@@ -71,10 +71,12 @@ class xvmpVideoPlayer {
 			$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/js/xvmp_observer.js');
 
 		}
-		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-6.4.0/video.min.js');
-		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/videojs-contrib-hls/videojs-contrib-hls.min.js');
-		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-6.4.0/video-js.min.css');
 		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/video.css');
+
+                $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-7.5.4/video.js');
+                $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-7.5.4/videojs-contrib-quality-levels.js');
+                $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-7.5.4/videojs-hls-quality-selector.js');
+                $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/vendor/video-js-7.5.4/video-js.css');
 	}
 
     /**
@@ -89,51 +91,60 @@ class xvmpVideoPlayer {
 		$template = $this->pl->getTemplate('default/tpl.video.html');
 
 		$medium = $this->video->getMedium();
+		$isABRStream = false;
+
 		if (is_array($medium)) {
-			$medium = $medium[0];
+			if (xvmpRequest::config('adaptive_bitrate_streaming')->getResponseArray()['config']['value']) {
+				$isABRstream = true;
+				$medium = html_entity_decode(end($medium));
+				$medium = str_replace('mp4', 'smil', $medium);
+			}
+			else {
+				$medium = $medium[0];
+			}
 		}
 		$id = ilUtil::randomhash();
 
 		if (xvmp::ViMPVersionGreaterEquals('4.0.5')) {
 		    $pathinfo['extension'] = 'application/x-mpegURL';
 		    $medium = urldecode($medium);
-        } else {
-            $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
+	        } else {
+        	    $pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
 
-            $sources = xvmp::ViMPVersionEquals('4.0.4') ?
-                xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray() :
-                xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
+	            $sources = xvmp::ViMPVersionEquals('4.0.4') ?
+        	        xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray() :
+	                xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])->getResponseArray()['sources'];
 
-            if(!empty($sources))
-            {
-                $medium = xvmp::ViMPVersionEquals('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
-                $pathinfo['extension'] = 'application/x-mpegURL';
-            }
-        }
+        	    if(!empty($sources))
+	            {
+        	        $medium = xvmp::ViMPVersionEquals('4.0.4') ? base64_decode($sources[0][1]) : $sources[0][1];
+	                $pathinfo['extension'] = 'application/x-mpegURL';
+	            }
+        	}
 
-        $subtitles = $this->video->getField(xvmpMedium::F_SUBTITLES);
+	        $subtitles = $this->video->getField(xvmpMedium::F_SUBTITLES);
 
-        if($subtitles) {
-            foreach($subtitles as $lang => $url) {
-                $template->setCurrentBlock('captions');
-                $template->setVariable('CAPTION_LANG', $lang);
-		$template->setVariable('CAPTION_SOURCE', 'data:text/vtt;base64,' . base64_encode(xvmpRequest::getCaptions($url)->getResponseBody()));
-                $template->parseCurrentBlock();
-            }
-        }
+	        if($subtitles) {
+        	    foreach($subtitles as $lang => $url) {
+	                $template->setCurrentBlock('captions');
+	                $template->setVariable('CAPTION_LANG', $lang);
+			$template->setVariable('CAPTION_SOURCE', 'data:text/vtt;base64,' . base64_encode(xvmpRequest::getCaptions($url)->getResponseBody()));
+	                $template->parseCurrentBlock();
+	            }
+	        }
 
-       $chapters = json_decode(xvmpRequest::getChapters($this->video->getMediakey())->getResponseBody());
+	       $chapters = json_decode(xvmpRequest::getChapters($this->video->getMediakey())->getResponseBody());
 
-       if($chapters->chapters) {
-               $output = "WEBVTT \n\n";
-               foreach($chapters->chapters as $chapter) {
-                       $output .= gmdate("H:i:s", $chapter->time) . ".000 --> " . gmdate("H:i:s", $chapter->time) . ".000\n" . $chapter->title . "\n\n";
-               }
+	       if($chapters->chapters) {
+        	       $output = "WEBVTT \n\n";
+	               foreach($chapters->chapters as $chapter) {
+	                       $output .= gmdate("H:i:s", $chapter->time) . ".000 --> " . gmdate("H:i:s", $chapter->time) . ".000\n" . $chapter->title . "\n\n";
+	               }
 
-               $template->setCurrentBlock('chapters');
-               $template->setVariable('CHAPTER_SOURCE', 'data:text/vtt;base64,' . base64_encode($output));
-               $template->parseCurrentBlock();
-       }
+        	       $template->setCurrentBlock('chapters');
+	               $template->setVariable('CHAPTER_SOURCE', 'data:text/vtt;base64,' . base64_encode($output));
+	               $template->parseCurrentBlock();
+	       }
 
 
 		$template->setVariable('ID', $id);
@@ -152,8 +163,11 @@ class xvmpVideoPlayer {
 		}
 
 		$options = json_encode($this->options);
-		$videojs_script = "videojs('xvmp_video_{$id}', {$options}, function () { $('#xvmp_video_{$id}').on('contextmenu', function(e) { e.preventDefault(); });});";
+                $videojs_script = "var player = videojs('xvmp_video_{$id}', {$options}, function () { $('#xvmp_video_{$id}').on('contextmenu', function(e) { e.preventDefault(); });});";
 
+		if ($isABRstream) {
+			$videojs_script .= "player.hlsQualitySelector();";
+		}
 
 		$template->setCurrentBlock('script');
 		$template->setVariable('SCRIPT', $videojs_script);
