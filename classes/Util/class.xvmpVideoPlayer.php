@@ -76,9 +76,9 @@ class xvmpVideoPlayer {
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/node_modules/video.js/dist/video.min.js');
 		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/node_modules/video.js/dist/video-js.min.css');
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
-			. '/node_modules/videojs-contrib-quality-levels/videojs-contrib-quality-levels.min.js');
+			. '/node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js');
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
-			. '/node_modules/videojs-hls-quality-selector/videojs-hls-quality-selector.min.js');
+			. '/node_modules/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js');
 	}
 
 
