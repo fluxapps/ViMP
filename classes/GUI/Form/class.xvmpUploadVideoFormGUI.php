@@ -69,9 +69,9 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
 
 		// FILE
 		$input = new xvmpFileUploadInputGUI($this, xvmpOwnVideosGUI::CMD_CREATE, $this->lng->txt('file'), self::F_SOURCE_URL);
-		$response = xvmpRequest::config('upload_max_size')->getResponseArray();
-		if (isset($response['config']['value'])) {
-            $max_filesize_vimp = trim($response['config']['value'], "'");
+		$config = xvmpConfig::find('upload_max_size')->getValue();
+		if ($config !== null) {
+            $max_filesize_vimp = trim($config, "'");
         }
         $max_filesize_plugin = xvmpConf::getConfig(xvmpConf::F_UPLOAD_LIMIT);
 		if ($max_filesize_vimp || $max_filesize_plugin) {
@@ -92,9 +92,9 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
             'mpeg',
             'avi',
         );
-		$response = xvmpRequest::config('extension_whitelist_video')->getResponseArray();
-		if (isset($response['config']['value'])) {
-            $suffixes = eval('return ' . $response['config']['value'] . ';');
+		$config = xvmpConfig::find('extension_whitelist_video')->getValue();
+		if ($config !== null) {
+            $suffixes = eval('return ' . $config . ';');
         }
 		$input->setUrl($this->ctrl->getLinkTarget($this->parent_gui, xvmpOwnVideosGUI::CMD_UPLOAD_CHUNKS));
 		$input->setSuffixes($suffixes);

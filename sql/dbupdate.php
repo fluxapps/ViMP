@@ -96,3 +96,7 @@ xvmpConf::set(xvmpConf::F_CACHE_TTL_USERS, 0);
 xvmpConf::set(xvmpConf::F_CACHE_TTL_TOKEN, 0);
 xvmpConf::set(xvmpConf::F_CACHE_TTL_CATEGORIES, 86400);
 ?>
+<#6>
+<?php
+xvmpConf::set(xvmpConf::F_CACHE_TTL_CONFIG, 0);
+?>
