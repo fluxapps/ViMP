@@ -503,6 +503,7 @@ return array(
     'xvmpCacheFactory' => $baseDir . '/classes/Cache/class.xvmpCacheFactory.php',
     'xvmpCategory' => $baseDir . '/classes/Model/API/class.xvmpCategory.php',
     'xvmpChangeOwnerFormGUI' => $baseDir . '/classes/Util/class.xvmpChangeOwnerFormGUI.php',
+    'xvmpChapters' => $baseDir . '/classes/Model/API/class.xvmpChapters.php',
     'xvmpConf' => $baseDir . '/classes/Model/AR/class.xvmpConf.php',
     'xvmpConfFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpConfFormGUI.php',
     'xvmpConfig' => $baseDir . '/classes/Model/API/class.xvmpConfig.php',

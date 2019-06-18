@@ -23,8 +23,6 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
-		xvmpRequest::version();
-
 		xvmpVideoPlayer::loadVideoJSAndCSS(!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
 
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {

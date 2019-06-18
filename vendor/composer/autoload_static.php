@@ -514,6 +514,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpCacheFactory' => __DIR__ . '/../..' . '/classes/Cache/class.xvmpCacheFactory.php',
         'xvmpCategory' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpCategory.php',
         'xvmpChangeOwnerFormGUI' => __DIR__ . '/../..' . '/classes/Util/class.xvmpChangeOwnerFormGUI.php',
+        'xvmpChapters' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpChapters.php',
         'xvmpConf' => __DIR__ . '/../..' . '/classes/Model/AR/class.xvmpConf.php',
         'xvmpConfFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpConfFormGUI.php',
         'xvmpConfig' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpConfig.php',

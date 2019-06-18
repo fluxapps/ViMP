@@ -135,11 +135,11 @@ class xvmpVideoPlayer {
 			}
 		}
 
-		$chapters = json_decode(xvmpRequest::getChapters($this->video->getMediakey())->getResponseBody());
+		$chapters = xvmpChapters::find($this->video->getMediakey())->getChapters();
 
-		if ($chapters->chapters) {
+		if (is_array($chapters) && !empty($chapters)) {
 			$output = "WEBVTT \n\n";
-			foreach ($chapters->chapters as $chapter) {
+			foreach ($chapters as $chapter) {
 				$output .= gmdate("H:i:s", $chapter->time) . ".000 --> " . gmdate("H:i:s", $chapter->time) . ".000\n" . $chapter->title . "\n\n";
 			}
 
