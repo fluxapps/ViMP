@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.0]
+- Bugfix: Category Cache didn't work (should improve performance)
+- Library: VideoJS introduced via npm and upgraded to 7.5.5
+- Feature: Added quality level selector for adaptive streaming
+
 ## [1.0.5]
 - Bugfix: PageComponent in ILIAS learning module not working correctly
 - Bugfix: Possible Error when changing owner
