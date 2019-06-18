@@ -48,8 +48,8 @@ class xvmpCategory extends xvmpObject {
 
 		// response has the wrong keys -> format array
 		$cache_array = [];
-		foreach ($response as $key => $item) {
-		    $cache_array[($key == 'loaded' ? $key : $item['cid'])] = $item;
+		foreach ($response as $k => $item) {
+		    $cache_array[($k == 'loaded' ? $k : $item['cid'])] = $item;
         }
 
 		self::cache($key, $cache_array);
