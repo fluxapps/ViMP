@@ -36,7 +36,8 @@ class xvmpVideoPlayer {
 		"autoplay" => false,
 		"preload" => "auto",
 		"fluid" => true,
-		"playbackRates" => [ 0.5, 1.0, 1.25, 1.5 ]
+		"playbackRates" => [ 0.5, 1.0, 1.25, 1.5 ],
+		"plugins" => [ "httpSourceSelector" => [ "default" => "auto"] ]
 	);
 	protected static $count = 1;
 
@@ -78,7 +79,7 @@ class xvmpVideoPlayer {
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
 			. '/node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js');
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
-			. '/node_modules/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js');
+			. '/node_modules/videojs-http-source-selector/dist/videojs-http-source-selector.min.js');
 	}
 
 
@@ -167,7 +168,7 @@ class xvmpVideoPlayer {
 		$videojs_script = "var player = videojs('xvmp_video_{$id}', {$options}, function () { $('#xvmp_video_{$id}').on('contextmenu', function(e) { e.preventDefault(); });});";
 
 		if ($isABRStream) {
-			$videojs_script .= "player.hlsQualitySelector();";
+			$videojs_script .= "player.httpSourceSelector();";
 		}
 
 		$template->setCurrentBlock('script');
