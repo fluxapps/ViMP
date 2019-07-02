@@ -232,6 +232,11 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_TOKEN . '_info'));
 		$this->addItem($input);
 
+		// Config TTL
+		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CONFIG), xvmpConf::F_CACHE_TTL_CONFIG);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CONFIG . '_info'));
+		$this->addItem($input);
+
 
 		// Buttons
 		$this->addCommandButton(ilViMPConfigGUI::CMD_UPDATE,$this->lng->txt('save'));

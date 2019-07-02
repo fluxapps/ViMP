@@ -63,13 +63,33 @@ class xvmp {
 
 
 	/**
+	 * @return bool|mixed|string|null
+	 */
+	public static function getViMPVersion() {
+		$key = 'version';
+		$existing = xvmpCacheFactory::getInstance()->get($key);
+		if ($existing) {
+			xvmpCurlLog::getInstance()->write('CACHE: used cached: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
+			return $existing;
+		}
+
+		$response = xvmpRequest::version()->getResponseArray()['info']['version'];
+		$vimp_version = substr($response, 0, strpos($response, ' '));
+
+		xvmpCurlLog::getInstance()->write('CACHE: added to cache: ' . $key, xvmpCurlLog::DEBUG_LEVEL_1);
+		xvmpCacheFactory::getInstance()->set($key, $vimp_version, 0);
+
+		return $vimp_version;
+	}
+
+
+	/**
 	 * @param $version
 	 *
 	 * @return mixed
 	 */
 	public static function ViMPVersionEquals($version) {
-		$response = xvmpRequest::version()->getResponseArray()['info']['version'];
-		$vimp_version = substr($response, 0, strpos($response, ' '));
+		$vimp_version = self::getViMPVersion();
 
 		return version_compare($vimp_version, $version, '=');
 	}
@@ -82,8 +102,7 @@ class xvmp {
 	 * @return mixed
 	 */
 	public static function ViMPVersionGreaterEquals($version) {
-		$response = xvmpRequest::version()->getResponseArray()['info']['version'];
-		$vimp_version = substr($response, 0, strpos($response, ' '));
+		$vimp_version = self::getViMPVersion();
 
 		return version_compare($vimp_version, $version, '>=');
 	}

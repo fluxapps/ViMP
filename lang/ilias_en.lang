@@ -42,6 +42,8 @@ conf_cache_ttl_categories#:#TTL Categories
 conf_cache_ttl_categories_info#:#Time-To-Live in seconds
 conf_cache_ttl_token#:#TTL Token
 conf_cache_ttl_token_info#:#Time-To-Live in seconds
+conf_cache_ttl_config#:#TTL Config
+conf_cache_ttl_config_info#:#Time-To-Live in seconds
 conf_cache#:#Caching
 conf_cache_info#:#Objects are cached to improve performance. After the TTL of an object is expired, it will be removed and reloaded (if TTL = 0, the object will not be removed automatically). Flush the whole cache with the button on top of this form or flush only the video cache inside a ViMP Object.
 conf_embed_player#:#Embedded Video Player

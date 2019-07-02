@@ -37,6 +37,7 @@ class xvmpConf extends ActiveRecord {
 	const F_CACHE_TTL_USERS = 'cache_ttl_users';
 	const F_CACHE_TTL_CATEGORIES = 'cache_ttl_categories';
 	const F_CACHE_TTL_TOKEN = 'cache_ttl_token';
+	const F_CACHE_TTL_CONFIG = 'cache_ttl_config';
 	const F_FILTER_FIELDS = 'filter_fields';
 	const F_FILTER_FIELD_ID = 'filter_id';
 	const F_FILTER_FIELD_TITLE = 'filter_title';

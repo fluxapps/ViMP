@@ -44,7 +44,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	/**
 	 * xvmpOwnVideosTableGUI constructor.
 	 *
-	 * @param     $ parent_gui
+	 * @param     $parent_gui
 	 * @param string $parent_cmd
 	 */
 	public function __construct($parent_gui, $parent_cmd) {

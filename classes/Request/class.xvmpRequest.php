@@ -25,8 +25,8 @@ class xvmpRequest {
 	const GET_USER_MEDIA = 'getUserMedia';
 	const EXTENDED_SEARCH = 'extendedSearch';
 	const GET_PICTURE = 'getPicture';
-        const GET_VIDEOSOURCES = '../media/ajax';
-        const GET_CHAPTERS = '../webplayer/getchapters/key/';
+    const GET_VIDEOSOURCES = '../media/ajax';
+    const GET_CHAPTERS = '../webplayer/getchapters/key/';
     const CONFIG = 'config';
 
 	/**

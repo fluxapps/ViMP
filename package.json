@@ -1,0 +1,22 @@
+{
+  "name": "srag.plugins.vimp",
+  "description": "",
+  "keywords": [
+    "ILIAS",
+    "Plugin",
+    "ViMP"
+  ],
+  "license": "GPL-3.0-only",
+  "contributors": [
+    "srag <support-custom1@studer-raimann.ch> (https://studer-raimann.ch)"
+  ],
+  "bugs": {
+    "url": "https://plugins.studer-raimann.ch/goto.php?target=uihk_srsu_PLVIMP"
+  },
+  "private": true,
+  "dependencies": {
+    "video.js": "^7.5.5",
+    "videojs-contrib-quality-levels": "^2.0.9",
+    "videojs-http-source-selector": "^1.1.5"
+  }
+}
