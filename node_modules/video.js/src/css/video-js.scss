@@ -2,7 +2,7 @@
 @import "private-variables";
 @import "utilities";
 
-@import "node_modules/videojs-font/scss/icons";
+@import "../../node_modules/videojs-font/scss/icons";
 
 @import "components/layout";
 @import "components/big-play";
@@ -28,6 +28,7 @@
 @import "components/time";
 @import "components/play-pause";
 @import "components/text-track";
+@import "components/picture-in-picture";
 @import "components/fullscreen";
 @import "components/playback-rate";
 @import "components/error";
