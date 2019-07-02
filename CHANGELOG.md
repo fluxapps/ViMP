@@ -3,10 +3,11 @@
 ## [1.1.0]
 - Bugfix: Category Cache didn't work (should improve performance)
 - Library: VideoJS included via npm now and upgraded to 7.5.5
-- Feature: Added quality level selector for adaptive streaming
+- Feature: Added videojs-http-source-selector for adaptive streaming
 - Improvement: Configs will be cached now (should improve performance)
 - Improvement: Chapters will be cached now (should improve performance)
 - Improvement: Version will be cached now (should improve performance)
+- Improvement: changed button for showing own videos
 
 ## [1.0.5]
 - Bugfix: PageComponent in ILIAS learning module not working correctly
