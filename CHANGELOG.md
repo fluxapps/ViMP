@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.0]
+- Feature: Support for ILIAS Version 5.4.x
+- Change: Dropped support for ILIAS Version 5.2.x
+- Feature: Config for CURL setting 'DISABLE_VERIFY_PEER'
+
 ## [1.1.0]
 - Bugfix: Category Cache didn't work (should improve performance)
 - Library: VideoJS included via npm now and upgraded to 7.5.5
