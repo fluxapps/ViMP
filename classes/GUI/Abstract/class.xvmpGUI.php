@@ -205,7 +205,7 @@ abstract class xvmpGUI {
 				$video_infos .= "<p>{$field[xvmpConf::F_FORM_FIELD_TITLE]}: {$value}</p>";
 			}
 		}
-		$video_infos .= "<p class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</p>";
+		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</div>";
 
 		$response = new stdClass();
 		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
