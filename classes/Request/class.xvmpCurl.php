@@ -95,6 +95,8 @@ class xvmpCurl {
         curl_setopt($ch, CURLOPT_COOKIEJAR, CLIENT_DATA_DIR . "/temp/vimp_cookie.txt");
         curl_setopt($ch, CURLOPT_COOKIEFILE, CLIENT_DATA_DIR . "/temp/vimp_cookie.txt");
 
+
+
         $this->addHeader('X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR']);
         
 		$this->prepare($ch);
@@ -592,15 +594,7 @@ class xvmpCurl {
 	 * @return bool
 	 */
 	public static function isVerifyPeer() {
-		return self::$verify_peer;
-	}
-
-
-	/**
-	 * @param bool $verify_peer
-	 */
-	public static function setVerifyPeer($verify_peer) {
-		self::$verify_peer = $verify_peer;
+		return !xvmpConf::getConfig(xvmpConf::F_DISABLE_VERIFY_PEER);
 	}
 
 

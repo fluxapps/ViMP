@@ -74,6 +74,11 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 					<span id='xvmp_connection_status' style='margin-left: 5px'></span>");
 		$this->addItem($input);
 
+		// ignore ssl
+	    $input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_DISABLE_VERIFY_PEER), xvmpConf::F_DISABLE_VERIFY_PEER);
+	    $input->setInfo($this->pl->confTxt(xvmpConf::F_DISABLE_VERIFY_PEER . '_info'));
+	    $this->addItem($input);
+
 		// External User Mapping
 		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL), xvmpConf::F_USER_MAPPING_EXTERNAL);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL . '_info'));
@@ -312,6 +317,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 
 			// exception: object title is stored in lng_data, not in config table
 			if ($key == xvmpConf::F_OBJECT_TITLE) {
+				// obj
 				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
 				$existing = $this->db->fetchObject($sql);
 
@@ -333,6 +339,32 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 						'lang_key' => array('text', 'en'),
 						'module' => array('text', 'rep_robj_xvmp'),
 						'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
+						'value' => array('text', $value)
+					));
+				}
+
+				// objs
+				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_objs_xvmp"');
+				$existing = $this->db->fetchObject($sql);
+
+				if ($existing) {
+					$this->db->update('lng_data',array(
+						'value' => array('text', $value)
+					), array(
+						'module' => array('text', 'rep_robj_xvmp'),
+						'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
+					));
+				} else {
+					$this->db->insert('lng_data',array(
+						'lang_key' => array('text', 'de'),
+						'module' => array('text', 'rep_robj_xvmp'),
+						'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
+						'value' => array('text', $value)
+					));
+					$this->db->insert('lng_data',array(
+						'lang_key' => array('text', 'en'),
+						'module' => array('text', 'rep_robj_xvmp'),
+						'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
 						'value' => array('text', $value)
 					));
 				}
