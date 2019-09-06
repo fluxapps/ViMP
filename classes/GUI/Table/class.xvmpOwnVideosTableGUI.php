@@ -205,9 +205,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$this->tpl->setVariable('VAL_VISIBLE', (int) $transcoded);
 
 
-        foreach ($this->available_columns as $title => $props)
-		{
-		    if ($title == 'thumbnail') {
+        foreach ($this->available_columns as $title => $props) {
+            if ($title == 'thumbnail') {
                 if ($transcoded) {
                     $this->tpl->setCurrentBlock('transcoded');
                 } else {
@@ -215,6 +214,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
                 }
                 $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
                 $this->tpl->parseCurrentBlock();
+            } elseif ($title == 'published') {
+                $this->tpl->setVariable('VAL_' . strtoupper($title),  $this->pl->txt($a_set[$title]));
             } else {
                 $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
             }
