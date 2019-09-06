@@ -310,8 +310,8 @@ class xvmpMedium extends xvmpObject {
 	 * some attributes have to be formatted to fill the form correctly
 	 */
 	public static function formatResponse($response) {
-		$response['duration_formatted'] = sprintf('%02d:%02d', ($response['duration']/60%60), $response['duration']%60);
-		$response['description'] = strip_tags($response['description']);
+        $response['duration_formatted'] = gmdate("H:i:s", $response['duration']);
+        $response['description'] = strip_tags(html_entity_decode($response['description']));
 
 		if (is_array($response['mediapermissions']['rid'])) {
 			$response['mediapermissions'] = $response['mediapermissions']['rid'];

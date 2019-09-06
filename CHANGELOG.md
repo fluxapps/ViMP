@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.1]
+- Bugfix: missing lang var for 'published' in own videos table
+- Bugfix: video length >1h didn't show the hours
+- Bugfix: HTML in video description showed tags
+
 ## [1.2.0]
 - Feature: Support for ILIAS Version 5.4.x
 - Change: Dropped support for ILIAS Version 5.2.x
