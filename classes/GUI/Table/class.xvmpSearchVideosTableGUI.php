@@ -134,7 +134,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		}
 		
 		$current_user = xvmpUser::getOrCreateVimpUser($this->user);
-		if (!in_array(xvmpUserRoles::ROLE_ADMINISTRATOR, $current_user->getRoles())) {  // don't check roles for admins
+		if (!in_array(xvmpUserRoles::ROLE_ADMINISTRATOR, array_keys($current_user->getRoles()))) {  // don't check roles for admins
             $filter['mediapermissions'] = xvmpUserRoles::ROLE_ANONYMOUS . ',' . implode(',', array_keys($current_user->getRoles()));  //PLVIMP-37
         }
 		$data = array_filter(xvmpMedium::getFilteredAsArray($filter));
