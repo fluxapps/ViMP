@@ -293,8 +293,14 @@ class xvmpRequest {
 	 */
 	public static function extendedSearch($params) {
 		$xvmpCurl = new xvmpCurl(self::EXTENDED_SEARCH);
-
-//		$xvmpCurl->addPostField('token', xvmp::getToken()); // mit token wird das feld userid ignoriert
+		
+		if (!isset($params['userid'])) {
+            $xvmpCurl->addPostField('token', xvmp::getToken()); // with a token, the field userid is ignored by ViMP
+        } else {
+            // vimp sets a session id when logging in the api user - this session expires though, that's why we need to reload the token/session here
+            xvmpCacheFactory::getInstance()->delete(xvmp::TOKEN);
+            xvmp::getToken();
+        }
 		$xvmpCurl->addPostField('hidden', 'true');
 		foreach ($params as $name => $value) {
 			$xvmpCurl->addPostField($name, $value);
