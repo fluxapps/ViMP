@@ -8,6 +8,9 @@
  */
 class xvmpUserRoles extends xvmpObject {
 
+    const ROLE_ANONYMOUS = 0;
+    const ROLE_ADMINISTRATOR = 1;
+
 	/**
 	 * @inheritdoc
 	 */
