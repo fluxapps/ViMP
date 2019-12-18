@@ -42,6 +42,14 @@ class xvmpUploadedMedia extends ActiveRecord {
 	 * @db_length           8
 	 */
 	protected $user_id;
+    /**
+     * @var int
+     *
+     * @db_has_field        true
+     * @db_fieldtype        integer
+     * @db_length           8
+     */
+	protected $ref_id;
 	/**
 	 * @var int
 	 *
@@ -91,6 +99,24 @@ class xvmpUploadedMedia extends ActiveRecord {
 	public function setTmpId($tmp_id) {
 		$this->tmp_id = $tmp_id;
 	}
+
+
+    /**
+     * @return int
+     */
+    public function getRefId() : int
+    {
+        return $this->ref_id;
+    }
+
+
+    /**
+     * @param int $ref_id
+     */
+    public function setRefId(int $ref_id)
+    {
+        $this->ref_id = $ref_id;
+    }
 
 
 	/**

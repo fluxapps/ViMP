@@ -207,6 +207,10 @@ abstract class xvmpGUI {
 		}
 		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</div>";
 
+		$perm_link = (new ilPermanentLinkGUI($this->getObject()->getType(), $this->getObject()->getRefId(), '_' . $video->getMid()));
+		$perm_link->setIncludePermanentLinkText(false);
+        $video_infos .= $perm_link->getHTML();
+
 		$response = new stdClass();
 		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
 			$video_player_html = (new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId(), $video)))->getHTML();

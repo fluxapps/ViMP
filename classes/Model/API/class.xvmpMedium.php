@@ -277,6 +277,7 @@ class xvmpMedium extends xvmpObject {
 		$ilUser = $DIC['ilUser'];
 		$response = xvmpRequest::uploadMedium($video);
 		$medium = $response->getResponseArray()['medium'];
+		$ref_id = array_shift(ilObject::_getAllReferences($obj_id));
 
 		if ($add_automatically) {
 			xvmpSelectedMedia::addVideo($medium['mid'], $obj_id, false);
@@ -288,6 +289,7 @@ class xvmpMedium extends xvmpObject {
 		$uploaded_media->setEmail($ilUser->getEmail());
 		$uploaded_media->setUserId($ilUser->getId());
 		$uploaded_media->setTmpId($tmp_id);
+		$uploaded_media->setRefId($ref_id);
 		$uploaded_media->create();
 
 		return $medium;
