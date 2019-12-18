@@ -29,11 +29,11 @@ conf_general_settings#:#General
 conf_notification_subject#:#Subject (transcoding successful)
 conf_notification_subject_info#:#Subject of the email sent when a video has been transcoded successfully.
 conf_notification_body#:#Message (transcoding successful)
-conf_notification_body_info#:#Content of the email sent when a video has been transcoded successfully.
+conf_notification_body_info#:#Content of the email sent when a video has been transcoded successfully. Usable placeholders:<br>&#123FIRSTNAME}<br>&#123LASTNAME}<br>&#123TITLE}<br>&#123DESCRIPTION}<br>&#123VIDEO_LINK}
 conf_notification_subject_failed#:#Subject (transcoding failed)
 conf_notification_subject_failed_info#:#Subject of the email sent when an error occured during transcoding.
 conf_notification_body_failed#:#Message (transcoding failed)
-conf_notification_body_failed_info#:#Content of the email sent when an error occured during transcoding.
+conf_notification_body_failed_info#:#Content of the email sent when an error occured during transcoding. Usable placeholders:<br>&#123FIRSTNAME}<br>&#123LASTNAME}<br>&#123TITLE}<br>&#123DESCRIPTION}<br>&#123VIDEO_LINK}
 conf_cache_ttl_videos#:#TTL Videos (Metadata)
 conf_cache_ttl_videos_info#:#Time-To-Live in seconds
 conf_cache_ttl_users#:#TTL Vimp Users

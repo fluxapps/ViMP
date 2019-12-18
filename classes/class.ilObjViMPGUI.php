@@ -1,5 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+use ILIAS\DI\Container;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
@@ -13,6 +16,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class ilObjViMPGUI extends ilObjectPluginGUI {
 
 	const CMD_SHOW_CONTENT = 'showContent';
+	const CMD_PLAY_VIDEO = 'playVideo';
 	const CMD_SEARCH_VIDEOS = 'searchVideos';
 	const CMD_SEARCH_USER_AJAX = 'searchUserAjax';
 
@@ -23,8 +27,9 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	const TAB_LOG = 'log';
 	const TAB_SETTINGS = 'settings';
 	const TAB_PERMISSION = 'permissions';
-
-	/**
+    const GET_REF_ID = 'ref_id';
+    const GET_VIDEO_ID = 'mid';
+    /**
 	 * @var ilViMPPlugin
 	 */
 	protected $pl;
@@ -32,6 +37,10 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 * @var ilObjViMP
 	 */
 	protected $obj;
+    /**
+     * @var Container
+     */
+	protected $dic;
 
 
 	/**
@@ -42,6 +51,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 * @param int $a_parent_node_id
 	 */
 	public function __construct($a_ref_id = 0, $a_id_type = self::REPOSITORY_NODE_ID, $a_parent_node_id = 0) {
+	    global $DIC;
+	    $this->dic = $DIC;
 		parent::__construct($a_ref_id, $a_id_type, $a_parent_node_id);
 		$this->pl = ilViMPPlugin::getInstance();
 	}
@@ -244,9 +255,6 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 * @return bool
 	 */
 	protected function setTabs() {
-		global $DIC;
-		$lng = $DIC['lng'];
-
 		$this->tabs_gui->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xvmpContentGUI::class, xvmpContentGUI::CMD_STANDARD));
 		$this->tabs_gui->addTab(self::TAB_INFO, $this->pl->txt(self::TAB_INFO), $this->ctrl->getLinkTargetByClass(ilInfoScreenGUI::class));
 
@@ -271,7 +279,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 
 
 		if ($this->checkPermissionBool("edit_permission")) {
-			$this->tabs_gui->addTab("perm_settings", $lng->txt("perm_settings"), $this->ctrl->getLinkTargetByClass(array(
+			$this->tabs_gui->addTab("perm_settings", $this->dic->language()->txt("perm_settings"), $this->ctrl->getLinkTargetByClass(array(
 				get_class($this),
 				"ilpermissiongui",
 			), "perm"));
@@ -281,7 +289,26 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	}
 
 
-	/**
+    /**
+     * @param $a_target
+     */
+    public static function _goto($a_target)
+    {
+        global $DIC;
+        $id = explode("_", $a_target[0]);
+
+        $_GET['baseClass'] = ilObjPluginDispatchGUI::class;
+        $DIC->ctrl()->setParameterByClass(xvmpContentGUI::class, self::GET_REF_ID, $id[0]);
+
+        if (isset($id[1])) {
+            $DIC->ctrl()->setParameterByClass(xvmpContentGUI::class, self::GET_VIDEO_ID, $id[1]);
+            $DIC->ctrl()->redirectByClass([ilObjPluginDispatchGUI::class, self::class, xvmpContentGUI::class], xvmpContentGUI::CMD_PLAY_VIDEO);
+        }
+        parent::_goto($a_target);
+    }
+
+
+    /**
 	 * called by the button to test connection inside the plugin config
 	 */
 	public function testConnectionAjax() {

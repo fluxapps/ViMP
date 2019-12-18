@@ -29,11 +29,11 @@ conf_general_settings#:#Allgemein
 conf_notification_subject#:#Betreff (Transk. Erfolgreich)
 conf_notification_subject_info#:#Betreff der Email, welche nach erfolgreicher Transkodierung an den Benutzer verschickt wird.
 conf_notification_body#:#Nachricht (Transk. Erfolgreich)
-conf_notification_body_info#:#Inhalt der Email, welche nach erfolgreicher Transkodierung an den Benutzer verschickt wird.
+conf_notification_body_info#:#Inhalt der Email, welche nach erfolgreicher Transkodierung an den Benutzer verschickt wird. Verwendbare Platzhalter:<br>&#123FIRSTNAME}<br>&#123LASTNAME}<br>&#123TITLE}<br>&#123DESCRIPTION}<br>&#123VIDEO_LINK}
 conf_notification_subject_failed#:#Betreff (Transk. Fehlgeschlagen)
 conf_notification_subject_failed_info#:#Betreff der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird.
 conf_notification_body_failed#:#Nachricht (Transk. Fehlgeschlagen)
-conf_notification_body_failed_info#:#Inhalt der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird.
+conf_notification_body_failed_info#:#Inhalt der Email, welche nach fehlgeschlagener Transkodierung an den Benutzer verschickt wird. Verwendbare Platzhalter:<br>&#123FIRSTNAME}<br>&#123LASTNAME}<br>&#123TITLE}<br>&#123DESCRIPTION}<br>&#123VIDEO_LINK}
 conf_cache_ttl_videos#:#TTL Videos (Metadaten)
 conf_cache_ttl_videos_info#:#Time-To-Live in Sekunden
 conf_cache_ttl_users#:#TTL Vimp-Benutzerdaten

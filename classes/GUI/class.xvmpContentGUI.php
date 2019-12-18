@@ -18,8 +18,11 @@ class xvmpContentGUI extends xvmpGUI {
 	const CMD_RENDER_ITEM = 'renderItem';
 	const CMD_RENDER_TILE_SMALL = 'renderTileSmall';
 	const CMD_DELIVER_VIDEO = 'deliverVideo';
+	const CMD_PLAY_VIDEO = 'playVideo';
+    const GET_TEMPLATE = 'tpl';
 
-	/**
+
+    /**
 	 *
 	 */
 	protected function index() {
@@ -61,12 +64,23 @@ class xvmpContentGUI extends xvmpGUI {
 	}
 
 
+    /**
+     * used for goto link
+     */
+	public function playVideo() {
+	    $mid = filter_input(INPUT_GET, ilObjViMPGUI::GET_VIDEO_ID, FILTER_SANITIZE_NUMBER_INT);
+	    if ($mid) {
+	        $this->tpl->addOnLoadCode('VimpContent.playVideo(' . $mid . ');');
+        }
+        $this->index();
+    }
+
 	/**
 	 * ajax
 	 */
 	public function renderItem() {
-		$mid = $_GET['mid'];
-		$template = $_GET['tpl'];
+        $mid = filter_input(INPUT_GET, ilObjViMPGUI::GET_VIDEO_ID, FILTER_SANITIZE_NUMBER_INT);
+        $template = filter_input(INPUT_GET, self::GET_TEMPLATE, FILTER_SANITIZE_STRING);
 		try {
 			$video = xvmpMedium::find($mid);
 			$tpl = new ilTemplate("tpl.content_{$template}.html", true, true, $this->pl->getDirectory());

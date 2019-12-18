@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3.0]
+- Feature: Deep Links for Videos
+- Feature: show deep link in video and notification
+- Feature: link thumbnail in repository preview to video
+
 ## [1.2.1]
 - Bugfix: missing lang var for 'published' in own videos table
 - Bugfix: video length >1h didn't show the hours

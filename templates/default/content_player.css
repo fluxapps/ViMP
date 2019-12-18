@@ -1,3 +1,8 @@
+div#xvmp_video_infos .ilPermalinkContainer {
+	width: inherit;
+	margin-top: 10px;
+}
+
 div#xvmp_video_container {
 	/*margin: auto;*/
 	width: 70%;
