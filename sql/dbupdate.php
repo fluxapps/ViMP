@@ -80,6 +80,7 @@ die Transkodierung eines von Ihnen hochgeladenen Videos wurde abgeschlossen:
 
 Titel: {TITLE}
 Beschreibung: {DESCRIPTION}
+Link zum Video: {VIDEO_LINK}
 
 Das Video kann nun in ILIAS verwendet werden.');
 xvmpConf::set(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED, 'Transkodierung fehlgeschlagen');
