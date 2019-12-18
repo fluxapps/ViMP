@@ -104,7 +104,11 @@ class xvmpContentPlayerGUI {
 				$player_tpl->setVariable('VALUE', $this->pl->txt('watched') . ': ' . xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
 				$player_tpl->parseCurrentBlock();
 			}
-		}
+
+			$perm_link = (new ilPermanentLinkGUI($this->parent_gui->getObject()->getType(), $this->parent_gui->getObject()->getRefId(), '_' . $video->getMid()));
+			$perm_link->setIncludePermanentLinkText(false);
+            $player_tpl->setVariable('PERMANENT_LINK', $perm_link->getHTML());
+        }
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
 		$json_array = array();

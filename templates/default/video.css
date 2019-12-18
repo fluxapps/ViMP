@@ -9,3 +9,7 @@ div.xvmp_embed_wrapper iframe {
 div#xvmp_video_container iframe{
 	background: white url('../images/spinner.gif') center no-repeat;
 }
+
+div#xvmp_video_container div.ilPermalinkContainer {
+	margin-top: 21px;
+}

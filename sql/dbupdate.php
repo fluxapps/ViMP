@@ -100,3 +100,7 @@ xvmpConf::set(xvmpConf::F_CACHE_TTL_CATEGORIES, 86400);
 <?php
 xvmpConf::set(xvmpConf::F_CACHE_TTL_CONFIG, 0);
 ?>
+<#7>
+<?php
+xvmpUploadedMedia::updateDB();
+?>

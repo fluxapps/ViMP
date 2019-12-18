@@ -109,8 +109,15 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 		foreach ($selected_videos as $selected) {
 			try {
 				$video = xvmpMedium::getObjectAsArray($selected->getMid());
+                $deep_link = ilLink::_getStaticLink(
+                    $this->ref_id,
+                    'xvmp',
+                    true,
+                    '_' . $video['mid']
+                );
+				$preview .= '<a href="' . $deep_link . '">';
 				$preview .= '<img style="margin-right:10px;" height=108px width=170px src="' . $video['thumbnail'] . "&size=170x108" . '">';
-				// TODO: play icon overlay
+				$preview .= '</a>';
 			} catch (xvmpException $e) {
 //				if ($e->getCode() == 404) {
 //					return $this->getVideoPreview($count + 1);
