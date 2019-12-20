@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.1]
+- Bugfix: Check ViMP version for adaptive bitrate streaming
+
 ## [1.3.0]
 - Feature: Deep Links for Videos
 - Feature: show deep link in video and notification
