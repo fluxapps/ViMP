@@ -295,6 +295,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
     public static function _goto($a_target)
     {
         global $DIC;
+        $DIC->ctrl()->setTargetScript('ilias.php');
         $id = explode("_", $a_target[0]);
 
         $_GET['baseClass'] = ilObjPluginDispatchGUI::class;
