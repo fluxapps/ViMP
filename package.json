@@ -17,6 +17,7 @@
   "dependencies": {
     "video.js": "^7.5.5",
     "videojs-contrib-quality-levels": "^2.0.9",
-    "videojs-http-source-selector": "^1.1.5"
+    "videojs-http-source-selector": "^1.1.5",
+    "videojs-vr": "^1.7.1"
   }
 }
