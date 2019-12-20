@@ -150,12 +150,12 @@ abstract class xvmpTableGUI extends ilTable2GUI {
                 return implode(', ', $value);
             case 'description':
                 if (strlen($value) > 95) {
-                    $value = substr($value, 0, 90) . '...';
+                    $value = mb_substr($value, 0, 90) . '...';
                 }
                 return $value;
             case 'title':
                 if (strlen($value) > 45) {
-                    $value = substr($value, 0, 90) . '...';
+                    $value = mb_substr($value, 0, 90) . '...';
                 }
                 return $value;
             default:
