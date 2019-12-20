@@ -98,7 +98,7 @@ class xvmpVideoPlayer {
 		$isABRStream = false;
 
 		if (is_array($medium)) {
-			if (xvmpConfig::find('adaptive_bitrate_streaming')->getValue()) {
+			if (xvmp::ViMPVersionGreaterEquals('4.1.0') && xvmpConfig::find('adaptive_bitrate_streaming')->getValue()) {
 				$isABRStream = true;
 				$medium = html_entity_decode(end($medium));
 				$medium = str_replace('mp4', 'smil', $medium);
