@@ -4,6 +4,7 @@
 - Bugfix: Check ViMP version for adaptive bitrate streaming
 - Bugfix: Umlauts failed in shortened descriptions
 - Bugfix: missing import in cronjob
+- Bugfix: deep links didn't work for ilias 5.3
 
 ## [1.3.0]
 - Feature: Deep Links for Videos
