@@ -50,10 +50,11 @@ class xvmpCron {
 
 	public function initILIAS() {
 		chdir(substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], '/Customizing')));
-		require_once('include/inc.ilias_version.php');
-		require_once('Services/Component/classes/class.ilComponent.php');
+		require_once 'include/inc.ilias_version.php';
+		require_once 'Services/Component/classes/class.ilComponent.php';
 		require_once './Services/Cron/classes/class.ilCronStartUp.php';
-
+		require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/class.xvmp.php';
+		
 		$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
 		if (!xvmp::is54()) {
 		    $ilCronStartup->initIlias();
