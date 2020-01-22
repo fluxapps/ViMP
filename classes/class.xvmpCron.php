@@ -54,7 +54,7 @@ class xvmpCron {
 		require_once 'Services/Component/classes/class.ilComponent.php';
 		require_once './Services/Cron/classes/class.ilCronStartUp.php';
 		require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/class.xvmp.php';
-		
+
 		$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
 		if (!xvmp::is54()) {
 		    $ilCronStartup->initIlias();
@@ -80,7 +80,7 @@ class xvmpCron {
     protected function buildHTTPPath()
     {
         global $DIC;
-        define('ILIAS_HTTP_PATH', $DIC->iliasIni()->readVariable('server', 'http_path'));
+        define('ILIAS_HTTP_PATH', $DIC['ilIliasIniFile']->readVariable('server', 'http_path'));
     }
 
 
@@ -118,7 +118,7 @@ class xvmpCron {
                         default:
                             $uploaded_medium->delete();
                     }
-				
+
 			} catch (xvmpException $e) {
 				if ($e->getCode() == 404 && strpos($e->getMessage(), "Medium not exist") !== false) {
 					$uploaded_medium->delete();
