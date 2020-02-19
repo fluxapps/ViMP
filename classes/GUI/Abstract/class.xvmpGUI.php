@@ -176,17 +176,45 @@ abstract class xvmpGUI {
 		$modal = ilModalGUI::getInstance();
 		$modal->setId('xvmp_modal_player');
 		$modal->setType(ilModalGUI::TYPE_LARGE);
-//		$modal->setHeading('<div id="xoct_waiter_modal" class="xoct_waiter xoct_waiter_mini"></div>');
-		$modal->setBody('<section><div id="xvmp_video_container"></div></section>');
+        $modal->setBody('<section><div id="xvmp_video_container"></div></section>');
 		return $modal;
 	}
 
 
-	/**
-	 * ajax
-	 */
-	public function fillModalPlayer() {
-		$mid = $_GET['mid'];
+    /**
+     * @param $video_mid
+     *
+     * @return ilModalGUI
+     * @throws ilTemplateException
+     * @throws xvmpException
+     */
+    public function getFilledModalPlayer($video_mid)
+    {
+        global $tpl;
+        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
+        $modal_content = $this->fillModalPlayer($video_mid, false);
+        $tpl->addOnLoadCode('VimpObserver.init(' . $video_mid . ', ' . json_encode($modal_content->time_ranges) . ');');
+        $modal = ilModalGUI::getInstance();
+        $modal->setId('xvmp_modal_player');
+        $modal->setHeading($modal_content->video_title);
+        $modal->setType(ilModalGUI::TYPE_LARGE);
+        $modal->setBody('<section><div id="xvmp_video_container">' .
+            $modal_content->html .
+            '</div></section>');
+        return $modal;
+    }
+
+
+    /**
+     * @param null $play_video_id
+     * @param bool $async
+     *
+     * @return stdClass
+     * @throws ilTemplateException
+     * @throws xvmpException
+     */
+	public function fillModalPlayer($play_video_id = null, $async = true) {
+		$mid = $play_video_id ?? $_GET['mid'];
 		$video = xvmpMedium::find($mid);
 		$video_infos = '';
 		if ($video->getStatus() !== 'legal') {
@@ -224,8 +252,12 @@ abstract class xvmpGUI {
 		} else {
 			$response->time_ranges = array();
 		}
-		echo json_encode($response);
-		exit;
+		if ($async == true) {
+            echo json_encode($response);
+            exit;
+        } else {
+		    return $response;
+        }
 	}
 
 

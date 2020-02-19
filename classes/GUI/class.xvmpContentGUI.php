@@ -25,7 +25,7 @@ class xvmpContentGUI extends xvmpGUI {
     /**
 	 *
 	 */
-	protected function index() {
+	protected function index($play_video_id = null) {
 		xvmpVideoPlayer::loadVideoJSAndCSS(!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
 
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
@@ -37,16 +37,28 @@ class xvmpContentGUI extends xvmpGUI {
 		switch ($layout_type) {
 			case xvmpSettings::LAYOUT_TYPE_LIST:
 				$xvmpContentListGUI = new xvmpContentListGUI($this);
-				$xvmpContentListGUI->show();
+				if (!is_null($play_video_id)) {
+                    $this->tpl->setContent($xvmpContentListGUI->getHTML() . $this->getFilledModalPlayer($play_video_id)->getHTML());
+                } else {
+                    $this->tpl->setContent($xvmpContentListGUI->getHTML() . self::getModalPlayer()->getHTML());
+                }
 				break;
 			case xvmpSettings::LAYOUT_TYPE_TILES:
 				$xvmpContentTilesGUI = new xvmpContentTilesGUI($this);
-				$xvmpContentTilesGUI->show();
-				break;
+                if (!is_null($play_video_id)) {
+                    $this->tpl->setContent($xvmpContentTilesGUI->getHTML() . $this->getFilledModalPlayer($play_video_id)->getHTML());
+                } else {
+                    $this->tpl->setContent($xvmpContentTilesGUI->getHTML() . self::getModalPlayer()->getHTML());
+                }
+                break;
 			case xvmpSettings::LAYOUT_TYPE_PLAYER:
 				$xvmpContentPlayerGUI = new xvmpContentPlayerGUI($this);
-				$xvmpContentPlayerGUI->show();
-				break;
+                if (!is_null($play_video_id)) {
+                    $this->tpl->setContent($xvmpContentPlayerGUI->getHTML() . $this->getFilledModalPlayer($play_video_id)->getHTML());
+                } else {
+                    $this->tpl->setContent($xvmpContentPlayerGUI->getHTML() . self::getModalPlayer()->getHTML());
+                }
+                break;
 		}
 	}
 
@@ -70,9 +82,9 @@ class xvmpContentGUI extends xvmpGUI {
 	public function playVideo() {
 	    $mid = filter_input(INPUT_GET, ilObjViMPGUI::GET_VIDEO_ID, FILTER_SANITIZE_NUMBER_INT);
 	    if ($mid) {
-	        $this->tpl->addOnLoadCode('VimpContent.playVideo(' . $mid . ');');
+	        $this->tpl->addOnLoadCode('$(\'#xvmp_modal_player\').modal(\'show\');');
         }
-        $this->index();
+        $this->index($mid);
     }
 
 	/**

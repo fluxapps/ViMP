@@ -47,10 +47,13 @@ class xvmpContentPlayerGUI {
 	}
 
 
-	/**
-	 * @throws xvmpException
-	 */
-	public function show() {
+    /**
+     * @return string|void
+     * @throws arException
+     * @throws ilTemplateException
+     * @throws xvmpException
+     */
+	public function getHTML() {
 		$selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
 		if (!$selected_media->hasSets()) {
 			ilUtil::sendInfo($this->pl->txt('msg_no_videos'));
@@ -145,6 +148,6 @@ class xvmpContentPlayerGUI {
 		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
 //        $this->tpl->addOnLoadCode('VimpContent.loadTiles();');
 
-		$this->tpl->setContent($player_tpl->get());
+		return $player_tpl->get();
 	}
 }

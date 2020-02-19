@@ -45,10 +45,13 @@ class xvmpContentTilesGUI {
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
 	}
 
-	/**
-	 *
-	 */
-	public function show() {
+
+    /**
+     * @return string|void
+     * @throws arException
+     * @throws ilTemplateException
+     */
+	public function getHTML() {
 		$selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
 		if (!$selected_media->hasSets()) {
 			ilUtil::sendInfo($this->pl->txt('msg_no_videos'));
@@ -74,8 +77,7 @@ class xvmpContentTilesGUI {
 		//		$this->tpl->addOnLoadCode('$("div.xoctWaiter").each(function() { $(this).show(); });');
 
 		//		$this->tpl->setContent('<div id="xvmp_placeholder"></div>');
-		$modal = $this->parent_gui->getModalPlayer();
-		$this->tpl->setContent($tpl->get() . $modal->getHTML());
+		return $tpl->get();
 	}
 
 }
