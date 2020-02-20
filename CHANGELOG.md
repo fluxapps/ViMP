@@ -1,6 +1,7 @@
 # Changelog
 
 ## [1.3.1]
+- Improvement: setting videos public/hidden can now be globally deactivated
 - Bugfix: Check ViMP version for adaptive bitrate streaming
 - Bugfix: Umlauts failed in shortened descriptions
 - Bugfix: missing import in cronjob

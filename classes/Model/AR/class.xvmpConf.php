@@ -27,6 +27,7 @@ class xvmpConf extends ActiveRecord {
 	const PRIORITIZE_EMAIL = 0;
 	const PRIORITIZE_MAPPING = 1;
 
+	const F_ALLOW_PUBLIC = 'allow_public';
 	const F_ALLOW_PUBLIC_UPLOAD = 'allow_public_upload';
 	const F_MEDIA_PERMISSIONS = 'media_permissions';
 	const F_MEDIA_PERMISSIONS_SELECTION = 'media_permissions_selection';
@@ -58,8 +59,7 @@ class xvmpConf extends ActiveRecord {
 	const MEDIA_PERMISSION_OFF = 0;
 	const MEDIA_PERMISSION_ON = 1;
 	const MEDIA_PERMISSION_SELECTION = 2;
-
-	/**
+    /**
 	 * @var array
 	 */
 	protected static $cache = array();

@@ -12,6 +12,8 @@ conf_user_mapping_ext#:#User Mapping (external users)
 conf_user_mapping_ext_info#:#The formula, with which the ViMP logins of external ILIAS users are composed. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
 conf_user_mapping_local#:#User Mapping (local users)
 conf_user_mapping_local_info#:#The formula, with which the ViMP logins of local ILIAS users are composed. The following placeholders can be used:<br>&#123LOGIN}: username<br>&#123EXT_ID}: external ID<br>&#123CLIENT_ID}: client ID of this ILIAS platform
+conf_allow_public#:#Allow setting videos public
+conf_allow_public_info#:#Defines if users with the permission "Edit Settings" are authorized to set uploaded videos "Public". If deactivated, videos uploaded are always set "Hidden".
 conf_allow_public_upload#:#Permission „Upload“ can set Videos public
 conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Hidden".
 conf_form_fields#:#Additional Form Fields

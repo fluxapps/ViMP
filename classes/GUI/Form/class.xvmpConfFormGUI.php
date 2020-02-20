@@ -117,11 +117,17 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($input);
 
 		// Allow Public Upload
-		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD), xvmpConf::F_ALLOW_PUBLIC_UPLOAD);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD . '_info'));
-		$this->addItem($input);
+		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC), xvmpConf::F_ALLOW_PUBLIC);
+		$input->setInfo($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC . '_info'));
 
-		// Form Fields
+        $input2 = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD), xvmpConf::F_ALLOW_PUBLIC_UPLOAD);
+        $input2->setInfo($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD . '_info'));
+        $input->addSubItem($input2);
+
+        $this->addItem($input);
+
+
+        // Form Fields
 		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FORM_FIELDS), xvmpConf::F_FORM_FIELDS);
 		$input->setAllowEmptyFields(true);
 		$input->setRequired(false);

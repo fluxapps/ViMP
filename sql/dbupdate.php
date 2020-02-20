@@ -105,3 +105,7 @@ xvmpConf::set(xvmpConf::F_CACHE_TTL_CONFIG, 0);
 <?php
 xvmpUploadedMedia::updateDB();
 ?>
+<#8>
+<?php
+xvmpConf::set(xvmpConf::F_ALLOW_PUBLIC, 1);
+?>

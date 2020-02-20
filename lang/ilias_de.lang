@@ -12,8 +12,10 @@ conf_user_mapping_ext#:#User­Mapping (externe Benutzer)
 conf_user_mapping_ext_info#:#Nach dieser Formel werden die ViMP-Benutzernamen von externen ILIAS-Benutzern zusammengestellt. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
 conf_user_mapping_local#:#User­Mapping (lokale Benutzer)
 conf_user_mapping_local_info#:#Nach dieser Formel werden die ViMP-Benutzernamen von lokalen ILIAS-Benutzern zusammengestellt. Folgende Platzhalter können verwendet werden:<br>&#123LOGIN}: Benutzername<br>&#123EXT_ID}: externe ID des Benutzers<br>&#123CLIENT_ID}: Client-ID dieser ILIAS-Installation
+conf_allow_public#:#Videos öffentlich schalten aktivieren
+conf_allow_public_info#:#Wenn aktiviert: Benutzer mit dem Recht "Einstellungen bearbeiten" dürfen beim Hochladen eines Videos auswählen, ob das Video den Status "Öffentlich" oder "Versteckt" hat. Ansonsten wird automatisch der Status "Versteckt" gesetzt.
 conf_allow_public_upload#:#Recht „Upload“ darf Videos öffentlich schalten
-conf_allow_public_upload_info#:#Wenn aktiviert: Benutzer mit dem Recht "Upload" dürfen beim Hochladen eines Videos auswählen, ob das Video den Status "Öffentlich" oder "Versteckt" hat. Ansonsten wird automatisch der Status "Versteckt" gesetzt.
+conf_allow_public_upload_info#:#Wenn aktiviert: Benutzer mit dem Recht "Upload" dürfen ebenfalls Videos öffentlich schalten
 conf_form_fields#:#Zusätzliche Formular-Felder
 conf_form_fields_info#:#Zusätzliche in ViMP konfigurierte Medienfelder können hier angegeben werden, um diese im Formular zum Hochladen und Bearbeiten eines Videos zur Verfügung zu stellen.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name<br>Checkbox 1: Pflichtfeld<br>Checkbox 2: Feld wird beim Hochladeformular automatisch mit dem Benutzernamen gefüllt.<br>Auswahlfeld: Feldtyp
 conf_filter_fields#:#Zusätzliche Tabellen-Filter

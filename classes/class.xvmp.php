@@ -173,7 +173,8 @@ class xvmp {
 	 * @return bool
 	 */
 	public static function isAllowedToSetPublic() {
-		return ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD));
+		return xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC) &&
+            (ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD)));
 	}
 
 
