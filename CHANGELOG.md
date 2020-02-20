@@ -1,6 +1,7 @@
 # Changelog
 
 ## [1.3.1]
+- Improvement: 360 degree video support
 - Improvement: setting videos public/hidden can now be globally deactivated
 - Bugfix: Check ViMP version for adaptive bitrate streaming
 - Bugfix: Umlauts failed in shortened descriptions
