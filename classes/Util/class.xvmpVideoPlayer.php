@@ -80,6 +80,9 @@ class xvmpVideoPlayer {
 			. '/node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js');
 		$tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
 			. '/node_modules/videojs-http-source-selector/dist/videojs-http-source-selector.min.js');
+        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/node_modules/videojs-vr/dist/videojs-vr.css');
+        $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
+            . '/node_modules/videojs-vr/dist/videojs-vr.min.js');
 	}
 
 
@@ -170,6 +173,12 @@ class xvmpVideoPlayer {
 		if ($isABRStream) {
 			$videojs_script .= "player.httpSourceSelector();";
 		}
+
+        if ($this->video->getProperties()['source-is360video']) {
+            $videojs_script .= "player.mediainfo = player.mediainfo || {};";
+            $videojs_script .= "player.mediainfo.projection = '360';";
+            $videojs_script .= "player.vr();";
+        }
 
 		$template->setCurrentBlock('script');
 		$template->setVariable('SCRIPT', $videojs_script);
