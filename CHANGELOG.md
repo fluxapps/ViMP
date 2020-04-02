@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.2]
+- Bugfix: Player didn't work without adaptive streaming
+
 ## [1.3.1]
 - Improvement: 360 degree video support
 - Improvement: setting videos public/hidden can now be globally deactivated
