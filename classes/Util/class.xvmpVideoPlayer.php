@@ -100,8 +100,10 @@ class xvmpVideoPlayer {
 		$medium = $this->video->getMedium();
 		$isABRStream = false;
 
+		$abr_conf = xvmpConfig::find('adaptive_bitrate_streaming')->getValue();
+
 		if (is_array($medium)) {
-			if (xvmp::ViMPVersionGreaterEquals('4.1.0') && xvmpConfig::find('adaptive_bitrate_streaming')->getValue()) {
+			if (xvmp::ViMPVersionGreaterEquals('4.1.0') && $abr_conf) {
 				$isABRStream = true;
 				$medium = html_entity_decode(end($medium));
 				$medium = str_replace('mp4', 'smil', $medium);
@@ -112,8 +114,7 @@ class xvmpVideoPlayer {
 		$id = ilUtil::randomhash();
 
 		if (xvmp::ViMPVersionGreaterEquals('4.0.5')) {
-		    $pathinfo['extension'] = 'application/x-mpegURL';
-//			$pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];     // dev
+		    $pathinfo['extension'] = $abr_conf ? 'application/x-mpegURL' : 'video/' . pathinfo($medium)['extension'];
 			$medium = urldecode($medium);
 		} else {
 			$pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
