@@ -197,7 +197,7 @@ class xvmpUserProgress extends ActiveRecord {
 		parent::store();
 
 		// learning progress
-		xvmpUserLPStatus::updateLPStatuses();
+		xvmpUserLPStatus::updateLPStatuses(0, true, $this->getUsrId());
 	}
 
     /**
