@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.3]
+- Improvement: load LP observer only if LP is active
+- Change: changed intervall for LP observer from 2 to 5 sec
+
 ## [1.3.2]
 - Bugfix: Player didn't work without adaptive streaming
 
