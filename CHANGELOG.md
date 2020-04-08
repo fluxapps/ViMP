@@ -2,6 +2,7 @@
 
 ## [1.3.3]
 - Improvement: load LP observer only if LP is active
+- Improvement: improved LP observer performance
 - Change: changed intervall for LP observer from 2 to 5 sec
 
 ## [1.3.2]
