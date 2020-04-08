@@ -139,7 +139,9 @@ class xvmpContentPlayerGUI {
 			$time_ranges = '[]';
 		}
 
-		if (!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
+		/** @var xvmpSettings $settings */
+		$settings = xvmpSettings::find($this->parent_gui->getObjId());
+		if ($settings->getLpActive() && !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
 			$this->tpl->addOnLoadCode('VimpObserver.init(' . $mid  . ', ' . $time_ranges . ');');
 		}
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');

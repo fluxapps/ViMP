@@ -193,7 +193,11 @@ abstract class xvmpGUI {
         global $tpl;
         $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
         $modal_content = $this->fillModalPlayer($video_mid, false);
-        $tpl->addOnLoadCode('VimpObserver.init(' . $video_mid . ', ' . json_encode($modal_content->time_ranges) . ');');
+        /** @var xvmpSettings $settings */
+        $settings = xvmpSettings::find($this->getObjId());
+        if ($settings->getLpActive()) {
+            $tpl->addOnLoadCode('VimpObserver.init(' . $video_mid . ', ' . json_encode($modal_content->time_ranges) . ');');
+        }
         $modal = ilModalGUI::getInstance();
         $modal->setId('xvmp_modal_player');
         $modal->setHeading($modal_content->video_title);

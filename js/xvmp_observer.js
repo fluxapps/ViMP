@@ -9,7 +9,7 @@ var VimpObserver = {
 	init: function(mid, time_ranges) {
 		VimpObserver.mid = mid;
 		VimpObserver.time_ranges = time_ranges;
-		window.setInterval(VimpObserver.observe, 2000);
+		window.setInterval(VimpObserver.observe, 5000);
 	},
 
 	observe: function() {
