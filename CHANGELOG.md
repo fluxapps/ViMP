@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.4]
+- Bugfix: fixed bug when playing videos in page component plugin
+
 ## [1.3.3]
 - Improvement: load LP observer only if LP is active
 - Improvement: improved LP observer performance
