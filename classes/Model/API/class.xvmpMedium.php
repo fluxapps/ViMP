@@ -734,7 +734,7 @@ class xvmpMedium extends xvmpObject {
 	 * @return String
 	 */
 	public function getDescription($max_length = 0) {
-		if ($max_length && strlen($this->description) > $max_length) {
+		if ($max_length && mb_strlen($this->description) > $max_length) {
 			return mb_substr($this->description, 0, $max_length) . '...';
 		}
 		return $this->description;
