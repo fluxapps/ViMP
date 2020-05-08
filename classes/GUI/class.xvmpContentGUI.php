@@ -93,32 +93,33 @@ class xvmpContentGUI extends xvmpGUI {
         $template = filter_input(INPUT_GET, self::GET_TEMPLATE, FILTER_SANITIZE_STRING);
 		try {
 			$video = xvmpMedium::find($mid);
-			$tpl = new ilTemplate("tpl.content_{$template}.html", true, true, $this->pl->getDirectory());
+            if ($video instanceof xvmpDeletedMedium) {
+                echo 'deleted';
+                exit;
+            }
+            $tpl = new ilTemplate("tpl.content_{$template}.html", true, true, $this->pl->getDirectory());
 
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
 			$tpl->setVariable('TITLE', $video->getTitle());
 			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription(50)));
 
-			if (!$video instanceof xvmpDeletedMedium) {
+            if ($video->getStatus() !== 'legal') {
+                $tpl->setCurrentBlock('info_transcoding');
+                $tpl->setVariable('INFO_TRANSCODING', $this->pl->txt('info_transcoding_short'));
+                $tpl->parseCurrentBlock();
+            }
 
-				if ($video->getStatus() !== 'legal') {
-					$tpl->setCurrentBlock('info_transcoding');
-					$tpl->setVariable('INFO_TRANSCODING', $this->pl->txt('info_transcoding_short'));
-					$tpl->parseCurrentBlock();
-				}
-
-				$tpl->setVariable('LABEL_TITLE', $this->pl->txt( xvmpMedium::F_TITLE) . ':');
-				$tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt(xvmpMedium::F_DESCRIPTION) . ':');
-				$tpl->setVariable('LABEL_DURATION', $this->pl->txt(xvmpMedium::F_DURATION) . ':');
-				$tpl->setVariable('DURATION', $video->getDurationFormatted());
-				$tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt(xvmpMedium::F_CREATED_AT) . ':');
-				$tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
-				if (xvmp::showWatched($this->getObjId(), $video)) {
-					$tpl->setVariable('LABEL_WATCHED', $this->pl->txt('watched') . ':');
-					$tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
-				}
-			}
+            $tpl->setVariable('LABEL_TITLE', $this->pl->txt( xvmpMedium::F_TITLE) . ':');
+            $tpl->setVariable('LABEL_DESCRIPTION', $this->pl->txt(xvmpMedium::F_DESCRIPTION) . ':');
+            $tpl->setVariable('LABEL_DURATION', $this->pl->txt(xvmpMedium::F_DURATION) . ':');
+            $tpl->setVariable('DURATION', $video->getDurationFormatted());
+            $tpl->setVariable('LABEL_CREATED_AT', $this->pl->txt(xvmpMedium::F_CREATED_AT) . ':');
+            $tpl->setVariable('CREATED_AT', $video->getCreatedAt('d.m.Y, H:i'));
+            if (xvmp::showWatched($this->getObjId(), $video)) {
+                $tpl->setVariable('LABEL_WATCHED', $this->pl->txt('watched') . ':');
+                $tpl->setVariable('WATCHED', xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
+            }
 
 			echo $tpl->get();
 			exit;

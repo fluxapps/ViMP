@@ -16,8 +16,12 @@ var VimpContent = {
 					"mid": mid,
 				}
 			}).always(function(response) {
-				$('div#xvmp_tile_'+mid).html(response);
-				$('div#xvmp_tile_'+mid).removeClass('waiting');
+				if (response === 'deleted') {
+						$('div#box_'+mid).hide();
+				} else {
+					$('div#xvmp_tile_'+mid).html(response);
+					$('div#xvmp_tile_'+mid).removeClass('waiting');
+				}
 			});
 		});
 	},
@@ -32,8 +36,12 @@ var VimpContent = {
 				"mid": mid
 			}
 		}).always(function(response) {
-			$('div#xvmp_tile_'+mid).html(response);
-			$('div#xvmp_tile_'+mid).removeClass('waiting');
+			if (response === 'deleted') {
+				$('div#box_'+mid).hide();
+			} else {
+				$('div#xvmp_tile_' + mid).html(response);
+				$('div#xvmp_tile_' + mid).removeClass('waiting');
+			}
 			if (typeof VimpContent.selected_media[key + 1] !== 'undefined') {
 				VimpContent.loadTilesInOrder(key + 1);
 			}
