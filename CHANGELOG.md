@@ -1,9 +1,12 @@
 # Changelog
 
-## [1.3.4]
-- Bugfix: fixed bug when playing videos in page component plugin
+## [1.3.5]
 - Bugfix: fixed direct link for content player (don't open modal)
 - Bugfix: changed to mb_substr to avoid umlaut bugs
+- Improvement: hide deleted videos in content tab
+
+## [1.3.4]
+- Bugfix: fixed bug when playing videos in page component plugin
 
 ## [1.3.3]
 - Improvement: load LP observer only if LP is active
