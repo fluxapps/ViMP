@@ -1,7 +1,7 @@
 # Changelog
 
-## [x]
-- WIP/Try: LP permissions
+## [1.3.6]
+- Bugfix: Introduced LP permissions
 
 ## [1.3.5]
 - Bugfix: fixed direct link for content player (don't open modal)
