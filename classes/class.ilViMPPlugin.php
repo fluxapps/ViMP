@@ -116,4 +116,43 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 		echo $list;
 		exit();
 	}
+
+
+    /**
+     * Before activation processing
+     */
+    protected function beforeActivation()
+    {
+        global $DIC;
+        parent::beforeActivation();
+
+        // check whether type exists in object data, if not, create the type
+        $set = $DIC->database()->query("SELECT * FROM object_data " .
+            " WHERE type = " . $DIC->database()->quote("typ", ilDBConstants::T_TEXT) .
+            " AND title = " . $DIC->database()->quote(self::XVMP, ilDBConstants::T_TEXT)
+        );
+        if ($rec = $DIC->database()->fetchAssoc($set)) {
+            $t_id = $rec["obj_id"];
+        }
+
+        // add rbac operations
+        // 1: edit_permissions, 2: visible, 3: read, 4:write, 6:delete
+        $ops = array(55, 95);
+        foreach ($ops as $op) {
+            // check whether type exists in object data, if not, create the type
+            $set = $DIC->database()->query("SELECT * FROM rbac_ta " .
+                " WHERE typ_id = " . $DIC->database()->quote($t_id, ilDBConstants::T_INTEGER) .
+                " AND ops_id = " . $DIC->database()->quote($op, ilDBConstants::T_INTEGER)
+            );
+            if (!$DIC->database()->fetchAssoc($set)) {
+                $DIC->database()->manipulate("INSERT INTO rbac_ta " .
+                    "(typ_id, ops_id) VALUES (" .
+                    $DIC->database()->quote($t_id, ilDBConstants::T_INTEGER) . "," .
+                    $DIC->database()->quote($op, ilDBConstants::T_INTEGER) .
+                    ")");
+            }
+        }
+
+        return true;
+    }
 }
