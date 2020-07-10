@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+- WIP/Try: Description line breaks
+
 ## [1.3.6]
 - Bugfix: Introduced LP permissions
 
