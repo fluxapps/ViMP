@@ -102,7 +102,7 @@ class xvmpContentGUI extends xvmpGUI {
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
 			$tpl->setVariable('TITLE', $video->getTitle());
-			$tpl->setVariable('DESCRIPTION', strip_tags($video->getDescription(50)));
+			$tpl->setVariable('DESCRIPTION', nl2br(strip_tags($video->getDescription(50)), false));
 
             if ($video->getStatus() !== 'legal') {
                 $tpl->setCurrentBlock('info_transcoding');

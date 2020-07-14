@@ -237,7 +237,7 @@ abstract class xvmpGUI {
 				$video_infos .= "<p>{$field[xvmpConf::F_FORM_FIELD_TITLE]}: {$value}</p>";
 			}
 		}
-		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: {$video->getDescription()}</div>";
+		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: " . nl2br($video->getDescription(), false) . "</div>";
 
 		if (!is_null($this->getObject())) {
             $perm_link = (new ilPermanentLinkGUI($this->getObject()->getType(), $this->getObject()->getRefId(), '_' . $video->getMid()));
