@@ -137,7 +137,9 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 
         // add rbac operations
         // 1: edit_permissions, 2: visible, 3: read, 4:write, 6:delete
-        $ops = array(55, 95);
+        $ops = array_map(function (array $operation) {
+            return $operation["ops_id"];
+        }, $DIC->database()->fetchAll($DIC->database()->query("SELECT ops_id FROM rbac_operations WHERE " . $DIC->database()->in("operation", ["read_learning_progress", "edit_learning_progress"], false, ilDBConstants::T_TEXT))));
         foreach ($ops as $op) {
             // check whether type exists in object data, if not, create the type
             $set = $DIC->database()->query("SELECT * FROM rbac_ta " .
