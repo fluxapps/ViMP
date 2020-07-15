@@ -75,7 +75,7 @@ class xvmpContentPlayerGUI {
 		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->parent_gui->getObjId(), $video));
 		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
-		$player_tpl->setVariable('DESCRIPTION', $video->getDescription(50));
+		$player_tpl->setVariable('DESCRIPTION', nl2br($video->getDescription(50), false));
 
 		if ($video->getStatus() !== 'legal') {
 			$player_tpl->setCurrentBlock('info_transcoding');
