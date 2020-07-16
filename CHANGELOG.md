@@ -1,6 +1,6 @@
 # Changelog
 
-## [x]
+## [1.3.8]
 - Get LP permission operations ids dynamic
 - Revert wrong description line breaks try from v1.3.7
 - Description line breaks in content tab (All 4 views) and add inline scroller if needed
