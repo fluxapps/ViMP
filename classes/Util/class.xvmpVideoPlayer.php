@@ -114,10 +114,10 @@ class xvmpVideoPlayer {
 		$id = ilUtil::randomhash();
 
 		if (xvmp::ViMPVersionGreaterEquals('4.0.5')) {
-		    $pathinfo['extension'] = $abr_conf ? 'application/x-mpegURL' : 'video/' . pathinfo($medium)['extension'];
+		    $pathinfo['extension'] = $abr_conf ? 'application/x-mpegURL' : mime_content_type($medium);
 			$medium = urldecode($medium);
 		} else {
-			$pathinfo['extension'] = 'video/' . pathinfo($medium)['extension'];
+			$pathinfo['extension'] = mime_content_type($medium);
 
 			$sources = xvmp::ViMPVersionEquals('4.0.4') ? xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])
 				->getResponseArray() : xvmpRequest::getVideoSources($this->video->getMediakey(), $_SERVER['HTTP_HOST'])
