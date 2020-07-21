@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+- WIP/Try: Mime type not direct from extension
+
 ## [1.3.8]
 - Get LP permission operations ids dynamic
 - Revert wrong description line breaks try from v1.3.7
