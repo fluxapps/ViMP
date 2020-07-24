@@ -1,7 +1,6 @@
 # Changelog
 
 ## [x]
-<<<<<<< CHANGELOG.md
 - Fix Docker-ILIAS log
 - Mime type not direct from extension
 
