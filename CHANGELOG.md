@@ -2,7 +2,6 @@
 
 ## [x]
 - Fix Docker-ILIAS log
-- Mime type not direct from extension
 
 ## [1.3.8]
 - Get LP permission operations ids dynamic
