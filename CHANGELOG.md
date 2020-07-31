@@ -1,6 +1,7 @@
 # Changelog
 
 ## [x]
+- Fix VIMP server 4.2.9 config need admin token
 - Fix Docker-ILIAS log
 
 ## [1.3.8]
