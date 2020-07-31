@@ -2,6 +2,8 @@
 
 ## [x]
 - Fix Docker-ILIAS log
+- Not show hidden videos in repository object list preview
+- Fix direct link to hidden videos access check
 
 ## [1.3.8]
 - Get LP permission operations ids dynamic

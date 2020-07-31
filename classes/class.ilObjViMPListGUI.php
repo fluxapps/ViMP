@@ -89,12 +89,12 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 			);
 		}
 
-		if ($count = $settings->getRepositoryPreview()) {
+		if (($count = $settings->getRepositoryPreview()) && ($preview = $this->getVideoPreview($count))) {
 			$props[] = array(
 				'alert' => true,
 				'newline' => true,
 				'property' => 'API',
-				'value' => $this->getVideoPreview($count),
+				'value' => $preview,
 				'propertyNameVisible' => false
 			);
 		}
@@ -104,7 +104,11 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 
 
 	protected function getVideoPreview($count) {
-		$selected_videos = xvmpSelectedMedia::where(array('obj_id' => $this->obj_id))->orderBy('sort')->limit(0, $count)->get();
+		$selected_videos = xvmpSelectedMedia::where(array('obj_id' => $this->obj_id))->orderBy('sort')->limit(0, $count);
+        if (!ilObjViMPAccess::hasWriteAccess()) {
+            $selected_videos = $selected_videos->where(['visible' => 1]);
+        }
+        $selected_videos = $selected_videos->get();
 		$preview = '';
 		foreach ($selected_videos as $selected) {
 			try {
