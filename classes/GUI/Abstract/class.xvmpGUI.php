@@ -190,7 +190,23 @@ abstract class xvmpGUI {
      */
     public function getFilledModalPlayer($video_mid)
     {
-        global $tpl;
+        global $tpl, $DIC;
+        $selected_medium = xvmpSelectedMedia::where(array('obj_id' => $this->getObjId(), 'mid' => $video_mid));
+        if (!ilObjViMPAccess::hasWriteAccess()) {
+            $selected_medium = $selected_medium->where(['visible' => 1]);
+        }
+        $selected_medium = $selected_medium->first();
+        if (!$selected_medium) {
+            $modal = ilModalGUI::getInstance();
+            $modal->setId('xvmp_modal_player');
+            $modal->setType(ilModalGUI::TYPE_LARGE);
+            if (xvmp::is54()) {
+                $modal->setBody($DIC->ui()->renderer()->render($DIC->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
+            } else {
+                $modal->setBody($DIC->ui()->mainTemplate()->getMessageHTML($this->pl->txt('access_denied'), "failure"));
+            }
+            return $modal;
+        }
         $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
         $modal_content = $this->fillModalPlayer($video_mid, false);
         /** @var xvmpSettings $settings */
