@@ -1,6 +1,6 @@
 # Changelog
 
-## [x]
+## [1.3.9]
 - Fix VIMP server 4.2.9 config need admin token
 - Fix Docker-ILIAS log
 - Not show hidden videos in repository object list preview
