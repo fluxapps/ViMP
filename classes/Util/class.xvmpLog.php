@@ -21,7 +21,12 @@ class xvmpLog extends ilLog {
 	 */
 	public static function getInstance() {
 		if (! isset(self::$instance)) {
-			self::$instance = new self(ILIAS_LOG_DIR, self::LOG_TITLE);
+            if (ILIAS_LOG_DIR === "php:/" && ILIAS_LOG_FILE === "stdout") {
+                // Fix Docker-ILIAS log
+                self::$instance = new self(ILIAS_LOG_DIR, ILIAS_LOG_FILE);
+            } else {
+                self::$instance = new self(ILIAS_LOG_DIR, self::LOG_TITLE);
+            }
 		}
 
 		return self::$instance;
@@ -56,7 +61,12 @@ class xvmpLog extends ilLog {
 	 * @return string
 	 */
 	public function getLogFile() {
-		return self::LOG_TITLE;
+        if (ILIAS_LOG_DIR === "php:/" && ILIAS_LOG_FILE === "stdout") {
+            // Fix Docker-ILIAS log
+            return ILIAS_LOG_FILE;
+        } else {
+            return self::LOG_TITLE;
+        }
 	}
 
 

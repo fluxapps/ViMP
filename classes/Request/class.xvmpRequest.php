@@ -384,6 +384,10 @@ class xvmpRequest {
 
         $xvmpCurl->addPostField('name', $name);
 
+        if (xvmp::ViMPVersionGreaterEquals("4.2.9")) {
+            $xvmpCurl->addPostField('token', xvmp::getToken());
+        }
+
         $xvmpCurl->post();
         return $xvmpCurl;
     }
