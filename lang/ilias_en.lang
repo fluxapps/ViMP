@@ -182,3 +182,5 @@ info_transcoding_full#:#This video is being transcoded and can not be viewed at 
 info_transcoding_possible_full#:#This video is being transcoded and may not be viewable at the moment.
 info_autocomplete#:#Autocompletion: Suggestions are offered from the moment the third letter is entered. You can search by login, firstname, lastname and email address.
 btn_show_own_videos#:#Show My Videos
+cron_title#:#Send notifications
+cron_description#:#Send notifications

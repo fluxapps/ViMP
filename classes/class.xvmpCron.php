@@ -1,5 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+use srag\DIC\ViMP\DICTrait;
 
 /**
  * Class xvmpCron
@@ -7,7 +8,7 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xvmpCron {
-
+    use DICTrait;
 	const DEBUG = false;
 	/**
 	 * @var Ilias
@@ -20,14 +21,9 @@ class xvmpCron {
 
 
 	/**
-	 * @param array $data
+	 *
 	 */
-	function __construct($data) {
-        $_COOKIE['ilClientId'] = $data[3];
-		$_POST['username'] = $data[1];
-		$_POST['password'] = $data[2];
-		$this->initILIAS();
-
+	function __construct() {
 		global $DIC;
 		$ilDB = $DIC['ilDB'];
 		$ilCtrl = $DIC['ilCtrl'];
@@ -46,42 +42,6 @@ class xvmpCron {
 		$this->ilias = $ilias;
 		$this->pl = ilViMPPlugin::getInstance();
 	}
-
-
-	public function initILIAS() {
-		chdir(substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], '/Customizing')));
-		require_once 'include/inc.ilias_version.php';
-		require_once 'Services/Component/classes/class.ilComponent.php';
-		require_once './Services/Cron/classes/class.ilCronStartUp.php';
-		require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/class.xvmp.php';
-
-		$ilCronStartup = new ilCronStartUp($_SERVER['argv'][3], $_SERVER['argv'][1], $_SERVER['argv'][2]);
-		if (!xvmp::is54()) {
-		    $ilCronStartup->initIlias();
-        }
-		$ilCronStartup->authenticate();
-
-		$this->buildHTTPPath();
-
-		require_once './Services/Mail/classes/class.ilMimeMail.php';
-		require_once './Services/Mail/classes/class.ilMail.php';
-
-		// fix for some stupid ilias init....
-		global $DIC;
-		$ilSetting = $DIC['ilSetting'];
-		if (!$ilSetting) {
-			$ilSetting = new ilSessionMock();
-		}
-	}
-
-    /**
-     * builds http path
-     */
-    protected function buildHTTPPath()
-    {
-        global $DIC;
-        define('ILIAS_HTTP_PATH', $DIC['ilIliasIniFile']->readVariable('server', 'http_path'));
-    }
 
 
 	/**
@@ -168,6 +128,17 @@ class xvmpCron {
 
 		// send mail
 		$notification = new ilMail(ANONYMOUS_USER_ID);
+        if (self::version()->is6()) {
+            $notification->sendMail(
+                $ilObjUser->getLogin(),
+                '',
+                '',
+                $subject,
+                $body,
+                array(),
+                true
+            );
+        } else {
 		$notification->sendMail(
 			$ilObjUser->getLogin(),
 			'',
@@ -178,24 +149,8 @@ class xvmpCron {
 			array('normal'),
 			1
 		);
+		}
 
 //		xvmpLog::getInstance()->write('Notification sent to user: ' . ilObjUser::_lookupLogin($uploaded_medium->getUserId()) . ' (' . $uploaded_medium->getUserId() . ')');
 	}
-
-	/**
-	 *
-	 */
-	public function logout() {
-		global $DIC;
-		$ilAuth = $DIC["ilAuthSession"];
-		$ilAuth->logout();
-	}
-
-}
-
-class ilSessionMock {
-	public function get($what, $default) {
-		return $default;
-	}
-
 }
