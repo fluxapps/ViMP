@@ -182,3 +182,5 @@ info_transcoding_full#:#Dieses Video wird noch transkodiert und lässt sich dahe
 info_transcoding_possible_full#:#Dieses Video wird noch transkodiert und lässt sich daher möglicherweise nicht abspielen.
 info_autocomplete#:#Autovervollständigung: Ab der Eingabe des dritten Buchstabens werden mögliche Benutzer vorgeschlagen. Es kann nach Benutzername, Email, Vor- oder Nachname gesucht werden.
 btn_show_own_videos#:#Meine Videos anzeigen
+cron_title#:#Benachrichtigungen senden
+cron_description#:#Benachrichtigungen senden

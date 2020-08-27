@@ -3,6 +3,15 @@ ViMP
 ### Description
 This plugin can be installed in the LMS ILIAS to implement an interface to the external video platform ViMP. To install, please read the [installation guide](doc/ILIAS_ViMP_Installation.pdf).
 
+### Installation
+```bash
+mkdir -p Customizing/global/plugins/Services/Repository/RepositoryObject
+cd Customizing/global/plugins/Services/Repository/RepositoryObject
+git clone https://github.com/studer-raimann/ViMP.git
+```
+
+Please also install and enable [ViMPCron](https://github.com/studer-raimann/ViMPCron).
+
 ### Adjustment suggestions
 * Adjustment suggestions by pull requests
 * Adjustment suggestions which are not yet worked out in detail by Jira tasks under https://jira.studer-raimann.ch/projects/PLVIMP

@@ -6,4 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'srag\\Plugins\\ViMP\\' => array($baseDir . '/src'),
+    'srag\\LibrariesNamespaceChanger\\' => array($vendorDir . '/srag/librariesnamespacechanger/src'),
+    'srag\\DIC\\ViMP\\' => array($vendorDir . '/srag/dic/src'),
 );
