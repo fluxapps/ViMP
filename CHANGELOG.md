@@ -1,5 +1,11 @@
 # Changelog
 
+## [x]
+- ILIAS 6 support
+- Remove ILIAS 5.3 support
+- Min. PHP 7.0
+- Separate legacy cron job to `ViMPCron` wrapper plugin
+
 ## [1.3.9]
 - Fix VIMP server 4.2.9 config need admin token
 - Fix Docker-ILIAS log

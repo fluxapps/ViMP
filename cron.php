@@ -1,6 +1,6 @@
 <?php
-require_once 'vendor/autoload.php';
-$cron = new xvmpCron($_SERVER['argv']);
-$cron->run();
-$cron->logout();
-?>
+
+echo "Please remove legacy 'xvmpCron' from contab, because it is incompatible / give conflict - It's now on a separate 'ViMPCron' plugin and direct configurable in ILIAS gui
+";
+
+exit(1);

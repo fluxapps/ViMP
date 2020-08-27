@@ -2,6 +2,7 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use ILIAS\DI\Container;
+use srag\DIC\ViMP\DICTrait;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -14,7 +15,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @ilCtrl_Calls      ilObjViMPGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI
  */
 class ilObjViMPGUI extends ilObjectPluginGUI {
-
+    use DICTrait;
 	const CMD_SHOW_CONTENT = 'showContent';
 	const CMD_PLAY_VIDEO = 'playVideo';
 	const CMD_SEARCH_VIDEOS = 'searchVideos';
@@ -68,7 +69,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
 			$this->ctrl->returnToParent($this);
 		}
+		if (self::version()->is6()) {
+            $this->tpl->loadStandardTemplate();
+        } else {
 		$this->tpl->getStandardTemplate();
+		}
 
 		try {
 			switch ($next_class) {
@@ -79,7 +84,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpContentGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'xvmpsearchvideosgui':
 					if (!$this->ctrl->isAsynch()) {
@@ -88,7 +97,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpSearchVideosGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'xvmpeventloggui':
 					if (!$this->ctrl->isAsynch()) {
@@ -97,7 +110,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpEventLogGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'xvmpsettingsgui':
 					if (!$this->ctrl->isAsynch()) {
@@ -106,7 +123,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpSettingsGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'xvmpselectedvideosgui':
 					if (!$this->ctrl->isAsynch()) {
@@ -115,7 +136,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpSelectedVideosGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'xvmpownvideosgui':
 					if (!$this->ctrl->isAsynch()) {
@@ -124,7 +149,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpOwnVideosGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'xvmplearningprogressgui':
 					if (!$this->ctrl->isAsynch()) {
@@ -133,7 +162,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$xvmpGUI = new xvmpLearningProgressGUI($this);
 					$this->ctrl->forwardCommand($xvmpGUI);
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case "ilinfoscreengui":
 					if (!$this->ctrl->isAsynch()) {
@@ -142,7 +175,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					}
 					$this->checkPermission("visible");
 					$this->infoScreen();	// forwards command
+                    if (self::version()->is6()) {
+                        $this->tpl->printToStdout();
+                    } else {
 					$this->tpl->show();
+					}
 					break;
 				case 'ilpermissiongui':
 					$this->initHeader(false);
@@ -159,7 +196,11 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			}
 		} catch (Exception $e) {
 			ilUtil::sendFailure($e->getMessage());
+            if (self::version()->is6()) {
+                $this->tpl->printToStdout();
+            } else {
 			$this->tpl->show();
+			}
 		}
 
 	}
