@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.4.1]
+- Fixed empty mediapermissions upload error
+
 ## [1.4.0]
 - ILIAS 6 support
 - Remove ILIAS 5.3 support
