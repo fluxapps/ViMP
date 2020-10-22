@@ -270,7 +270,10 @@ class xvmpUploadVideoFormGUI extends xvmpFormGUI {
                 $media_permissions[] = $role->getId();
             }
         }
-        $video[xvmpMedium::F_MEDIAPERMISSIONS] = implode(',', $media_permissions);
+        
+        if (!empty($media_permissions)) {
+            $video[xvmpMedium::F_MEDIAPERMISSIONS] = implode(',', $media_permissions);
+        }
 
 		if (!xvmp::isAllowedToSetPublic()) {
 			$video[xvmpMedium::PUBLISHED_HIDDEN] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];
