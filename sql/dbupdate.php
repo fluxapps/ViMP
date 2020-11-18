@@ -109,3 +109,8 @@ xvmpUploadedMedia::updateDB();
 <?php
 xvmpConf::set(xvmpConf::F_ALLOW_PUBLIC, 1);
 ?>
+<#9>
+<?php
+xvmpConf::set(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED, 1);
+xvmpConf::set(xvmpConf::F_DEFAULT_PUBLICATION, 2);
+?>

@@ -173,7 +173,9 @@ class xvmp {
 	 * @return bool
 	 */
 	public static function isAllowedToSetPublic() {
-		return xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC) &&
+                global $ilAccess;
+                $is_admin = $ilAccess->checkAccess("visible", "", SYSTEM_FOLDER_ID);
+		return $is_admin || xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC) &&
             (ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD)));
 	}
 

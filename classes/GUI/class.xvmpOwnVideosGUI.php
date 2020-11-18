@@ -171,8 +171,9 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	 *
 	 */
 	public function uploadVideoForm() {
-		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
-		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
+		$xvmpUploadVideoFormGUI = new xvmpUploadVideoFormGUI($this);
+		$xvmpUploadVideoFormGUI->fillForm();
+		$this->tpl->setContent($xvmpUploadVideoFormGUI->getHTML());
 	}
 
 

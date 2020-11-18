@@ -22,6 +22,8 @@ conf_filter_fields#:#Zusätzliche Tabellen-Filter
 conf_filter_fields_info#:#Werden die zusätzlichen Medienfelder hier angegeben, stehen Sie anschliessend als Filter in Tabellen zur Verfügung.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name
 conf_media_permissions#:#Medienberechtigungen nutzen
 conf_media_permissions_info#:#Definiert, ob und welche Medienberechtigungen beim Upload und beim Editieren von Videos gesetzt werden dürfen.
+conf_media_permissions_preselected#:#Medienberechtigungen-Vorauswahl
+conf_media_permissions_preselected_info#:#Definiert, ob Medienberechtigungen im Upload-Dialog vorausgewählt sein sollen.
 conf_mapping_priority#:#Priorität Mapping
 conf_mapping_priority_info#:#Definiert, auf welche Art zuerst nach dem Benutzer in ViMP gesucht wird. Wird dabei kein Benutzer gefunden, wird nach dem anderen Feld gesucht. Wird erneut nichts gefunden, wird ein entsprechender Benutzer erstellt.
 conf_mapping_priority_0#:#Email
@@ -58,6 +60,8 @@ conf_upload_limit#:#Upload Limit (MB)
 conf_upload_limit_info#:#Begrenzung der Dateigröße in MB. Geben Sie '0' ein, um keine Begrenzung festzulegen.
 conf_disable_verify_peer#:#Peer-Verifizierung deaktivieren
 conf_disable_verify_peer_info#:#Deaktiviert für die Kommunikation mit ViMP die Verifizierung des Zertifikat-Herstellers.
+conf_default_publication#:#Voreingestellter Zugriff
+conf_default_publication_info#:#Auswahl des voreingestellten Zugriffs beim Upload
 msg_success#:#Änderungen erfolgreich gespeichert.
 selection#:#Auswahl
 all#:#Ja, alle
