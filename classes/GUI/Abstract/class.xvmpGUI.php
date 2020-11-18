@@ -245,7 +245,7 @@ abstract class xvmpGUI {
 		}
 		$video_infos .= "				
 			<p>{$this->pl->txt(xvmpMedium::F_DURATION)}: {$video->getDurationFormatted()}</p>
-			<p>{$this->pl->txt(xvmpMedium::F_CREATED_AT)}: {$video->getCreatedAt('m.d.Y, H:i')}</p>
+			<p>{$this->pl->txt(xvmpMedium::F_CREATED_AT)}: {$video->getCreatedAt('d.m.Y, H:i')}</p>
 			
 		";
 		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
