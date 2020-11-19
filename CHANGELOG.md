@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0]
+- Fixed wrong date format in modal player
+- Feature: configurable default access type (upload)
+- Feature: configurable media permissions preselection (upload)
+- Change: allow setting videos public for global admins
+
 ## [1.4.1]
 - Fixed empty mediapermissions upload error
 
