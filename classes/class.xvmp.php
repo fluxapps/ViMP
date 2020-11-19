@@ -168,16 +168,16 @@ class xvmp {
 		return (ilObjUserTracking::_enabledLearningProgress() && self::getParentCourseRefId($ref_id));
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public static function isAllowedToSetPublic() {
-                global $ilAccess;
-                $is_admin = $ilAccess->checkAccess("visible", "", SYSTEM_FOLDER_ID);
-		return $is_admin || xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC) &&
+    /**
+     * @return bool
+     */
+    public static function isAllowedToSetPublic()
+    {
+        global $DIC;
+        $is_admin = $DIC->rbac()->review()->isAssigned($DIC->user()->getId(), 2);
+        return $is_admin || xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC) &&
             (ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD)));
-	}
+    }
 
 
 	/**
