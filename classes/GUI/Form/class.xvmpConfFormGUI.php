@@ -187,16 +187,17 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$sub_selection->setOptions($options);
 		$sub_selection->setDisabled(empty($options));
 		$radio_option->addSubItem($sub_selection);
-		$input->addOption($radio_option);
 
-		$this->addItem($input);
+        // Media Permission Preselection
+        $sub_input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED), xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED);
+        $sub_input->setInfo($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED . '_info'));
+        $radio_option->addSubItem($sub_input);
 
-		// Media Permission Preselection
-		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED), xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED . '_info'));
-		$this->addItem($input);
+        $input->addOption($radio_option);
+        $this->addItem($input);
 
-		// Embedded Player
+
+        // Embedded Player
 		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_EMBED_PLAYER), xvmpConf::F_EMBED_PLAYER);
 		$input->setInfo($this->pl->confTxt(xvmpConf::F_EMBED_PLAYER . '_info'));
 		$this->addItem($input);
