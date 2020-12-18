@@ -104,11 +104,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 
 
 	protected function getVideoPreview($count) {
-		$selected_videos = xvmpSelectedMedia::where(array('obj_id' => $this->obj_id))->orderBy('sort')->limit(0, $count);
-        if (!ilObjViMPAccess::hasWriteAccess()) {
-            $selected_videos = $selected_videos->where(['visible' => 1]);
-        }
-        $selected_videos = $selected_videos->get();
+		$selected_videos = xvmpSelectedMedia::where(['obj_id' => $this->obj_id, 'visible' => 1])->orderBy('sort')->limit(0, $count)->get();
 		$preview = '';
 		foreach ($selected_videos as $selected) {
 			try {
