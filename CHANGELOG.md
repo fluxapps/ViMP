@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.5.1]
+- Fix: only show visible videos in repository preview
+
 ## [1.5.0]
 - Fixed wrong date format in modal player
 - Feature: configurable default access type (upload)
@@ -18,7 +21,7 @@
 ## [1.3.9]
 - Fix VIMP server 4.2.9 config need admin token
 - Fix Docker-ILIAS log
-- Not show hidden videos in repository object list preview
+- Fix Don't show hidden videos in repository object list preview
 - Fix direct link to hidden videos access check
 
 ## [1.3.8]
