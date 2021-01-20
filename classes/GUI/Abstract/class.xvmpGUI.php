@@ -2,6 +2,7 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use ILIAS\DI\Container;
+use ILIAS\UI\Implementation\Component\Signal;
 
 /**
  * Class xvmpGUI
@@ -78,8 +79,36 @@ abstract class xvmpGUI {
 		$this->parent_gui = $parent_gui;
 	}
 
+    /**
+     * @param xvmpMedium $video
+     * @param bool       $async
+     * @return string
+     */
+    public function getPermLinkHTML(xvmpMedium $video, bool $async = true) : string
+    {
+        $link_tpl = ilLink::_getStaticLink(
+            $this->parent_gui->ref_id,
+            $this->parent_gui->getType(),
+            true,
+            '_' . $video->getMid() . '_TIME_'
+        );
+        $link_tpl = "<input type='text' id='xvmp_direct_link_tpl' value='{$link_tpl}' hidden>";
 
-	/**
+        $dropdown = $this->dic->ui()->factory()->dropdown()->standard([
+            $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link'), '')->withOnLoadCode(function (
+                $id
+            ) {
+                return "document.getElementById('{$id}').addEventListener('click', VimpContent.copyDirectLink);";
+            }),
+            $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
+                '')->withOnLoadCode(function ($id) {
+                return "document.getElementById('{$id}').addEventListener('click', VimpContent.copyDirectLinkWithTime);";
+            }),
+        ])->withLabel($this->pl->txt('direct_link_dropdown'));
+        return $link_tpl . '<br>' . ($async ? $this->dic->ui()->renderer()->renderAsync($dropdown) : $this->dic->ui()->renderer()->render($dropdown));
+    }
+
+    /**
 	 *
 	 */
 	public function executeCommand() {
@@ -263,9 +292,8 @@ abstract class xvmpGUI {
 		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: " . nl2br($video->getDescription(), false) . "</div>";
 
 		if (!is_null($this->getObject())) {
-            $perm_link = (new ilPermanentLinkGUI($this->getObject()->getType(), $this->getObject()->getRefId(), '_' . $video->getMid()));
-            $perm_link->setIncludePermanentLinkText(false);
-            $video_infos .= $perm_link->getHTML();
+            $link = $this->getPermLinkHTML($video);
+            $video_infos .= $link;
         }
 
 		$response = new stdClass();

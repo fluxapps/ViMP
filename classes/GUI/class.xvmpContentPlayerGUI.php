@@ -108,9 +108,7 @@ class xvmpContentPlayerGUI {
 				$player_tpl->parseCurrentBlock();
 			}
 
-			$perm_link = (new ilPermanentLinkGUI($this->parent_gui->getObject()->getType(), $this->parent_gui->getObject()->getRefId(), '_' . $video->getMid()));
-			$perm_link->setIncludePermanentLinkText(false);
-            $player_tpl->setVariable('PERMANENT_LINK', $perm_link->getHTML());
+            $player_tpl->setVariable('PERMANENT_LINK', $this->parent_gui->getPermLinkHTML($video, false));
         }
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());

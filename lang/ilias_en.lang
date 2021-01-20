@@ -193,3 +193,6 @@ form_header_access#:#Access
 form_header_additional_options#:#Additional Options
 form_header_notification#:#Notification
 thumbnail#:#Thumbnail
+direct_link_dropdown#:#Video Link
+btn_copy_link#:#Copy Link
+btn_copy_link_w_time#:#Copy Link with current time

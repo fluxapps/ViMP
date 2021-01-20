@@ -168,6 +168,10 @@ class xvmpVideoPlayer {
 
 		$options = json_encode($this->options);
 		$videojs_script = "var player = videojs('xvmp_video_{$id}', {$options}, function () { $('#xvmp_video_{$id}').on('contextmenu', function(e) { e.preventDefault(); });});";
+		$time = filter_input(INPUT_GET, ilObjViMPGUI::GET_TIME, FILTER_VALIDATE_INT);
+		if ($time > 0) {
+		    $videojs_script .= "player.currentTime(" . $time . ");";
+        }
 
 		if ($isABRStream) {
 			$videojs_script .= "player.httpSourceSelector();";

@@ -31,6 +31,11 @@ div#xvmp_video_infos {
 	margin-left: 10px;
 }
 
+div#xvmp_video_infos div.dropdown {
+	position: relative;
+	float: left;
+}
+
 div.xvmp_video_infos {
 	padding: 0 5px;
 }

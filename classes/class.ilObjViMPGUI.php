@@ -30,6 +30,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	const TAB_PERMISSION = 'permissions';
     const GET_REF_ID = 'ref_id';
     const GET_VIDEO_ID = 'mid';
+    const GET_TIME = 't';
     /**
 	 * @var ilViMPPlugin
 	 */
@@ -343,6 +344,10 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
         $DIC->ctrl()->setParameterByClass(xvmpContentGUI::class, self::GET_REF_ID, $id[0]);
 
         if (isset($id[1])) {
+            if ($id[2]) {
+                // time
+                $DIC->ctrl()->setParameterByClass(xvmpContentGUI::class, self::GET_TIME, (int) $id[2]);
+            }
             $DIC->ctrl()->setParameterByClass(xvmpContentGUI::class, self::GET_VIDEO_ID, $id[1]);
             $DIC->ctrl()->redirectByClass([ilObjPluginDispatchGUI::class, self::class, xvmpContentGUI::class], xvmpContentGUI::CMD_PLAY_VIDEO);
         }

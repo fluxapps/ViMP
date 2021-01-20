@@ -6,6 +6,15 @@ var VimpContent = {
 
 	template: '',
 
+	init: function () {
+		addEventListener('xvmp_copy_direct_link', function (event) {
+			this.copyDirectLink();
+		});
+		addEventListener('xvmp_copy_direct_link_with_time', function (event) {
+			this.copyDirectLinkWithTime();
+		});
+	},
+
 	loadTiles: function () {
 		$(VimpContent.selected_media).each(function(key, mid) {
 			$.get({
@@ -90,6 +99,26 @@ var VimpContent = {
 				}
 			});
 		});
+	},
+
+	copyDirectLink: function() {
+		const link_tpl = document.getElementById('xvmp_direct_link_tpl').value;
+		const el = document.createElement('textarea');
+		el.value = link_tpl.replace('_TIME_', '');
+		document.body.appendChild(el);
+		el.select();
+		document.execCommand('copy');
+		document.body.removeChild(el);
+	},
+
+	copyDirectLinkWithTime: function() {
+		const link_tpl = document.getElementById('xvmp_direct_link_tpl').value;
+		const el = document.createElement('textarea');
+		el.value = link_tpl.replace('_TIME_', '_' + Math.floor(player.currentTime()));
+		document.body.appendChild(el);
+		el.select();
+		document.execCommand('copy');
+		document.body.removeChild(el);
 	}
 
 }
