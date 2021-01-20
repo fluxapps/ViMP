@@ -94,17 +94,20 @@ abstract class xvmpGUI {
         );
         $link_tpl = "<input type='text' id='xvmp_direct_link_tpl' value='{$link_tpl}' hidden>";
 
-        $dropdown = $this->dic->ui()->factory()->dropdown()->standard([
+        $items = [
             $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link'), '')->withOnLoadCode(function (
                 $id
             ) {
                 return "document.getElementById('{$id}').addEventListener('click', VimpContent.copyDirectLink);";
-            }),
-            $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
+            })
+        ];
+        if (!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
+            $items[] = $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
                 '')->withOnLoadCode(function ($id) {
                 return "document.getElementById('{$id}').addEventListener('click', VimpContent.copyDirectLinkWithTime);";
-            }),
-        ])->withLabel($this->pl->txt('direct_link_dropdown'));
+            });
+        }
+        $dropdown = $this->dic->ui()->factory()->dropdown()->standard($items)->withLabel($this->pl->txt('direct_link_dropdown'));
         return $link_tpl . '<br>' . ($async ? $this->dic->ui()->renderer()->renderAsync($dropdown) : $this->dic->ui()->renderer()->render($dropdown));
     }
 
