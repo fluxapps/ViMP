@@ -243,22 +243,10 @@ class xvmpMedium extends xvmpObject {
 	/**
 	 * @return xvmpCurl
 	 */
-	public function update() {
-		$params = array(
-			'title' => $this->getTitle(),
-			'description' => $this->getDescription(),
-			'categories' => implode(',', $this->getCategories()),
-			'tags' => is_array($this->getTags()) ? implode(',', $this->getTags()) : $this->getTags(),
-			'mediapermissions' => implode(',',$this->getMediapermissions()),
-			'hidden' => $this->getPublishedId(),
-		);
-		// TODO: uncomment when fixed by vimp
-		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-			$params[$field[xvmpConf::F_FORM_FIELD_ID]] = $this->getField($field[xvmpConf::F_FORM_FIELD_ID]);
-		}
-		$response = xvmpRequest::editMedium($this->getId(), $params);
-		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $this->getMid());
-		self::cache(self::class . '-' . $this->getMid(),$this->__toArray());
+	public static function update(array $video) : xvmpCurl
+    {
+		$response = xvmpRequest::editMedium($video['mid'], $video);
+		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $video['mid']);
 		return $response;
 	}
 
@@ -272,12 +260,13 @@ class xvmpMedium extends xvmpObject {
 	 *
 	 * @return mixed
 	 */
-	public static function upload($video, $obj_id, $tmp_id, $add_automatically, $notification) {
+	public static function upload($video, $obj_id, $add_automatically, $notification) {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 		$response = xvmpRequest::uploadMedium($video);
 		$medium = $response->getResponseArray()['medium'];
-		$ref_id = array_shift(ilObject::_getAllReferences($obj_id));
+        $references = ilObject::_getAllReferences($obj_id);
+        $ref_id = array_shift($references);
 
 		if ($add_automatically) {
 			xvmpSelectedMedia::addVideo($medium['mid'], $obj_id, false);
@@ -288,7 +277,6 @@ class xvmpMedium extends xvmpObject {
 		$uploaded_media->setNotification($notification);
 		$uploaded_media->setEmail($ilUser->getEmail());
 		$uploaded_media->setUserId($ilUser->getId());
-		$uploaded_media->setTmpId($tmp_id);
 		$uploaded_media->setRefId($ref_id);
 		$uploaded_media->create();
 
@@ -418,7 +406,7 @@ class xvmpMedium extends xvmpObject {
 	 */
 	protected $embed_code;
 	/**
-	 * @var array
+	 * @var array|string
 	 */
 	protected $medium;
 	/**
@@ -821,7 +809,7 @@ class xvmpMedium extends xvmpObject {
 
 
 	/**
-	 * @return array
+	 * @return array|string
 	 */
 	public function getMedium() {
 		return $this->medium;
@@ -829,7 +817,7 @@ class xvmpMedium extends xvmpObject {
 
 
 	/**
-	 * @param array $medium
+	 * @param array|string $medium
 	 */
 	public function setMedium($medium) {
 		$this->medium = $medium;

@@ -98,18 +98,16 @@ class xvmpVideoPlayer {
 		$template = $this->pl->getTemplate('default/tpl.video.html');
 
 		$medium = $this->video->getMedium();
+        $medium = is_array($medium) ? end($medium) : $medium;
+
 		$isABRStream = false;
 
 		$abr_conf = xvmpConfig::find('adaptive_bitrate_streaming')->getValue();
 
-		if (is_array($medium)) {
-			if (xvmp::ViMPVersionGreaterEquals('4.1.0') && $abr_conf) {
-				$isABRStream = true;
-				$medium = html_entity_decode(end($medium));
-				$medium = str_replace('mp4', 'smil', $medium);
-			} else {
-				$medium = $medium[0];
-			}
+		if ($medium && xvmp::ViMPVersionGreaterEquals('4.1.0') && $abr_conf) {
+            $isABRStream = true;
+            $medium = html_entity_decode($medium);
+            $medium = str_replace('mp4', 'smil', $medium);
 		}
 		$id = ilUtil::randomhash();
 

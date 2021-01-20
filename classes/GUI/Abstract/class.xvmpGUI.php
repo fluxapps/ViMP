@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use ILIAS\DI\Container;
+
 /**
  * Class xvmpGUI
  *
@@ -46,6 +48,10 @@ abstract class xvmpGUI {
 	 * @var mixed
 	 */
 	protected $lng;
+    /**
+     * @var Container
+     */
+	protected $dic;
 
 
 	/**
@@ -61,6 +67,7 @@ abstract class xvmpGUI {
 		$ilToolbar = $DIC['ilToolbar'];
 		$ilUser = $DIC['ilUser'];
 		$lng = $DIC['lng'];
+		$this->dic = $DIC;
 		$this->tpl = $tpl;
 		$this->tabs = $ilTabs;
 		$this->ctrl = $ilCtrl;

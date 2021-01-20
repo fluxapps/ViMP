@@ -188,3 +188,8 @@ info_autocomplete#:#Autovervollständigung: Ab der Eingabe des dritten Buchstabe
 btn_show_own_videos#:#Meine Videos anzeigen
 cron_title#:#Benachrichtigungen senden
 cron_description#:#Benachrichtigungen senden
+form_header_metadata#:#Metadata
+form_header_access#:#Zugriff
+form_header_additional_options#:#Zusätzliche Optionen
+form_header_notification#:#Benachrichtigung
+thumbnail#:#Miniaturbild

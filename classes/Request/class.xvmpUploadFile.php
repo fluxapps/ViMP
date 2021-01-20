@@ -29,7 +29,6 @@ class xvmpUploadFile {
 	 * @return CURLFile
 	 */
 	public function getCURLFile() {
-		require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/OpenCast/classes/Event/Form/class.xvmpFileUploadInputGUI.php');
 		$xoctPlupload = new xvmpPlupload();
 		$CURLFile = new CURLFile($xoctPlupload->getTargetDir() . '/' . $this->getTitle());
 

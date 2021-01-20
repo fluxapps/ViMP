@@ -183,7 +183,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	public function create() {
 		$xvmpEditVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpEditVideoFormGUI->setValuesByPost();
-		if ($xvmpEditVideoFormGUI->uploadVideo()) {
+		if ($xvmpEditVideoFormGUI->saveForm()) {
 			ilUtil::sendSuccess($this->pl->txt('video_uploaded'), true);
 			$this->ctrl->redirect($this, self::CMD_STANDARD);
 		}
@@ -233,7 +233,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	 */
 	protected function uploadChunks() {
 		$xoctPlupload = new xoctPlupload();
-		$tmp_id = $_GET['tmp_id'];
+		$tmp_id = filter_input(INPUT_GET, 'tmp_id', FILTER_SANITIZE_STRING);
 
 		$dir = ILIAS_ABSOLUTE_PATH  . ltrim(ilUtil::getWebspaceDir(), '.') . '/vimp/' . $tmp_id;
 		if (!is_dir($dir)) {

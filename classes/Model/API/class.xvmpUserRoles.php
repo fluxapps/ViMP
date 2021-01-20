@@ -46,7 +46,8 @@ class xvmpUserRoles extends xvmpObject {
     /**
      * @return bool
      */
-    public function isInvisibleDefault() {
+    public function isInvisibleDefault() : bool
+    {
         return $this->getField('default') && !$this->getField('visible');
 	}
 
