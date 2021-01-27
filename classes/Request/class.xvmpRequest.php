@@ -27,9 +27,12 @@ class xvmpRequest {
 	const GET_PICTURE = 'getPicture';
     const GET_VIDEOSOURCES = '../media/ajax';
     const GET_CHAPTERS = '../webplayer/getchapters/key/';
+    const ADD_SUBTITLE = 'addSubtitle';
+    const REMOVE_SUBTITLES = 'removeSubtitles';
+    const REMOVE_SUBTITLE = 'removeSubtitle';
     const CONFIG = 'config';
 
-	/**
+    /**
 	 * @return xvmpCurl
 	 */
 	public static function version() {
@@ -379,7 +382,8 @@ class xvmpRequest {
      * @param String $name
      * @return xvmpCurl
      */
-    public static function config($name) {
+    public static function config($name) : xvmpCurl
+    {
         $xvmpCurl = new xvmpCurl(self::CONFIG);
 
         $xvmpCurl->addPostField('name', $name);
@@ -389,6 +393,47 @@ class xvmpRequest {
         }
 
         $xvmpCurl->post();
+        return $xvmpCurl;
+    }
+
+    public static function addSubtitle(int $mediumid, array $params) : xvmpCurl
+    {
+        $xvmpCurl = new xvmpCurl(self::ADD_SUBTITLE);
+        $params['token'] = xvmp::getToken();
+        $params['mediumid'] = $mediumid;
+        foreach ($params as $name => $value) {
+            $xvmpCurl->addPostField($name, $value);
+        }
+
+        $xvmpCurl->post();
+
+        return $xvmpCurl;
+    }
+
+    public static function removeSubtitles(int $mediumid) : xvmpCurl
+    {
+        $xvmpCurl = new xvmpCurl(self::REMOVE_SUBTITLES);
+        $params['token'] = xvmp::getToken();
+        $params['mediumid'] = $mediumid;
+
+        $xvmpCurl->post();
+
+        return $xvmpCurl;
+    }
+
+    public static function removeSubtitle(int $mediumid, string $lang_code, string $lang_file) : xvmpCurl
+    {
+        $xvmpCurl = new xvmpCurl(self::REMOVE_SUBTITLE);
+        $params['token'] = xvmp::getToken();
+        $params['mediumid'] = $mediumid;
+        $params['subtitlelanguage'] = $lang_code;
+        $params['subtitlefile'] = $lang_file;
+        foreach ($params as $name => $value) {
+            $xvmpCurl->addPostField($name, $value);
+        }
+
+        $xvmpCurl->post();
+
         return $xvmpCurl;
     }
 }

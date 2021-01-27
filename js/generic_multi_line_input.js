@@ -55,12 +55,13 @@
 
 						// if date input, configure datetimepicker
 						var $div = new_line.find('.date');
-						if (typeof $div !== 'undefined') {
+						if ($div.length > 0) {
 							$div.datetimepicker(date_config);
 						}
 
 						$(element).change();
 						$(document).trigger('multi_line_add_button', [$line, new_line]);
+						il.Form.registerFileUploadInputEventTrigger();
 						return false;
 					}
 				});

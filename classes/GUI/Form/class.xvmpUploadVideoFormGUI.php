@@ -71,6 +71,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 
         $this->addFormHeader('additional_options');
         $this->addThumbnailInput();
+        $this->addSubtitleInput();
 
         $this->addFormHeader('notification');
 
@@ -118,7 +119,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 		return false;
 	}
 
-    protected function storeVideo()
+    protected function storeVideo() : int
     {
         $this->data = xvmpMedium::upload(
             $this->data,
@@ -126,6 +127,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
             (int) $this->getInput(self::F_ADD_AUTOMATICALLY),
             (int) $this->getInput(self::F_NOTIFICATION)
         );
+        return $this->data['mid'];
     }
 
     protected function fillVideoByPost()

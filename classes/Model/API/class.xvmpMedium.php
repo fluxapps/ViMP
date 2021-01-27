@@ -473,6 +473,26 @@ class xvmpMedium extends xvmpObject {
 	 * @var array
 	 */
 	protected $tags;
+    /**
+     * @var array
+     */
+	protected $subtitles = [];
+
+    /**
+     * @return array lang_code => url
+     */
+    public function getSubtitles() : array
+    {
+        return $this->subtitles;
+    }
+
+    /**
+     * @param array $subtitles
+     */
+    public function setSubtitles(array $subtitles)
+    {
+        $this->subtitles = $subtitles;
+    }
 
 
 	/**

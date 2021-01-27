@@ -196,6 +196,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 					break;
 			}
 		} catch (Exception $e) {
+		    self::dic()->logger()->root()->logStack(ilLogLevel::ERROR, $e->getMessage());
 			ilUtil::sendFailure($e->getMessage());
             if (self::version()->is6()) {
                 $this->tpl->printToStdout();

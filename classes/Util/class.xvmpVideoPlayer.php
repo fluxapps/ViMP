@@ -127,7 +127,7 @@ class xvmpVideoPlayer {
 			}
 		}
 
-		$subtitles = $this->video->getField(xvmpMedium::F_SUBTITLES);
+		$subtitles = $this->video->getSubtitles();
 
 		if ($subtitles) {
 			foreach ($subtitles as $lang => $url) {

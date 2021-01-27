@@ -5,7 +5,6 @@ use ILIAS\FileUpload\FileUpload;
 use ILIAS\FileUpload\Location;
 use ILIAS\Filesystem\Exception\IOException;
 use ILIAS\FileUpload\Exception\IllegalStateException;
-use ILIAS\FileUpload\DTO\UploadResult;
 
 /**
  * Class xvmpUploadService
@@ -41,12 +40,11 @@ class xvmpUploadService
      * moves file upload to web dir and returns WAC-signed url
      * @param string $tmp_name
      * @param string $tmp_id
-     * @return string
+     * @return string name (could have been changed by the upload processor)
      * @throws IOException
      * @throws IllegalStateException
-     * @throws ilWACException
      */
-    public function moveUploadToWebDir(string $tmp_name, string $tmp_id)
+    public function moveUploadToWebDir(string $tmp_name, string $tmp_id) : string
     {
         $dir = '/vimp/' . $tmp_id;
         $this->createDirIfNotExists($dir);
@@ -55,8 +53,10 @@ class xvmpUploadService
         $this->file_upload->moveOneFileTo(
             $uploadResult,
             $dir,
-            Location::WEB
+            Location::WEB,
+            $uploadResult->getName()
         );
+        return $uploadResult->getName();
     }
 
     /**

@@ -262,11 +262,21 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 
 		// validate
 		foreach ($this->inputs as $input_key => $inputs) {
-			foreach ($out_array as $subitem) {
-				$_POST[$inputs->getPostVar()] = $subitem[$inputs->getPostVar()];
-				if (! $inputs->checkInput()) {
-					$valid = false;
+			foreach ($out_array as $subitem_key => $subitem) {
+                $_POST[$inputs->getPostVar()] = $subitem[$inputs->getPostVar()];
+                if ($inputs instanceof ilFileInputGUI) {
+                    $_FILES[$inputs->getPostVar()] = [
+                        'name' => $_FILES[$this->getPostVar()]['name'][$subitem_key][$input_key],
+                        'type' => $_FILES[$this->getPostVar()]['type'][$subitem_key][$input_key],
+                        'tmp_name' => $_FILES[$this->getPostVar()]['tmp_name'][$subitem_key][$input_key],
+                        'error' => $_FILES[$this->getPostVar()]['error'][$subitem_key][$input_key],
+                        'size' => $_FILES[$this->getPostVar()]['size'][$subitem_key][$input_key],
+                    ];
+                }
+                if (!$inputs->checkInput()) {
+                    $valid = false;
 				}
+                unset($_FILES[$inputs->getPostVar()] );
 			}
 		}
 

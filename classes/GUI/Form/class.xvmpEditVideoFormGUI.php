@@ -51,11 +51,22 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
 
         $this->addFormHeader('additional_options');
         $this->addThumbnailInput();
+        $this->addSubtitleInput();
 	}
 
 	public function fillForm() {
 		$array = $this->medium;
 		$array[xvmpMedium::F_CATEGORIES] = array_keys($this->medium[xvmpMedium::F_CATEGORIES]);
+		$array[xvmpMedium::F_SUBTITLES] = array_map(function ($el, $i) {
+            return [
+                self::F_SUBTITLE_LANGUAGE => $i,
+                self::F_SUBTITLE_FILE => substr($el, strrpos($el, '/') + 1)
+            ];
+        }, $array[xvmpMedium::F_SUBTITLES], array_keys($array[xvmpMedium::F_SUBTITLES]));
+		if (!empty($array[xvmpMedium::F_SUBTITLES])) {
+		    $array[self::F_SUBTITLES_CHECKBOX] = 1;
+            $this->dic->ui()->mainTemplate()->addOnLoadCode('$("#subtitles_checkbox").trigger("click");');
+        }
 		$this->setValuesByArray($array);
 	}
 
@@ -74,10 +85,11 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
         return false;
 	}
 
-    protected function storeVideo()
+    protected function storeVideo() : int
     {
         xvmpMedium::update($this->data);
         $this->upload_service->cleanUp();
+        return $this->data['mid'];
     }
 
     protected function addCommandButtons() {

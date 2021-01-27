@@ -192,7 +192,11 @@ form_header_metadata#:#Metadata
 form_header_access#:#Zugriff
 form_header_additional_options#:#Zusätzliche Optionen
 form_header_notification#:#Benachrichtigung
-thumbnail#:#Miniaturbild
+thumbnail_checkbox#:#Miniaturbild
+thumbnail#:#Datei
+subtitles_checkbox#:#Untertitel
+subtitles#:#Sprachdateien
+remove_subtitles#:#Existierende Untertitel löschen
 direct_link_dropdown#:#Link zum Video
 btn_copy_link#:#Link kopieren
 btn_copy_link_w_time#:#Link mit Zeitangabe kopieren
