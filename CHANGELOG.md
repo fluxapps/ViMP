@@ -2,6 +2,7 @@
 
 ## [1.5.1]
 - Fix: only show visible videos in repository preview
+- Fix: building streaming urls (.smil) didn't work when multiple qualities are provided
 
 ## [1.5.0]
 - Fixed wrong date format in modal player
