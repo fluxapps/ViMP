@@ -107,6 +107,7 @@ class xvmpVideoPlayer {
 				$isABRStream = true;
 				$medium = html_entity_decode(end($medium));
 				$medium = str_replace('mp4', 'smil', $medium);
+                $medium = preg_replace('/(_[0-9]{3,4}p)?\.smil/', '.smil', $medium);
 			} else {
 				$medium = $medium[0];
 			}
