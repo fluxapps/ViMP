@@ -56,7 +56,7 @@ class xvmpUploadService
             Location::WEB,
             $uploadResult->getName()
         );
-        return $uploadResult->getName();
+        return ilFileUtils::getValidFilename($uploadResult->getName());
     }
 
     /**
