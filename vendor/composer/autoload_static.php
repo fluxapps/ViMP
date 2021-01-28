@@ -117,6 +117,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpObject' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpObject.php',
         'xvmpOwnVideosGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpOwnVideosGUI.php',
         'xvmpOwnVideosTableGUI' => __DIR__ . '/../..' . '/classes/GUI/Table/class.xvmpOwnVideosTableGUI.php',
+        'xvmpProgressBarUI' => __DIR__ . '/../..' . '/classes/Util/class.xvmpProgressBarUI.php',
         'xvmpRequest' => __DIR__ . '/../..' . '/classes/Request/class.xvmpRequest.php',
         'xvmpSearchVideosGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpSearchVideosGUI.php',
         'xvmpSearchVideosTableGUI' => __DIR__ . '/../..' . '/classes/GUI/Table/class.xvmpSearchVideosTableGUI.php',

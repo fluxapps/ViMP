@@ -211,6 +211,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
                     $this->tpl->setCurrentBlock('transcoded');
                 } else {
                     $this->tpl->setCurrentBlock('transcoding');
+                    // TODO: if actually transcoding
+                    $this->tpl->setVariable('PROGRESS_BAR', (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
                 }
                 $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
                 $this->tpl->parseCurrentBlock();

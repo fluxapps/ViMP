@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use ILIAS\DI\Container;
+
 /**
  * Class xvmpTableGUI
  *
@@ -9,8 +11,12 @@
 abstract class xvmpTableGUI extends ilTable2GUI {
 
 	const ROW_TEMPLATE = ''; // overwrite with subclass
+    /**
+     * @var Container
+     */
+    protected $dic;
 
-	protected $js_files = array();
+    protected $js_files = array();
 	protected $css_files = array();
 
 	/**
@@ -56,6 +62,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		$this->ctrl = $ilCtrl;
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->tpl_global = $tpl;
+		$this->dic = $DIC;
 //		$this->setPrefix(ilViMPPlugin::XVMP . '_table_');
 
 		parent::__construct($parent_gui, $parent_cmd);

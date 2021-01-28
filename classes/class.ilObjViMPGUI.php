@@ -31,6 +31,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
     const GET_REF_ID = 'ref_id';
     const GET_VIDEO_ID = 'mid';
     const GET_TIME = 't';
+    const CMD_TRANSCODING_PROGRESS = 'getTranscodingProgress';
     /**
 	 * @var ilViMPPlugin
 	 */

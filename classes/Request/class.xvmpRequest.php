@@ -436,4 +436,9 @@ class xvmpRequest {
 
         return $xvmpCurl;
     }
+
+    public static function getTranscodingProgress(int $mid) : int
+    {
+        return rand(0, 100);
+    }
 }

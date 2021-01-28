@@ -82,6 +82,7 @@ return array(
     'xvmpObject' => $baseDir . '/classes/Model/API/class.xvmpObject.php',
     'xvmpOwnVideosGUI' => $baseDir . '/classes/GUI/class.xvmpOwnVideosGUI.php',
     'xvmpOwnVideosTableGUI' => $baseDir . '/classes/GUI/Table/class.xvmpOwnVideosTableGUI.php',
+    'xvmpProgressBarUI' => $baseDir . '/classes/Util/class.xvmpProgressBarUI.php',
     'xvmpRequest' => $baseDir . '/classes/Request/class.xvmpRequest.php',
     'xvmpSearchVideosGUI' => $baseDir . '/classes/GUI/class.xvmpSearchVideosGUI.php',
     'xvmpSearchVideosTableGUI' => $baseDir . '/classes/GUI/Table/class.xvmpSearchVideosTableGUI.php',
