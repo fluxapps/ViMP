@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.5.2]
+- Fix: "The media could not be loaded.." error for plugin internal player and private videos
+
 ## [1.5.1]
 - Fix: only show visible videos in repository preview
 - Fix: building streaming urls (.smil) didn't work when multiple qualities are provided
