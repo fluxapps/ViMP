@@ -32,6 +32,7 @@ class xvmpRequest
     const REMOVE_SUBTITLES = 'removeSubtitles';
     const REMOVE_SUBTITLE = 'removeSubtitle';
     const CONFIG = 'config';
+    const ADD_MEDIUM_COUNT = 'addMediumCount';
 
     /**
      * @return xvmpCurl
@@ -130,6 +131,20 @@ class xvmpRequest
         foreach ($params as $name => $value) {
             $xvmpCurl->addPostField($name, $value);
         }
+        $xvmpCurl->post();
+        return $xvmpCurl;
+    }
+
+    /**
+     * @param int $mediumid
+     * @return xvmpCurl
+     * @throws xvmpException
+     */
+    public static function addMediumCount(int $mediumid) : xvmpCurl
+    {
+        $xvmpCurl = new xvmpCurl(self::ADD_MEDIUM_COUNT);
+        $xvmpCurl->addPostField('mediumid', $mediumid);
+        $xvmpCurl->addPostField('token', xvmp::getToken());
         $xvmpCurl->post();
         return $xvmpCurl;
     }

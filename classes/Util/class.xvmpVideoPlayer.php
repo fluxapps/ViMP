@@ -91,7 +91,11 @@ class xvmpVideoPlayer {
 	 * @throws ilTemplateException
 	 */
 	public function getHTML() {
-		if ($this->embed) {
+	    if (xvmp::ViMPVersionGreaterEquals('4.4.0')) {
+            xvmpRequest::addMediumCount($this->video->getMid());
+        }
+
+        if ($this->embed) {
 			return $this->video->getEmbedCode($this->options['width'], $this->options['height']);
 		}
 
