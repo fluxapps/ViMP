@@ -483,7 +483,7 @@ class xvmpMedium extends xvmpObject {
      */
     public function getSubtitles() : array
     {
-        return $this->subtitles;
+        return $this->subtitles ?? [];
     }
 
     /**
