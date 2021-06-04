@@ -136,7 +136,7 @@ class xvmpVideoPlayer {
 			foreach ($subtitles as $lang => $url) {
 				$template->setCurrentBlock('captions');
 				$template->setVariable('CAPTION_LANG', $lang);
-				$template->setVariable('CAPTION_SOURCE', 'data:text/vtt;base64,' . base64_encode(xvmpRequest::getCaptions($url)->getResponseBody()));
+				$template->setVariable('CAPTION_SOURCE', 'data:text/vtt;base64,' . base64_encode(xvmpRequest::get($url)->getResponseBody()));
 				$template->parseCurrentBlock();
 			}
 		}
