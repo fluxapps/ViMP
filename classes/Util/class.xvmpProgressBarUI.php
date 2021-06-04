@@ -68,7 +68,7 @@ class xvmpProgressBarUI
             xvmpLog::getInstance()->logError($e->getCode(), $e->getMessage());
             $progress = 0;
         }
-        $this->tpl->setVariable('PROGRESS', $progress . "%");
+        $this->tpl->setVariable('PROGRESS', $progress);
 
         return $this->tpl->get();
     }

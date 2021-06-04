@@ -27,6 +27,7 @@ class xvmpRequest {
 	const GET_PICTURE = 'getPicture';
     const GET_VIDEOSOURCES = '../media/ajax';
     const GET_CHAPTERS = '../webplayer/getchapters/key/';
+    const GET_MEDIUM_TRANSCODING_PROGRESS = 'getMediumTranscodingProgress';
     const ADD_SUBTITLE = 'addSubtitle';
     const REMOVE_SUBTITLES = 'removeSubtitles';
     const REMOVE_SUBTITLE = 'removeSubtitle';
@@ -437,8 +438,12 @@ class xvmpRequest {
         return $xvmpCurl;
     }
 
-    public static function getTranscodingProgress(int $mid) : int
+    public static function getTranscodingProgress(int $mid) : string
     {
-        return rand(0, 100);
+        $xvmpCurl = new xvmpCurl(self::GET_MEDIUM_TRANSCODING_PROGRESS);
+        $xvmpCurl->addPostField('mediumid', $mid);
+        $xvmpCurl->post();
+        $response = $xvmpCurl->getResponseArray();
+        return $response['progress'];
     }
 }
