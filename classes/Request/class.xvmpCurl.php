@@ -37,30 +37,42 @@ class xvmpCurl {
 		self::$api_key = xvmpConf::getConfig(xvmpConf::F_API_KEY);
 	}
 
-	public function get() {
+    /**
+     * @throws xvmpException
+     */
+    public function get() {
 		$this->setRequestType(self::REQ_TYPE_GET);
 		$this->execute();
 	}
 
-
-	public function put() {
+    /**
+     * @throws xvmpException
+     */
+    public function put() {
 		$this->setRequestType(self::REQ_TYPE_PUT);
 		$this->execute();
 	}
 
-
+    /**
+     * @throws xvmpException
+     */
 	public function post() {
 		$this->setRequestType(self::REQ_TYPE_POST);
 		$this->execute();
 	}
 
-
-	public function delete() {
+    /**
+     * @throws xvmpException
+     */
+    public function delete() {
 		$this->setRequestType(self::REQ_TYPE_DELETE);
 		$this->execute();
 	}
 
-	protected function execute() {
+    /**
+     * @throws xvmpException
+     */
+    protected function execute() {
 		static $ch;
 		if (!isset($ch)) {
 			$ch = curl_init();

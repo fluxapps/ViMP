@@ -1,18 +1,25 @@
 VimpProgressBar = {
-
-  active_bars: [],
-
-  init: () => {
-    setInterval(() => {
-      this.active_bars.forEach((url, mid) => {
-        $.get(url, (data) => {
-          $('#xvmp_progress_' + mid).val(data + '%');
-        });
+  init: (mid, url) => {
+    let i = setInterval(() => {
+      VimpProgressBar.updateProgress(mid, url, (data) => {
+        if (!data || data === '100%') {
+          clearInterval(i);
+        }
       });
-    }, 1000)
+    }, 5000)
   },
 
-  add: (mid, url) => {
-    this.active_bars[mid] = url;
+  updateProgress: (mid, url, callback) => {
+    VimpProgressBar.getProgress(mid, url, (data) => {
+      $('#xvmp_progress_' + mid).text(data + '%');
+      $('#xvmp_progress_bar_' + mid).css('width', data + '%').attr('aria-valuenow', data);
+      callback(data);
+    })
+  },
+
+  getProgress: (mid, url, callback) => {
+    $.get(url.replace(/&amp;/g, '&'), (data) => {
+      callback(data);
+    });
   }
 }

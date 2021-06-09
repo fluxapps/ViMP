@@ -92,10 +92,15 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 	 */
 	protected function fillRow($a_set) {
 		$transcoded = ($a_set['status'] == 'legal');
-		if ($transcoded) {
+        $transcoding = ($a_set['status'] === 'converting');
+        if ($transcoded) {
 			$this->tpl->setCurrentBlock('transcoded');
 		} else {
 			$this->tpl->setCurrentBlock('transcoding');
+			if ($transcoding) {
+                $this->tpl->setVariable('PROGRESS_BAR',
+                    (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
+            }
 		}
 
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);

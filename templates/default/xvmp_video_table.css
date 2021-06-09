@@ -65,6 +65,40 @@ div.modal-body > section > iframe {
 	/*background-color: rgba(0, 255, 0, 0.7);*/
 }
 
+/* CONVERTING OVERLAY */
+.xvmp_progress_overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: inherit;
+	width: inherit;
+	transition: .5s ease;
+	background-color: rgba(0,0,0,.7);
+	vertical-align: middle;
+	display: inline-block;
+	color: white;
+}
+
+.xvmp_progress_bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: white;
+	height: 100%;
+	background-color: white;
+}
+
+.xvmp_progress_bar_container {
+	width: 90%;
+	position: absolute;
+	top: 65%;
+	left: 5%;
+	height: 5px;
+}
+
+
 /* PLAY OVERLAY */
 .xvmp_play_overlay {
 	position: absolute;
@@ -93,7 +127,7 @@ div.modal-body > section > iframe {
 	display: inline-block;
 }
 
-div.xvmp_image_container img.xvmp_play_icon {
+div.xvmp_image_container img.xvmp_play_icon .xvmp_progress {
 	vertical-align: middle;
 	display: inline-block;
 }

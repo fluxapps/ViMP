@@ -442,6 +442,19 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		exit;
 	}
 
+    /**
+     * AJAX call
+     * @throws xvmpException
+     */
+	protected function getTranscodingProgress() {
+	    try {
+            $transcodingProgress = xvmpRequest::getTranscodingProgress(filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT), 2);
+            echo $transcodingProgress;
+        } catch (xvmpException $e) {
+	        xvmpCurlLog::getInstance()->write($e->getMessage());
+        }
+	    exit;
+    }
 
 	/**
 	 *

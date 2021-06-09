@@ -204,16 +204,33 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	 * @param xvmpObject $a_set
 	 */
 	protected function fillRow($a_set) {
-		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
+        $transcoded = ($a_set['status'] === 'legal');
+        $transcoding = ($a_set['status'] === 'converting');
 
-		$checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
+        $this->tpl->setVariable('VAL_MID', $a_set['mid']);
+
+        $checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
 		if ($checked) {
 			$this->tpl->setVariable('VAL_CHECKED', 'checked');
 		}
 
 		foreach ($this->available_columns as $title => $props)
 		{
-            $this->tpl->setVariable('VAL_' . strtoupper($title), $this->parseColumnValue($title, $a_set[$title]));
+		    if ($title == 'thumbnail') {
+                if ($transcoded) {
+                    $this->tpl->setCurrentBlock('transcoded');
+                } else {
+                    $this->tpl->setCurrentBlock('transcoding');
+                    if ($transcoding) {
+                        $this->tpl->setVariable('PROGRESS_BAR',
+                            (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
+                    }
+                }
+                $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
+                $this->tpl->parseCurrentBlock();
+            } else {
+                $this->tpl->setVariable('VAL_' . strtoupper($title), $this->parseColumnValue($title, $a_set[$title]));
+            }
 		}
 
 		foreach ($this->getSelectableColumns() as $title => $props) {

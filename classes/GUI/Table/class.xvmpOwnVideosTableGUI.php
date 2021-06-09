@@ -188,7 +188,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	 * @param xvmpObject $a_set
 	 */
 	protected function fillRow($a_set) {
-        $transcoded = ($a_set['status'] == 'legal');
+        $transcoded = ($a_set['status'] === 'legal');
+        $transcoding = ($a_set['status'] === 'converting');
 
 		if ($a_set['status'] == 'error') {
 			$this->tpl->setVariable('VAL_DISABLED', 'disabled');
@@ -211,8 +212,10 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
                     $this->tpl->setCurrentBlock('transcoded');
                 } else {
                     $this->tpl->setCurrentBlock('transcoding');
-                    // TODO: if actually transcoding
-                    $this->tpl->setVariable('PROGRESS_BAR', (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
+                    if ($transcoding) {
+                        $this->tpl->setVariable('PROGRESS_BAR',
+                            (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
+                    }
                 }
                 $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
                 $this->tpl->parseCurrentBlock();

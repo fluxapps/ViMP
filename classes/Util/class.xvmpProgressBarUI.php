@@ -46,7 +46,6 @@ class xvmpProgressBarUI
     {
         if (!self::$js_loaded) {
             $this->dic->ui()->mainTemplate()->addJavaScript($this->plugin->getDirectory() . '/js/xvmp_progress_bar.min.js');
-            $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpProgressBar.init();');
             self::$js_loaded = true;
         }
         $this->dic->ctrl()->setParameterByClass(ilObjViMPGUI::class, ilObjViMPGUI::GET_VIDEO_ID, $this->mid);
@@ -60,13 +59,13 @@ class xvmpProgressBarUI
      */
     public function getHTML() : string
     {
-        $this->tpl->setVariable('TEXT_CONVERTING', $this->plugin->txt('converting'));
+        $this->tpl->setVariable('TEXT_TRANSCODING', $this->plugin->txt('transcoding'));
         $this->tpl->setVariable('MID', $this->mid);
         try {
-            $progress = xvmpRequest::getTranscodingProgress($this->mid);
+            $progress = xvmpRequest::getTranscodingProgress($this->mid, 1);
         } catch (xvmpException $e) {
-            xvmpLog::getInstance()->logError($e->getCode(), $e->getMessage());
-            $progress = 0;
+            xvmpCurlLog::getInstance()->logError($e->getCode(), $e->getMessage());
+            $progress = '...';
         }
         $this->tpl->setVariable('PROGRESS', $progress);
 

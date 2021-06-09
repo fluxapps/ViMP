@@ -6,6 +6,7 @@ require_once('./Services/Logging/classes/class.ilLog.php');
  * Class xvmpLog
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
+ * @deprecated use xvmpCurlLog
  */
 class xvmpLog extends ilLog {
 
