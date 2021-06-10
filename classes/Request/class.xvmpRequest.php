@@ -419,8 +419,8 @@ class xvmpRequest
     public static function removeSubtitles(int $mediumid) : xvmpCurl
     {
         $xvmpCurl = new xvmpCurl(self::REMOVE_SUBTITLES);
-        $params['token'] = xvmp::getToken();
-        $params['mediumid'] = $mediumid;
+        $xvmpCurl->addPostField('token', xvmp::getToken());
+        $xvmpCurl->addPostField('mediumid', $mediumid);
 
         $xvmpCurl->post();
 

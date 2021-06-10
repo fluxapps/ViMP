@@ -109,6 +109,7 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 		$settings->supported_suffixes_array = $this->getSuffixes();
 		$settings->mime_types = implode(',', $this->getMimeTypes());
 		$settings->mime_types_array = $this->getMimeTypes();
+		$settings->required = $this->getRequired();
 
 		$tpl->addOnLoadCode('xoctFileuploaderSettings.initFromJSON(\'' . json_encode($settings) . '\');');
 	}

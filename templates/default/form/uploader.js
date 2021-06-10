@@ -32,15 +32,16 @@ var xoctFileuploader = {
                     $(document).ready(function () {
                         $('#form_' + xoctFileuploaderSettings.form_id + ' input[name="cmd[create]"], ' +
                           '#form_' + xoctFileuploaderSettings.form_id + ' input[name="cmd[updateVideo]"]').click(function (e) {
-                            e.preventDefault();
                             self.cmd = $(this).attr('name');
                             if (self.has_files) {
+                                e.preventDefault();
                                 xoctWaiter.show();
                                 self.start();
-                            } else {
+                            } else if (xoctFileuploaderSettings.required) {
+                                e.preventDefault();
                                 alert(xoctFileuploaderSettings.lng.msg_select);
                             }
-                            return false;
+                            return true;
                         });
                         $('#xoct_clear').click(function () {
                             self.splice();
@@ -138,7 +139,7 @@ var xoctFileuploader = {
 
 /**
  * xoctFileuploaderSettings
- * @type {{lng: {msg_select: string, msg_not_supported: string}, log: boolean, form_id: string, url: string, runtimes: string, pick_button: string, chunk_size: string, max_file_size: string, supported_suffixes: string, supported_suffixes_array:array,mime_types:string,mime_types_array:array}}
+ * @type {{lng: {msg_select: string, msg_not_supported: string}, log: boolean, form_id: string, url: string, runtimes: string, pick_button: string, chunk_size: string, max_file_size: string, supported_suffixes: string, supported_suffixes_array:array,mime_types:string,mime_types_array:array, required: boolean}}
  */
 var xoctFileuploaderSettings = {
     /**

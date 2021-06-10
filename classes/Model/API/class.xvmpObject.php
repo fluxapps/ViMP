@@ -49,7 +49,7 @@ class xvmpObject {
 		if (!self::$cache_initialized[$class_name]) {
 			self::buildAllFromArray($class_name::getAllAsArray());
 		}
-		return self::$cache[$class_name];
+		return self::$cache[$class_name] ?? [];
 	}
 
 	/**

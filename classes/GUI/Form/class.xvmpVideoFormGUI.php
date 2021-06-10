@@ -14,6 +14,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     const F_SOURCE_URL = 'source_url';
     const F_THUMBNAIL_CHECKBOX = 'thumbnail_checkbox';
     const F_SUBTITLES_CHECKBOX = 'subtitles_checkbox';
+    const F_SUBTITLES_REMOVE_CHECKBOX = 'subtitles_remove_checkbox';
     const F_SUBTITLE_LANGUAGE = 'subtitle_language';
     const F_SUBTITLE_FILE = 'subtitle_file';
     private static $subtitle_languages = [
@@ -76,19 +77,20 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function processSubtitles(int $mid)
     {
         $tmp_id = filter_input(INPUT_GET, 'tmp_id', FILTER_SANITIZE_STRING);
-        $existing = $this->medium[xvmpMedium::F_SUBTITLES];
-        foreach ($_FILES[xvmpMedium::F_SUBTITLES]['tmp_name'] as $id => $name_arr) {
-            $lang_code = $this->getInput(xvmpMedium::F_SUBTITLES)[$id][self::F_SUBTITLE_LANGUAGE];
-            unset($existing[$lang_code]);
-            if ($name_arr[self::F_SUBTITLE_FILE]) {
-                if (in_array($lang_code, array_keys($existing))) {
-                    xvmpRequest::removeSubtitle($mid, $lang_code, substr($existing[$lang_code], strrpos($existing[$lang_code], '/') + 1));
-                }
-                $this->uploadSubtitle($mid, $lang_code, $name_arr[self::F_SUBTITLE_FILE], $tmp_id);
+        $tmp_names = $_FILES[xvmpMedium::F_SUBTITLES]['tmp_name'] ?? [];
+        if ($this->getInput(self::F_SUBTITLES_REMOVE_CHECKBOX)) {
+            try {
+                xvmpRequest::removeSubtitles($mid);
+            } catch (xvmpException $e) {
+                // vimp throws an error if no subtitles are present
+                xvmpCurlLog::getInstance()->writeWarning('error removing subtitles: ' . $e->getMessage());
             }
         }
-        foreach ($existing as $lang_code => $value) {
-            xvmpRequest::removeSubtitle($mid, $lang_code, substr($existing[$lang_code], strrpos($existing[$lang_code], '/') + 1));
+        foreach ($tmp_names as $id => $name_arr) {
+            $lang_code = $this->getInput(xvmpMedium::F_SUBTITLES)[$id][self::F_SUBTITLE_LANGUAGE];
+            if ($name_arr[self::F_SUBTITLE_FILE]) {
+                $this->uploadSubtitle($mid, $lang_code, $name_arr[self::F_SUBTITLE_FILE], $tmp_id);
+            }
         }
     }
 
@@ -216,11 +218,27 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
      */
     protected function fillVideoByPost()
     {
-        foreach ($this->getItems() as $item) {
-            $post_var = rtrim($item->getPostVar(), '[]');
-            $field = $this->mapPostVarToMediumField($post_var);
-            if (!is_null($field)) {
-                $this->data[$field] = $this->formatInput($post_var);
+        /** @var ilFormPropertyGUI $item */
+        foreach ($this->getInputItemsRecursive() as $item) {
+            $this->fillVideoByItem($item);
+        }
+    }
+
+    /**
+     * @param ilFormPropertyGUI $item
+     * @throws IOException
+     * @throws IllegalStateException
+     * @throws ilWACException
+     * @throws xvmpException
+     */
+    protected function fillVideoByItem(ilFormPropertyGUI $item)
+    {
+        $post_var = rtrim($item->getPostVar(), '[]');
+        $field = $this->mapPostVarToMediumField($post_var);
+        if (!is_null($field)) {
+            $input = $this->formatInput($post_var);
+            if (!is_null($input)) {
+                $this->data[$field] = $input;
             }
         }
     }
@@ -407,6 +425,10 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function addSubtitleInput()
     {
         $checkbox = new ilCheckboxInputGUI($this->pl->txt(self::F_SUBTITLES_CHECKBOX), self::F_SUBTITLES_CHECKBOX);
+
+        $checkbox_remove = new ilCheckboxInputGUI($this->pl->txt(self::F_SUBTITLES_REMOVE_CHECKBOX), self::F_SUBTITLES_REMOVE_CHECKBOX);
+        $checkbox->addSubItem($checkbox_remove);
+
         $input = new srGenericMultiInputGUI($this->pl->txt(xvmpMedium::F_SUBTITLES), xvmpMedium::F_SUBTITLES);
         $input->setAllowEmptyFields(true);
         $input->setLimit(count(self::$subtitle_languages));

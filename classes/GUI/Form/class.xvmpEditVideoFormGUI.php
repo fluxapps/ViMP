@@ -36,7 +36,9 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
 
         $this->addTitleInput();
         $this->addDescriptionInput();
-        $this->addFileInput(false);
+        if (xvmp::ViMPVersionGreaterEquals('4.4.0')) {
+            $this->addFileInput(false);
+        }
 
         $this->addFormHeader('metadata');
         $this->addCategoriesInput();
@@ -49,22 +51,16 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
 
         $this->addFormHeader('additional_options');
         $this->addThumbnailInput();
-        $this->addSubtitleInput();
+        // TODO: set version where addSubtitle is fixed
+//        if (xvmp::ViMPVersionGreaterEquals('4.5.0')) {
+//            $this->addSubtitleInput();
+//        }
 	}
 
 	public function fillForm() {
 		$array = $this->medium;
 		$array[xvmpMedium::F_CATEGORIES] = array_keys($this->medium[xvmpMedium::F_CATEGORIES]);
-		$array[xvmpMedium::F_SUBTITLES] = array_map(function ($el, $i) {
-            return [
-                self::F_SUBTITLE_LANGUAGE => $i,
-                self::F_SUBTITLE_FILE => substr($el, strrpos($el, '/') + 1)
-            ];
-        }, $array[xvmpMedium::F_SUBTITLES] ?? [], array_keys($array[xvmpMedium::F_SUBTITLES] ?? []));
-		if (!empty($array[xvmpMedium::F_SUBTITLES])) {
-		    $array[self::F_SUBTITLES_CHECKBOX] = 1;
-            $this->dic->ui()->mainTemplate()->addOnLoadCode('$("#subtitles_checkbox").trigger("click");');
-        }
+        $array[xvmpMedium::F_SUBTITLES] = [];
 		$this->setValuesByArray($array);
 	}
 

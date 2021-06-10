@@ -71,8 +71,10 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 
         $this->addFormHeader('additional_options');
         $this->addThumbnailInput();
-        $this->addSubtitleInput();
-
+        // TODO: set version where addSubtitle is fixed
+//        if (xvmp::ViMPVersionGreaterEquals('4.5.0')) {
+//            $this->addSubtitleInput();
+//        }
         $this->addFormHeader('notification');
 
         // NOTIFICATION
