@@ -364,9 +364,8 @@ class xvmpRequest
      * @return xvmpCurl
      * @throws xvmpException
      */
-    public static function getChapters($key)
-    {
-        $xvmpCurl = new xvmpCurl(self::GET_CHAPTERS . $key);
+     public static function getChapters($key) {
+        $xvmpCurl = new xvmpCurl(self::GET_CHAPTERS . $key . '?token=' . xvmp::getToken());
         $xvmpCurl->get();
         return $xvmpCurl;
     }
@@ -378,8 +377,7 @@ class xvmpRequest
      * @return xvmpCurl
      * @throws xvmpException
      */
-    public static function getCaptions($url)
-    {
+     public static function get($url) {
         $xvmpCurl = new xvmpCurl($url);
         $xvmpCurl->get();
         return $xvmpCurl;
