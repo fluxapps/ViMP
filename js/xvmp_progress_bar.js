@@ -2,7 +2,7 @@ VimpProgressBar = {
   init: (mid, url) => {
     let i = setInterval(() => {
       VimpProgressBar.updateProgress(mid, url, (data) => {
-        if (!data || data === '100%') {
+        if (data === '100') {
           clearInterval(i);
         }
       });

@@ -6,7 +6,6 @@
 mOxie.Mime.addMimeType("video/quicktime, mov");
 var xoctFileuploader = {
     init: function () {
-        console.log('init')
         mOxie.Mime.addMimeType("video/quicktime, mov");
         var xoctFileuploaderJS = new plupload.Uploader({
             cmd: '',
@@ -31,8 +30,8 @@ var xoctFileuploader = {
                     var self = this;
                     info.runtime == 'html5' ? xoctWaiter.init('percentage') : xoctWaiter.init();
                     $(document).ready(function () {
-                        $('#form_xvmp_video input[name="cmd[create]"]').click(function (e) {
-                            console.log('upload');
+                        $('#form_' + xoctFileuploaderSettings.form_id + ' input[name="cmd[create]"], ' +
+                          '#form_' + xoctFileuploaderSettings.form_id + ' input[name="cmd[updateVideo]"]').click(function (e) {
                             e.preventDefault();
                             self.cmd = $(this).attr('name');
                             if (self.has_files) {
@@ -68,7 +67,6 @@ var xoctFileuploader = {
                     plupload.each(files, function (file) {
                         self_file = file;
                     });
-                    console.log(self_file);
                     $('#postvar_temp_file').val(self_file.target_name);
                     $('#postvar_file_name').val(self_file.name);
                     $('#postvar_size').val(self_file.size);
@@ -96,7 +94,6 @@ var xoctFileuploader = {
 
                     var self = this;
                     plupload.each(files, function (file) {
-                        console.log(file);
                         if (!inArray(file.type, xoctFileuploaderSettings.mime_types_array) && !file.type.startsWith('video/')) {
                             alert(xoctFileuploaderSettings.lng.msg_not_supported)
                         } else {
@@ -162,7 +159,7 @@ var xoctFileuploaderSettings = {
      */
     getUrl: function () {
         var replacer = new RegExp('amp;', 'g');
-        console.log(this);
+        // console.log(this);
         return this.url.replace(replacer, '');
     }
 };

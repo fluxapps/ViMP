@@ -74,7 +74,6 @@ div.modal-body > section > iframe {
 	right: 0;
 	height: inherit;
 	width: inherit;
-	transition: .5s ease;
 	background-color: rgba(0,0,0,.7);
 	vertical-align: middle;
 	display: inline-block;
@@ -88,6 +87,7 @@ div.modal-body > section > iframe {
 	color: white;
 	height: 100%;
 	background-color: white;
+	transition: .5s ease-out;
 }
 
 .xvmp_progress_bar_container {

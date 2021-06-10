@@ -1,8 +1,6 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use ILIAS\FileUpload\Location;
-
 /**
  * Class xvmpEditVideoFormGUI
  *
@@ -62,7 +60,7 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
                 self::F_SUBTITLE_LANGUAGE => $i,
                 self::F_SUBTITLE_FILE => substr($el, strrpos($el, '/') + 1)
             ];
-        }, $array[xvmpMedium::F_SUBTITLES], array_keys($array[xvmpMedium::F_SUBTITLES]));
+        }, $array[xvmpMedium::F_SUBTITLES] ?? [], array_keys($array[xvmpMedium::F_SUBTITLES] ?? []));
 		if (!empty($array[xvmpMedium::F_SUBTITLES])) {
 		    $array[self::F_SUBTITLES_CHECKBOX] = 1;
             $this->dic->ui()->mainTemplate()->addOnLoadCode('$("#subtitles_checkbox").trigger("click");');

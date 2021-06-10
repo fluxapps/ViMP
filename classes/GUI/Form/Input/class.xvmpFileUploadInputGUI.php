@@ -7,7 +7,12 @@
  */
 class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 
-	/**
+    /**
+     * @var ilViMPPlugin
+     */
+    private $pl;
+
+    /**
 	 * @var array
 	 */
 	protected $suffixes = array();

@@ -453,7 +453,7 @@ class xvmpRequest
      */
     public static function getTranscodingProgress(int $mid, int $decimals = 0) : float
     {
-        $xvmpCurl = new xvmpCurl(self::GET_MEDIUM_TRANSCODING_PROGRESS);
+        $xvmpCurl = new xvmpCurl(self::GET_MEDIUM_TRANSCODING_PROGRESS . '?token=' . xvmp::getToken());
         $xvmpCurl->addPostField('mediumid', $mid);
         $xvmpCurl->post();
         $response = $xvmpCurl->getResponseArray();
