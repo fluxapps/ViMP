@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use ILIAS\DI\Container;
+
 /**
  * Class xvmpFormGUI
  *
@@ -24,6 +26,10 @@ abstract class xvmpFormGUI extends ilPropertyFormGUI {
 	 * @var ilLanguage
 	 */
 	protected $lng;
+    /**
+     * @var Container
+     */
+    protected $dic;
 
 	/**
 	 * xvmpFormGUI constructor.
@@ -36,6 +42,7 @@ abstract class xvmpFormGUI extends ilPropertyFormGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->ctrl = $ilCtrl;
 		$this->lng = $lng;
+		$this->dic = $DIC;
 
 		$this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 

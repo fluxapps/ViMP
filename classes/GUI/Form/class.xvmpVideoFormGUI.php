@@ -31,10 +31,6 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
      */
     protected $data = [];
     /**
-     * @var Container
-     */
-    protected $dic;
-    /**
      * @var xvmpUploadService
      */
     protected $upload_service;

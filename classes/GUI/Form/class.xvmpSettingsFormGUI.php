@@ -31,9 +31,9 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 	 * @param $parent_gui
 	 */
 	public function __construct($parent_gui) {
-		parent::__construct($parent_gui);
-		$this->setTitle($this->lng->txt('settings'));
-		$this->object = $this->parent_gui->getObject();
+        $this->object = $parent_gui->getObject();
+        parent::__construct($parent_gui);
+        $this->setTitle($this->lng->txt('settings'));
 		$this->settings = xvmpSettings::find($this->parent_gui->getObjId());
 		$this->fillForm();
 	}
@@ -82,6 +82,8 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 		$input->setDisabled(!xvmp::isLearningProgressPossible($this->parent_gui->getObjId()));
 		$this->addItem($input);
 
+		$this->dic->object()->commonSettings()->legacyForm($this, $this->object)->addTileImage();
+
 		$this->initCommandButtons();
 	}
 
@@ -128,6 +130,8 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 		$this->settings->setRepositoryPreview($this->getInput(self::F_REPOSITORY_PREVIEW));
 		$this->settings->setLpActive($this->getInput(self::F_LEARNING_PROGRESS));
 		$this->settings->update();
+
+        $this->dic->object()->commonSettings()->legacyForm($this, $this->object)->saveTileImage();
 
 		return true;
 	}
