@@ -8,6 +8,7 @@
 - Feature: replace video (file upload in edit form)
 - Feature: upload image for repository tile view
 - Feature: outlined logo for repository tile view (ILIAS 6+ only)
+- Feature: increase medium view count when opening video in Content tab
 
 ## [1.5.2]
 - Fix: "The media could not be loaded.." error for plugin internal player and private videos

@@ -72,7 +72,7 @@ class xvmpContentPlayerGUI {
 		}
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
-		$video_player = new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->parent_gui->getObjId(), $video));
+		$video_player = new xvmpVideoPlayer($video, xvmp::isUseEmbeddedPlayer($this->parent_gui->getObjId(), $video));
 		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
 		$player_tpl->setVariable('TITLE', $video->getTitle());
 		$player_tpl->setVariable('DESCRIPTION', nl2br($video->getDescription(50), false));

@@ -187,7 +187,8 @@ class xvmp {
 	 * @return bool
 	 * @throws xvmpException
 	 */
-	public static function useEmbeddedPlayer($obj_id, $video) {
+	public static function isUseEmbeddedPlayer($obj_id, $video) : bool
+    {
 		return (!xvmpSettings::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER))
 			|| xvmpMedium::isVimeoOrYoutube($video);
 	}
@@ -202,7 +203,7 @@ class xvmp {
 	 * @throws xvmpException
 	 */
 	public static function showWatched($obj_id, $video) {
-		return !self::useEmbeddedPlayer($obj_id, $video);
+		return !self::isUseEmbeddedPlayer($obj_id, $video);
 	}
 
 

@@ -7,8 +7,12 @@
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xvmpVideoPlayer {
+    /**
+     * @var bool
+     */
+    private $increase_view_count;
 
-	/**
+    /**
 	 * @var ilViMPPlugin
 	 */
 	protected $pl;
@@ -41,16 +45,14 @@ class xvmpVideoPlayer {
 	);
 	protected static $count = 1;
 
-
-	/**
-	 * xvmpVideoPlayer constructor.
-	 *
-	 * @param      $video
-	 * @param bool $embed
-	 *
-	 * @throws xvmpException
-	 */
-	public function __construct($video, $embed = false) {
+    /**
+     * xvmpVideoPlayer constructor.
+     * @param      $video
+     * @param bool $embed
+     * @param bool $increase_view_count
+     * @throws xvmpException
+     */
+	public function __construct($video, bool $embed = false, bool $increase_view_count = true) {
 		global $DIC;
 		$tpl = $GLOBALS['tpl']; // necessary because of LM Bug
 		$this->ctrl = $DIC['ilCtrl'];
@@ -61,7 +63,8 @@ class xvmpVideoPlayer {
 		}
 		$this->video = $video;
 		$this->embed = $embed;
-	}
+        $this->increase_view_count = $increase_view_count;
+    }
 
 
 	/**
@@ -91,7 +94,7 @@ class xvmpVideoPlayer {
 	 * @throws ilTemplateException
 	 */
 	public function getHTML() {
-	    if (xvmp::ViMPVersionGreaterEquals('4.4.0')) {
+	    if (xvmp::ViMPVersionGreaterEquals('4.4.0') && $this->increase_view_count) {
             xvmpRequest::addMediumCount($this->video->getMid());
         }
 

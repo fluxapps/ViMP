@@ -112,6 +112,17 @@ abstract class xvmpGUI {
     }
 
     /**
+    * @param     $video
+    * @param int $obj_id
+    * @return xvmpVideoPlayer
+    * @throws xvmpException
+    */
+    protected function getVideoPlayer($video, int $obj_id) : xvmpVideoPlayer
+    {
+        return (new xvmpVideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video)));
+    }
+
+    /**
 	 *
 	 */
 	public function executeCommand() {
@@ -301,7 +312,7 @@ abstract class xvmpGUI {
 
 		$response = new stdClass();
 		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
-			$video_player_html = (new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId(), $video)))->getHTML();
+			$video_player_html = $this->getVideoPlayer($video, $this->getObjId())->getHTML();
 		}
 		$response->html = $video_player_html . $video_infos;
 		$response->video_title = $video->getTitle();

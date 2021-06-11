@@ -176,4 +176,10 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$upload_button->setUrl($this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO_FORM));
 		$this->toolbar->addButtonInstance($upload_button);
 	}
+
+    protected function getVideoPlayer($video, int $obj_id) : xvmpVideoPlayer
+    {
+        return (new xvmpVideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video), false));
+    }
+
 }
