@@ -1,5 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+use ILIAS\UI\Component\Card\RepositoryObject;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
@@ -126,5 +129,22 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 		}
 		return $preview;
 	}
+
+    public function getAsCard(
+        int $ref_id,
+        int $obj_id,
+        string $type,
+        string $title,
+        string $description
+    ) : ?\ILIAS\UI\Component\Card\Card {
+	    /** @var RepositoryObject $card */
+        $card = parent::getAsCard($ref_id, $obj_id, $type, $title, $description);
+        return $card->withObjectIcon(
+            $this->ui->factory()->symbol()->icon()->custom(
+                $this->plugin->getImagePath('icon_xvmp_outlined.svg'),
+                $this->plugin->txt('xvmp_obj')
+            )
+        );
+    }
 
 }
