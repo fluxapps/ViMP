@@ -1,5 +1,14 @@
 # Changelog
 
+## [x.x.x]
+- Feature: upload thumbnails for videos
+- Feature: video deep links with time marker
+- Feature/Improvement: restructured video upload/edit forms
+- Feature: show transcoding progress 
+- Feature: replace video (file upload in edit form)
+- Feature: upload image for repository tile view
+- Feature: outlined logo for repository tile view (ILIAS 6+ only)
+
 ## [1.5.2]
 - Fix: "The media could not be loaded.." error for plugin internal player and private videos
 
