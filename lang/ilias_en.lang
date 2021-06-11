@@ -196,7 +196,7 @@ thumbnail_checkbox#:#Thumbnail
 thumbnail#:#File
 subtitles_checkbox#:#Subtitles
 subtitles#:#Language files
-remove_subtitles#:#Delete existing
+subtitles_remove_checkbox#:#Delete existing files
 direct_link_dropdown#:#Video Link
 btn_copy_link#:#Copy Link
 btn_copy_link_w_time#:#Copy Link with current time
