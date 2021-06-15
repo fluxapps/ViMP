@@ -477,6 +477,10 @@ class xvmpMedium extends xvmpObject {
      * @var array
      */
 	protected $subtitles = [];
+	/**
+    * @var bool
+    */
+	protected $download_allowed = false;
 
     /**
      * @return array lang_code => url
@@ -509,6 +513,14 @@ class xvmpMedium extends xvmpObject {
 	public function setMediapermissions($mediapermissions) {
 		$this->mediapermissions = $mediapermissions;
 	}
+
+    /**
+     * @return bool
+     */
+    public function isDownloadAllowed() : bool
+    {
+        return $this->download_allowed;
+    }
 
 	/**
 	 * @return int

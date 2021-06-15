@@ -278,12 +278,11 @@ abstract class xvmpGUI {
     /**
      * @param null $play_video_id
      * @param bool $async
-     *
      * @return stdClass
      * @throws ilTemplateException
      * @throws xvmpException
      */
-	public function fillModalPlayer($play_video_id = null, $async = true) {
+	public function fillModalPlayer($play_video_id = null, bool $async = true) {
 		$mid = $play_video_id ?? $_GET['mid'];
 		$video = xvmpMedium::find($mid);
 		$video_infos = '';
