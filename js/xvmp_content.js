@@ -59,8 +59,9 @@ var VimpContent = {
 
 	playVideo: function (mid) {
 		console.log('playVideo ' + mid)
-		$('#xoct_waiter_modal').show();
 		var $modal = $('#xvmp_modal_player');
+		$modal.find('h4.modal-title').html('');
+		$modal.find('div#xvmp_video_container').html('');
 		$modal.modal('show');
 		$.get({
 			url: this.ajax_base_url,
@@ -72,7 +73,6 @@ var VimpContent = {
 			response_object = JSON.parse(response);
 			$modal.find('div#xvmp_video_container').html(response_object.html);
 			$modal.find('h4.modal-title').html(response_object.video_title);
-			$('#xoct_waiter_modal').show();
 			if (typeof VimpObserver != 'undefined') {
 				VimpObserver.init(mid, response_object.time_ranges);
 			}

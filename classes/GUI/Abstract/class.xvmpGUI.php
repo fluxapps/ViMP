@@ -53,6 +53,10 @@ abstract class xvmpGUI {
      * @var Container
      */
 	protected $dic;
+    /**
+     * @var xvmpPlayModalRenderer
+     */
+	protected $modal_renderer;
 
 
 	/**
@@ -77,7 +81,62 @@ abstract class xvmpGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
+		$this->modal_renderer = new xvmpPlayModalRenderer($DIC);
 	}
+
+    /**
+     * @return ilModalGUI
+     */
+    protected function getAccessDeniedModal() : ilModalGUI
+    {
+        $modal = ilModalGUI::getInstance();
+        $modal->setId('xvmp_modal_player');
+        $modal->setType(ilModalGUI::TYPE_LARGE);
+        if (xvmp::is54()) {
+            $modal->setBody($this->dic->ui()->renderer()->render($this->dic->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
+        } else {
+            $modal->setBody($this->dic->ui()->mainTemplate()->getMessageHTML($this->pl->txt('access_denied'),
+                "failure"));
+        }
+        return $modal;
+    }
+
+    /**
+     * @param $video
+     * @return xvmpPlayModalDTO
+     * @throws xvmpException
+     */
+    protected function buildPlayModalDTO($video) : xvmpPlayModalDTO
+    {
+        $playModalDto = new xvmpPlayModalDTO($this->getVideoPlayer($video, $this->getObjId()));
+        if ($video->getStatus() !== 'legal') {
+            $msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->pl->txt('info_transcoding_full')
+                : $this->pl->txt('info_transcoding_possible_full');
+            $playModalDto = $playModalDto->withVideoInfo(
+                (new xvmpVideoInfo($msg))->withStyle('color:red'));
+        }
+        $playModalDto = $playModalDto->withVideoInfo(
+            new xvmpVideoInfo($video->getDurationFormatted(), $this->pl->txt(xvmpMedium::F_DURATION)));
+        $playModalDto = $playModalDto->withVideoInfo(
+            new xvmpVideoInfo($video->getCreatedAt('d.m.Y, H:i'), $this->pl->txt(xvmpMedium::F_CREATED_AT)));
+
+        foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+            if ($value = $video->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
+                $playModalDto = $playModalDto->withVideoInfo(
+                    new xvmpVideoInfo($value, $field[xvmpConf::F_FORM_FIELD_TITLE]));
+            }
+        }
+
+        $playModalDto = $playModalDto->withVideoInfo(
+            (new xvmpVideoInfo(nl2br($video->getDescription(), false), $this->pl->txt(xvmpMedium::F_DESCRIPTION)))
+                ->withEllipsis(true));
+
+        if (!is_null($this->getObject())) {
+            $link = $this->getPermLinkHTML($video);
+            $playModalDto = $playModalDto->withPermLinkHtml($link);
+        }
+        return $playModalDto;
+    }
 
     /**
      * @param xvmpMedium $video
@@ -238,31 +297,23 @@ abstract class xvmpGUI {
      * @throws ilTemplateException
      * @throws xvmpException
      */
-    public function getFilledModalPlayer($video_mid)
+    public function getFilledModalPlayer($video_mid) : ilModalGUI
     {
-        global $tpl, $DIC;
         $selected_medium = xvmpSelectedMedia::where(array('obj_id' => $this->getObjId(), 'mid' => $video_mid));
         if (!ilObjViMPAccess::hasWriteAccess()) {
             $selected_medium = $selected_medium->where(['visible' => 1]);
         }
+        /** @var xvmpSelectedMedia $selected_medium */
         $selected_medium = $selected_medium->first();
         if (!$selected_medium) {
-            $modal = ilModalGUI::getInstance();
-            $modal->setId('xvmp_modal_player');
-            $modal->setType(ilModalGUI::TYPE_LARGE);
-            if (xvmp::is54()) {
-                $modal->setBody($DIC->ui()->renderer()->render($DIC->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
-            } else {
-                $modal->setBody($DIC->ui()->mainTemplate()->getMessageHTML($this->pl->txt('access_denied'), "failure"));
-            }
-            return $modal;
+            return $this->getAccessDeniedModal();
         }
-        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
+        $this->dic->ui()->mainTemplate()->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
         $modal_content = $this->fillModalPlayer($video_mid, false);
         /** @var xvmpSettings $settings */
         $settings = xvmpSettings::find($this->getObjId());
         if ($settings->getLpActive()) {
-            $tpl->addOnLoadCode('VimpObserver.init(' . $video_mid . ', ' . json_encode($modal_content->time_ranges) . ');');
+            $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpObserver.init(' . $video_mid . ', ' . json_encode($modal_content->time_ranges) . ');');
         }
         $modal = ilModalGUI::getInstance();
         $modal->setId('xvmp_modal_player');
@@ -285,35 +336,10 @@ abstract class xvmpGUI {
 	public function fillModalPlayer($play_video_id = null, bool $async = true) {
 		$mid = $play_video_id ?? $_GET['mid'];
 		$video = xvmpMedium::find($mid);
-		$video_infos = '';
-		if ($video->getStatus() !== 'legal') {
-			$msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->pl->txt('info_transcoding_full') : $this->pl->txt('info_transcoding_possible_full');
-			$video_infos .= "
-				<p style='color:red'>" . $msg . "</p>
-			";
-		}
-		$video_infos .= "				
-			<p>{$this->pl->txt(xvmpMedium::F_DURATION)}: {$video->getDurationFormatted()}</p>
-			<p>{$this->pl->txt(xvmpMedium::F_CREATED_AT)}: {$video->getCreatedAt('d.m.Y, H:i')}</p>
-			
-		";
-		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-			if ($value = $video->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
-				$video_infos .= "<p>{$field[xvmpConf::F_FORM_FIELD_TITLE]}: {$value}</p>";
-			}
-		}
-		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: " . nl2br($video->getDescription(), false) . "</div>";
+        $playModalDto = $this->buildPlayModalDTO($video);
 
-		if (!is_null($this->getObject())) {
-            $link = $this->getPermLinkHTML($video);
-            $video_infos .= $link;
-        }
-
-		$response = new stdClass();
-		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
-			$video_player_html = $this->getVideoPlayer($video, $this->getObjId())->getHTML();
-		}
-		$response->html = $video_player_html . $video_infos;
+        $response = new stdClass();
+		$response->html = $this->modal_renderer->render($playModalDto);
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->user->getId(), xvmpMedium::F_MID => $mid))->first();
@@ -336,11 +362,9 @@ abstract class xvmpGUI {
 	 * ajax
 	 */
 	public function updateProgress() {
-		global $DIC;
-		$ilUser = $DIC['ilUser'];
 		$mid = $_POST[xvmpMedium::F_MID];
 		$ranges = $_POST[xvmpUserProgress::F_RANGES];
-		xvmpUserProgress::storeProgress($ilUser->getid(), $mid, $ranges);
+		xvmpUserProgress::storeProgress($this->dic->user()->getid(), $mid, $ranges);
 		echo "ok";
 		exit;
 	}

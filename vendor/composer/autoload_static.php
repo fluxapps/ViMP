@@ -88,7 +88,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpCache' => __DIR__ . '/../..' . '/classes/Cache/v52/class.xvmpCache.php',
         'xvmpCacheFactory' => __DIR__ . '/../..' . '/classes/Cache/class.xvmpCacheFactory.php',
         'xvmpCategory' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpCategory.php',
-        'xvmpChangeOwnerFormGUI' => __DIR__ . '/../..' . '/classes/Util/class.xvmpChangeOwnerFormGUI.php',
+        'xvmpChangeOwnerFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpChangeOwnerFormGUI.php',
         'xvmpChapters' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpChapters.php',
         'xvmpConf' => __DIR__ . '/../..' . '/classes/Model/AR/class.xvmpConf.php',
         'xvmpConfFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpConfFormGUI.php',
@@ -117,6 +117,8 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpObject' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpObject.php',
         'xvmpOwnVideosGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpOwnVideosGUI.php',
         'xvmpOwnVideosTableGUI' => __DIR__ . '/../..' . '/classes/GUI/Table/class.xvmpOwnVideosTableGUI.php',
+        'xvmpPlayModalDTO' => __DIR__ . '/../..' . '/classes/GUI/Components/class.xvmpPlayModalDTO.php',
+        'xvmpPlayModalRenderer' => __DIR__ . '/../..' . '/classes/GUI/Components/class.xvmpPlayModalRenderer.php',
         'xvmpProgressBarUI' => __DIR__ . '/../..' . '/classes/Util/class.xvmpProgressBarUI.php',
         'xvmpRequest' => __DIR__ . '/../..' . '/classes/Request/class.xvmpRequest.php',
         'xvmpSearchVideosGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpSearchVideosGUI.php',
@@ -137,7 +139,8 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpUserProgress' => __DIR__ . '/../..' . '/classes/Model/AR/class.xvmpUserProgress.php',
         'xvmpUserRoles' => __DIR__ . '/../..' . '/classes/Model/API/class.xvmpUserRoles.php',
         'xvmpVideoFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpVideoFormGUI.php',
-        'xvmpVideoPlayer' => __DIR__ . '/../..' . '/classes/Util/class.xvmpVideoPlayer.php',
+        'xvmpVideoInfo' => __DIR__ . '/../..' . '/classes/GUI/Components/class.xvmpVideoInfo.php',
+        'xvmpVideoPlayer' => __DIR__ . '/../..' . '/classes/GUI/Components/class.xvmpVideoPlayer.php',
         'xvmpVideosGUI' => __DIR__ . '/../..' . '/classes/GUI/Abstract/class.xvmpVideosGUI.php',
     );
 

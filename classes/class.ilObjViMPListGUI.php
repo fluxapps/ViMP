@@ -136,7 +136,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
         string $type,
         string $title,
         string $description
-    ) : ?\ILIAS\UI\Component\Card\Card {
+    )/* : ?\ILIAS\UI\Component\Card\Card*/ {
 	    /** @var RepositoryObject $card */
         $card = parent::getAsCard($ref_id, $obj_id, $type, $title, $description);
         return $card->withObjectIcon(
