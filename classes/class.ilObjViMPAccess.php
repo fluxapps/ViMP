@@ -12,6 +12,7 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 	const ACTION_ADD_VIDEO = 'add_video';
 	const ACTION_REMOVE_VIDEO = 'remove_video';
 	const ACTION_PLAY_VIDEO = 'play_video';
+	const ACTION_DOWNLOAD_VIDEO = 'download_video';
 	/**
 	 * delete / edit / change owner
 	 */
@@ -150,10 +151,23 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 				if ($medium->isPublic() || $medium->isCurrentUserOwner()) {
 					return true;
 				}
-				if ($context == self::CONTEXT_OBJECT && xvmpSelectedMedia::isSelected($medium->getId(), $GUI->getObjId()) && self::hasReadAccess()) {
+				if ($context == self::CONTEXT_OBJECT
+                    && xvmpSelectedMedia::isSelected($medium->getId(), $GUI->getObjId())
+                    && self::hasReadAccess()) {
 					return true;
 				}
 				break;
+            case self::ACTION_DOWNLOAD_VIDEO:
+                if ($medium->isPublic() || $medium->isCurrentUserOwner()) {
+                    return true;
+                }
+                if ($context == self::CONTEXT_OBJECT
+                    && xvmpSelectedMedia::isSelected($medium->getId(), $GUI->getObjId())
+                    && self::hasReadAccess()
+                    && $medium->isDownloadAllowed()) {
+                    return true;
+                }
+                break;
 			case self::ACTION_ADD_VIDEO:
 				if ($medium->isPublic() || $medium->isCurrentUserOwner() && (self::hasWriteAccess() || self::hasUploadPermission())) {
 					return true;

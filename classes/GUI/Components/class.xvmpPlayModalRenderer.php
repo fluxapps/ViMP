@@ -1,6 +1,7 @@
 <?php
 
 use ILIAS\DI\Container;
+use ILIAS\UI\Component\Component;
 
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
@@ -23,7 +24,7 @@ class xvmpPlayModalRenderer
         $this->dic = $dic;
     }
 
-    public function render(xvmpPlayModalDTO $playModalDTO) : string
+    public function render(xvmpPlayModalDTO $playModalDTO, bool $async) : string
     {
         $tpl = new ilTemplate(self::TEMPLATE_PATH, true, true);
         $tpl->setVariable('VIDEO_PLAYER', $playModalDTO->getVideoPlayer()->getHTML());
@@ -42,7 +43,19 @@ class xvmpPlayModalRenderer
         if ($playModalDTO->getPermLinkHtml()) {
             $tpl->setVariable('PERM_LINK', $playModalDTO->getPermLinkHtml());
         }
+
+        foreach ($playModalDTO->getButtons() as $button) {
+            $tpl->setCurrentBlock('button');
+            $tpl->setVariable('BUTTON', $this->renderComponent($button, $async));
+            $tpl->parseCurrentBlock();
+        }
         return $tpl->get();
+    }
+
+    protected function renderComponent(Component $component, bool $async) : string
+    {
+        return $async ? $this->dic->ui()->renderer()->renderAsync($component)
+            : $this->dic->ui()->renderer()->render($component);
     }
 
 }

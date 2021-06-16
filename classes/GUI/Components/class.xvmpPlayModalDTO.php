@@ -1,5 +1,7 @@
 <?php
 
+use ILIAS\UI\Component\Button\Button;
+
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
  */
@@ -18,6 +20,10 @@ class xvmpPlayModalDTO
      * @var string
      */
     protected $perm_link_html = '';
+    /**
+     * @var Button[]
+     */
+    protected $buttons = [];
 
     /**
      * xvmpPlayModal constructor.
@@ -28,10 +34,10 @@ class xvmpPlayModalDTO
         $this->video_player = $video_player;
     }
 
-    public function withVideoInfo(xvmpVideoInfo $info) : self
+    public function withVideoInfos(array $infos) : self
     {
         $new = clone $this;
-        $new->infos[] = $info;
+        $new->infos = $infos;
         return $new;
     }
 
@@ -39,6 +45,13 @@ class xvmpPlayModalDTO
     {
         $new = clone $this;
         $new->perm_link_html = $perm_link_html;
+        return $new;
+    }
+
+    public function withButtons(array $buttons) : self
+    {
+        $new = clone $this;
+        $new->buttons = $buttons;
         return $new;
     }
 
@@ -64,6 +77,14 @@ class xvmpPlayModalDTO
     public function getPermLinkHtml() : string
     {
         return $this->perm_link_html;
+    }
+
+    /**
+     * @return Button[]
+     */
+    public function getButtons() : array
+    {
+        return $this->buttons;
     }
 
 }

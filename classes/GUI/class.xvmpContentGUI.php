@@ -136,7 +136,8 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	public function deliverVideo() {
-		$mid = filter_input(INPUT_GET, 'mid', FILTER_SANITIZE_NUMBER_INT);
+		exit;
+	    $mid = filter_input(INPUT_GET, 'mid', FILTER_SANITIZE_NUMBER_INT);
 		$video = xvmpMedium::find($mid);
 		$medium = $video->getMedium();
 		if (is_array($medium)) {

@@ -17,7 +17,8 @@ abstract class xvmpGUI {
 	const CMD_FILL_MODAL = 'fillModalPlayer';
 
 	const TAB_ACTIVE = ''; // overwrite in subclass
-	/**
+    const CMD_DOWNLOAD_MEDIUM = 'downloadMedium';
+    /**
 	 * @var ilObjViMPGUI
 	 */
 	protected $parent_gui;
@@ -102,39 +103,48 @@ abstract class xvmpGUI {
     }
 
     /**
-     * @param $video
+     * @param xvmpMedium $video
      * @return xvmpPlayModalDTO
      * @throws xvmpException
      */
-    protected function buildPlayModalDTO($video) : xvmpPlayModalDTO
+    protected function buildPlayModalDTO(xvmpMedium $video) : xvmpPlayModalDTO
     {
-        $playModalDto = new xvmpPlayModalDTO($this->getVideoPlayer($video, $this->getObjId()));
+        $video_infos = [];
         if ($video->getStatus() !== 'legal') {
             $msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->pl->txt('info_transcoding_full')
                 : $this->pl->txt('info_transcoding_possible_full');
-            $playModalDto = $playModalDto->withVideoInfo(
-                (new xvmpVideoInfo($msg))->withStyle('color:red'));
+            $video_infos[] = (new xvmpVideoInfo($msg))->withStyle('color:red');
         }
-        $playModalDto = $playModalDto->withVideoInfo(
-            new xvmpVideoInfo($video->getDurationFormatted(), $this->pl->txt(xvmpMedium::F_DURATION)));
-        $playModalDto = $playModalDto->withVideoInfo(
-            new xvmpVideoInfo($video->getCreatedAt('d.m.Y, H:i'), $this->pl->txt(xvmpMedium::F_CREATED_AT)));
+        $video_infos[] = new xvmpVideoInfo($video->getDurationFormatted(), $this->pl->txt(xvmpMedium::F_DURATION));
+        $video_infos[] = new xvmpVideoInfo($video->getCreatedAt('d.m.Y, H:i'), $this->pl->txt(xvmpMedium::F_CREATED_AT));
 
         foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
             if ($value = $video->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
-                $playModalDto = $playModalDto->withVideoInfo(
-                    new xvmpVideoInfo($value, $field[xvmpConf::F_FORM_FIELD_TITLE]));
+                $video_infos[] = new xvmpVideoInfo($value, $field[xvmpConf::F_FORM_FIELD_TITLE]);
             }
         }
 
-        $playModalDto = $playModalDto->withVideoInfo(
-            (new xvmpVideoInfo(nl2br($video->getDescription(), false), $this->pl->txt(xvmpMedium::F_DESCRIPTION)))
-                ->withEllipsis(true));
+        $video_infos[] = (new xvmpVideoInfo(nl2br($video->getDescription(), false), $this->pl->txt(xvmpMedium::F_DESCRIPTION)))
+                ->withEllipsis(true);
+
+        $playModalDto = (new xvmpPlayModalDTO($this->getVideoPlayer($video, $this->getObjId())))
+            ->withVideoInfos($video_infos);
 
         if (!is_null($this->getObject())) {
             $link = $this->getPermLinkHTML($video);
             $playModalDto = $playModalDto->withPermLinkHtml($link);
         }
+
+        if ($video->isDownloadAllowed()) {
+            $this->dic->ctrl()->setParameter($this, 'mid', $video->getMid());
+            $playModalDto = $playModalDto->withButtons([
+                $this->dic->ui()->factory()->button()->standard(
+                    $this->pl->txt('btn_download'),
+                    $this->dic->ctrl()->getLinkTarget($this, self::CMD_DOWNLOAD_MEDIUM)
+                )
+            ]);
+        }
+
         return $playModalDto;
     }
 
@@ -167,7 +177,7 @@ abstract class xvmpGUI {
             });
         }
         $dropdown = $this->dic->ui()->factory()->dropdown()->standard($items)->withLabel($this->pl->txt('direct_link_dropdown'));
-        return $link_tpl . '<br>' . ($async ? $this->dic->ui()->renderer()->renderAsync($dropdown) : $this->dic->ui()->renderer()->render($dropdown));
+        return $link_tpl . ($async ? $this->dic->ui()->renderer()->renderAsync($dropdown) : $this->dic->ui()->renderer()->render($dropdown));
     }
 
     /**
@@ -339,7 +349,7 @@ abstract class xvmpGUI {
         $playModalDto = $this->buildPlayModalDTO($video);
 
         $response = new stdClass();
-		$response->html = $this->modal_renderer->render($playModalDto);
+		$response->html = $this->modal_renderer->render($playModalDto, $async);
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->user->getId(), xvmpMedium::F_MID => $mid))->first();
@@ -356,6 +366,13 @@ abstract class xvmpGUI {
         }
 	}
 
+	protected function downloadMedium()
+    {
+        $mid = filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT);
+        $video = xvmpMedium::find($mid);
+        ilObjViMPAccess::checkAction(ilObjViMPAccess::ACTION_DOWNLOAD_VIDEO, $this, $video);
+        xvmp::deliverMedium($video);
+    }
 
 
 	/**

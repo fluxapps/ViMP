@@ -247,4 +247,31 @@ class xvmp {
 
 		return $members;
 	}
+
+	public static function deliverMedium(xvmpMedium $medium)
+    {
+        $medium_url = $medium->getMedium();
+        if (is_array($medium_url)) {
+            $medium_url = $medium_url[0];
+        }
+        $download_url = $medium_url . '?token=' . xvmp::getToken();
+        $extension = pathinfo($medium_url)['extension'];
+        // get filesize
+        $ch = curl_init($download_url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+        curl_exec($ch);
+        $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+        curl_close($ch);
+
+        // deliver file
+        header('Content-Description: File Transfer');
+        header('Content-Type: video/' . $extension);
+        header('Content-Disposition: attachment; filename="' . $medium->getTitle() . '.' . $extension);
+        header('Content-Length: ' . $size);
+        readfile($download_url);
+        exit;
+    }
 }

@@ -30,3 +30,15 @@ h4.modal-title {
 .waiting {
 	background: url('../images/spinner.gif') no-repeat center center !important;
 }
+
+.xvmp_player_toolbar {
+	width: 100%;
+}
+
+.xvmp_player_toolbar button, .xvmp_player_toolbar .dropdown {
+	display: inline-block;
+}
+
+.xvmp_info {
+	margin: 8px 0;
+}
