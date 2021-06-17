@@ -105,8 +105,6 @@ class xvmpContentPlayerGUI {
 			$tiles_tpl->setCurrentBlock('block_box_clickable');
 			$tiles_tpl->setVariable('MID', $media->getMid());
 
-			$this->ctrl->setParameter($this->parent_gui, 'mid', $media->getMid());
-			$tiles_tpl->setVariable('PLAY_LINK', $this->ctrl->getLinkTarget($this->parent_gui, xvmpContentGUI::CMD_STANDARD));
 			$tiles_tpl->parseCurrentBlock();
 
 		}
@@ -127,7 +125,7 @@ class xvmpContentPlayerGUI {
 		}
 		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
 		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
-		$this->tpl->addOnLoadCode("VimpContent.template = 'tiles';");
+		$this->tpl->addOnLoadCode("VimpContent.template = 'TileSmall';");
 		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
 
 		return $player_tpl->get();

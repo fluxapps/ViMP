@@ -20,8 +20,7 @@ var VimpContent = {
 			$.get({
 				url: VimpContent.ajax_base_url,
 				data: {
-					"cmd": "renderItem",
-					"tpl": VimpContent.template,
+					"cmd": "renderItem" + VimpContent.template,
 					"mid": mid,
 				}
 			}).always(function(response) {
@@ -40,8 +39,7 @@ var VimpContent = {
 		$.get({
 			url: VimpContent.ajax_base_url,
 			data: {
-				"cmd": "renderItem",
-				"tpl": VimpContent.template,
+				"cmd": "render" + VimpContent.template,
 				"mid": mid
 			}
 		}).always(function(response) {

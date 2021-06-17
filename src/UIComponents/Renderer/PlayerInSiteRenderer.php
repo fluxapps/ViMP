@@ -27,7 +27,6 @@ class PlayerInSiteRenderer
     protected $dic;
 
     /**
-     * PlayModalRenderer constructor.
      * @param Container    $dic
      * @param ilViMPPlugin $plugin
      */

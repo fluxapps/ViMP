@@ -6,6 +6,7 @@ use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
 use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
 use srag\Plugins\ViMP\UIComponents\Renderer\PlayerModalRenderer;
+use srag\Plugins\ViMP\UIComponents\Renderer\Factory;
 
 /**
  * Class xvmpGUI
@@ -58,9 +59,9 @@ abstract class xvmpGUI {
      */
 	protected $dic;
     /**
-     * @var PlayerModalRenderer
+     * @var Factory
      */
-	protected $modal_renderer;
+	protected $renderer_factory;
     /**
      * @var MediumMetadataDTOBuilder
      */
@@ -89,8 +90,8 @@ abstract class xvmpGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
-		$this->modal_renderer = new PlayerModalRenderer($DIC, $this->pl);
 		$this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
+		$this->renderer_factory = new Factory($DIC, $this->pl);
 	}
 
     /**
@@ -340,7 +341,7 @@ abstract class xvmpGUI {
         $playModalDto = $this->buildPlayModalDTO($video);
 
         $response = new stdClass();
-		$response->html = $this->modal_renderer->render($playModalDto, $async);
+		$response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async);
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->user->getId(), xvmpMedium::F_MID => $mid))->first();

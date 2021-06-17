@@ -35,7 +35,7 @@ class MediumMetadataDTOBuilder
 
     /**
      * @param xvmpMedium $medium
-     * @param bool       $short short version is used e.g. for tiles or list elements
+     * @param bool       $short        short version is used e.g. for tiles or list elements
      * @param bool       $show_watched show watched percentage
      * @return MediumMetadataDTO
      */
@@ -63,8 +63,10 @@ class MediumMetadataDTOBuilder
     {
         $medium_infos = [];
 
-        $medium_infos[] = new MediumAttribute($medium->getDurationFormatted(), $this->plugin->txt(xvmpMedium::F_DURATION));
-        $medium_infos[] = new MediumAttribute($medium->getCreatedAt('d.m.Y, H:i'), $this->plugin->txt(xvmpMedium::F_CREATED_AT));
+        $medium_infos[] = new MediumAttribute($medium->getDurationFormatted(),
+            $this->plugin->txt(xvmpMedium::F_DURATION));
+        $medium_infos[] = new MediumAttribute($medium->getCreatedAt('d.m.Y, H:i'),
+            $this->plugin->txt(xvmpMedium::F_CREATED_AT));
 
         if (!$short) {
             foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
@@ -76,12 +78,11 @@ class MediumMetadataDTOBuilder
 
         if ($show_watched) {
             $medium_infos[] = new MediumAttribute(
-                $this->plugin->txt('watched'),
-                xvmpUserProgress::calcPercentage($this->dic->user()->getId(), $medium->getMid()) . '%');
+                xvmpUserProgress::calcPercentage($this->dic->user()->getId(), $medium->getMid()) . '%',
+                $this->plugin->txt('watched'));
         }
 
         return $medium_infos;
     }
-
 
 }
