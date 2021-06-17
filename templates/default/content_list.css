@@ -82,6 +82,15 @@
 	opacity: 1;
 }
 
+.box a:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+.default_cursor {
+	cursor: default;
+}
+
 /* this is necessary to center the "play" image */
 .xvmp_pseudo_element {
 	height: 100%;

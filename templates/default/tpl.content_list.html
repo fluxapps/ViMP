@@ -1,20 +1,34 @@
-<div class="xvmp_image_container">
-	<img width="280px" height="160px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
-	<div class="xvmp_play_overlay">
-		<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
-		<img class="xvmp_play_icon" width="32px" height="32px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/play.svg">
+<!-- BEGIN playable -->
+<a onclick="VimpContent.playVideo({MID});">
+	<div class="xvmp_image_container">
+		<img width="280px" height="160px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
+		<div class="xvmp_play_overlay">
+			<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
+			<img class="xvmp_play_icon" width="32px" height="32px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/play.svg">
+		</div>
 	</div>
-</div>
-<div class="xvmp_video_infos">
-	<h2>{TITLE}</h2>
-	<!-- BEGIN info_transcoding -->
-	<p style="color:red">{INFO_TRANSCODING}</p>
-	<!-- END info_transcoding -->
-	<p>{DESCRIPTION}</p>
-	<p><i>{LABEL_DURATION}</i> {DURATION}</p>
-	<p><i>{LABEL_AUTHOR}</i> {AUTHOR}</p>
-	<p><i>{LABEL_CREATED_AT}</i> {CREATED_AT}</p>
-	<p><i>{LABEL_WATCHED}</i> {WATCHED}</p>
-</div>
+	<!-- END playable -->
+	<!-- BEGIN not_playable -->
+	<a class="default_cursor" onclick="preventDefault();">
+		<div class="xvmp_image_container">
+			<img width="280px" height="160px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
+			<div class="xvmp_play_overlay">
+				<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
+				<img class="xvmp_play_icon" width="32px" height="32px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/not_available.svg">
+			</div>
+		</div>
+	<!-- END not_playable -->
+	<div class="xvmp_video_infos">
+		<h2>{TITLE}</h2>
+		<!-- BEGIN info_transcoding -->
+		<p style="color:red">{INFO_TRANSCODING}</p>
+		<!-- END info_transcoding -->
+		<p>{DESCRIPTION}</p>
+		<p><i>{LABEL_DURATION}</i> {DURATION}</p>
+		<p><i>{LABEL_AUTHOR}</i> {AUTHOR}</p>
+		<p><i>{LABEL_CREATED_AT}</i> {CREATED_AT}</p>
+		<p><i>{LABEL_WATCHED}</i> {WATCHED}</p>
+	</div>
+</a>
 <div class="xoctWaiter" id="waiter_{MID}"></div>
 <script type="text/javascript">{JS}</script>

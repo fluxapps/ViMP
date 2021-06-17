@@ -130,7 +130,7 @@ class xvmpObject {
 
 			$value = $this->sleep($key, $this->{$key});
 			switch (true) {
-				case ($value instanceof xoctObject):
+				case ($value instanceof xvmpObject):
 					$stdClass->{$key} = $value->__toStdClass();
 					break;
 				case (is_array($value)):
@@ -157,7 +157,7 @@ class xvmpObject {
 					$a = array();
 					$value = (array)$value;
 					foreach ($value as $k => $v) {
-						if ($v instanceof xoctObject) {
+						if ($v instanceof xvmpObject) {
 							$a[$k] = $v->__toStdClass();
 						} else {
 							$a[$k] = self::convertToUtf8($v);

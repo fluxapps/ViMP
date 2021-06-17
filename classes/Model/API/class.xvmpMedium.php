@@ -306,7 +306,17 @@ class xvmpMedium extends xvmpObject {
 		if (is_array($response['mediapermissions']['rid'])) {
 			$response['mediapermissions'] = $response['mediapermissions']['rid'];
 		}
-//		foreach ($response['mediapermissions'])
+
+		$date_fields = ['startdate', 'enddate'];
+        foreach ($date_fields as $date_field) {
+            if (isset($response[$date_field])) {
+                try {
+                    $response[$date_field] = new DateTime($response[$date_field]);
+                } catch (Exception $e) {
+                    xvmpCurlLog::getInstance()->writeWarning("couldn't parse date '$response[$date_field]' from field $date_field");
+                }
+            }
+        }
 
 		foreach (array(array('categories', 'category', 'cid'), array('tags', 'tag', 'tid')) as $labels) {
 			$result = array();
@@ -481,6 +491,14 @@ class xvmpMedium extends xvmpObject {
     * @var bool
     */
 	protected $download_allowed = false;
+    /**
+     * @var DateTime
+     */
+	protected $startdate;
+    /**
+     * @var DateTime
+     */
+	protected $enddate;
 
     /**
      * @return array lang_code => url
@@ -520,6 +538,44 @@ class xvmpMedium extends xvmpObject {
     public function isDownloadAllowed() : bool
     {
         return $this->download_allowed;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getStartdate() /*: ?DateTime*/
+    {
+        return $this->startdate;
+    }
+
+    /**
+     * @param DateTime $startdate
+     */
+    public function setStartdate(DateTime $startdate)
+    {
+        $this->startdate = $startdate;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getEnddate() /*: ?DateTime*/
+    {
+        return $this->enddate;
+    }
+
+    /**
+     * @param DateTime $enddate
+     */
+    public function setEnddate(DateTime $enddate)
+    {
+        $this->enddate = $enddate;
+    }
+
+    public function isAvailable() : bool
+    {
+        return (is_null($this->startdate) || time() > $this->startdate->getTimestamp())
+            && (is_null($this->enddate) || time() > $this->enddate->getTimestamp());
     }
 
 	/**
@@ -1114,4 +1170,12 @@ class xvmpMedium extends xvmpObject {
 	public function setTags($tags) {
 		$this->tags = $tags;
 	}
+
+    /**
+     * @return bool
+     */
+    public function isTranscoded() : bool
+    {
+        return $this->getStatus() === 'legal';
+    }
 }

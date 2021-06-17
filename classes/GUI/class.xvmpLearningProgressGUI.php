@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+
 /**
  * Class xvmpLearningProgressGUI
  *
@@ -19,7 +21,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 	 *
 	 */
 	public function executeCommand() {
-		xvmpVideoPlayer::loadVideoJSAndCSS(false);
+		VideoPlayer::loadVideoJSAndCSS(false);
 		if (!ilObjViMPAccess::hasWriteAccess()) {
 			$this->accessDenied();
 		}

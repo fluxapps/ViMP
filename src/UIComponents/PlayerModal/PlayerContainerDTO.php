@@ -1,21 +1,25 @@
 <?php
 
+namespace srag\Plugins\ViMP\UIComponents\PlayerModal;
+
 use ILIAS\UI\Component\Button\Button;
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\Content\MediumMetadataDTO;
 
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpPlayModalDTO
+class PlayerContainerDTO
 {
 
     /**
-     * @var xvmpVideoPlayer
+     * @var VideoPlayer
      */
     protected $video_player;
     /**
-     * @var xvmpVideoInfo[]
+     * @var MediumMetadataDTO
      */
-    protected $infos = [];
+    protected $medium_metadata;
     /**
      * @var string
      */
@@ -26,19 +30,14 @@ class xvmpPlayModalDTO
     protected $buttons = [];
 
     /**
-     * xvmpPlayModal constructor.
-     * @param xvmpVideoPlayer $video_player
+     * PlayModal constructor.
+     * @param VideoPlayer       $video_player
+     * @param MediumMetadataDTO $medium_metadata
      */
-    public function __construct(xvmpVideoPlayer $video_player)
+    public function __construct(VideoPlayer $video_player, MediumMetadataDTO $medium_metadata)
     {
         $this->video_player = $video_player;
-    }
-
-    public function withVideoInfos(array $infos) : self
-    {
-        $new = clone $this;
-        $new->infos = $infos;
-        return $new;
+        $this->medium_metadata = $medium_metadata;
     }
 
     public function withPermLinkHtml(string $perm_link_html) : self
@@ -56,19 +55,19 @@ class xvmpPlayModalDTO
     }
 
     /**
-     * @return xvmpVideoPlayer
+     * @return VideoPlayer
      */
-    public function getVideoPlayer() : xvmpVideoPlayer
+    public function getVideoPlayer() : VideoPlayer
     {
         return $this->video_player;
     }
 
     /**
-     * @return xvmpVideoInfo[]
+     * @return MediumMetadataDTO
      */
-    public function getInfos() : array
+    public function getMediumMetadata() : MediumMetadataDTO
     {
-        return $this->infos;
+        return $this->medium_metadata;
     }
 
     /**

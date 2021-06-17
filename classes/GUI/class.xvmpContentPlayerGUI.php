@@ -1,15 +1,28 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\UIComponents\Renderer\PlayerModalRenderer;
+use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
+use srag\Plugins\ViMP\UIComponents\Renderer\PlayerInSiteRenderer;
+use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
+
 /**
  * Class xvmpContentPlayerGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xvmpContentPlayerGUI {
+    /**
+     * @var PlayerInSiteRenderer
+     */
+    private $player_renderer;
+    /**
+     * @var MediumMetadataDTOBuilder
+     */
+    private $metadata_builder;
 
-
-	/**
+    /**
 	 * @var xvmpContentGUI
 	 */
 	protected $parent_gui;
@@ -39,6 +52,8 @@ class xvmpContentPlayerGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
+        $this->player_renderer = new PlayerInSiteRenderer($DIC, $this->pl);
+        $this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
 
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_player.css');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
@@ -60,10 +75,10 @@ class xvmpContentPlayerGUI {
 			return;
 		}
 
-		$mid = $_GET['mid'] ? $_GET['mid'] : $selected_media->first()->getMid();
+		$mid = filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT) ?: $selected_media->first()->getMid();
 
 		try {
-			$video = xvmpMedium::find($mid);
+			$medium = xvmpMedium::find($mid);
 		} catch (Exception $e) {
 			if ($e->getCode() != 404) {
 				throw $e;
@@ -72,44 +87,12 @@ class xvmpContentPlayerGUI {
 		}
 
 		$player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
-		$video_player = new xvmpVideoPlayer($video, xvmp::isUseEmbeddedPlayer($this->parent_gui->getObjId(), $video));
-		$player_tpl->setVariable('VIDEO', $video_player->getHTML());
-		$player_tpl->setVariable('TITLE', $video->getTitle());
-		$player_tpl->setVariable('DESCRIPTION', nl2br($video->getDescription(50), false));
-
-		if ($video->getStatus() !== 'legal') {
-			$player_tpl->setCurrentBlock('info_transcoding');
-			$player_tpl->setVariable('INFO_TRANSCODING', $this->pl->txt('info_transcoding_full'));
-			$player_tpl->parseCurrentBlock();
-		}
-
-		if (!$video instanceof xvmpDeletedMedium) {
-			$player_tpl->setCurrentBlock('video_info');
-			$player_tpl->setVariable('VALUE', $this->pl->txt('duration') . ': ' . strip_tags($video->getDurationFormatted()));
-			$player_tpl->parseCurrentBlock();
-
-			foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $custom_field) {
-				$value = $video->getField($custom_field[xvmpConf::F_FORM_FIELD_ID]);
-				if (!$value) {
-					continue;
-				}
-				$player_tpl->setCurrentBlock('video_info');
-				$player_tpl->setVariable('VALUE', $custom_field[xvmpConf::F_FORM_FIELD_TITLE] . ': ' . $value);
-				$player_tpl->parseCurrentBlock();
-			}
-
-			$player_tpl->setCurrentBlock('video_info');
-			$player_tpl->setVariable('VALUE', $this->pl->txt('created_at') . ': ' . $video->getCreatedAt('d.m.Y, H:i'));
-			$player_tpl->parseCurrentBlock();
-
-			if (xvmp::showWatched($this->parent_gui->getObjId(), $video)) {
-				$player_tpl->setCurrentBlock('video_info');
-				$player_tpl->setVariable('VALUE', $this->pl->txt('watched') . ': ' . xvmpUserProgress::calcPercentage($this->user->getId(), $mid) . '%');
-				$player_tpl->parseCurrentBlock();
-			}
-
-            $player_tpl->setVariable('PERMANENT_LINK', $this->parent_gui->getPermLinkHTML($video, false));
-        }
+		
+		$video_player = new VideoPlayer($medium, xvmp::isUseEmbeddedPlayer($this->parent_gui->getObjId(), $medium));
+		$in_site_player = $this->player_renderer->render(
+		    new PlayerContainerDTO($video_player, $this->metadata_builder->buildFromVimpMedium($medium, false, true)),
+            $medium instanceof xvmpDeletedMedium);
+		$player_tpl->setVariable('VIDEO_PLAYER', $in_site_player);
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
 		$json_array = array();
@@ -146,7 +129,6 @@ class xvmpContentPlayerGUI {
 		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
 		$this->tpl->addOnLoadCode("VimpContent.template = 'tiles';");
 		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
-//        $this->tpl->addOnLoadCode('VimpContent.loadTiles();');
 
 		return $player_tpl->get();
 	}

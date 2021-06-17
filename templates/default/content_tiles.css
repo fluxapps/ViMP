@@ -21,6 +21,15 @@
 	opacity: 1;
 }
 
+.box a:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+.default_cursor {
+	cursor: default;
+}
+
 .xvmp_overlay_infos {
 	position: absolute;
 	top: 0;

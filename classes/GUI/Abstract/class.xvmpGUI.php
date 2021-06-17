@@ -2,7 +2,10 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use ILIAS\DI\Container;
-use ILIAS\UI\Implementation\Component\Signal;
+use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
+use srag\Plugins\ViMP\UIComponents\Renderer\PlayerModalRenderer;
 
 /**
  * Class xvmpGUI
@@ -55,9 +58,13 @@ abstract class xvmpGUI {
      */
 	protected $dic;
     /**
-     * @var xvmpPlayModalRenderer
+     * @var PlayerModalRenderer
      */
 	protected $modal_renderer;
+    /**
+     * @var MediumMetadataDTOBuilder
+     */
+	protected $metadata_builder;
 
 
 	/**
@@ -82,7 +89,8 @@ abstract class xvmpGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
-		$this->modal_renderer = new xvmpPlayModalRenderer($DIC);
+		$this->modal_renderer = new PlayerModalRenderer($DIC, $this->pl);
+		$this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
 	}
 
     /**
@@ -103,40 +111,23 @@ abstract class xvmpGUI {
     }
 
     /**
-     * @param xvmpMedium $video
-     * @return xvmpPlayModalDTO
+     * @param xvmpMedium $medium
+     * @return PlayerContainerDTO
      * @throws xvmpException
      */
-    protected function buildPlayModalDTO(xvmpMedium $video) : xvmpPlayModalDTO
+    protected function buildPlayModalDTO(xvmpMedium $medium) : PlayerContainerDTO
     {
-        $video_infos = [];
-        if ($video->getStatus() !== 'legal') {
-            $msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->pl->txt('info_transcoding_full')
-                : $this->pl->txt('info_transcoding_possible_full');
-            $video_infos[] = (new xvmpVideoInfo($msg))->withStyle('color:red');
-        }
-        $video_infos[] = new xvmpVideoInfo($video->getDurationFormatted(), $this->pl->txt(xvmpMedium::F_DURATION));
-        $video_infos[] = new xvmpVideoInfo($video->getCreatedAt('d.m.Y, H:i'), $this->pl->txt(xvmpMedium::F_CREATED_AT));
-
-        foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-            if ($value = $video->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
-                $video_infos[] = new xvmpVideoInfo($value, $field[xvmpConf::F_FORM_FIELD_TITLE]);
-            }
-        }
-
-        $video_infos[] = (new xvmpVideoInfo(nl2br($video->getDescription(), false), $this->pl->txt(xvmpMedium::F_DESCRIPTION)))
-                ->withEllipsis(true);
-
-        $playModalDto = (new xvmpPlayModalDTO($this->getVideoPlayer($video, $this->getObjId())))
-            ->withVideoInfos($video_infos);
+        $playModalDto = new PlayerContainerDTO(
+            $this->getVideoPlayer($medium, $this->getObjId()),
+            $this->metadata_builder->buildFromVimpMedium($medium, false, false));
 
         if (!is_null($this->getObject())) {
-            $link = $this->getPermLinkHTML($video);
+            $link = $this->getPermLinkHTML($medium);
             $playModalDto = $playModalDto->withPermLinkHtml($link);
         }
 
-        if ($video->isDownloadAllowed()) {
-            $this->dic->ctrl()->setParameter($this, 'mid', $video->getMid());
+        if ($medium->isDownloadAllowed()) {
+            $this->dic->ctrl()->setParameter($this, 'mid', $medium->getMid());
             $playModalDto = $playModalDto->withButtons([
                 $this->dic->ui()->factory()->button()->standard(
                     $this->pl->txt('btn_download'),
@@ -183,12 +174,12 @@ abstract class xvmpGUI {
     /**
     * @param     $video
     * @param int $obj_id
-    * @return xvmpVideoPlayer
+    * @return VideoPlayer
     * @throws xvmpException
     */
-    protected function getVideoPlayer($video, int $obj_id) : xvmpVideoPlayer
+    protected function getVideoPlayer($video, int $obj_id) : VideoPlayer
     {
-        return (new xvmpVideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video)));
+        return (new VideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video)));
     }
 
     /**

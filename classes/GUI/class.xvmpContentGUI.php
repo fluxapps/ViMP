@@ -1,7 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use Detection\MobileDetect;
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
 
 /**
  * Class xvmpContentGUI
@@ -28,7 +28,7 @@ class xvmpContentGUI extends xvmpGUI {
 	protected function index($play_video_id = null) {
         /** @var xvmpSettings $settings */
         $settings = xvmpSettings::find($this->getObjId());
-		xvmpVideoPlayer::loadVideoJSAndCSS($settings->getLpActive() && !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
+		VideoPlayer::loadVideoJSAndCSS($settings->getLpActive() && !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
 
 		if (!$this->ctrl->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
@@ -101,9 +101,16 @@ class xvmpContentGUI extends xvmpGUI {
                 exit;
             }
             $tpl = new ilTemplate("tpl.content_{$template}.html", true, true, $this->pl->getDirectory());
+            if ($video->isAvailable()) {
+                $tpl->setCurrentBlock('playable');
+            } else {
+                $tpl->setCurrentBlock('not_playable');
+            }
 
 			$tpl->setVariable('MID', $mid);
 			$tpl->setVariable('THUMBNAIL', $video->getThumbnail());
+			$tpl->parseCurrentBlock();
+
 			$tpl->setVariable('TITLE', $video->getTitle());
 			$tpl->setVariable('DESCRIPTION', nl2br(strip_tags($video->getDescription(50)), false));
 

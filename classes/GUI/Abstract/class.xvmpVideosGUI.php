@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+
 /**
  * Class xvmpVideosGUI
  *
@@ -31,7 +33,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 * @param $cmd
 	 */
 	protected function performCommand($cmd) {
-		xvmpVideoPlayer::loadVideoJSAndCSS(false);
+		VideoPlayer::loadVideoJSAndCSS(false);
 
 		switch ($cmd) {
 			case self::CMD_STANDARD:
@@ -177,9 +179,9 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$this->toolbar->addButtonInstance($upload_button);
 	}
 
-    protected function getVideoPlayer($video, int $obj_id) : xvmpVideoPlayer
+    protected function getVideoPlayer($video, int $obj_id) : VideoPlayer
     {
-        return (new xvmpVideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video), false));
+        return (new VideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video), false));
     }
 
 }
