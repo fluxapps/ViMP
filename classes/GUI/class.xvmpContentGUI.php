@@ -16,7 +16,6 @@ class xvmpContentGUI extends xvmpGUI {
 
 	const CMD_RENDER_LIST_ITEM = 'renderListItem';
 	const CMD_RENDER_TILE = 'renderTile';
-	const CMD_RENDER_TILE_SMALL = 'renderTileSmall';
 	const CMD_DELIVER_VIDEO = 'deliverVideo';
 	const CMD_PLAY_VIDEO = 'playVideo';
     const GET_TEMPLATE = 'tpl';
@@ -65,7 +64,6 @@ class xvmpContentGUI extends xvmpGUI {
 		switch ($cmd) {
 			case self::CMD_RENDER_LIST_ITEM:
 			case self::CMD_RENDER_TILE:
-			case self::CMD_RENDER_TILE_SMALL:
 				$mid = $_GET['mid'];
 				if (!$mid || !xvmpSelectedMedia::isSelected($mid, $this->getObjId())) {
 					$this->accessDenied();
@@ -120,23 +118,6 @@ class xvmpContentGUI extends xvmpGUI {
         }
         echo $this->renderer_factory->tile()->render(
             $this->metadata_builder->buildFromVimpMedium($medium, true, true)
-        );
-        exit;
-    }
-
-    /**
-     * async
-     * @throws xvmpException
-     */
-    public function renderTileSmall() {
-        $mid = filter_input(INPUT_GET, ilObjViMPGUI::GET_VIDEO_ID, FILTER_SANITIZE_NUMBER_INT);
-        $medium = xvmpMedium::find($mid);
-        if ($medium instanceof xvmpDeletedMedium) {
-            echo 'deleted';
-            exit;
-        }
-        echo $this->renderer_factory->tileSmall()->render(
-            $this->metadata_builder->buildFromVimpMedium($medium, true, false)
         );
         exit;
     }
