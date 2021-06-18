@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use ILIAS\DI\Container;
+
 /**
  * Class xvmpContentListGUI
  *
@@ -12,37 +14,24 @@ class xvmpContentListGUI {
 	 * @var xvmpContentGUI
 	 */
 	protected $parent_gui;
+    /**
+     * @var Container
+     */
+	protected $dic;
 
 	/**
 	 * xvmpContentTilesGUI constructor.
 	 */
 	public function __construct($parent_gui) {
 		global $DIC;
-		$tpl = $DIC['tpl'];
-		$ilCtrl = $DIC['ilCtrl'];
-		$ilTabs = $DIC['ilTabs'];
-		$ilToolbar = $DIC['ilToolbar'];
-		$ilUser = $DIC['ilUser'];
-		$lng = $DIC['lng'];
-		/**
-		 * @var $ilCtrl    ilCtrl
-		 * @var $ilTabs    ilTabsGUI
-		 * @var $tpl       ilTemplate
-		 * @var $ilToolbar ilToolbarGUI
-		 */
-		$this->tpl = $tpl;
-		$this->tabs = $ilTabs;
-		$this->ctrl = $ilCtrl;
-		$this->toolbar = $ilToolbar;
-		$this->user = $ilUser;
+		$this->dic = $DIC;
 		$this->pl = ilViMPPlugin::getInstance();
-		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
 
-		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_list.css');
-		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
-		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
-		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
+		$this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/content_list.css');
+		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
+		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
+		$this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
 	}
 
 
@@ -69,10 +58,10 @@ class xvmpContentListGUI {
 			$tpl->parseCurrentBlock();
 		}
 
-		$this->tpl->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
-		$this->tpl->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_gui, '', '', true) . "';");
-		$this->tpl->addOnLoadCode("VimpContent.template = 'ListItem';");
-		$this->tpl->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
+		$this->dic->ui()->mainTemplate()->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');
+		$this->dic->ui()->mainTemplate()->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->dic->ctrl()->getLinkTarget($this->parent_gui, '', '', true) . "';");
+		$this->dic->ui()->mainTemplate()->addOnLoadCode("VimpContent.template = 'ListItem';");
+		$this->dic->ui()->mainTemplate()->addOnLoadCode('VimpContent.loadTilesInOrder(0);');
 		return $tpl->get();
 	}
 }

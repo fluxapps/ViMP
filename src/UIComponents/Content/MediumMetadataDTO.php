@@ -25,7 +25,7 @@ class MediumMetadataDTO
     /**
      * @var MediumAttribute[]
      */
-    private $medium_infos = [];
+    private $medium_attributes = [];
     /**
      * @var bool
      */
@@ -48,7 +48,7 @@ class MediumMetadataDTO
      * @param int               $mid
      * @param string            $title
      * @param string            $description
-     * @param MediumAttribute[] $video_infos
+     * @param MediumAttribute[] $medium_attributes
      * @param bool              $transcoding
      * @param string            $thumbnail_url
      * @param DateTime|null     $availability_start
@@ -58,7 +58,7 @@ class MediumMetadataDTO
         int $mid,
         string $title,
         string $description,
-        array $video_infos,
+        array $medium_attributes,
         bool $transcoding,
         string $thumbnail_url,
         DateTime $availability_start = null,
@@ -67,7 +67,7 @@ class MediumMetadataDTO
         $this->mid = $mid;
         $this->title = $title;
         $this->description = $description;
-        $this->medium_infos = $video_infos;
+        $this->medium_attributes = $medium_attributes;
         $this->transcoding = $transcoding;
         $this->thumbnail_url = $thumbnail_url;
         $this->availability_start = $availability_start;
@@ -128,9 +128,9 @@ class MediumMetadataDTO
     /**
      * @return MediumAttribute[]
      */
-    public function getMediumInfos() : array
+    public function getMediumAttributes() : array
     {
-        return $this->medium_infos;
+        return $this->medium_attributes;
     }
 
     /**

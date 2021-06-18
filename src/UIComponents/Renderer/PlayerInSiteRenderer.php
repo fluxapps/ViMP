@@ -40,34 +40,34 @@ class PlayerInSiteRenderer
      * @throws ilTemplateException
      * @throws xvmpException
      */
-    public function render(PlayerContainerDTO $playModalDTO, bool $deleted) : string
+    public function render(PlayerContainerDTO $playerContainerDTO, bool $deleted) : string
     {
         $tpl = new ilTemplate(self::TEMPLATE_PATH, true, true);
-        $tpl->setVariable('VIDEO_PLAYER', $playModalDTO->getVideoPlayer()->getHTML());
+        $tpl->setVariable('VIDEO_PLAYER', $playerContainerDTO->getVideoPlayer()->getHTML());
 
-        $tpl->setVariable('VIDEO', $playModalDTO->getVideoPlayer()->getHTML());
-        $tpl->setVariable('TITLE', $playModalDTO->getMediumMetadata()->getTitle());
-        $tpl->setVariable('DESCRIPTION', nl2br($playModalDTO->getMediumMetadata()->getDescription(50), false));
+        $tpl->setVariable('VIDEO', $playerContainerDTO->getVideoPlayer()->getHTML());
+        $tpl->setVariable('TITLE', $playerContainerDTO->getMediumMetadata()->getTitle());
+        $tpl->setVariable('DESCRIPTION', nl2br($playerContainerDTO->getMediumMetadata()->getDescription(50), false));
 
-        if ($playModalDTO->getMediumMetadata()->isTranscoding()) {
+        if ($playerContainerDTO->getMediumMetadata()->isTranscoding()) {
             $tpl->setCurrentBlock('info_transcoding');
             $tpl->setVariable('INFO_TRANSCODING', $this->plugin->txt('info_transcoding_full'));
             $tpl->parseCurrentBlock();
         }
 
         if (!$deleted) {
-            foreach ($playModalDTO->getMediumMetadata()->getMediumInfos() as $mediumInfo) {
+            foreach ($playerContainerDTO->getMediumMetadata()->getMediumAttributes() as $mediumAttribute) {
                 $tpl->setCurrentBlock('medium_info');
-                $tpl->setVariable('VALUE', $mediumInfo->getTitle() ?
-                    $mediumInfo->getTitle() . ': ' . $mediumInfo->getValue() :
-                    $mediumInfo->getValue());
+                $tpl->setVariable('VALUE', $mediumAttribute->getTitle() ?
+                    $mediumAttribute->getTitle() . ': ' . $mediumAttribute->getValue() :
+                    $mediumAttribute->getValue());
                 $tpl->parseCurrentBlock();
             }
 
-            if ($playModalDTO->getPermLinkHtml()) {
-                $tpl->setVariable('PERMANENT_LINK', $playModalDTO->getPermLinkHtml());
+            if ($playerContainerDTO->getPermLinkHtml()) {
+                $tpl->setVariable('PERMANENT_LINK', $playerContainerDTO->getPermLinkHtml());
             }
-            foreach ($playModalDTO->getButtons() as $button) {
+            foreach ($playerContainerDTO->getButtons() as $button) {
                 $tpl->setCurrentBlock('button');
                 $tpl->setVariable('BUTTON', $this->renderComponent($button, false));
                 $tpl->parseCurrentBlock();

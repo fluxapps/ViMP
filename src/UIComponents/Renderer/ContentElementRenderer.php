@@ -13,6 +13,7 @@ use xvmpMedium;
  */
 abstract class ContentElementRenderer
 {
+    const CONTAINER_TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.content_element.html';
 
     /**
      * @var ilViMPPlugin
@@ -34,18 +35,10 @@ abstract class ContentElementRenderer
         $this->plugin = $plugin;
     }
 
-    /**
-     * @param MediumMetadataDTO $mediumMetadataDTO
-     * @return ilTemplate
-     */
-    protected function buildTemplate(MediumMetadataDTO $mediumMetadataDTO) : ilTemplate
+    protected function buildInnerTemplate(MediumMetadataDTO $mediumMetadataDTO) : ilTemplate
     {
-        $tpl = $this->getTemplate();
-        if ($mediumMetadataDTO->isAvailable()) {
-            $tpl->setCurrentBlock('playable');
-        } else {
-            $tpl->setCurrentBlock('not_playable');
-        }
+        $tpl = $this->getInnerTemplate();
+        $tpl->touchBlock($mediumMetadataDTO->isAvailable() ? 'icon_play' : 'icon_not_available');
 
         $tpl->setVariable('MID', $mediumMetadataDTO->getMid());
         $tpl->setVariable('THUMBNAIL', $mediumMetadataDTO->getThumbnailUrl());
@@ -62,11 +55,11 @@ abstract class ContentElementRenderer
             $tpl->parseCurrentBlock();
         }
 
-        foreach ($mediumMetadataDTO->getMediumInfos() as $mediumInfo) {
+        foreach ($mediumMetadataDTO->getMediumAttributes() as $mediumAttribute) {
             $tpl->setCurrentBlock('info_paragraph');
-            $tpl->setVariable('INFO', $mediumInfo->getTitle() ?
-                $mediumInfo->getTitle() . ': ' . $mediumInfo->getValue() :
-                $mediumInfo->getValue());
+            $tpl->setVariable('INFO', $mediumAttribute->getTitle() ?
+                $mediumAttribute->getTitle() . ': ' . $mediumAttribute->getValue() :
+                $mediumAttribute->getValue());
             $tpl->parseCurrentBlock();
         }
         return $tpl;
@@ -78,5 +71,13 @@ abstract class ContentElementRenderer
         return $tpl->get();
     }
 
-    abstract protected function getTemplate() : ilTemplate;
+    protected function getContainerTemplate() : ilTemplate
+    {
+        return new ilTemplate(self::CONTAINER_TEMPLATE_PATH, true, true);
+    }
+
+    abstract protected function buildTemplate(MediumMetadataDTO $mediumMetadataDTO) : ilTemplate;
+
+    abstract protected function getInnerTemplate() : ilTemplate;
+
 }

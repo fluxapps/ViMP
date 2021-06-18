@@ -56,11 +56,11 @@ class PlayerModalRenderer
             $tpl->parseCurrentBlock();
         }
 
-        foreach ($playModalDTO->getMediumMetadata()->getMediumInfos() as $mediumInfo) {
+        foreach ($playModalDTO->getMediumMetadata()->getMediumAttributes() as $mediumAttribute) {
             $tpl->setCurrentBlock('info_paragraph');
-            $tpl->setVariable('INFO', $mediumInfo->getTitle() ?
-                $mediumInfo->getTitle() . ': ' . $mediumInfo->getValue() :
-                $mediumInfo->getValue());
+            $tpl->setVariable('INFO', $mediumAttribute->getTitle() ?
+                $mediumAttribute->getTitle() . ': ' . $mediumAttribute->getValue() :
+                $mediumAttribute->getValue());
             $tpl->parseCurrentBlock();
         }
 

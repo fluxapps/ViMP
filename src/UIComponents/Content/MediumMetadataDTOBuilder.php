@@ -59,7 +59,7 @@ class MediumMetadataDTOBuilder
      * @param bool       $show_watched
      * @return array
      */
-    public function buildMediumInfos(xvmpMedium $medium, bool $short, bool $show_watched) : array
+    protected function buildMediumInfos(xvmpMedium $medium, bool $short, bool $show_watched) : array
     {
         $medium_infos = [];
 
