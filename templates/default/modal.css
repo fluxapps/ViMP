@@ -26,3 +26,7 @@ h4.modal-title {
 	-ms-text-overflow: ellipsis;
 	text-overflow:     ellipsis;
 }
+
+.video-js .vjs-control-bar {
+	display: flex;
+}
