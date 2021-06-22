@@ -12,7 +12,6 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 {
 
     const F_SOURCE_URL = 'source_url';
-    const F_THUMBNAIL_CHECKBOX = 'thumbnail_checkbox';
     const F_SUBTITLES_CHECKBOX = 'subtitles_checkbox';
     const F_SUBTITLES_REMOVE_CHECKBOX = 'subtitles_remove_checkbox';
     const F_SUBTITLE_LANGUAGE = 'subtitle_language';
@@ -129,7 +128,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
                 }
                 return $this->upload_service->getSignedUrl($value['name'], $tmp_id);
             case xvmpMedium::F_THUMBNAIL:
-                if (!$_FILES[$post_var]['tmp_name'] || !$this->getInput(self::F_THUMBNAIL_CHECKBOX)) {
+                if (!$_FILES[$post_var]['tmp_name']) {
                     return null;
                 }
                 $this->upload_service->moveUploadToWebDir($_FILES[$post_var]['tmp_name'], $tmp_id);
@@ -411,11 +410,9 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 
     protected function addThumbnailInput()
     {
-        $checkbox = new ilCheckboxInputGUI($this->pl->txt(self::F_THUMBNAIL_CHECKBOX), self::F_THUMBNAIL_CHECKBOX);
         $input = new ilImageFileInputGUI($this->pl->txt(xvmpMedium::F_THUMBNAIL), xvmpMedium::F_THUMBNAIL);
-        $input->setRequired(true);
-        $checkbox->addSubItem($input);
-        $this->addItem($checkbox);
+        $input->setALlowDeletion(false);
+        $this->addItem($input);
     }
 
     protected function addSubtitleInput()

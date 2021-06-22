@@ -61,6 +61,14 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
 		$array[xvmpMedium::F_CATEGORIES] = array_keys($this->medium[xvmpMedium::F_CATEGORIES]);
         $array[xvmpMedium::F_SUBTITLES] = [];
 		$this->setValuesByArray($array);
+
+		// fill thumbnail
+        if ($this->medium[xvmpMedium::F_THUMBNAIL]) {
+            $item = $this->getItemByPostVar(xvmpMedium::F_THUMBNAIL);
+            if ($item instanceof ilImageFileInputGUI) {
+                $item->setImage($this->medium[xvmpMedium::F_THUMBNAIL]);
+            }
+        }
 	}
 
 
