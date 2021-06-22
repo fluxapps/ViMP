@@ -8,6 +8,7 @@ use ILIAS\DI\Container;
  */
 class xvmpProgressBarUI
 {
+    private static $version = 1;
     /**
      * @var ilPlugin
      */
@@ -45,7 +46,10 @@ class xvmpProgressBarUI
     protected function addJS()
     {
         if (!self::$js_loaded) {
-            $this->dic->ui()->mainTemplate()->addJavaScript($this->plugin->getDirectory() . '/js/xvmp_progress_bar.min.js');
+            $this->dic->ui()->mainTemplate()->addJavaScript(
+                $this->plugin->getDirectory() . '/js/xvmp_progress_bar.min.js?v=' . self::$version);
+            $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpProgressBar.lng.transcoded = "' .
+                $this->plugin->txt('status_legal') . '";');
             self::$js_loaded = true;
         }
         $this->dic->ctrl()->setParameterByClass(ilObjViMPGUI::class, ilObjViMPGUI::GET_VIDEO_ID, $this->mid);

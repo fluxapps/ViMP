@@ -1,16 +1,24 @@
-<!-- BEGIN transcoded -->
 <tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row xvmpSortable" id="xvmp_row_{VAL_MID}">
 	<td class="std small">
 		<span class="glyphicon glyphicon-resize-vertical"></span>
 	</td>
 	<td class="std small">
+		<!-- BEGIN transcoded -->
 		<a onclick="VimpContent.playVideo({VAL_MID});">
+		<!-- END transcoded -->
+		<!-- BEGIN transcoding -->
+		<a class="xvmp_default_cursor">
+		<!-- END transcoding -->
 			<div class="xvmp_image_container">
-				<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
-				<div class="xvmp_play_overlay">
+				<img width="170px" height="95px" class="xvmp_preview_image"
+					 src="{VAL_THUMBNAIL}"
+					 data-url="{VAL_THUMBNAIL}"
+					 onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
+				<div class="xvmp_play_overlay" {PLAY_OVERLAY_ATTRIBUTES}>
 					<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
 					<img class="xvmp_play_icon" width="32px" height="32px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/play.svg">
 				</div>
+				{PROGRESS_BAR}
 			</div>
 		</a>
 	</td>
@@ -35,37 +43,3 @@
 		</a>
 	</td>
 </tr>
-<!-- END transcoded -->
-<!-- BEGIN transcoding -->
-<tr class="{CSS_ROW} {ADDITIONAL_CSS} xvmp_table_row xvmpSortable" id="xvmp_row_{VAL_MID}">
-	<td class="std small">
-		<span class="glyphicon glyphicon-resize-vertical"></span>
-	</td>
-	<td class="std small">
-		<div class="xvmp_image_container">
-			<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
-			{PROGRESS_BAR}
-		</div>
-	</td>
-	<td class="std small">
-		<input id="xvmp_visible_{VAL_MID}" onclick="VimpSelected.setVisibility(event, {VAL_MID});" type="checkbox" {VAL_VISIBLE} {VAL_VISIBILITY_DISABLED}>
-	</td>
-	<td class="std small">
-		{VAL_TITLE}
-	</td>
-	<td class="std small">
-		{VAL_DESCRIPTION}
-	</td>
-	<td class="std small">
-		{VAL_USERNAME}
-	</td>
-	<td class="std small">
-		{VAL_CREATED_AT}
-	</td>
-	<td class="std small xvmp_action">
-		<a id="xvmp_remove_{VAL_MID}" onclick="VimpSelected.remove(event, {VAL_MID});" class="xvmp_action_remove">
-			<img width="40px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/icon_xvmp_remove.svg">
-		</a>
-	</td>
-</tr>
-<!-- END transcoding -->

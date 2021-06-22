@@ -2,27 +2,26 @@
 	<td class="std small xvmp_action">
 		<input id="xvmp_checkbox_{VAL_MID}" type="checkbox" {VAL_CHECKED} onclick="VimpSearch.toggle({VAL_MID});">
 	</td>
-	<!-- BEGIN transcoded -->
 	<td class="std small">
+		<!-- BEGIN transcoded -->
 		<a onclick="VimpContent.playVideo({VAL_MID});">
+		<!-- END transcoded -->
+		<!-- BEGIN transcoding -->
+		<a class="xvmp_default_cursor">
+		<!-- END transcoding -->
 			<div class="xvmp_image_container">
-				<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
-				<div class="xvmp_play_overlay">
+				<img width="170px" height="95px" class="xvmp_preview_image"
+					 src="{VAL_THUMBNAIL}"
+					 data-url="{VAL_THUMBNAIL}"
+					 onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
+				<div class="xvmp_play_overlay" {PLAY_OVERLAY_ATTRIBUTES}>
 					<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
 					<img class="xvmp_play_icon" width="32px" height="32px" src="./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/play.svg">
 				</div>
+				{PROGRESS_BAR}
 			</div>
 		</a>
 	</td>
-	<!-- END transcoded -->
-	<!-- BEGIN transcoding -->
-	<td class="std small">
-		<div class="xvmp_image_container">
-			<img width="170px" height="95px" class="xvmp_preview_image" src="{VAL_THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
-			{PROGRESS_BAR}
-		</div>
-	</td>
-	<!-- END transcoding -->
 	<td class="std small">
 		{VAL_TITLE}
 	</td>
