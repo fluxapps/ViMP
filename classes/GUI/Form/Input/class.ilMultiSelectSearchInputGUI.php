@@ -267,7 +267,7 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 	public function setValueByArray($array){
 //		print_r($array);
 
-		$val = $array[$this->searchPostVar()];
+		$val = $array[$this->searchPostVar()] ?? $array[$this->getPostVar()];
 		if(is_array($val))
 			$val;
 		elseif(!$val)

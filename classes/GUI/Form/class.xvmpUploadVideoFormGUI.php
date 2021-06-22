@@ -154,9 +154,8 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
         }
 
         if (xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED)) {
-            /** @var ilMultiSelectSearchInputGUI $mediapermissions_input */
-            $mediapermissions_input = $this->getItemByPostVar(xvmpMedium::F_MEDIAPERMISSIONS . '[]');
-            $array[xvmpMedium::F_MEDIAPERMISSIONS] = array_keys($mediapermissions_input->getOptions());
+            $selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
+            $array[xvmpMedium::F_MEDIAPERMISSIONS . '[]'] = $selectable_roles;
         }
 
         $this->setValuesByArray($array, true);
