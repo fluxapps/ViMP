@@ -192,8 +192,7 @@ form_header_metadata#:#Metadata
 form_header_access#:#Access
 form_header_additional_options#:#Additional Options
 form_header_notification#:#Notification
-thumbnail_checkbox#:#Thumbnail
-thumbnail#:#File
+thumbnail#:#Thumbnail
 subtitles_checkbox#:#Subtitles
 subtitles#:#Language files
 subtitles_remove_checkbox#:#Delete existing files
