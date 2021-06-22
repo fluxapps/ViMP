@@ -191,6 +191,17 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
         $transcoded = ($a_set['status'] === 'legal');
         $transcoding = ($a_set['status'] === 'converting');
 
+        if ($transcoded) {
+            $this->tpl->touchBlock('transcoded');
+        } else {
+            $this->tpl->touchBlock('transcoding');
+            $this->tpl->setVariable('PLAY_OVERLAY_ATTRIBUTES', 'hidden');
+            if ($transcoding) {
+                $this->tpl->setVariable('PROGRESS_BAR',
+                    (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
+            }
+        }
+
 		if ($a_set['status'] == 'error') {
 			$this->tpl->setVariable('VAL_DISABLED', 'disabled');
 		}
@@ -207,19 +218,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 
         foreach ($this->available_columns as $title => $props) {
-            if ($title == 'thumbnail') {
-                if ($transcoded) {
-                    $this->tpl->setCurrentBlock('transcoded');
-                } else {
-                    $this->tpl->setCurrentBlock('transcoding');
-                    if ($transcoding) {
-                        $this->tpl->setVariable('PROGRESS_BAR',
-                            (new xvmpProgressBarUI($a_set['mid'], $this->pl, $this->dic))->getHTML());
-                    }
-                }
-                $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
-                $this->tpl->parseCurrentBlock();
-            } elseif ($title == 'published') {
+            if ($title == 'published') {
                 $this->tpl->setVariable('VAL_' . strtoupper($title),  $this->pl->txt($a_set[$title]));
             } else {
                 $this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title]);
