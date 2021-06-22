@@ -181,7 +181,8 @@ class VideoPlayer
         }
 
         $template->setVariable('ID', $id);
-        $template->setVariable('SOURCE', $medium . '?token=' . xvmp::getToken());
+        $has_query = !is_null(parse_url($medium, PHP_URL_QUERY));
+        $template->setVariable('SOURCE', $medium . ($has_query ? '&' : '?') . 'token=' . xvmp::getToken());
         $template->setVariable('THUMBNAIL', $this->video->getThumbnail());
         $template->setVariable('TYPE', $pathinfo['extension']);
 
