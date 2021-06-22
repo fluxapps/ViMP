@@ -42,3 +42,7 @@ h4.modal-title {
 .xvmp_info {
 	margin: 8px 0;
 }
+
+.video-js .vjs-control-bar {
+	display: flex;
+}

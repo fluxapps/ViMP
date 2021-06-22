@@ -93,8 +93,13 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 	protected function fillRow($a_set) {
 		$transcoded = ($a_set['status'] == 'legal');
         $transcoding = ($a_set['status'] === 'converting');
+
+        $this->tpl->setVariable('VAL_MID', $a_set['mid']);
+
         if ($transcoded) {
-			$this->tpl->touchBlock('transcoded');
+			$this->tpl->setCurrentBlock('transcoded');
+			$this->tpl->setVariable('MID', $a_set['mid']);
+			$this->tpl->parseCurrentBlock();
 		} else {
 			$this->tpl->touchBlock('transcoding');
             $this->tpl->setVariable('PLAY_OVERLAY_ATTRIBUTES', 'hidden');
@@ -104,20 +109,11 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
             }
 		}
 
-		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
-
-
 		$this->ctrl->setParameter($this->parent_obj, 'mid', $a_set['mid']);
 		$this->tpl->setVariable('VAL_LINK_REMOVE', $this->ctrl->getLinkTarget($this->parent_obj, xvmpSelectedVideosGUI::CMD_REMOVE_VIDEO, '', true));
 
-		// Videos can be transcoded multiple times. If they are being transcoded again, it should be possible to change the visibility.
-//		if (!$transcoded) {
-//			$this->tpl->setVariable('VAL_VISIBILITY_DISABLED', 'disabled');
-//		}
-
 		foreach ($this->available_columns as $title => $props)
 		{
-
 			if ($title == 'visible') {
 				$this->tpl->setVariable('VAL_' . strtoupper($title), $a_set[$title] == 1 ? 'checked' : '');
 			} elseif ($title == 'description' && strlen($a_set[$title]) > 95) {
