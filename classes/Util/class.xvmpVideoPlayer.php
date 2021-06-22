@@ -153,7 +153,8 @@ class xvmpVideoPlayer {
 		}
 
 		$template->setVariable('ID', $id);
-		$template->setVariable('SOURCE', $medium . '?token=' . xvmp::getToken());
+		$has_query = !is_null(parse_url($medium, PHP_URL_QUERY));
+		$template->setVariable('SOURCE', $medium . ($has_query ? '&' : '?') . 'token=' . xvmp::getToken());
 		// TODO: uncomment to proxy video url
 		//		$this->ctrl->setParameterByClass(xvmpContentGUI::class, 'mid', $this->video->getId());
 		//		$template->setVariable('SOURCE', $this->ctrl->getLinkTargetByClass(array(ilObjViMPGUI::class, xvmpContentGUI::class), xvmpContentGUI::CMD_DELIVER_VIDEO));
