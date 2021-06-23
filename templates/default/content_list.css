@@ -34,7 +34,6 @@
 	text-overflow: ellipsis;
 	word-break: break-all;
 	word-wrap: break-word;
-	width: auto;
 	height: 100%;
 }
 
@@ -46,6 +45,11 @@
 .xvmp_video_infos p {
 	margin: 6px 0;
 	color: black;
+	width: 94%
+}
+
+.xvmp_description {
+	font-style: italic;
 }
 
 .xvmp_video_infos h2, .xvmp_video_infos p {
@@ -55,7 +59,6 @@
 	text-overflow:     ellipsis;
 	word-break: break-all;
 	word-wrap: break-word;
-	width: auto;
 	clear: both;
 }
 

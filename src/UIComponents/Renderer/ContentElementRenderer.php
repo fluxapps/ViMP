@@ -17,6 +17,7 @@ abstract class ContentElementRenderer
 {
     const CONTAINER_TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.content_element.html';
     const DATE_FORMAT = 'd.m.Y';
+    const DESCRIPTION_LENGTH = 30;
     /**
      * @var ilViMPPlugin
      */
@@ -91,7 +92,7 @@ abstract class ContentElementRenderer
         }
 
         $tpl->setVariable('TITLE', $mediumMetadataDTO->getTitle());
-        $tpl->setVariable('DESCRIPTION', nl2br(strip_tags($mediumMetadataDTO->getDescription(50)), false));
+        $tpl->setVariable('DESCRIPTION', nl2br(strip_tags($mediumMetadataDTO->getDescription(static::DESCRIPTION_LENGTH)), false));
         $tpl->setVariable('LABEL_TITLE', $this->plugin->txt(xvmpMedium::F_TITLE));
         $tpl->setVariable('LABEL_DESCRIPTION', $this->plugin->txt(xvmpMedium::F_DESCRIPTION));
 

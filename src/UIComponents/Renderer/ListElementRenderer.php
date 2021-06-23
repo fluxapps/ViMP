@@ -12,6 +12,7 @@ use ilTemplateException;
 class ListElementRenderer extends ContentElementRenderer
 {
     const TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.content_list.html';
+    const DESCRIPTION_LENGTH = 0;
 
 
     protected function getInnerTemplate() : ilTemplate
