@@ -30,9 +30,9 @@ class xvmpSettingsGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
-		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/xvmp_settings.css');
+		$this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/xvmp_settings.css');
 		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
-		$this->tpl->setContent($xvmpSettingsFormGUI->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpSettingsFormGUI->getHTML());
 	}
 
 
@@ -44,10 +44,10 @@ class xvmpSettingsGUI extends xvmpGUI {
 		$xvmpSettingsFormGUI->setValuesByPost();
 		if (!$xvmpSettingsFormGUI->saveForm()) {
 			ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
-			$this->tpl->setContent($xvmpSettingsFormGUI->getHTML());
+			$this->dic->ui()->mainTemplate()->setContent($xvmpSettingsFormGUI->getHTML());
 		}
 		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 }

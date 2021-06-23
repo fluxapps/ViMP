@@ -32,7 +32,7 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 	protected function index() {
 		ilUtil::sendInfo($this->pl->txt('hint_learning_progress_gui'));
 		$xvmpLearningProgressTableGUI = new xvmpLearningProgressTableGUI($this, self::CMD_STANDARD);
-		$this->tpl->setContent($xvmpLearningProgressTableGUI->getHTML() . $this->getModalPlayer()->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpLearningProgressTableGUI->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
 	protected function save() {
@@ -45,6 +45,6 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 		}
 		xvmpUserLPStatus::updateLPStatuses($this->getObjId(), false);
 		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-		$this->ctrl->redirect($this,self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this,self::CMD_STANDARD);
 	}
 }

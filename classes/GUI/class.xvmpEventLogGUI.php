@@ -25,20 +25,20 @@ class xvmpEventLogGUI extends xvmpGUI {
 	protected function index() {
 		$xvmpEventLogTableGUI = new xvmpEventLogTableGUI($this, self::CMD_STANDARD);
 		$xvmpEventLogTableGUI->parseData();
-		$this->tpl->setContent($xvmpEventLogTableGUI->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpEventLogTableGUI->getHTML());
 	}
 
 	protected function applyFilter() {
 		$xvmpEventLogTableGUI = new xvmpEventLogTableGUI($this, self::CMD_STANDARD);
 		$xvmpEventLogTableGUI->writeFilterToSession();
 		$xvmpEventLogTableGUI->resetOffset();
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 	protected function resetFilter() {
 		$xvmpEventLogTableGUI = new xvmpEventLogTableGUI($this, self::CMD_STANDARD);
 		$xvmpEventLogTableGUI->resetFilter();
 		$xvmpEventLogTableGUI->resetOffset();
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 }

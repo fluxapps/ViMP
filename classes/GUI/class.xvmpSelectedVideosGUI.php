@@ -24,7 +24,7 @@ class xvmpSelectedVideosGUI extends xvmpVideosGUI {
 			$this->accessDenied();
 		}
 
-		if (!$this->ctrl->isAsynch()) {
+		if (!$this->dic->ctrl()->isAsynch()) {
 			$this->addFlushCacheButton();
 		}
 

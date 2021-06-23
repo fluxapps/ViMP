@@ -60,7 +60,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			 * this will find (and cache) or create a vimp user,
 			 * or throw an exception if no vimp user is found and no vimp user can be created.
 			 */
-			xvmpUser::getOrCreateVimpUser($this->user);
+			xvmpUser::getOrCreateVimpUser($this->dic->user());
 		}
 		parent::performCommand($cmd);
 	}
@@ -73,7 +73,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$mid = $_GET['mid'];
 		$xvmpEditVideoFormGUI = new xvmpEditVideoFormGUI($this, $mid);
 		$xvmpEditVideoFormGUI->fillForm();
-		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
 
@@ -86,7 +86,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$login_exists = ilObjUser::_loginExists($login);
 		if ($login && $login_exists) {
 			$ilConfirmationGUI = new ilConfirmationGUI();
-			$ilConfirmationGUI->setFormAction($this->ctrl->getFormAction($this));
+			$ilConfirmationGUI->setFormAction($this->dic->ctrl()->getFormAction($this));
 			$ilConfirmationGUI->setHeaderText($this->pl->txt('msg_warning_change_owner'));
 			$ilConfirmationGUI->addItem('mid', $mid, sprintf(
 				$this->pl->txt('confirmation_new_owner'),
@@ -94,15 +94,15 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 				$login
 			));
 			$ilConfirmationGUI->addHiddenItem('login', $login);
-			$ilConfirmationGUI->setConfirm($this->lng->txt('confirm'), self::CMD_CONFIRMED_CHANGE_OWNER);
-			$ilConfirmationGUI->setCancel($this->lng->txt('cancel'), self::CMD_STANDARD);
-			$this->tpl->setContent($ilConfirmationGUI->getHTML());
+			$ilConfirmationGUI->setConfirm($this->dic->language()->txt('confirm'), self::CMD_CONFIRMED_CHANGE_OWNER);
+			$ilConfirmationGUI->setCancel($this->dic->language()->txt('cancel'), self::CMD_STANDARD);
+			$this->dic->ui()->mainTemplate()->setContent($ilConfirmationGUI->getHTML());
 		} else {
 			if ($login && !$login_exists) {
 				ilUtil::sendFailure($this->pl->txt('msg_error_login_not_found'));
 			}
 			$xvmpChangeOwnerFormGUI = new xvmpChangeOwnerFormGUI($this, $mid);
-			$this->tpl->setContent($xvmpChangeOwnerFormGUI->getHTML());
+			$this->dic->ui()->mainTemplate()->setContent($xvmpChangeOwnerFormGUI->getHTML());
 		}
 	}
 
@@ -115,9 +115,9 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$login = filter_input(INPUT_POST, 'login');
 
 		$medium = xvmpMedium::getObjectAsArray($mid);
-		if ($medium['uid'] !== xvmpUser::getVimpUser($this->user)->getUid()) {
+		if ($medium['uid'] !== xvmpUser::getVimpUser($this->dic->user())->getUid()) {
 			ilUtil::sendFailure($this->pl->txt('permission_denied'), true);
-			$this->ctrl->redirect($this, self::CMD_STANDARD);
+			$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 		}
 
 		$xvmpUser = xvmpUser::getOrCreateVimpUser(new ilObjUser(ilObjUser::getUserIdByLogin($login)));
@@ -140,7 +140,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 				'title' => $medium['title']
 			));
 			/** @var xvmpUploadedMedia $xvmpUploadedMedia */
-			foreach (xvmpUploadedMedia::where(['mid' => $mid, 'user_id' => $this->user->getId()])->get() as $xvmpUploadedMedia) {
+			foreach (xvmpUploadedMedia::where(['mid' => $mid, 'user_id' => $this->dic->user()->getId()])->get() as $xvmpUploadedMedia) {
 				$new_user_id = ilObjUser::_lookupId($login);
 				$xvmpUploadedMedia->setUserId($new_user_id);
 				$xvmpUploadedMedia->setEmail(ilObjUser::_lookupEmail($new_user_id));
@@ -150,7 +150,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			ilUtil::sendFailure($this->pl->txt('failure'));
 		}
 
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 	/**
@@ -161,10 +161,10 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$xvmpEditVideoFormGUI->setValuesByPost();
 		if ($xvmpEditVideoFormGUI->saveForm()) {
 			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
-			$this->ctrl->redirect($this, self::CMD_STANDARD);
+			$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 		}
 		ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
-		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
 	/**
@@ -173,7 +173,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 	public function uploadVideoForm() {
 		$xvmpUploadVideoFormGUI = new xvmpUploadVideoFormGUI($this);
 		$xvmpUploadVideoFormGUI->fillForm();
-		$this->tpl->setContent($xvmpUploadVideoFormGUI->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpUploadVideoFormGUI->getHTML());
 	}
 
 
@@ -185,12 +185,12 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$xvmpEditVideoFormGUI->setValuesByPost();
 		if ($xvmpEditVideoFormGUI->saveForm()) {
 			ilUtil::sendSuccess($this->pl->txt('video_uploaded'), true);
-			$this->ctrl->redirect($this, self::CMD_STANDARD);
+			$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 		}
 
 		ilUtil::sendFailure($this->pl->txt('form_incomplete'));
 		$xvmpEditVideoFormGUI->setValuesByPost();
-		$this->tpl->setContent($xvmpEditVideoFormGUI->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($xvmpEditVideoFormGUI->getHTML());
 	}
 
 
@@ -201,12 +201,12 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$mid = $_GET['mid'];
 		$video = xvmpMedium::find($mid);
 		$confirmation_gui = new ilConfirmationGUI();
-		$confirmation_gui->setFormAction($this->ctrl->getFormAction($this));
+		$confirmation_gui->setFormAction($this->dic->ctrl()->getFormAction($this));
 		$confirmation_gui->setHeaderText($this->pl->txt('confirm_delete_text'));
 		$confirmation_gui->addItem('mid', $mid, $video->getTitle());
-		$confirmation_gui->setConfirm($this->lng->txt('delete'),self::CMD_CONFIRMED_DELETE_VIDEO);
-		$confirmation_gui->setCancel($this->lng->txt('cancel'), self::CMD_STANDARD);
-		$this->tpl->setContent($confirmation_gui->getHTML());
+		$confirmation_gui->setConfirm($this->dic->language()->txt('delete'),self::CMD_CONFIRMED_DELETE_VIDEO);
+		$confirmation_gui->setCancel($this->dic->language()->txt('cancel'), self::CMD_STANDARD);
+		$this->dic->ui()->mainTemplate()->setContent($confirmation_gui->getHTML());
 	}
 
 
@@ -224,7 +224,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		xvmpEventLog::logEvent(xvmpEventLog::ACTION_DELETE, $this->getObjId(), $video);
 
 		ilUtil::sendSuccess($this->pl->txt('video_deleted'), true);
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 

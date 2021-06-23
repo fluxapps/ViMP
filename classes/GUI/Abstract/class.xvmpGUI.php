@@ -26,33 +26,9 @@ abstract class xvmpGUI {
 	 */
 	protected $parent_gui;
 	/**
-	 * @var ilTemplate
-	 */
-	protected $tpl;
-	/**
-	 * @var ilTabsGUI
-	 */
-	protected $tabs;
-	/**
-	 * @var ilCtrl
-	 */
-	protected $ctrl;
-	/**
-	 * @var ilToolbarGUI|mixed
-	 */
-	protected $toolbar;
-	/**
-	 * @var ilObjUser
-	 */
-	protected $user;
-	/**
 	 * @var ilViMPPlugin
 	 */
 	protected $pl;
-	/**
-	 * @var mixed
-	 */
-	protected $lng;
     /**
      * @var Container
      */
@@ -74,20 +50,8 @@ abstract class xvmpGUI {
 	 */
 	public function __construct(ilObjViMPGUI $parent_gui) {
 		global $DIC;
-		$tpl = $DIC['tpl'];
-		$ilCtrl = $DIC['ilCtrl'];
-		$ilTabs = $DIC['ilTabs'];
-		$ilToolbar = $DIC['ilToolbar'];
-		$ilUser = $DIC['ilUser'];
-		$lng = $DIC['lng'];
 		$this->dic = $DIC;
-		$this->tpl = $tpl;
-		$this->tabs = $ilTabs;
-		$this->ctrl = $ilCtrl;
-		$this->toolbar = $ilToolbar;
-		$this->user = $ilUser;
 		$this->pl = ilViMPPlugin::getInstance();
-		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
 		$this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
 		$this->renderer_factory = new Factory($DIC, $this->pl);
@@ -96,8 +60,8 @@ abstract class xvmpGUI {
 
 	protected function addJavaScript()
     {
-        $this->tpl->addJavaScript('./libs/bower/bower_components/webui-popover/dist/jquery.webui-popover.js');
-        $this->tpl->addJavaScript('./src/UI/templates/js/Popover/popover.js');
+        $this->dic->ui()->mainTemplate()->addJavaScript('./libs/bower/bower_components/webui-popover/dist/jquery.webui-popover.js');
+        $this->dic->ui()->mainTemplate()->addJavaScript('./src/UI/templates/js/Popover/popover.js');
     }
 
     /**
@@ -200,14 +164,14 @@ abstract class xvmpGUI {
 	 *
 	 */
 	public function executeCommand() {
-		if (!$this->ctrl->isAsynch()) {
-			$this->tabs->activateTab(static::TAB_ACTIVE);
+		if (!$this->dic->ctrl()->isAsynch()) {
+			$this->dic->tabs()->activateTab(static::TAB_ACTIVE);
 		}
 
-		$nextClass = $this->ctrl->getNextClass();
+		$nextClass = $this->dic->ctrl()->getNextClass();
 		switch ($nextClass) {
 			default:
-				$cmd = $this->ctrl->getCmd(self::CMD_STANDARD);
+				$cmd = $this->dic->ctrl()->getCmd(self::CMD_STANDARD);
 				$this->performCommand($cmd);
 				break;
 		}
@@ -234,10 +198,10 @@ abstract class xvmpGUI {
 	 */
 	public function addFlushCacheButton () {
 		$button = ilLinkButton::getInstance();
-		$button->setUrl($this->ctrl->getLinkTarget($this,self::CMD_FLUSH_CACHE));
+		$button->setUrl($this->dic->ctrl()->getLinkTarget($this,self::CMD_FLUSH_CACHE));
 		$button->setCaption($this->pl->txt('flush_video_cache'), false);
 		$button->setId('xvmp_flush_video_cache');
-		$this->toolbar->addButtonInstance($button);
+		$this->dic->toolbar()->addButtonInstance($button);
 
 		ilTooltipGUI::addTooltip('xvmp_flush_video_cache', $this->pl->txt('flush_video_cache_tooltip'));
 	}
@@ -250,7 +214,7 @@ abstract class xvmpGUI {
 		foreach (xvmpSelectedMedia::getSelected($this->getObjId()) as $selected) {
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $selected->getMid());
 		}
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 
@@ -264,7 +228,7 @@ abstract class xvmpGUI {
 	 *
 	 */
 	protected function cancel() {
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 
@@ -288,7 +252,7 @@ abstract class xvmpGUI {
 	 */
 	public function accessDenied() {
 		ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-		$this->ctrl->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+		$this->dic->ctrl()->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
 	}
 
 		/**
@@ -357,7 +321,7 @@ abstract class xvmpGUI {
 		$response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async);
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
-		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->user->getId(), xvmpMedium::F_MID => $mid))->first();
+		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->dic->user()->getId(), xvmpMedium::F_MID => $mid))->first();
 		if ($progress) {
 			$response->time_ranges = json_decode($progress->getRanges());
 		} else {

@@ -39,9 +39,9 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 			case self::CMD_STANDARD:
 			case self::CMD_SHOW:
 			case self::CMD_SHOW_FILTERED:
-				if (!$this->ctrl->isAsynch()) {
+				if (!$this->dic->ctrl()->isAsynch()) {
 					$this->setSubTabs();
-					$this->tabs->activateSubTab(static::SUBTAB_ACTIVE);
+					$this->dic->tabs()->activateSubTab(static::SUBTAB_ACTIVE);
 					$this->initUploadButton();
 				}
 				break;
@@ -64,9 +64,9 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 */
 	protected function setSubTabs() {
 		if (ilObjViMPAccess::hasWriteAccess()) {
-			$this->tabs->addSubTab(self::SUBTAB_SEARCH, $this->pl->txt(self::SUBTAB_SEARCH), $this->ctrl->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
-			$this->tabs->addSubTab(self::SUBTAB_SELECTED, $this->pl->txt(self::SUBTAB_SELECTED), $this->ctrl->getLinkTargetByClass(xvmpSelectedVideosGUI::class, xvmpSelectedVideosGUI::CMD_STANDARD));
-			$this->tabs->addSubTab(self::SUBTAB_OWN, $this->pl->txt(self::SUBTAB_OWN), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
+			$this->dic->tabs()->addSubTab(self::SUBTAB_SEARCH, $this->pl->txt(self::SUBTAB_SEARCH), $this->dic->ctrl()->getLinkTargetByClass(xvmpSearchVideosGUI::class, xvmpSearchVideosGUI::CMD_STANDARD));
+			$this->dic->tabs()->addSubTab(self::SUBTAB_SELECTED, $this->pl->txt(self::SUBTAB_SELECTED), $this->dic->ctrl()->getLinkTargetByClass(xvmpSelectedVideosGUI::class, xvmpSelectedVideosGUI::CMD_STANDARD));
+			$this->dic->tabs()->addSubTab(self::SUBTAB_OWN, $this->pl->txt(self::SUBTAB_OWN), $this->dic->ctrl()->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
 		}
 	}
 
@@ -78,7 +78,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$class_name = static::TABLE_CLASS;
 		/** @var xvmpTableGUI $table_gui */
 		$table_gui = new $class_name($this, self::CMD_SHOW);
-		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
 
@@ -91,7 +91,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$table_gui = new $class_name($this, self::CMD_SHOW);
 		$table_gui->parseData();
 		$table_gui->determineOffsetAndOrder();
-		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
 	/**
@@ -103,7 +103,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$table_gui = new $class_name($this, self::CMD_SHOW_FILTERED);
 		$table_gui->parseData();
 		$table_gui->determineOffsetAndOrder();
-		$this->tpl->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
+		$this->dic->ui()->mainTemplate()->setContent($table_gui->getHTML() . $this->getModalPlayer()->getHTML());
 	}
 
 
@@ -116,7 +116,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$table_gui = new $class_name($this, self::CMD_STANDARD);
 		$table_gui->resetOffset();
 		$table_gui->writeFilterToSession();
-		$this->ctrl->redirect($this, self::CMD_SHOW_FILTERED);
+		$this->dic->ctrl()->redirect($this, self::CMD_SHOW_FILTERED);
 	}
 
 
@@ -129,7 +129,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$table_gui = new $class_name($this, self::CMD_STANDARD);
 		$table_gui->resetOffset();
 		$table_gui->resetFilter();
-		$this->ctrl->redirect($this, self::CMD_STANDARD);
+		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 
 	public function toggleVideo() {
@@ -175,8 +175,8 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	protected function initUploadButton() {
 		$upload_button = ilLinkButton::getInstance();
 		$upload_button->setCaption($this->pl->txt('upload_video'), false);
-		$upload_button->setUrl($this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO_FORM));
-		$this->toolbar->addButtonInstance($upload_button);
+		$upload_button->setUrl($this->dic->ctrl()->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_UPLOAD_VIDEO_FORM));
+		$this->dic->toolbar()->addButtonInstance($upload_button);
 	}
 
     protected function getVideoPlayer($video, int $obj_id) : VideoPlayer
