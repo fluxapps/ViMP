@@ -47,7 +47,7 @@ class xvmpContentPlayerGUI {
 		$this->dic = $DIC;
 
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_player.css');
-		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
+		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js?v=2');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
 	}

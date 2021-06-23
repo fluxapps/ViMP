@@ -221,7 +221,7 @@ abstract class xvmpGUI {
 	 */
 	public static function getModalPlayer() {
 		global $tpl;
-		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
+		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css?v=2');
 		$modal = ilModalGUI::getInstance();
 		$modal->setId('xvmp_modal_player');
 		$modal->setType(ilModalGUI::TYPE_LARGE);
@@ -256,7 +256,7 @@ abstract class xvmpGUI {
             }
             return $modal;
         }
-        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
+        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css?v=2');
         $modal_content = $this->fillModalPlayer($video_mid, false);
         /** @var xvmpSettings $settings */
         $settings = xvmpSettings::find($this->getObjId());
