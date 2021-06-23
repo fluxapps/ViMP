@@ -8,12 +8,8 @@
  */
 class xvmp {
 
-	const ILIAS_50 = 50;
-	const ILIAS_51 = 51;
-	const ILIAS_52 = 52;
-	const ILIAS_53 = 53;
     const ILIAS_54 = 54;
-    const MIN_ILIAS_VERSION = self::ILIAS_50;
+    const ILIAS_6 = 6;
     const TOKEN = 'token';
 
 
@@ -21,55 +17,23 @@ class xvmp {
 	 * @return int
 	 */
 	public static function getILIASVersion() {
+		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.4.999')) {
+			return self::ILIAS_6;
+		}
 		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.3.999')) {
 			return self::ILIAS_54;
-		}
-		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.2.999')) {
-			return self::ILIAS_53;
-		}
-		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.1.999')) {
-			return self::ILIAS_52;
-		}
-		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '5.0.999')) {
-			return self::ILIAS_51;
-		}
-		if (ilComponent::isVersionGreaterString(ILIAS_VERSION_NUMERIC, '4.9.999')) {
-			return self::ILIAS_50;
 		}
 
 		return 0;
 	}
 
-
 	/**
 	 * @return bool
 	 */
-	public static function is50() {
-		return self::getILIASVersion() >= self::ILIAS_50;
+	public static function is6() {
+		return self::getILIASVersion() >= self::ILIAS_6;
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public static function is51() {
-		return self::getILIASVersion() >= self::ILIAS_51;
-	}
-
-
-	/**
-	 * @return bool
-	 */
-	public static function is52() {
-		return self::getILIASVersion() >= self::ILIAS_52;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public static function is53() {
-		return self::getILIASVersion() >= self::ILIAS_53;
-	}
 
 	/**
 	 * @return bool

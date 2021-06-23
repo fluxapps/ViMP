@@ -74,13 +74,18 @@ class PlayerModalRenderer
 
         foreach ($playModalDTO->getButtons() as $button) {
             $tpl->setCurrentBlock('button');
-            $tpl->setVariable('BUTTON', $this->renderComponent($button, $async));
+            $tpl->setVariable('BUTTON', $this->renderComponents($button, $async));
             $tpl->parseCurrentBlock();
         }
         return $tpl->get();
     }
 
-    protected function renderComponent(Component $component, bool $async) : string
+    /**
+     * @param Component|Component[] $component
+     * @param bool $async
+     * @return string
+     */
+    protected function renderComponents($component, bool $async) : string
     {
         return $async ? $this->dic->ui()->renderer()->renderAsync($component)
             : $this->dic->ui()->renderer()->render($component);

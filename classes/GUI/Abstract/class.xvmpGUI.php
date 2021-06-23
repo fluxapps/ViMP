@@ -3,10 +3,9 @@
 
 use ILIAS\DI\Container;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
-use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
 use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
-use srag\Plugins\ViMP\UIComponents\Renderer\PlayerModalRenderer;
 use srag\Plugins\ViMP\UIComponents\Renderer\Factory;
+use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
 
 /**
  * Class xvmpGUI
@@ -92,7 +91,14 @@ abstract class xvmpGUI {
 		$this->parent_gui = $parent_gui;
 		$this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
 		$this->renderer_factory = new Factory($DIC, $this->pl);
+		$this->addJavaScript();
 	}
+
+	protected function addJavaScript()
+    {
+        $this->tpl->addJavaScript('./libs/bower/bower_components/webui-popover/dist/jquery.webui-popover.js');
+        $this->tpl->addJavaScript('./src/UI/templates/js/Popover/popover.js');
+    }
 
     /**
      * @return ilModalGUI
@@ -122,30 +128,39 @@ abstract class xvmpGUI {
             $this->getVideoPlayer($medium, $this->getObjId()),
             $this->metadata_builder->buildFromVimpMedium($medium, false, false));
 
+        $buttons = [];
         if (!is_null($this->getObject())) {
-            $link = $this->getPermLinkHTML($medium);
-            $playModalDto = $playModalDto->withPermLinkHtml($link);
+            $buttons[] = $this->buildPermLinkDropdown($medium);
         }
 
         if ($medium->isDownloadAllowed()) {
             $this->dic->ctrl()->setParameter($this, 'mid', $medium->getMid());
-            $playModalDto = $playModalDto->withButtons([
-                $this->dic->ui()->factory()->button()->standard(
-                    $this->pl->txt('btn_download'),
-                    $this->dic->ctrl()->getLinkTarget($this, self::CMD_DOWNLOAD_MEDIUM)
-                )
-            ]);
+            $buttons[] = $this->dic->ui()->factory()->button()->standard(
+                $this->pl->txt('btn_download'),
+                $this->dic->ctrl()->getLinkTarget($this, self::CMD_DOWNLOAD_MEDIUM)
+            );
+        }
+
+        if (!empty($buttons)) {
+            $playModalDto = $playModalDto->withButtons($buttons);
         }
 
         return $playModalDto;
     }
 
     /**
-     * @param xvmpMedium $video
-     * @param bool       $async
-     * @return string
+     * @throws xvmpException
      */
-    public function getPermLinkHTML(xvmpMedium $video, bool $async = true) : string
+    protected function getVideoPlayer($video, int $obj_id) : VideoPlayer
+    {
+        return (new VideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video), false));
+    }
+
+    /**
+     * @param xvmpMedium $video
+     * @return ILIAS\UI\Component\Component[]
+     */
+    public function buildPermLinkDropdown(xvmpMedium $video) : array
     {
         $link_tpl = ilLink::_getStaticLink(
             $this->parent_gui->ref_id,
@@ -153,34 +168,32 @@ abstract class xvmpGUI {
             true,
             '_' . $video->getMid() . '_TIME_'
         );
-        $link_tpl = "<input type='text' id='xvmp_direct_link_tpl' value='{$link_tpl}' hidden>";
+
+        // ilias can't handle one popover for two buttons
+        $popover_1 = $this->dic->ui()->factory()->popover()->standard(
+            $this->dic->ui()->factory()->legacy($this->pl->txt('popover_link_copied')));
+        $popover_2 = $this->dic->ui()->factory()->popover()->standard(
+            $this->dic->ui()->factory()->legacy($this->pl->txt('popover_link_copied')));
+
 
         $items = [
-            $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link'), '')->withOnLoadCode(function (
-                $id
-            ) {
-                return "document.getElementById('{$id}').addEventListener('click', VimpContent.copyDirectLink);";
+            $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link'),
+                '')->withOnClick($popover_1->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
+                return "document.getElementById('{$id}').addEventListener('click', () => VimpContent.copyDirectLink('{$link_tpl}'));";
             })
         ];
+
         if (!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
             $items[] = $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
-                '')->withOnLoadCode(function ($id) {
-                return "document.getElementById('{$id}').addEventListener('click', VimpContent.copyDirectLinkWithTime);";
+                '')->withOnClick($popover_2->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
+                return "document.getElementById('{$id}').addEventListener('click', () => VimpContent.copyDirectLinkWithTime('{$link_tpl}'));";
             });
         }
-        $dropdown = $this->dic->ui()->factory()->dropdown()->standard($items)->withLabel($this->pl->txt('direct_link_dropdown'));
-        return $link_tpl . ($async ? $this->dic->ui()->renderer()->renderAsync($dropdown) : $this->dic->ui()->renderer()->render($dropdown));
-    }
-
-    /**
-    * @param     $video
-    * @param int $obj_id
-    * @return VideoPlayer
-    * @throws xvmpException
-    */
-    protected function getVideoPlayer($video, int $obj_id) : VideoPlayer
-    {
-        return (new VideoPlayer($video, xvmp::isUseEmbeddedPlayer($obj_id, $video)));
+        return [
+            $this->dic->ui()->factory()->dropdown()->standard($items)->withLabel($this->pl->txt('direct_link_dropdown')),
+            $popover_1,
+            $popover_2
+        ];
     }
 
     /**

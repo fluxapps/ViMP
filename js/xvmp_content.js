@@ -6,6 +6,8 @@ var VimpContent = {
 
 	template: '',
 
+	copy_link_template: '<input type=\'text\' id=\'xvmp_direct_link_tpl\' value=\'\' hidden>',
+
 	init: function () {
 		addEventListener('xvmp_copy_direct_link', function (event) {
 			this.copyDirectLink();
@@ -99,8 +101,7 @@ var VimpContent = {
 		});
 	},
 
-	copyDirectLink: function() {
-		const link_tpl = document.getElementById('xvmp_direct_link_tpl').value;
+	copyDirectLink: function(link_tpl) {
 		const el = document.createElement('textarea');
 		el.value = link_tpl.replace('_TIME_', '');
 		document.body.appendChild(el);
@@ -109,8 +110,7 @@ var VimpContent = {
 		document.body.removeChild(el);
 	},
 
-	copyDirectLinkWithTime: function() {
-		const link_tpl = document.getElementById('xvmp_direct_link_tpl').value;
+	copyDirectLinkWithTime: function(link_tpl) {
 		const el = document.createElement('textarea');
 		el.value = link_tpl.replace('_TIME_', '_' + Math.floor(player.currentTime()));
 		document.body.appendChild(el);
