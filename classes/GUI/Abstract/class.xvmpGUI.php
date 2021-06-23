@@ -78,7 +78,14 @@ abstract class xvmpGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
+		$this->addJavaScript();
 	}
+
+    protected function addJavaScript()
+    {
+        $this->tpl->addJavaScript('./libs/bower/bower_components/webui-popover/dist/jquery.webui-popover.js');
+        $this->tpl->addJavaScript('./src/UI/templates/js/Popover/popover.js');
+    }
 
     /**
      * @param xvmpMedium $video
