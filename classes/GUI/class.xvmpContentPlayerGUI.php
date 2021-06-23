@@ -1,15 +1,20 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use ILIAS\DI\Container;
+
 /**
  * Class xvmpContentPlayerGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xvmpContentPlayerGUI {
+    /**
+     * @var Container
+     */
+    private $dic;
 
-
-	/**
+    /**
 	 * @var xvmpContentGUI
 	 */
 	protected $parent_gui;
@@ -39,6 +44,7 @@ class xvmpContentPlayerGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->lng = $lng;
 		$this->parent_gui = $parent_gui;
+		$this->dic = $DIC;
 
 		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/content_player.css');
 		$this->tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
@@ -108,7 +114,9 @@ class xvmpContentPlayerGUI {
 				$player_tpl->parseCurrentBlock();
 			}
 
-            $player_tpl->setVariable('PERMANENT_LINK', $this->parent_gui->getPermLinkHTML($video, false));
+            $player_tpl->setVariable('PERMANENT_LINK',
+                $this->dic->ui()->renderer()->render(
+                    $this->parent_gui->buildPermLinkDropdown($video)));
         }
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
