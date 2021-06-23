@@ -1,9 +1,8 @@
 .box {
 	width: 100%;
 	border: 1px solid black;
-	border-radius: 8px;
 	background-color: white;
-	height: 160px;
+	height: 236px;
 	overflow: hidden;
 	position: relative;
 	margin-bottom: 15px;
@@ -18,8 +17,8 @@
 }
 
 .xvmp_image_container {
-	height: 160px;
-	width: 280px;
+	height: 236px;
+	width: 356px;
 	float: left;
 	background-color: black;
 	text-align: center;
@@ -28,7 +27,8 @@
 }
 
 .xvmp_video_infos {
-	padding-left: 20px;
+	padding-left: 36px;
+	padding-top: 20px;
 	overflow: auto;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -38,14 +38,13 @@
 	height: 100%;
 }
 
-.xvmp_video_infos h2 {
+.xvmp_video_infos .xvmp_title_container {
 	margin-top: 8px;
-	margin-bottom: 3px;
+	margin-bottom: 15px;
 }
 
 .xvmp_video_infos p {
-	margin-top: 1px;
-	margin-bottom: 1px;
+	margin: 6px 0;
 	color: black;
 }
 

@@ -1,5 +1,5 @@
 <div class="xvmp_image_container">
-	<img width="280px" height="160px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
+	<img width="356px" height="236px" id="xvmp_thumbnail_{MID}" class="xvmp_preview_image" src="{THUMBNAIL}" onerror="this.src='./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/images/vimp_logo.svg'">
 	<!-- BEGIN play_overlay -->
 	<div class="xvmp_play_overlay">
 		<div class="xvmp_pseudo_element"></div> <!-- this is necessary to center the following image -->
@@ -14,10 +14,12 @@
 	</div>
 </div>
 <div class="xvmp_video_infos">
-	<h2>{TITLE}</h2>
-	<!-- BEGIN info_message -->
-	<p style="color:red">{INFO_MESSAGE}</p>
-	<!-- END info_message -->
+	<div class="xvmp_title_container">
+		<h2>{TITLE}</h2>
+		<!-- BEGIN info_message -->
+		<p style="color:red">{INFO_MESSAGE}</p>
+		<!-- END info_message -->
+	</div>
 	<p>{DESCRIPTION}</p>
 	<!-- BEGIN info_paragraph -->
 	<p>{INFO}</p>
