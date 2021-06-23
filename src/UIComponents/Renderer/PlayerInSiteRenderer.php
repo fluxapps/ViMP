@@ -45,7 +45,7 @@ class PlayerInSiteRenderer
             $playerContainerDTO->getVideoPlayer()->getHTML()
             : $this->renderUnavailablePlayer($playerContainerDTO));
         $tpl->setVariable('TITLE', $playerContainerDTO->getMediumMetadata()->getTitle());
-        $tpl->setVariable('DESCRIPTION', nl2br($playerContainerDTO->getMediumMetadata()->getDescription(50), false));
+        $tpl->setVariable('DESCRIPTION', nl2br($playerContainerDTO->getMediumMetadata()->getDescription(0), false));
 
         if (!$playerContainerDTO->getMediumMetadata()->isAvailable()) {
             $tpl->setCurrentBlock('info_message');

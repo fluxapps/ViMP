@@ -39,7 +39,7 @@
 
 .xvmp_video_infos .xvmp_title_container {
 	margin-top: 8px;
-	margin-bottom: 15px;
+	margin-bottom: 13px;
 }
 
 .xvmp_video_infos p {
@@ -48,8 +48,9 @@
 	width: 94%
 }
 
-.xvmp_description {
+.xvmp_video_infos p.xvmp_description {
 	font-style: italic;
+	margin-bottom: 10px;
 }
 
 .xvmp_video_infos h2, .xvmp_video_infos p {
