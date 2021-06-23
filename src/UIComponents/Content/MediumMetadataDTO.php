@@ -144,6 +144,6 @@ class MediumMetadataDTO
     public function isAvailable() : bool
     {
         return (is_null($this->availability_start) || time() > $this->availability_start->getTimestamp())
-            && (is_null($this->availability_end) || time() > $this->availability_end->getTimestamp());
+            && (is_null($this->availability_end) || time() < $this->availability_end->getTimestamp());
     }
 }

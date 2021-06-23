@@ -33,7 +33,6 @@ div#xvmp_video_infos {
 
 div#xvmp_video_infos div.dropdown {
 	position: relative;
-	float: left;
 }
 
 div.xvmp_video_infos {
@@ -81,14 +80,6 @@ div#xvmp_video_list_container::-webkit-scrollbar-thumb
 	background: white;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 	border-radius: 7px;
-}
-
-.box:hover .xvmp_overlay_infos {
-	/*opacity: 1;*/
-}
-
-.box:hover {
-	opacity: 0.75;
 }
 
 .xvmp_overlay_infos {
@@ -168,6 +159,20 @@ div.xvmp_image_container img.xvmp_preview_image {
 	opacity: 1;
 }
 
+.xvmp_not_available_overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: inherit;
+	width: inherit;
+	background-color: rgba(0,0,0,.7);
+	vertical-align: middle;
+	display: inline-block;
+	color: white;
+	font-size: 0.9em;
+}
 /* this is necessary to center the "play" image */
 .xvmp_pseudo_element {
 	height: 100%;
@@ -188,6 +193,19 @@ div.xvmp_image_container img.xvmp_play_icon {
 
 .waiting {
 	background: url('../images/spinner.gif') no-repeat center center !important;
+}
+
+.xvmp_player_toolbar {
+	width: 100%;
+}
+
+.xvmp_player_toolbar button, .xvmp_player_toolbar .dropdown {
+	display: inline-block;
+}
+
+.xvmp_thumbnail_not_available {
+	width: 100%;
+	max-width: 100%;
 }
 
 @media only screen and (max-width : 1000px) {
@@ -215,6 +233,8 @@ div.xvmp_image_container img.xvmp_play_icon {
 		/*margin-right: 20px;*/
 	}
 }
+
+
 
 /*@media only screen and (max-width : 480px) {*/
 	/*!* Smartphone view: 1 tile *!*/

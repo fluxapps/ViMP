@@ -21,10 +21,6 @@ class PlayerContainerDTO
      */
     protected $medium_metadata;
     /**
-     * @var string
-     */
-    protected $perm_link_html = '';
-    /**
      * @var Button[]
      */
     protected $buttons = [];
@@ -38,13 +34,6 @@ class PlayerContainerDTO
     {
         $this->video_player = $video_player;
         $this->medium_metadata = $medium_metadata;
-    }
-
-    public function withPermLinkHtml(string $perm_link_html) : self
-    {
-        $new = clone $this;
-        $new->perm_link_html = $perm_link_html;
-        return $new;
     }
 
     public function withButtons(array $buttons) : self
@@ -68,14 +57,6 @@ class PlayerContainerDTO
     public function getMediumMetadata() : MediumMetadataDTO
     {
         return $this->medium_metadata;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPermLinkHtml() : string
-    {
-        return $this->perm_link_html;
     }
 
     /**

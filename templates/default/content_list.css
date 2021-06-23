@@ -82,6 +82,20 @@
 	opacity: 1;
 }
 
+.xvmp_not_available_overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: inherit;
+	width: inherit;
+	background-color: rgba(0,0,0,.7);
+	vertical-align: middle;
+	display: inline-block;
+	color: white;
+}
+
 .box a:hover {
 	text-decoration: none;
 	color: inherit;

@@ -81,9 +81,8 @@ class xvmpContentPlayerGUI
 
         $player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());
 
-        $video_player = new VideoPlayer($medium, xvmp::isUseEmbeddedPlayer($this->parent_gui->getObjId(), $medium));
         $in_site_player = $this->player_renderer->render(
-            new PlayerContainerDTO($video_player, $this->metadata_builder->buildFromVimpMedium($medium, false, true)),
+            $this->parent_gui->buildPlayerContainerDTO($medium),
             $medium instanceof xvmpDeletedMedium);
         $player_tpl->setVariable('VIDEO_PLAYER', $in_site_player);
 
@@ -124,4 +123,5 @@ class xvmpContentPlayerGUI
 
         return $player_tpl->get();
     }
+
 }

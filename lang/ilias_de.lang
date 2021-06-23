@@ -181,6 +181,7 @@ enable_learning_progress#:#Lernfortschritt aktiviert
 enable_learning_progress_info#:#Der Lernfortschritt kann nur aktiviert werden, wenn das Objekt innerhalb eines Kurses liegt und der Lernfortschritt global aktiviert ist.
 added#:#Hinzugefügt
 max_filesize#:#Max. Dateigröße
+info_not_available#:#Nicht Verfügbar
 info_transcoding_short#:#Wird Transkodiert
 info_transcoding_full#:#Dieses Video wird noch transkodiert und lässt sich daher momentan nicht abspielen.
 info_transcoding_possible_full#:#Dieses Video wird noch transkodiert und lässt sich daher möglicherweise nicht abspielen.
@@ -201,3 +202,9 @@ btn_copy_link#:#Link kopieren
 btn_copy_link_w_time#:#Link mit Zeitangabe kopieren
 btn_download#:#Download
 popover_link_copied#:#Link in Zwischenablage kopiert
+availability_between#:#Verfügbar %s - %s
+availability_from#:#Verfügbar ab %s
+availability_to#:#Verfügbar bis %s
+availability_between_short#:#%s - %s
+availability_from_short#:#%s
+availability_to_short#:#Bis %s

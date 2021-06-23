@@ -46,3 +46,8 @@ h4.modal-title {
 .video-js .vjs-control-bar {
 	display: flex;
 }
+
+.xvmp_thumbnail_not_available {
+	width: 100%;
+	max-width: 100%;
+}

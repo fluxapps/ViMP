@@ -17,6 +17,7 @@ use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 class PlayerModalRenderer
 {
     const TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.player_modal.html';
+    const TEMPLATE_PATH_UNAVAILABLE = __DIR__ . '/../../../templates/default/tpl.video_not_available.html';
     /**
      * @var ilViMPPlugin
      */
@@ -42,21 +43,17 @@ class PlayerModalRenderer
      * @throws ilTemplateException
      * @throws xvmpException
      */
-    public function render(PlayerContainerDTO $playModalDTO, bool $async) : string
+    public function render(PlayerContainerDTO $playerContainerDTO, bool $async, bool $show_unavailable = false) : string
     {
         $tpl = new ilTemplate(self::TEMPLATE_PATH, true, true);
-        $tpl->setVariable('VIDEO_PLAYER', $playModalDTO->getVideoPlayer()->getHTML());
+        $is_available = $playerContainerDTO->getMediumMetadata()->isAvailable() | $show_unavailable;
+        $tpl->setVariable('VIDEO_PLAYER', $is_available ?
+            $playerContainerDTO->getVideoPlayer()->getHTML()
+            : $this->renderUnavailablePlayer($playerContainerDTO));
 
-        if ($playModalDTO->getMediumMetadata()->isTranscoding()) {
-            $msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->plugin->txt('info_transcoding_full')
-                : $this->plugin->txt('info_transcoding_possible_full');
-            $tpl->setCurrentBlock('info_paragraph');
-            $tpl->setVariable('INFO', $msg);
-            $tpl->setVariable('INFO_STYLE', 'color:red;');
-            $tpl->parseCurrentBlock();
-        }
+        $this->renderInfoMessage($playerContainerDTO, $tpl, $show_unavailable);
 
-        foreach ($playModalDTO->getMediumMetadata()->getMediumAttributes() as $mediumAttribute) {
+        foreach ($playerContainerDTO->getMediumMetadata()->getMediumAttributes() as $mediumAttribute) {
             $tpl->setCurrentBlock('info_paragraph');
             $tpl->setVariable('INFO', $mediumAttribute->getTitle() ?
                 $mediumAttribute->getTitle() . ': ' . $mediumAttribute->getValue() :
@@ -65,18 +62,45 @@ class PlayerModalRenderer
         }
 
         $tpl->setCurrentBlock('info_paragraph_ellipsis');
-        $tpl->setVariable('INFO', nl2br($playModalDTO->getMediumMetadata()->getDescription(), false));
+        $tpl->setVariable('INFO', nl2br($playerContainerDTO->getMediumMetadata()->getDescription(), false));
         $tpl->parseCurrentBlock();
 
-        if ($playModalDTO->getPermLinkHtml()) {
-            $tpl->setVariable('PERM_LINK', $playModalDTO->getPermLinkHtml());
-        }
-
-        foreach ($playModalDTO->getButtons() as $button) {
+        foreach ($playerContainerDTO->getButtons() as $button) {
             $tpl->setCurrentBlock('button');
             $tpl->setVariable('BUTTON', $this->renderComponents($button, $async));
             $tpl->parseCurrentBlock();
         }
+        return $tpl->get();
+    }
+
+    /**
+     * @param PlayerContainerDTO $playerContainerDTO
+     * @param ilTemplate         $tpl
+     */
+    protected function renderInfoMessage(PlayerContainerDTO $playerContainerDTO, ilTemplate $tpl, bool $available)
+    {
+        if ($available) {
+            $tpl->setCurrentBlock('info_paragraph');
+            $tpl->setVariable('INFO', $this->plugin->txt('info_not_available'));
+            $tpl->setVariable('INFO_STYLE', 'color:red;');
+            $tpl->parseCurrentBlock();
+        } elseif ($playerContainerDTO->getMediumMetadata()->isTranscoding()) {
+            $msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->plugin->txt('info_transcoding_full')
+                : $this->plugin->txt('info_transcoding_possible_full');
+            $tpl->setCurrentBlock('info_paragraph');
+            $tpl->setVariable('INFO', $msg);
+            $tpl->setVariable('INFO_STYLE', 'color:red;');
+            $tpl->parseCurrentBlock();
+        }
+    }
+
+    /**
+     * @throws ilTemplateException
+     */
+    private function renderUnavailablePlayer(PlayerContainerDTO $playerContainerDTO) : string
+    {
+        $tpl = new ilTemplate(self::TEMPLATE_PATH_UNAVAILABLE, true, true);
+        $tpl->setVariable('THUMBNAIL', $playerContainerDTO->getMediumMetadata()->getThumbnailUrl());
         return $tpl->get();
     }
 

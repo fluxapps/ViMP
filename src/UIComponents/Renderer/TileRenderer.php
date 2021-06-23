@@ -20,8 +20,12 @@ class TileRenderer extends ContentElementRenderer
     protected function buildTemplate(MediumMetadataDTO $mediumMetadataDTO) : ilTemplate
     {
         $tpl = $this->getContainerTemplate();
-        $tpl->setCurrentBlock('play_async');
-        $tpl->setVariable('MID', $mediumMetadataDTO->getMid());
+        if ($mediumMetadataDTO->isAvailable()) {
+            $tpl->setCurrentBlock('play_async');
+            $tpl->setVariable('MID', $mediumMetadataDTO->getMid());
+        } else {
+            $tpl->setCurrentBlock('not_available');
+        }
         $tpl->setVariable('ELEMENT', $this->buildInnerTemplate($mediumMetadataDTO)->get());
         $tpl->parseCurrentBlock();
         return $tpl;
@@ -35,6 +39,16 @@ class TileRenderer extends ContentElementRenderer
         });
         $tpl->setVariable('DURATION', end($duration_array)->getValue());
         return $tpl;
+    }
+
+    protected function fillMediumInfos(MediumMetadataDTO $mediumMetadataDTO, ilTemplate $tpl)
+    {
+        foreach ($mediumMetadataDTO->getMediumAttributes() as $mediumAttribute) {
+            $tpl->setCurrentBlock('info_paragraph');
+            $tpl->setVariable('INFO_LABEL', $mediumAttribute->getTitle());
+            $tpl->setVariable('INFO_VALUE', $mediumAttribute->getValue());
+            $tpl->parseCurrentBlock();
+        }
     }
 
     protected function getInnerTemplate() : ilTemplate

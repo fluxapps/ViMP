@@ -29,8 +29,9 @@ class xvmpContentGUI extends xvmpGUI {
         /** @var xvmpSettings $settings */
         $settings = xvmpSettings::find($this->getObjId());
 		VideoPlayer::loadVideoJSAndCSS($settings->getLpActive() && !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
+        $this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/content.css');
 
-		if (!$this->dic->ctrl()->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
+        if (!$this->dic->ctrl()->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
 		}
 

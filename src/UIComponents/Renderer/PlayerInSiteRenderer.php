@@ -16,6 +16,8 @@ use ilTemplate;
 class PlayerInSiteRenderer
 {
     const TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.player_in_site.html';
+    const TEMPLATE_PATH_UNAVAILABLE = __DIR__ . '/../../../templates/default/tpl.video_not_available.html';
+
     /**
      * @var ilViMPPlugin
      */
@@ -26,10 +28,6 @@ class PlayerInSiteRenderer
      */
     protected $dic;
 
-    /**
-     * @param Container    $dic
-     * @param ilViMPPlugin $plugin
-     */
     public function __construct(Container $dic, ilViMPPlugin $plugin)
     {
         $this->dic = $dic;
@@ -43,15 +41,19 @@ class PlayerInSiteRenderer
     public function render(PlayerContainerDTO $playerContainerDTO, bool $deleted) : string
     {
         $tpl = new ilTemplate(self::TEMPLATE_PATH, true, true);
-        $tpl->setVariable('VIDEO_PLAYER', $playerContainerDTO->getVideoPlayer()->getHTML());
-
-        $tpl->setVariable('VIDEO', $playerContainerDTO->getVideoPlayer()->getHTML());
+        $tpl->setVariable('VIDEO_PLAYER', $playerContainerDTO->getMediumMetadata()->isAvailable() ?
+            $playerContainerDTO->getVideoPlayer()->getHTML()
+            : $this->renderUnavailablePlayer($playerContainerDTO));
         $tpl->setVariable('TITLE', $playerContainerDTO->getMediumMetadata()->getTitle());
         $tpl->setVariable('DESCRIPTION', nl2br($playerContainerDTO->getMediumMetadata()->getDescription(50), false));
 
-        if ($playerContainerDTO->getMediumMetadata()->isTranscoding()) {
-            $tpl->setCurrentBlock('info_transcoding');
-            $tpl->setVariable('INFO_TRANSCODING', $this->plugin->txt('info_transcoding_full'));
+        if (!$playerContainerDTO->getMediumMetadata()->isAvailable()) {
+            $tpl->setCurrentBlock('info_message');
+            $tpl->setVariable('INFO_MESSAGE', $this->plugin->txt('info_not_available'));
+            $tpl->parseCurrentBlock();
+        } elseif ($playerContainerDTO->getMediumMetadata()->isTranscoding()) {
+            $tpl->setCurrentBlock('info_message');
+            $tpl->setVariable('INFO_MESSAGE', $this->plugin->txt('info_transcoding_full'));
             $tpl->parseCurrentBlock();
         }
 
@@ -64,22 +66,36 @@ class PlayerInSiteRenderer
                 $tpl->parseCurrentBlock();
             }
 
-            if ($playerContainerDTO->getPermLinkHtml()) {
-                $tpl->setVariable('PERMANENT_LINK', $playerContainerDTO->getPermLinkHtml());
-            }
-            foreach ($playerContainerDTO->getButtons() as $button) {
-                $tpl->setCurrentBlock('button');
-                $tpl->setVariable('BUTTON', $this->renderComponent($button, false));
-                $tpl->parseCurrentBlock();
+            if ($playerContainerDTO->getMediumMetadata()->isAvailable()) {
+                foreach ($playerContainerDTO->getButtons() as $button) {
+                    $tpl->setCurrentBlock('button');
+                    $tpl->setVariable('BUTTON', $this->renderComponent($button, false));
+                    $tpl->parseCurrentBlock();
+                }
             }
         }
 
         return $tpl->get();
     }
 
-    protected function renderComponent(Component $component, bool $async) : string
+    /**
+     * @param Component|Component[] $component
+     * @param bool $async
+     * @return string
+     */
+    protected function renderComponent($component, bool $async) : string
     {
         return $async ? $this->dic->ui()->renderer()->renderAsync($component)
             : $this->dic->ui()->renderer()->render($component);
+    }
+
+    /**
+     * @throws ilTemplateException
+     */
+    private function renderUnavailablePlayer(PlayerContainerDTO $playerContainerDTO) : string
+    {
+        $tpl = new ilTemplate(self::TEMPLATE_PATH_UNAVAILABLE, true, true);
+        $tpl->setVariable('THUMBNAIL', $playerContainerDTO->getMediumMetadata()->getThumbnailUrl());
+        return $tpl->get();
     }
 }

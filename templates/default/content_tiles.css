@@ -7,7 +7,6 @@
 	float: left;
 	background: white;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-	border-radius: 7px;
 }
 
 .xvmp_title, .xvmp_description, .xvmp_duration {
@@ -41,7 +40,6 @@
 	opacity: 0;
 	transition: .5s ease;
 	background-color: white;
-	border-radius: 6px;
 	overflow: auto;
 }
 
@@ -88,8 +86,6 @@
 	width: 100%;
 	height: 66%;
 	background: black;
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
 }
 
 .xvmp_image_container img:hover {
@@ -107,8 +103,6 @@ div.xvmp_image_container img {
 	height: 100%;
 	max-width: 100%;
 	horiz-align: center;
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
 }
 
 .waiting {
@@ -124,6 +118,36 @@ div.xvmp_image_container img {
 
 .xvmp_play_overlay, .xvmp_play_overlay img {
 	display: none;
+}
+
+.xvmp_not_available_overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: inherit;
+	width: inherit;
+	background-color: rgba(0,0,0,.7);
+	vertical-align: middle;
+	display: inline-block;
+	color: white;
+}
+
+/* this is necessary to center the "play" image */
+.xvmp_pseudo_element {
+	height: 100%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+/** COMMON*/
+.xvmp_float_r {
+	float: right;
+}
+
+.xvmp_center_text {
+	text-align: center;
 }
 
 @media only screen and (max-width : 480px) {

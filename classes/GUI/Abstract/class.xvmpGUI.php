@@ -86,9 +86,9 @@ abstract class xvmpGUI {
      * @return PlayerContainerDTO
      * @throws xvmpException
      */
-    protected function buildPlayModalDTO(xvmpMedium $medium) : PlayerContainerDTO
+    public function buildPlayerContainerDTO(xvmpMedium $medium) : PlayerContainerDTO
     {
-        $playModalDto = new PlayerContainerDTO(
+        $playerContainerDTO = new PlayerContainerDTO(
             $this->getVideoPlayer($medium, $this->getObjId()),
             $this->metadata_builder->buildFromVimpMedium($medium, false, false));
 
@@ -106,10 +106,10 @@ abstract class xvmpGUI {
         }
 
         if (!empty($buttons)) {
-            $playModalDto = $playModalDto->withButtons($buttons);
+            $playerContainerDTO = $playerContainerDTO->withButtons($buttons);
         }
 
-        return $playModalDto;
+        return $playerContainerDTO;
     }
 
     /**
@@ -315,10 +315,10 @@ abstract class xvmpGUI {
 	public function fillModalPlayer($play_video_id = null, bool $async = true) {
 		$mid = $play_video_id ?? $_GET['mid'];
 		$video = xvmpMedium::find($mid);
-        $playModalDto = $this->buildPlayModalDTO($video);
+        $playModalDto = $this->buildPlayerContainerDTO($video);
 
         $response = new stdClass();
-		$response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async);
+		$response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async, ($this instanceof xvmpVideosGUI)); // TODO: change!
 		$response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->dic->user()->getId(), xvmpMedium::F_MID => $mid))->first();
