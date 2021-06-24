@@ -6,6 +6,7 @@ use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
 use srag\Plugins\ViMP\UIComponents\Renderer\PlayerInSiteRenderer;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use ILIAS\DI\Container;
+use srag\Plugins\ViMP\Content\MediumMetadataParser;
 
 /**
  * Class xvmpContentPlayerGUI
@@ -17,10 +18,6 @@ class xvmpContentPlayerGUI
      * @var PlayerInSiteRenderer
      */
     private $player_renderer;
-    /**
-     * @var MediumMetadataDTOBuilder
-     */
-    private $metadata_builder;
     /**
      * @var ilViMPPlugin
      */
@@ -43,8 +40,7 @@ class xvmpContentPlayerGUI
         $this->dic = $DIC;
         $this->pl = ilViMPPlugin::getInstance();
         $this->parent_gui = $parent_gui;
-        $this->player_renderer = new PlayerInSiteRenderer($DIC, $this->pl);
-        $this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
+        $this->player_renderer = new PlayerInSiteRenderer(new MediumMetadataParser($DIC, $this->pl), $DIC, $this->pl);
 
         $this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/content_player.css');
         $this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');

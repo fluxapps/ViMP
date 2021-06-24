@@ -17,7 +17,7 @@ conf_allow_public_info#:#Defines if users with the permission "Edit Settings" ar
 conf_allow_public_upload#:#Permission „Upload“ can set Videos public
 conf_allow_public_upload_info#:#Defines if users with the permission "Upload" are authorized to set uploaded videos "Public". If deactivated, videos uploaded by such users are always set "Hidden".
 conf_form_fields#:#Additional Form Fields
-conf_form_fields_info#:#Additional in ViMP defined media fields can be configured here and will thereby be available in the form for editing and uploading videos.<br>Textfield 1: Field name<br>Textfield 2: Display name<br>Checkbox 1: Required<br>Checkbox 2: Fill field automatically with username<br>Selection: Field Type
+conf_form_fields_info#:#Additional in ViMP defined media fields can be configured here and will thereby be available in the form for editing and uploading videos.<br>Textfield 1: Field name<br>Textfield 2: Display name<br>Checkbox 1: Required<br>Checkbox 2: Fill field automatically with username<br>Checkbox 3: Show below video player<br>Selection: Field Type
 conf_filter_fields#:#Additional Table Filters
 conf_filter_fields_info#:#The additional media fields can be configured here to make them available as filters in tables.<br>Textfield 1: Field name<br>Textfield 2: Display name
 conf_media_permissions#:#Use Media Permissions

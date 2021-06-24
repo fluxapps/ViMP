@@ -71,7 +71,7 @@ class Factory
     {
         static $renderer;
         if (is_null($renderer)) {
-            $renderer = new TileSmallRenderer($this->dic, $this->plugin);
+            $renderer = new TileSmallRenderer($this->metadataParser(), $this->dic, $this->plugin);
         }
         return $renderer;
     }

@@ -70,7 +70,8 @@ class MediumMetadataDTOBuilder
 
         if (!$short) {
             foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-                if ($value = $medium->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
+                if ($field[xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER]
+                    && ($value = $medium->getField($field[xvmpConf::F_FORM_FIELD_ID]))) {
                     $medium_infos[] = new MediumAttribute($value, $field[xvmpConf::F_FORM_FIELD_TITLE]);
                 }
             }

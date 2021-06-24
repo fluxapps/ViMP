@@ -68,7 +68,7 @@ class PlayerInSiteRenderer
             $tpl->setCurrentBlock('info_message');
             $tpl->setVariable('INFO_MESSAGE', $this->plugin->txt('info_transcoding_full'));
             $tpl->parseCurrentBlock();
-        } else {
+        } elseif ($playerContainerDTO->getMediumMetadata()->hasAvailability()) {
             $tpl->setCurrentBlock('medium_info');
             $tpl->setVariable('VALUE', $this->plugin->txt('available') . ': ' .
                 $this->metadata_parser->parseAvailability(

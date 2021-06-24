@@ -17,7 +17,7 @@ conf_allow_public_info#:#Wenn aktiviert: Benutzer mit dem Recht "Einstellungen b
 conf_allow_public_upload#:#Recht „Upload“ darf Videos öffentlich schalten
 conf_allow_public_upload_info#:#Wenn aktiviert: Benutzer mit dem Recht "Upload" dürfen ebenfalls Videos öffentlich schalten
 conf_form_fields#:#Zusätzliche Formular-Felder
-conf_form_fields_info#:#Zusätzliche in ViMP konfigurierte Medienfelder können hier angegeben werden, um diese im Formular zum Hochladen und Bearbeiten eines Videos zur Verfügung zu stellen.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name<br>Checkbox 1: Pflichtfeld<br>Checkbox 2: Feld wird beim Hochladeformular automatisch mit dem Benutzernamen gefüllt.<br>Auswahlfeld: Feldtyp
+conf_form_fields_info#:#Zusätzliche in ViMP konfigurierte Medienfelder können hier angegeben werden, um diese im Formular zum Hochladen und Bearbeiten eines Videos zur Verfügung zu stellen.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name<br>Checkbox 1: Pflichtfeld<br>Checkbox 2: Feld wird beim Hochladeformular automatisch mit dem Benutzernamen gefüllt<br>Checkbox 3: Beim Video-Player anzeigen<br>Auswahlfeld: Feldtyp
 conf_filter_fields#:#Zusätzliche Tabellen-Filter
 conf_filter_fields_info#:#Werden die zusätzlichen Medienfelder hier angegeben, stehen Sie anschliessend als Filter in Tabellen zur Verfügung.<br>Textfeld 1: Feld-Name<br>Textfeld 2: Anzeige-Name
 conf_media_permissions#:#Medienberechtigungen nutzen

@@ -50,17 +50,18 @@ class xvmpConf extends ActiveRecord {
 	const F_FORM_FIELD_TITLE = 'field_title';
 	const F_FORM_FIELD_REQUIRED = 'required';
 	const F_FORM_FIELD_FILL_USER_DATA = 'fill_user_data';
-	const F_FORM_FIELD_TYPE = 'field_type';
-	const F_FORM_FIELD_TYPE_TEXT = 0;
-	const F_FORM_FIELD_TYPE_CHECKBOX = 1;
+    const F_FORM_FIELD_SHOW_IN_PLAYER = 'show_in_player';
+    const F_FORM_FIELD_TYPE = 'field_type';
+    const F_FORM_FIELD_TYPE_TEXT = 0;
 
-	const F_UPLOAD_LIMIT = 'upload_limit';
+    const F_FORM_FIELD_TYPE_CHECKBOX = 1;
+    const F_UPLOAD_LIMIT = 'upload_limit';
     const F_TOKEN = 'token';
-	const F_EMBED_PLAYER = 'embed_player';
 
-	const MEDIA_PERMISSION_OFF = 0;
-	const MEDIA_PERMISSION_ON = 1;
-	const MEDIA_PERMISSION_SELECTION = 2;
+    const F_EMBED_PLAYER = 'embed_player';
+    const MEDIA_PERMISSION_OFF = 0;
+    const MEDIA_PERMISSION_ON = 1;
+    const MEDIA_PERMISSION_SELECTION = 2;
     /**
 	 * @var array
 	 */
