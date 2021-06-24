@@ -16,6 +16,10 @@
 	text-overflow:     ellipsis;
 }
 
+.xvmp_duration {
+	color: black;
+}
+
 .box:hover .xvmp_overlay_infos {
 	opacity: 1;
 }

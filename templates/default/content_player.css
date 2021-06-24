@@ -115,14 +115,15 @@ div#xvmp_video_list_container::-webkit-scrollbar-thumb
 
 .xvmp_duration {
 	font-size: 0.9em;
+	color: black;
 }
 
 .innerContent {
 	position: absolute;
-	left: 0px;
-	right: 0px;
-	top: 0px;
-	bottom: 0px;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }
 .xvmp_image_container {
 	text-align: center;
@@ -156,6 +157,11 @@ div.xvmp_image_container img.xvmp_preview_image {
 
 .box:hover .xvmp_play_overlay, .box:hover .xvmp_play_icon {
 	opacity: 1;
+}
+
+.box a:hover {
+	text-decoration: none;
+	color: inherit;
 }
 
 .xvmp_not_available_overlay {
