@@ -9,6 +9,8 @@ use xvmpException;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use ILIAS\UI\Component\Component;
 use ilTemplate;
+use DateTime;
+use srag\Plugins\ViMP\Content\MediumMetadataParser;
 
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
@@ -17,21 +19,32 @@ class PlayerInSiteRenderer
 {
     const TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.player_in_site.html';
     const TEMPLATE_PATH_UNAVAILABLE = __DIR__ . '/../../../templates/default/tpl.video_not_available.html';
+    const DATE_FORMAT = 'd.m.Y';
 
     /**
      * @var ilViMPPlugin
      */
     private $plugin;
+    /**
+     * @var MediumMetadataParser
+     */
+    private $metadata_parser;
 
     /**
      * @var Container
      */
     protected $dic;
 
-    public function __construct(Container $dic, ilViMPPlugin $plugin)
+    /**
+     * @param MediumMetadataParser $metadata_parser
+     * @param Container            $dic
+     * @param ilViMPPlugin         $plugin
+     */
+    public function __construct(MediumMetadataParser $metadata_parser, Container $dic, ilViMPPlugin $plugin)
     {
         $this->dic = $dic;
         $this->plugin = $plugin;
+        $this->metadata_parser = $metadata_parser;
     }
 
     /**
@@ -54,6 +67,14 @@ class PlayerInSiteRenderer
         } elseif ($playerContainerDTO->getMediumMetadata()->isTranscoding()) {
             $tpl->setCurrentBlock('info_message');
             $tpl->setVariable('INFO_MESSAGE', $this->plugin->txt('info_transcoding_full'));
+            $tpl->parseCurrentBlock();
+        } else {
+            $tpl->setCurrentBlock('medium_info');
+            $tpl->setVariable('VALUE', $this->plugin->txt('available') . ': ' .
+                $this->metadata_parser->parseAvailability(
+                    $playerContainerDTO->getMediumMetadata()->getAvailabilityStart(),
+                    $playerContainerDTO->getMediumMetadata()->getAvailabilityEnd(),
+                    true));
             $tpl->parseCurrentBlock();
         }
 
@@ -98,4 +119,5 @@ class PlayerInSiteRenderer
         $tpl->setVariable('THUMBNAIL', $playerContainerDTO->getMediumMetadata()->getThumbnailUrl());
         return $tpl->get();
     }
+
 }

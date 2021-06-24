@@ -4,6 +4,7 @@ namespace srag\Plugins\ViMP\UIComponents\Renderer;
 
 use ilViMPPlugin;
 use ILIAS\DI\Container;
+use srag\Plugins\ViMP\Content\MediumMetadataParser;
 
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
@@ -33,8 +34,8 @@ class Factory
     public function listElement() : ListElementRenderer
     {
         static $renderer;
-        if (is_null($renderer)){
-            $renderer = new ListElementRenderer($this->dic, $this->plugin);
+        if (is_null($renderer)) {
+            $renderer = new ListElementRenderer($this->metadataParser(), $this->dic, $this->plugin);
         }
         return $renderer;
     }
@@ -42,8 +43,8 @@ class Factory
     public function playerInSite() : PlayerInSiteRenderer
     {
         static $renderer;
-        if (is_null($renderer)){
-            $renderer = new PlayerInSiteRenderer($this->dic, $this->plugin);
+        if (is_null($renderer)) {
+            $renderer = new PlayerInSiteRenderer($this->metadataParser(), $this->dic, $this->plugin);
         }
         return $renderer;
     }
@@ -51,8 +52,8 @@ class Factory
     public function playerModal() : PlayerModalRenderer
     {
         static $renderer;
-        if (is_null($renderer)){
-            $renderer = new PlayerModalRenderer($this->dic, $this->plugin);
+        if (is_null($renderer)) {
+            $renderer = new PlayerModalRenderer($this->metadataParser(), $this->dic, $this->plugin);
         }
         return $renderer;
     }
@@ -60,8 +61,8 @@ class Factory
     public function tile() : TileRenderer
     {
         static $renderer;
-        if (is_null($renderer)){
-            $renderer = new TileRenderer($this->dic, $this->plugin);
+        if (is_null($renderer)) {
+            $renderer = new TileRenderer($this->metadataParser(), $this->dic, $this->plugin);
         }
         return $renderer;
     }
@@ -69,9 +70,18 @@ class Factory
     public function tileSmall() : TileSmallRenderer
     {
         static $renderer;
-        if (is_null($renderer)){
+        if (is_null($renderer)) {
             $renderer = new TileSmallRenderer($this->dic, $this->plugin);
         }
         return $renderer;
+    }
+
+    public function metadataParser() : MediumMetadataParser
+    {
+        static $parser;
+        if (is_null($parser)) {
+            $parser = new MediumMetadataParser($this->dic, $this->plugin);
+        }
+        return $parser;
     }
 }

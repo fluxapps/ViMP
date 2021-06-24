@@ -48,6 +48,7 @@ return array(
     'srag\\LibrariesNamespaceChanger\\UpdatePluginReadme' => $vendorDir . '/srag/librariesnamespacechanger/src/UpdatePluginReadme.php',
     'srag\\Plugins\\ViMP\\Content\\MediumMetadataDTO' => $baseDir . '/src/UIComponents/Content/MediumMetadataDTO.php',
     'srag\\Plugins\\ViMP\\Content\\MediumMetadataDTOBuilder' => $baseDir . '/src/UIComponents/Content/MediumMetadataDTOBuilder.php',
+    'srag\\Plugins\\ViMP\\Content\\MediumMetadataParser' => $baseDir . '/src/UIComponents/Content/MediumMetadataParser.php',
     'srag\\Plugins\\ViMP\\Cron\\ViMPJob' => $baseDir . '/src/Cron/ViMPJob.php',
     'srag\\Plugins\\ViMP\\UIComponents\\PlayerModal\\MediumAttribute' => $baseDir . '/src/UIComponents/PlayerModal/MediumAttribute.php',
     'srag\\Plugins\\ViMP\\UIComponents\\PlayerModal\\PlayerContainerDTO' => $baseDir . '/src/UIComponents/PlayerModal/PlayerContainerDTO.php',

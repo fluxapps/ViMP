@@ -51,6 +51,18 @@ class TileRenderer extends ContentElementRenderer
         }
     }
 
+    protected function fillAvailabilityInfo(MediumMetadataDTO $mediumMetadataDTO, ilTemplate $tpl)
+    {
+        $tpl->setCurrentBlock('info_paragraph');
+        $tpl->setVariable('INFO_LABEL', $this->plugin->txt('available'));
+        $tpl->setVariable('INFO_VALUE', $this->metadata_parser->parseAvailability(
+            $mediumMetadataDTO->getAvailabilityStart(),
+            $mediumMetadataDTO->getAvailabilityEnd(),
+            true
+        ));
+        $tpl->parseCurrentBlock();
+    }
+
     protected function getInnerTemplate() : ilTemplate
     {
         return new ilTemplate(self::TEMPLATE_PATH, true, true);

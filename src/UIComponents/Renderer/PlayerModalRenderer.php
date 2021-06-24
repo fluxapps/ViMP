@@ -10,6 +10,7 @@ use ilTemplateException;
 use xvmpConf;
 use ilViMPPlugin;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
+use srag\Plugins\ViMP\Content\MediumMetadataParser;
 
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
@@ -22,6 +23,10 @@ class PlayerModalRenderer
      * @var ilViMPPlugin
      */
     private $plugin;
+    /**
+     * @var MediumMetadataParser
+     */
+    private $metadata_parser;
 
     /**
      * @var Container
@@ -29,14 +34,15 @@ class PlayerModalRenderer
     protected $dic;
 
     /**
-     * PlayModalRenderer constructor.
-     * @param Container    $dic
-     * @param ilViMPPlugin $plugin
+     * @param MediumMetadataParser $metadata_parser
+     * @param Container            $dic
+     * @param ilViMPPlugin         $plugin
      */
-    public function __construct(Container $dic, ilViMPPlugin $plugin)
+    public function __construct(MediumMetadataParser $metadata_parser, Container $dic, ilViMPPlugin $plugin)
     {
         $this->dic = $dic;
         $this->plugin = $plugin;
+        $this->metadata_parser = $metadata_parser;
     }
 
     /**
@@ -53,6 +59,16 @@ class PlayerModalRenderer
 
         $this->renderInfoMessage($playerContainerDTO, $tpl, $show_unavailable);
 
+        if ($playerContainerDTO->getMediumMetadata()->hasAvailability()) {
+            $tpl->setCurrentBlock('info_paragraph');
+            $tpl->setVariable('INFO', $this->plugin->txt('available') . ': ' .
+                $this->metadata_parser->parseAvailability(
+                    $playerContainerDTO->getMediumMetadata()->getAvailabilityStart(),
+                    $playerContainerDTO->getMediumMetadata()->getAvailabilityEnd(),
+                    true));
+            $tpl->parseCurrentBlock();
+        }
+
         foreach ($playerContainerDTO->getMediumMetadata()->getMediumAttributes() as $mediumAttribute) {
             $tpl->setCurrentBlock('info_paragraph');
             $tpl->setVariable('INFO', $mediumAttribute->getTitle() ?
@@ -61,7 +77,7 @@ class PlayerModalRenderer
             $tpl->parseCurrentBlock();
         }
 
-        $tpl->setCurrentBlock('info_paragraph_ellipsis');
+        $tpl->setCurrentBlock('info_paragraph');
         $tpl->setVariable('INFO', nl2br($playerContainerDTO->getMediumMetadata()->getDescription(), false));
         $tpl->parseCurrentBlock();
 

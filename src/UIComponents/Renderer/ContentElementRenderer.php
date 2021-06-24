@@ -9,6 +9,7 @@ use ILIAS\DI\Container;
 use xvmpMedium;
 use DateTime;
 use xvmpException;
+use srag\Plugins\ViMP\Content\MediumMetadataParser;
 
 /**
  * @author Theodor Truffer <tt@studer-raimann.ch>
@@ -18,6 +19,10 @@ abstract class ContentElementRenderer
     const CONTAINER_TEMPLATE_PATH = __DIR__ . '/../../../templates/default/tpl.content_element.html';
     const DATE_FORMAT = 'd.m.Y';
     const DESCRIPTION_LENGTH = 30;
+    /**
+     * @var MediumMetadataParser
+     */
+    protected $metadata_parser;
     /**
      * @var ilViMPPlugin
      */
@@ -29,36 +34,15 @@ abstract class ContentElementRenderer
     protected $dic;
 
     /**
-     * @param Container    $dic
-     * @param ilViMPPlugin $plugin
+     * @param MediumMetadataParser $metadata_parser
+     * @param Container            $dic
+     * @param ilViMPPlugin         $plugin
      */
-    public function __construct(Container $dic, ilViMPPlugin $plugin)
+    public function __construct(MediumMetadataParser $metadata_parser, Container $dic, ilViMPPlugin $plugin)
     {
         $this->dic = $dic;
         $this->plugin = $plugin;
-    }
-
-    /**
-     * @param DateTime|null $availability_start
-     * @param DateTime|null $availability_end
-     * @throws xvmpException
-     */
-    protected function parseAvailability(/*?DateTime*/ $availability_start, /*?DateTime*/ $availability_end) : string
-    {
-        if (!is_null($availability_start) && !is_null($availability_end)) {
-            return sprintf($this->plugin->txt('availability_between'),
-                $availability_start->format(self::DATE_FORMAT),
-                $availability_end->format(self::DATE_FORMAT));
-        }
-        if (!is_null($availability_start) && is_null($availability_end)) {
-            return sprintf($this->plugin->txt('availability_from'),
-                $availability_start->format(self::DATE_FORMAT));
-        }
-        if (is_null($availability_start) && !is_null($availability_end)) {
-            return sprintf($this->plugin->txt('availability_to'),
-                $availability_end->format(self::DATE_FORMAT));
-        }
-        throw new xvmpException(xvmpException::INTERNAL_ERROR, 'error parsing availability');
+        $this->metadata_parser = $metadata_parser;
     }
 
     /**
@@ -67,14 +51,14 @@ abstract class ContentElementRenderer
     protected function buildInnerTemplate(MediumMetadataDTO $mediumMetadataDTO) : ilTemplate
     {
         $tpl = $this->getInnerTemplate();
+
         if ($mediumMetadataDTO->isAvailable()) {
             $tpl->touchBlock('play_overlay');
+            if ($mediumMetadataDTO->hasAvailability()) { // is available but has availability
+                $this->fillAvailabilityInfo($mediumMetadataDTO, $tpl);
+            }
         } else {
-            $tpl->setCurrentBlock('not_available_overlay');
-            $tpl->setVariable('AVAILABILITY', $this->parseAvailability(
-                $mediumMetadataDTO->getAvailabilityStart(),
-                $mediumMetadataDTO->getAvailabilityEnd()));
-            $tpl->parseCurrentBlock();
+            $this->fillAvailabilityOverlay($mediumMetadataDTO, $tpl);
         }
 
         $tpl->setVariable('MID', $mediumMetadataDTO->getMid());
@@ -113,6 +97,28 @@ abstract class ContentElementRenderer
                 $mediumAttribute->getValue());
             $tpl->parseCurrentBlock();
         }
+    }
+
+    protected function fillAvailabilityInfo(MediumMetadataDTO $mediumMetadataDTO, ilTemplate $tpl)
+    {
+        $tpl->setCurrentBlock('info_paragraph');
+        $tpl->setVariable('INFO', $this->metadata_parser->parseAvailability(
+            $mediumMetadataDTO->getAvailabilityStart(),
+            $mediumMetadataDTO->getAvailabilityEnd(),
+            false
+        ));
+        $tpl->parseCurrentBlock();
+    }
+
+    protected function fillAvailabilityOverlay(MediumMetadataDTO $mediumMetadataDTO, ilTemplate $tpl)
+    {
+        $tpl->setCurrentBlock('not_available_overlay');
+        $tpl->setVariable('AVAILABILITY', $this->metadata_parser->parseAvailability(
+            $mediumMetadataDTO->getAvailabilityStart(),
+            $mediumMetadataDTO->getAvailabilityEnd(),
+            false
+        ));
+        $tpl->parseCurrentBlock();
     }
 
     public function render(MediumMetadataDTO $mediumMetadataDTO) : string

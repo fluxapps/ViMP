@@ -29,26 +29,14 @@ class TileSmallRenderer extends TileRenderer
         return $tpl;
     }
 
-    /**
-     * @param DateTime|null $availability_start
-     * @param DateTime|null $availability_end
-     * @throws xvmpException
-     */
-    protected function parseAvailability(/*?DateTime*/ $availability_start, /*?DateTime*/ $availability_end) : string
+    protected function fillAvailabilityOverlay(MediumMetadataDTO $mediumMetadataDTO, ilTemplate $tpl)
     {
-        if (!is_null($availability_start) && !is_null($availability_end)) {
-            return sprintf($this->plugin->txt('availability_between_short'),
-                $availability_start->format(self::DATE_FORMAT),
-                $availability_end->format(self::DATE_FORMAT));
-        }
-        if (!is_null($availability_start) && is_null($availability_end)) {
-            return sprintf($this->plugin->txt('availability_from_short'),
-                $availability_start->format(self::DATE_FORMAT));
-        }
-        if (is_null($availability_start) && !is_null($availability_end)) {
-            return sprintf($this->plugin->txt('availability_to_short'),
-                $availability_end->format(self::DATE_FORMAT));
-        }
-        throw new xvmpException(xvmpException::INTERNAL_ERROR, 'error parsing availability');
+        $tpl->setCurrentBlock('not_available_overlay');
+        $tpl->setVariable('AVAILABILITY', $this->metadata_parser->parseAvailability(
+            $mediumMetadataDTO->getAvailabilityStart(),
+            $mediumMetadataDTO->getAvailabilityEnd(),
+            true
+        ));
+        $tpl->parseCurrentBlock();
     }
 }

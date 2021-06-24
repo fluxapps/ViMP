@@ -83,6 +83,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'srag\\LibrariesNamespaceChanger\\UpdatePluginReadme' => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src/UpdatePluginReadme.php',
         'srag\\Plugins\\ViMP\\Content\\MediumMetadataDTO' => __DIR__ . '/../..' . '/src/UIComponents/Content/MediumMetadataDTO.php',
         'srag\\Plugins\\ViMP\\Content\\MediumMetadataDTOBuilder' => __DIR__ . '/../..' . '/src/UIComponents/Content/MediumMetadataDTOBuilder.php',
+        'srag\\Plugins\\ViMP\\Content\\MediumMetadataParser' => __DIR__ . '/../..' . '/src/UIComponents/Content/MediumMetadataParser.php',
         'srag\\Plugins\\ViMP\\Cron\\ViMPJob' => __DIR__ . '/../..' . '/src/Cron/ViMPJob.php',
         'srag\\Plugins\\ViMP\\UIComponents\\PlayerModal\\MediumAttribute' => __DIR__ . '/../..' . '/src/UIComponents/PlayerModal/MediumAttribute.php',
         'srag\\Plugins\\ViMP\\UIComponents\\PlayerModal\\PlayerContainerDTO' => __DIR__ . '/../..' . '/src/UIComponents/PlayerModal/PlayerContainerDTO.php',

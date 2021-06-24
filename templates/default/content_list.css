@@ -28,7 +28,7 @@
 
 .xvmp_video_infos {
 	padding-left: 36px;
-	padding-top: 20px;
+	padding-top: 15px;
 	overflow: auto;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -39,7 +39,7 @@
 
 .xvmp_video_infos .xvmp_title_container {
 	margin-top: 8px;
-	margin-bottom: 13px;
+	margin-bottom: 10px;
 }
 
 .xvmp_video_infos p {
