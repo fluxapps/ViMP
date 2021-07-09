@@ -48,6 +48,16 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 		}
 	}
 
+    /**
+     * @param string $relative_path path after [PLUGIN_PATH]/templates/
+     * @param bool   $versioned
+     * @return string
+     */
+	public function getAssetURL(string $relative_path, bool $versioned = true) : string
+    {
+        $version_suffix = $versioned ? '?version=' . str_replace('.', '-', $this->getVersion()) : '';
+        return $this->getDirectory() . '/templates/' . ltrim($relative_path, '/') . $version_suffix;
+    }
 
 	/**
 	 * @param $lang_var

@@ -235,7 +235,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 * @return ilPropertyFormGUI
 	 */
 	public function initCreateForm($a_new_type) {
-		$this->tpl->addCss($this->pl->getDirectory() . '/templates/default/xvmp_settings.css');
+		$this->tpl->addCss($this->pl->getAssetURL('default/xvmp_settings.css'));
 
 		$form = parent::initCreateForm($a_new_type);
 

@@ -30,7 +30,7 @@ class xvmpSettingsGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index() {
-		$this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/xvmp_settings.css');
+		$this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/xvmp_settings.css'));
 		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
 		$this->dic->ui()->mainTemplate()->setContent($xvmpSettingsFormGUI->getHTML());
 	}

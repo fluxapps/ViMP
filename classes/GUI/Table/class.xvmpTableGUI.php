@@ -74,10 +74,10 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 		$this->setRowTemplate($this->pl->getDirectory() . '/templates/table_rows/' . static::ROW_TEMPLATE);
 
 		foreach (array_merge($this->js_files, array('waiter.js', 'xvmp_content.js')) as $js_file) {
-			$this->tpl_global->addJavaScript($this->pl->getDirectory() . '/js/' . $js_file);
+			$this->tpl_global->addJavaScript($this->pl->getAssetURL('js/' . $js_file));
 		}
 		foreach (array_merge($this->css_files, array('waiter.css')) as $css_file) {
-			$this->tpl_global->addCss($this->pl->getDirectory() . '/templates/default/' . $css_file);
+			$this->tpl_global->addCss($this->pl->getAssetURL('default/' . $css_file));
 		}
 
 		$this->tpl_global->addOnLoadCode("VimpContent.ajax_base_url = '" . $this->ctrl->getLinkTarget($this->parent_obj, '', '', true) . "';");

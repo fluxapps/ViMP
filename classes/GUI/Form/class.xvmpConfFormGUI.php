@@ -28,7 +28,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		parent::__construct($parent_gui);
 
 		$this->db = $DIC['ilDB'];
-		$tpl->addJavaScript($this->pl->getDirectory() . '/js/xvmp_config.js');
+		$tpl->addJavaScript($this->pl->getAssetURL('js/xvmp_config.js'));
 	}
 
     /**

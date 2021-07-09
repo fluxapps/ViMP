@@ -61,13 +61,13 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 		global $DIC;
 		$tpl = $DIC['tpl'];
 		$this->pl = ilViMPPlugin::getInstance();
-		$tpl->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
-		$tpl->addCss('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/waiter.css');
+		$tpl->addJavaScript($this->pl->getAssetURL('/js/waiter.js'));
+		$tpl->addCss($this->pl->getAssetURL('default/waiter.css'));
 
 		$ilPropertyFormGUI->setId($ilPropertyFormGUI->getId() ? $ilPropertyFormGUI->getId() : md5(rand(1, 99)));
 		$this->setFormId($ilPropertyFormGUI->getId());
 		$this->setCmd($cmd);
-		$tpl->addJavaScript('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/js/plupload-2.1.8/js/plupload.full.min.js');
+		$tpl->addJavaScript($this->pl->getAssetURL('js/plupload-2.1.8/js/plupload.full.min.js'));
 
 		parent::__construct($a_title, $a_postvar);
 	}
@@ -92,7 +92,7 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 	protected function initJS() {
 		global $DIC;
 		$tpl = $DIC['tpl'];
-		$tpl->addJavaScript('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/form/uploader.min.js');
+		$tpl->addJavaScript($this->pl->getAssetURL('default/form/uploader.min.js'));
 		$settings = new stdClass();
 		$settings->lng = new stdClass();
 		$settings->lng->msg_select = $this->pl->txt('form_msg_select');

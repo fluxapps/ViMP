@@ -28,10 +28,10 @@ class xvmpContentTilesGUI {
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->parent_gui = $parent_gui;
 
-		$this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/content_tiles.css');
-		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getDirectory() . '/js/xvmp_content.js');
-		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getDirectory() . '/js/waiter.js');
-		$this->dic->ui()->mainTemplate()->addCss($this->pl->getDirectory() . '/templates/default/waiter.css');
+		$this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/content_tiles.css'));
+		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getAssetURL('js/xvmp_content.js'));
+		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getAssetURL('js/waiter.js'));
+		$this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/waiter.css'));
 	}
 
 

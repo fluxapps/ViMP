@@ -46,7 +46,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
         $tmp_id = ilUtil::randomhash();
         $this->dic->ctrl()->setParameter($parent_gui, 'tmp_id', $tmp_id);
         parent::__construct($parent_gui);
-        $this->dic->ui()->mainTemplate()->addCss($this->pl->getStyleSheetLocation('default/form/video_form.css'));
+        $this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/form/video_form.css'));
         $this->addCommandButtons();
     }
 

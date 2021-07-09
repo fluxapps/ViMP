@@ -88,19 +88,20 @@ class VideoPlayer
     public static function loadVideoJSAndCSS($load_observer)
     {
         $tpl = $GLOBALS['tpl']; // necessary because of LM Bug
+        $ilViMPPlugin = ilViMPPlugin::getInstance();
         if ($load_observer) {
-            $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/js/xvmp_observer.js');
+            $tpl->addJavaScript($ilViMPPlugin->getAssetURL('js/xvmp_observer.js'));
         }
-        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/video.css');
+        $tpl->addCss($ilViMPPlugin->getAssetURL('default/video.css'));
 
-        $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory() . '/node_modules/video.js/dist/video.min.js');
-        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/node_modules/video.js/dist/video-js.min.css');
-        $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
+        $tpl->addJavaScript($ilViMPPlugin->getDirectory() . '/node_modules/video.js/dist/video.min.js');
+        $tpl->addCss($ilViMPPlugin->getDirectory() . '/node_modules/video.js/dist/video-js.min.css');
+        $tpl->addJavaScript($ilViMPPlugin->getDirectory()
             . '/node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js');
-        $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
+        $tpl->addJavaScript($ilViMPPlugin->getDirectory()
             . '/node_modules/videojs-http-source-selector/dist/videojs-http-source-selector.min.js');
-        $tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/node_modules/videojs-vr/dist/videojs-vr.css');
-        $tpl->addJavaScript(ilViMPPlugin::getInstance()->getDirectory()
+        $tpl->addCss($ilViMPPlugin->getDirectory() . '/node_modules/videojs-vr/dist/videojs-vr.css');
+        $tpl->addJavaScript($ilViMPPlugin->getDirectory()
             . '/node_modules/videojs-vr/dist/videojs-vr.min.js');
     }
 
