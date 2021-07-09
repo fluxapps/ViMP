@@ -260,7 +260,7 @@ abstract class xvmpGUI {
 	 */
 	public static function getModalPlayer() {
 		global $tpl;
-		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css');
+		$tpl->addCss(ilViMPPlugin::getInstance()->getDirectory() . '/templates/default/modal.css?v=2');
 		$modal = ilModalGUI::getInstance();
 		$modal->setId('xvmp_modal_player');
 		$modal->setType(ilModalGUI::TYPE_LARGE);
