@@ -69,10 +69,12 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
         $this->addPublishedInput();
         $this->addMediaPermissionsInput();
 
-        $this->addFormHeader('additional_options');
-        $this->addThumbnailInput();
-        if (xvmp::ViMPVersionGreaterEquals('4.4.1')) {
-            $this->addSubtitleInput();
+        if (xvmp::ViMPVersionGreaterEquals('4.4.0')) {
+            $this->addFormHeader('additional_options');
+            $this->addThumbnailInput();
+            if (xvmp::ViMPVersionGreaterEquals('4.4.1')) {
+                $this->addSubtitleInput();
+            }
         }
         $this->addFormHeader('notification');
 
