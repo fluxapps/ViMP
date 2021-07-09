@@ -9,6 +9,9 @@
 - Feature: upload image for repository tile view
 - Feature: outlined logo for repository tile view (ILIAS 6+ only)
 
+## [1.5.3]
+- Fix: catch exception when loading chapters fails (fix for internal player)
+
 ## [1.5.2]
 - Fix: "The media could not be loaded.." error for plugin internal player and private videos
 

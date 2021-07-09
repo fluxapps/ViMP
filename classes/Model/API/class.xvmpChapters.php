@@ -20,7 +20,13 @@ class xvmpChapters extends xvmpObject {
 			return $existing;
 		}
 
-		$array = xvmpRequest::getChapters($id)->getResponseArray();
+		try {
+            $array = xvmpRequest::getChapters($id)->getResponseArray();
+        } catch (xvmpException $e) {
+		    xvmpCurlLog::getInstance()->writeWarning('chapters could not be loaded');
+		    xvmpCurlLog::getInstance()->writeWarning($e->getCode() . ': ' . $e->getMessage());
+		    $array = [];
+        }
 
 		self::cache($key, $array);
 
