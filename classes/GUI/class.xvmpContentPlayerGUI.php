@@ -116,7 +116,7 @@ class xvmpContentPlayerGUI {
 
             $player_tpl->setVariable('PERMANENT_LINK',
                 $this->dic->ui()->renderer()->render(
-                    $this->parent_gui->buildPermLinkDropdown($video)));
+                    $this->parent_gui->buildPermLinkUI($video)));
         }
 
 		$tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());

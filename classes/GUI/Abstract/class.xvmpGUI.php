@@ -2,8 +2,6 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use ILIAS\DI\Container;
-use ILIAS\UI\Implementation\Component\Signal;
-use ILIAS\UI\Component\Dropdown\Dropdown;
 
 /**
  * Class xvmpGUI
@@ -91,40 +89,33 @@ abstract class xvmpGUI {
      * @param xvmpMedium $video
      * @return ILIAS\UI\Component\Component[]
      */
-    public function buildPermLinkDropdown(xvmpMedium $video) : array
+    public function buildPermLinkUI(xvmpMedium $video) : array
     {
         $link_tpl = ilLink::_getStaticLink(
             $this->parent_gui->ref_id,
             $this->parent_gui->getType(),
             true,
-            '_' . $video->getMid() . '_TIME_'
+            '_' . $video->getMid() . '_0'
         );
 
-        // ilias can't handle one popover for two buttons
-        $popover_1 = $this->dic->ui()->factory()->popover()->standard(
+        $popover = $this->dic->ui()->factory()->popover()->standard(
             $this->dic->ui()->factory()->legacy($this->pl->txt('popover_link_copied')));
-        $popover_2 = $this->dic->ui()->factory()->popover()->standard(
-            $this->dic->ui()->factory()->legacy($this->pl->txt('popover_link_copied')));
-
-
-        $items = [
-            $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link'),
-                '')->withOnClick($popover_1->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
-                return "document.getElementById('{$id}').addEventListener('click', () => VimpContent.copyDirectLink('{$link_tpl}'));";
-            })
-        ];
 
         if (!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
             $items[] = $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
-                '')->withOnClick($popover_2->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
+                '')->withOnClick($popover->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
                 return "document.getElementById('{$id}').addEventListener('click', () => VimpContent.copyDirectLinkWithTime('{$link_tpl}'));";
             });
         }
 
         return [
-            $this->dic->ui()->factory()->dropdown()->standard($items)->withLabel($this->pl->txt('direct_link_dropdown')),
-            $popover_1,
-            $popover_2
+            $popover,
+            $this->dic->ui()->factory()->legacy('
+                <div class="ilPermalinkContainer input-group">
+                    <input class="form-control" id="current_perma_link" type="text" value="' . $link_tpl . '" readonly="readonly" onclick="this.focus();this.select();return false;" />
+                    <span class="input-group-btn">'),
+            $this->dic->ui()->factory()->dropdown()->standard($items)->withLabel(''),
+            $this->dic->ui()->factory()->legacy('</span></div>'),
         ];
     }
 
@@ -312,7 +303,7 @@ abstract class xvmpGUI {
 		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: " . nl2br($video->getDescription(), false) . "</div>";
 
 		if (!is_null($this->getObject())) {
-            $link = $this->buildPermLinkDropdown($video);
+            $link = $this->buildPermLinkUI($video);
             $video_infos .= $async ?
                 $this->dic->ui()->renderer()->renderAsync($link)
                 : $this->dic->ui()->renderer()->render($link);
