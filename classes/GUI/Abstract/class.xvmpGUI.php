@@ -46,6 +46,9 @@ abstract class xvmpGUI {
      */
 	protected $metadata_builder;
 
+    /** @var ViMPDBService */
+    protected $db_service;
+
 
 	/**
 	 * xvmpGUI constructor.
@@ -60,6 +63,7 @@ abstract class xvmpGUI {
 		$this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
 		$this->renderer_factory = new Factory($DIC, $this->pl);
 		$this->addJavaScript();
+        $this->db_service = new ViMPDBService($DIC);
 	}
 
 	protected function addJavaScript()
@@ -215,7 +219,7 @@ abstract class xvmpGUI {
 	 */
 	public function flushCache() {
 //		xvmpCacheFactory::getInstance()->flush();
-		foreach (SelectedMediaAR::getSelected($this->getObjId()) as $selected) {
+		foreach ($this->db_service->getSelectedMediaByObjID($this->getObjId()) as $selected) {
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $selected->getMid());
 		}
 		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
