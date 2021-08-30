@@ -114,3 +114,16 @@ Bitte versuchen Sie es erneut oder kontaktieren Sie einen Administrator.');
 \srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_MEDIA_PERMISSIONS_PRESELECTED, 1);
 \srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_DEFAULT_PUBLICATION, 2);
 ?>
+<#10>
+<?php
+$form_fields = [];
+if (!empty(xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS))) {
+    foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
+        $field[xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER] = 1;
+        $form_fields[] = $field;
+    }
+    if (!empty($form_fields)) {
+        xvmpConf::set(xvmpConf::F_FORM_FIELDS, $form_fields);
+    }
+}
+?>
