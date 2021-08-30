@@ -4,6 +4,7 @@
 namespace srag\Plugins\ViMP\Database\Settings;
 
 use ActiveRecord;
+use xvmp;
 
 /**
  * Class xvmpSettings

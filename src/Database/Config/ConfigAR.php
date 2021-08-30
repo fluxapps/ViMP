@@ -4,6 +4,7 @@
 namespace srag\Plugins\ViMP\Database\Config;
 
 use ActiveRecord;
+use Matrix\Exception; // ToDo: Is that right?
 
 /**
  * Class xvmpConf

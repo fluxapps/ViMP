@@ -4,6 +4,9 @@
 namespace srag\Plugins\ViMP\Database\SelectedMedia;
 
 use ActiveRecord;
+use xvmpMedium;
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+use xvmpCacheFactory;
 
 /**
  * Class xvmpSelectedMedia
@@ -120,7 +123,7 @@ class SelectedMediaAR extends ActiveRecord {
 		$video = xvmpMedium::getObjectAsArray($mid);
 
 		// log event
-		xvmpEventLog::logEvent(xvmpEventLog::ACTION_ADD, $obj_id, $video);
+		EventLogAR::logEvent(EventLogAR::ACTION_ADD, $obj_id, $video);
 
 		return true;
 	}
@@ -142,7 +145,7 @@ class SelectedMediaAR extends ActiveRecord {
 
 		// log event
 		$video = xvmpMedium::getObjectAsArray($mid);
-		xvmpEventLog::logEvent(xvmpEventLog::ACTION_REMOVE, $obj_id, $video);
+		EventLogAR::logEvent(EventLogAR::ACTION_REMOVE, $obj_id, $video);
 
 		// remove from cache
 		xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);

@@ -4,6 +4,12 @@
 namespace srag\Plugins\ViMP\Database\UserLPStatus;
 
 use ActiveRecord;
+use ilLPStatus;
+use ilLPStatusWrapper;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\UserProgress\UserProgressAR;
+use xvmp;
+use ilObject2;
 
 /**
  * Class xvmpUserLPStatus
@@ -247,10 +253,10 @@ class UserLPStatusAR extends ActiveRecord {
 	 * @param $user_id
 	 * @param $obj_id
 	 *
-	 * @return ActiveRecord|xvmpUserLPStatus
+	 * @return ActiveRecord|UserLPStatusAR
 	 */
 	public static function getInstance($user_id, $obj_id) {
-		$xvmpUserLPStatus = xvmpUserLPStatus::where(array('user_id' => $user_id, 'obj_id' => $obj_id))->first();
+		$xvmpUserLPStatus = UserLPStatusAR::where(array('user_id' => $user_id, 'obj_id' => $obj_id))->first();
 		if (!$xvmpUserLPStatus) {
 			$xvmpUserLPStatus = new self();
 			$xvmpUserLPStatus->setUserId($user_id);
@@ -266,9 +272,9 @@ class UserLPStatusAR extends ActiveRecord {
 	public function updateStatus() {
 		$progress = false;
 		$complete = true;
-		/** @var xvmpSelectedMedia $selected_medium */
-		foreach (xvmpSelectedMedia::where(array('obj_id' => $this->getObjId(), 'lp_is_required' => 1, 'visible' => 1))->get() as $selected_medium) {
-			$reached_percentage = xvmpUserProgress::calcPercentage($this->getUserId(), $selected_medium->getMid());
+		/** @var SelectedMediaAR $selected_medium */
+		foreach (SelectedMediaAR::where(array('obj_id' => $this->getObjId(), 'lp_is_required' => 1, 'visible' => 1))->get() as $selected_medium) {
+			$reached_percentage = UserProgressAR::calcPercentage($this->getUserId(), $selected_medium->getMid());
 			if ($reached_percentage > 0) {
 				$progress = true;
 			}

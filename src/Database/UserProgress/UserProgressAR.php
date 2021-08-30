@@ -4,7 +4,8 @@
 namespace srag\Plugins\ViMP\Database\UserProgress;
 
 use ActiveRecord;
-use '/Customizing/global/'
+use xvmpMedium;
+use srag\Plugins\ViMP\Database\UserLPStatus\UserLPStatusAR;
 
 /**
  * Class xvmpUserProgress
@@ -202,7 +203,7 @@ class UserProgressAR extends ActiveRecord {
 		parent::store();
 
 		// learning progress
-		xvmpUserLPStatus::updateLPStatuses(0, true, $this->getUsrId());
+		UserLPStatusAR::updateLPStatuses(0, true, $this->getUsrId());
 	}
 
     /**
