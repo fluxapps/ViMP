@@ -260,7 +260,7 @@ abstract class xvmpGUI {
             $perm_link->setIncludePermanentLinkText(false);
             $video_infos .= $perm_link->getHTML();
         }
-
+		$video_infos = $video_infos . $this->getLinkHTML($video);
 		$response = new stdClass();
 		if ($video->getStatus() === 'legal' || !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
 			$video_player_html = (new xvmpVideoPlayer($video, xvmp::useEmbeddedPlayer($this->getObjId(), $video)))->getHTML();
@@ -282,7 +282,40 @@ abstract class xvmpGUI {
         }
 	}
 
+	private function getLinkHTML($video)
+	{
+		global $DIC;
+		//xvmpRequest::getAllAsArray();
+		$medium = $video->getMedium();
+		if (is_array($medium)){
+			
+			$medium = $medium[0];
+		}
+		$video_link = $video->getSource();
+		$html = '';
+		if(ilObjViMPAccess::hasAccessToLink()){
+			$html = new ilTemplate("tpl.copylink.html", true, true, $this->pl->getDirectory());
+			$html->setVariable("{INFO_COPYLINK}", $this->pl->txt("perm_readlink"));
+			$html->setVariable("COPYLINK", $medium);
+			$html = $html->get();
 
+			/*
+			//Use template to generate HTML
+			$link_info = '<div class ="link-info"><p>'. $this->pl->txt("perm_readlink"). '</p></div>';
+			$html_ = '<div class="ilInfoScreenSec form-horizontal video-url"><div class="ilPermalinkContainer input-group">'.
+					'<input class="form-control" readonly="readonly" id="videoUrl" type="text"'.
+					'value="' .$medium .'"'.
+					' onclick="return false;">'.
+					'<span class="input-group-btn">	<div class="btn-group"><button type="button" class="btn btn-default" id="copyVideoUrl">'.
+					'<span class="sr-only">Copy to clipboard</span><span class="glyphicon glyphicon-copy"></span></button></div></span></div></div>';
+			
+			$copy_js = "<script> $('#copyVideoUrl',document).on('click',function(e){let copyText=$('#videoUrl',document).get(0);copyText.select();copyText.setSelectionRange(0,99999);document.execCommand('copy')});</script>";
+			$html = $link_info . $html . $copy_js;*/
+
+			return $html;
+		}
+		return '';
+	}
 
 	/**
 	 * ajax

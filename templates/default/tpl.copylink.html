@@ -1,0 +1,25 @@
+<div class="link-info">
+    <p>{INFO_COPYLINK}</p>
+</div>
+<div class="ilInfoScreenSec form-horizontal video-url">
+    <div class="ilPermalinkContainer input-group">
+        <input class="form-control" readonly="readonly" id="videoUrl" type="text" value="{COPYLINK}" onclick="return false;">
+        <span class="input-group-btn">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" id="copyVideoUrl">
+                    <span></span>
+                    <span class="sr-only">Copy to clipboard</span>
+                    <span class="glyphicon glyphicon-copy"></span>
+                </button>
+            </div>
+        </span>
+    </div>
+</div>
+<script>
+    $('#copyVideoUrl', document).on('click', function (e) { 
+        let copyText = $('#videoUrl', document).get(0); 
+        copyText.select(); 
+        copyText.setSelectionRange(0, 99999); 
+        document.execCommand('copy') 
+    });
+</script>

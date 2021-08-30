@@ -116,6 +116,25 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 		return $ilAccess->checkAccess('rep_robj_xvmp_perm_upload', '', $ref_id);
 	}
 
+	/**
+	 * @param $ref_id
+	 *
+	 * @return bool
+	 */
+	public static function hasAccessToLink($ref_id = NULL) {
+		if ($ref_id === NULL) {
+			$ref_id = $_GET['ref_id'];
+		}
+		global $DIC;
+		$ilAccess = $DIC['ilAccess'];
+
+		/**
+		 * @var $ilAccess ilAccesshandler
+		 */
+
+		return $ilAccess->checkAccess('rep_robj_xvmp_perm_readlink', '', $ref_id);
+	}
+
 
 	/**
 	 * @param                 $action

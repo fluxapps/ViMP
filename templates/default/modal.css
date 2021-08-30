@@ -26,3 +26,16 @@ h4.modal-title {
 	-ms-text-overflow: ellipsis;
 	text-overflow:     ellipsis;
 }
+
+div.form-horizontal.video-url{
+	padding: 0 10px 10px 0;
+	width: 50%;
+}
+input#videoUrl {
+	background-color: white;
+	font-size: 90%;
+}
+
+.video-url div.ilPermalinkContainer.input-group{
+	margin-top: 5px !important;
+}

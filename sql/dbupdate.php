@@ -114,3 +114,16 @@ xvmpConf::set(xvmpConf::F_ALLOW_PUBLIC, 1);
 xvmpConf::set(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED, 1);
 xvmpConf::set(xvmpConf::F_DEFAULT_PUBLICATION, 2);
 ?>
+<#10>
+<?php
+require_once("./Services/Migration/DBUpdate_3560/classes/class.ilDBUpdateNewObjectType.php");
+$xvmp_type_id = ilDBUpdateNewObjectType::addNewType('xvmp', 'Plugin ViMP');
+
+//Adding a new Permission rep_robj_xvmp_readlink ("Read link")
+$offering_admin = ilDBUpdateNewObjectType::addCustomRBACOperation( //$a_id, $a_title, $a_class, $a_pos
+	'rep_robj_xvmp_perm_readlink', 'readlink', 'object', 2010);
+if($offering_admin)
+{
+	ilDBUpdateNewObjectType::addRBACOperation($xvmp_type_id, $offering_admin);
+}
+?>
