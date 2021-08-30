@@ -1,19 +1,19 @@
 <#1>
 <?php
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpConf.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpSelectedMedia.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpUploadedMedia.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpSettings.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpUserProgress.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpUserLPStatus.php');
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpEventLog.php');
-xvmpConf::updateDB();
-xvmpSelectedMedia::updateDB();
-xvmpUploadedMedia::updateDB();
-xvmpSettings::updateDB();
-xvmpUserProgress::updateDB();
-xvmpUserLPStatus::updateDB();
-xvmpEventLog::updateDB();
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/Config/ConfigAR.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/SelectedMedia/SelectedMediaAR.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/UploadedMedia/UploadedMediaAR.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/Settings/SettingsAR.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/UserProgress/UserProgressAR.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/UserLPStatus/UserLPStatusAR.php');
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/EventLog/EventLogAR.php');
+\srag\Plugins\ViMP\Database\Config\ConfigAR::updateDB();
+\srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR::updateDB();
+\srag\Plugins\ViMP\Database\UploadedMedia\UploadedMediaAR::updateDB();
+\srag\Plugins\ViMP\Database\Settings\SettingsAR::updateDB();
+\srag\Plugins\ViMP\Database\UserProgress\UserProgressAR::updateDB();
+\srag\Plugins\ViMP\Database\UserLPStatus\UserLPStatusAR::updateDB();
+\srag\Plugins\ViMP\Database\EventLog\EventLogAR::updateDB();
 ?>
 <#2>
 <?php
@@ -72,9 +72,9 @@ if (!$query->numRows()) {
 ?>
 <#5>
 <?php
-require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/classes/Model/AR/class.xvmpConf.php');
-xvmpConf::set(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL, 'Transkodierung abgeschlossen');
-xvmpConf::set(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL, 'Guten Tag {FIRSTNAME} {LASTNAME},
+require_once('./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/src/Database/Config/ConfigAR.php');
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_NOTIFICATION_SUBJECT_SUCCESSFULL, 'Transkodierung abgeschlossen');
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_NOTIFICATION_BODY_SUCCESSFULL, 'Guten Tag {FIRSTNAME} {LASTNAME},
 
 die Transkodierung eines von Ihnen hochgeladenen Videos wurde abgeschlossen:
 
@@ -83,8 +83,8 @@ Beschreibung: {DESCRIPTION}
 Link zum Video: {VIDEO_LINK}
 
 Das Video kann nun in ILIAS verwendet werden.');
-xvmpConf::set(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED, 'Transkodierung fehlgeschlagen');
-xvmpConf::set(xvmpConf::F_NOTIFICATION_BODY_FAILED, 'Guten Tag {FIRSTNAME} {LASTNAME},
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_NOTIFICATION_SUBJECT_FAILED, 'Transkodierung fehlgeschlagen');
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_NOTIFICATION_BODY_FAILED, 'Guten Tag {FIRSTNAME} {LASTNAME},
 
 die Transkodierung eines von Ihnen hochgeladenen Videos ist fehlgeschlagen:
 
@@ -92,36 +92,36 @@ Titel: {TITLE}
 Beschreibung: {DESCRIPTION}
 
 Bitte versuchen Sie es erneut oder kontaktieren Sie einen Administrator.');
-xvmpConf::set(xvmpConf::F_CACHE_TTL_VIDEOS, 0);
-xvmpConf::set(xvmpConf::F_CACHE_TTL_USERS, 0);
-xvmpConf::set(xvmpConf::F_CACHE_TTL_TOKEN, 0);
-xvmpConf::set(xvmpConf::F_CACHE_TTL_CATEGORIES, 86400);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_CACHE_TTL_VIDEOS, 0);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_CACHE_TTL_USERS, 0);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_CACHE_TTL_TOKEN, 0);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_CACHE_TTL_CATEGORIES, 86400);
 ?>
 <#6>
 <?php
-xvmpConf::set(xvmpConf::F_CACHE_TTL_CONFIG, 0);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_CACHE_TTL_CONFIG, 0);
 ?>
 <#7>
 <?php
-xvmpUploadedMedia::updateDB();
+\srag\Plugins\ViMP\Database\UploadedMedia\UploadedMediaAR::updateDB();
 ?>
 <#8>
 <?php
-xvmpConf::set(xvmpConf::F_ALLOW_PUBLIC, 1);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_ALLOW_PUBLIC, 1);
 ?>
 <#9>
 <?php
-xvmpConf::set(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED, 1);
-xvmpConf::set(xvmpConf::F_DEFAULT_PUBLICATION, 2);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_MEDIA_PERMISSIONS_PRESELECTED, 1);
+\srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_DEFAULT_PUBLICATION, 2);
 ?>
 <#10>
 <?php
 $form_fields = [];
-foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-    $field[xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER] = 1;
+foreach (\srag\Plugins\ViMP\Database\Config\ConfigAR::getConfig(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_FORM_FIELDS) as $field) {
+    $field[\srag\Plugins\ViMP\Database\Config\ConfigAR::F_FORM_FIELD_SHOW_IN_PLAYER] = 1;
     $form_fields[] = $field;
 }
 if (!empty($form_fields)) {
-    xvmpConf::set(xvmpConf::F_FORM_FIELDS, $form_fields);
+    \srag\Plugins\ViMP\Database\Config\ConfigAR::set(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_FORM_FIELDS, $form_fields);
 }
 ?>

@@ -1,12 +1,15 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+namespace srag\Plugins\ViMP\Database\EventLog;
+
+use ActiveRecord;
+
 /**
  * Class xvmpEventLog
- *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpEventLog extends ActiveRecord {
+class EventLogAR extends ActiveRecord {
 
 	const DB_TABLE_NAME = 'xvmp_event_log';
 

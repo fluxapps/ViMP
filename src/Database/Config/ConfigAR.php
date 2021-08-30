@@ -1,12 +1,15 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+namespace srag\Plugins\ViMP\Database\Config;
+
+use ActiveRecord;
+
 /**
  * Class xvmpConf
- *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpConf extends ActiveRecord {
+class ConfigAR extends ActiveRecord {
 
 	const DB_TABLE_NAME = 'xvmp_config';
 

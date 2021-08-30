@@ -12,12 +12,19 @@ use srag\DIC\ViMP\Exception\DICException;
  *
  * @package srag\DIC\ViMP\Database
  *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
- *
  * @internal
  */
 final class PdoContextHelper extends ilDBPdo
 {
+
+    /**
+     * PdoContextHelper constructor
+     */
+    private function __construct()
+    {
+
+    }
+
 
     /**
      * @param ilDBPdoInterface $db
@@ -35,15 +42,6 @@ final class PdoContextHelper extends ilDBPdo
         }
 
         return $db->pdo;
-    }
-
-
-    /**
-     * PdoContextHelper constructor
-     */
-    private function __construct()
-    {
-
     }
 
 

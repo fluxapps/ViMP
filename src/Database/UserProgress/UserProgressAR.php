@@ -1,12 +1,17 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+namespace srag\Plugins\ViMP\Database\UserProgress;
+
+use ActiveRecord;
+use '/Customizing/global/'
+
 /**
  * Class xvmpUserProgress
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpUserProgress extends ActiveRecord {
+class UserProgressAR extends ActiveRecord {
 	const DB_TABLE_NAME = 'xvmp_user_progress';
 
 	const F_USR_ID = 'usr_id';

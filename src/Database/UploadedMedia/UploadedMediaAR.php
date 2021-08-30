@@ -1,12 +1,16 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+namespace srag\Plugins\ViMP\Database\UploadedMedia;
+
+use ActiveRecord;
+
 /**
  * Class xvmpUploadedMedia
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpUploadedMedia extends ActiveRecord {
+class UploadedMediaAR extends ActiveRecord {
 	const DB_TABLE_NAME = 'xvmp_uploaded_media';
 
 

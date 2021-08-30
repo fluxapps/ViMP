@@ -1,12 +1,16 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+namespace srag\Plugins\ViMP\Database\UserLPStatus;
+
+use ActiveRecord;
+
 /**
  * Class xvmpUserLPStatus
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
-class xvmpUserLPStatus extends ActiveRecord {
+class UserLPStatusAR extends ActiveRecord {
 
 	const TABLE_NAME = 'xvmp_lp_status';
 
