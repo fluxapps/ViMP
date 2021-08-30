@@ -1,5 +1,14 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+use srag\Plugins\ViMP\Database\UploadedMedia\UploadedMediaAR;
+use srag\Plugins\ViMP\Database\UserLPStatus\UserLPStatusAR;
+use srag\Plugins\ViMP\Database\UserProgress\UserProgressAR;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**

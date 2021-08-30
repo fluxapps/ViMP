@@ -2,11 +2,11 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 /**
- * Class SettingsARGUI
+ * Class xvmpSettingGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  *
- * @ilCtrl_isCalledBy SettingsARGUI: ilObjViMPGUI
+ * @ilCtrl_isCalledBy xvmpSettingsGUI: ilObjViMPGUI
  */
 class xvmpSettingsGUI extends xvmpGUI {
 
