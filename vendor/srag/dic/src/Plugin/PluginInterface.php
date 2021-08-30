@@ -4,7 +4,7 @@ namespace srag\DIC\ViMP\Plugin;
 
 use ilPlugin;
 use ilTemplateException;
-use srag\CustomInputGUIs\Template\Template;
+use srag\CustomInputGUIs\ViMP\Template\Template;
 use srag\DIC\ViMP\Exception\DICException;
 
 /**

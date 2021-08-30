@@ -8,7 +8,7 @@ use ilCtrlStructureReader;
 use ilLanguage;
 use ilObjComponentSettingsGUI;
 use ilPlugin;
-use srag\CustomInputGUIs\Template\Template;
+use srag\CustomInputGUIs\ViMP\Template\Template;
 use srag\DIC\ViMP\DICTrait;
 use srag\DIC\ViMP\Exception\DICException;
 

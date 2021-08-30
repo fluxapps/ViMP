@@ -82,6 +82,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'srag\\Plugins\\ViMP\\Content\\MediumMetadataParser' => __DIR__ . '/../..' . '/src/UIComponents/Content/MediumMetadataParser.php',
         'srag\\Plugins\\ViMP\\Cron\\ViMPJob' => __DIR__ . '/../..' . '/src/Cron/ViMPJob.php',
         'srag\\Plugins\\ViMP\\Database\\Config\\ConfigAR' => __DIR__ . '/../..' . '/src/Database/Config/ConfigAR.php',
+        'srag\\Plugins\\ViMP\\Database\\Config\\ConfigRepository' => __DIR__ . '/../..' . '/src/Database/Config/ConfigRepository.php',
         'srag\\Plugins\\ViMP\\Database\\EventLog\\EventLogAR' => __DIR__ . '/../..' . '/src/Database/EventLog/EventLogAR.php',
         'srag\\Plugins\\ViMP\\Database\\SelectedMedia\\SelectedMediaAR' => __DIR__ . '/../..' . '/src/Database/SelectedMedia/SelectedMediaAR.php',
         'srag\\Plugins\\ViMP\\Database\\Settings\\SettingsAR' => __DIR__ . '/../..' . '/src/Database/Settings/SettingsAR.php',

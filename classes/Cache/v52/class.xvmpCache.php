@@ -88,7 +88,7 @@ class xvmpCache extends ilGlobalCache {
 		return true;
 		try
 		{
-			return (int)ConfigAR::getConfig(ConfigAR::F_ACTIVATE_CACHE);
+			return (int)ConfigAR::getConfig(ConfigAR::F_ACTIVATE_CACHE); //ToDo: Constant does not exist
 		}
 		catch (Exception $exceptione) //catch exception while dbupdate is running. (xlvoConf is not ready at that time).
 		{

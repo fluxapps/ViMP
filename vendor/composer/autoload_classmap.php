@@ -47,6 +47,7 @@ return array(
     'srag\\Plugins\\ViMP\\Content\\MediumMetadataParser' => $baseDir . '/src/UIComponents/Content/MediumMetadataParser.php',
     'srag\\Plugins\\ViMP\\Cron\\ViMPJob' => $baseDir . '/src/Cron/ViMPJob.php',
     'srag\\Plugins\\ViMP\\Database\\Config\\ConfigAR' => $baseDir . '/src/Database/Config/ConfigAR.php',
+    'srag\\Plugins\\ViMP\\Database\\Config\\ConfigRepository' => $baseDir . '/src/Database/Config/ConfigRepository.php',
     'srag\\Plugins\\ViMP\\Database\\EventLog\\EventLogAR' => $baseDir . '/src/Database/EventLog/EventLogAR.php',
     'srag\\Plugins\\ViMP\\Database\\SelectedMedia\\SelectedMediaAR' => $baseDir . '/src/Database/SelectedMedia/SelectedMediaAR.php',
     'srag\\Plugins\\ViMP\\Database\\Settings\\SettingsAR' => $baseDir . '/src/Database/Settings/SettingsAR.php',

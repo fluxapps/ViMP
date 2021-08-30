@@ -10,7 +10,7 @@ use srag\Plugins\ViMP\Content\MediumMetadataParser;
 use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
 use srag\Plugins\ViMP\Database\UserProgress\UserProgressAR;
 use srag\Plugins\ViMP\Database\Settings\SettingsAR;
-use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\ViMPDBService;
 
 /**
  * Class xvmpContentPlayerGUI
@@ -35,6 +35,9 @@ class xvmpContentPlayerGUI
      */
     protected $dic;
 
+    /** @var ViMPDBService */
+    protected $db_service;
+
     /**
      * xvmpContentTilesGUI constructor.
      */
@@ -45,6 +48,8 @@ class xvmpContentPlayerGUI
         $this->pl = ilViMPPlugin::getInstance();
         $this->parent_gui = $parent_gui;
         $this->player_renderer = new PlayerInSiteRenderer(new MediumMetadataParser($DIC, $this->pl), $DIC, $this->pl);
+        $this->db_service = new ViMPDBService($this->dic);
+
 
         $this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/content_player.css'));
         $this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getAssetURL('js/xvmp_content.js'));
@@ -112,7 +117,7 @@ class xvmpContentPlayerGUI
 
         /** @var SettingsAR $settings */
         $settings = SettingsAR::find($this->parent_gui->getObjId());
-        if ($settings->getLpActive() && !ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER)) {
+        if ($settings->getLpActive() && !$this->db_service->getEmbedPlayer()) {
             $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpObserver.init(' . $mid . ', ' . $time_ranges . ');');
         }
         $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');

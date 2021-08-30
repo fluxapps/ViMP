@@ -6,10 +6,10 @@ use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
 use srag\Plugins\ViMP\UIComponents\Renderer\Factory;
 use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
-use srag\Plugins\ViMP\Database\Config\ConfigAR;
 use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
 use srag\Plugins\ViMP\Database\UserProgress\UserProgressAR;
 use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+use srag\Plugins\ViMP\Database\ViMPDBService;
 
 /**
  * Class xvmpGUI
@@ -151,7 +151,7 @@ abstract class xvmpGUI {
             })
         ];
 
-        if (!ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER)) {
+        if (!ViMPDBService::getEmbedPlayer()) {
             $items[] = $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
                 '')->withOnClick($popover_2->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
                 return "document.getElementById('{$id}').addEventListener('click', () => VimpContent.copyDirectLinkWithTime('{$link_tpl}'));";

@@ -1,7 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\ViMPDBService;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
 
 /**
  * Class xvmp
@@ -104,10 +105,11 @@ class xvmp {
 
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . self::TOKEN, xvmpCurlLog::DEBUG_LEVEL_2);
 
-		$response = xvmpRequest::loginUser(ConfigAR::getConfig(ConfigAR::F_API_USER), ConfigAR::getConfig(ConfigAR::F_API_PASSWORD))
+
+		$response = xvmpRequest::loginUser(ViMPDBService::lookUpAPIUser(), ViMPDBService::lookUpAPIPassword())
 			->getResponseArray();
 		$token = $response[self::TOKEN];
-		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_TOKEN));
+		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, ViMPDBService::lookUpCacheTtlToken());
 
 		return $token;
 	}
@@ -141,8 +143,8 @@ class xvmp {
     {
         global $DIC;
         $is_admin = $DIC->rbac()->review()->isAssigned($DIC->user()->getId(), 2);
-        return $is_admin || xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC) &&
-            (ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && xvmpConf::getConfig(xvmpConf::F_ALLOW_PUBLIC_UPLOAD)));
+        return $is_admin || ViMPDBService::lookUpAllowPublic() &&
+            (ilObjViMPAccess::hasWriteAccess() || (ilObjViMPAccess::hasUploadPermission() && ViMPDBService::lookUpAllowPublicUpload()));
     }
 
 
@@ -155,7 +157,7 @@ class xvmp {
 	 */
 	public static function isUseEmbeddedPlayer($obj_id, $video) : bool
     {
-		return (!SettingsAR::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER))
+		return (!SettingsAR::find($obj_id)->getLpActive() && ViMPDBService::getEmbedPlayer())
 			|| xvmpMedium::isVimeoOrYoutube($video);
 	}
 
