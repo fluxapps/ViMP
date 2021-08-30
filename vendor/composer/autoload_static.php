@@ -11,7 +11,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         array (
             'srag\\Plugins\\ViMP\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DIC\\' => 9,
+            'srag\\DIC\\ViMP\\' => 14,
         ),
     );
 
@@ -24,7 +24,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DIC\\' => 
+        'srag\\DIC\\ViMP\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),

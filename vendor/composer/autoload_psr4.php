@@ -8,5 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'srag\\Plugins\\ViMP\\' => array($baseDir . '/src'),
     'srag\\LibrariesNamespaceChanger\\' => array($vendorDir . '/srag/librariesnamespacechanger/src'),
-    'srag\\DIC\\' => array($vendorDir . '/srag/dic/src'),
+    'srag\\DIC\\ViMP\\' => array($vendorDir . '/srag/dic/src'),
 );
