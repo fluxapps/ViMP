@@ -5,8 +5,8 @@ namespace srag\DIC\ViMP;
 use ilLogLevel;
 use ilPlugin;
 use srag\DIC\ViMP\DIC\DICInterface;
+use srag\DIC\ViMP\DIC\Implementation\ILIAS54DIC;
 use srag\DIC\ViMP\DIC\Implementation\ILIAS60DIC;
-use srag\DIC\ViMP\DIC\Implementation\ILIAS70DIC;
 use srag\DIC\ViMP\Exception\DICException;
 use srag\DIC\ViMP\Output\Output;
 use srag\DIC\ViMP\Output\OutputInterface;
@@ -52,22 +52,37 @@ final class DICStatic implements DICStaticInterface
 
     /**
      * @inheritDoc
+     *
+     * @deprecated
+     */
+    public static function clearCache()/*: void*/
+    {
+        self::$dic = null;
+        self::$output = null;
+        self::$plugins = [];
+        self::$version = null;
+    }
+
+
+    /**
+     * @inheritDoc
      */
     public static function dic() : DICInterface
     {
         if (self::$dic === null) {
             switch (true) {
-                case (self::version()->isLower(VersionInterface::ILIAS_VERSION_6)):
+                case (self::version()->isLower(VersionInterface::ILIAS_VERSION_5_4)):
                     throw new DICException("DIC not supports ILIAS " . self::version()->getILIASVersion() . " anymore!");
+                    break;
 
-                case (self::version()->isLower(VersionInterface::ILIAS_VERSION_7)):
+                case (self::version()->isLower(VersionInterface::ILIAS_VERSION_6)):
                     global $DIC;
-                    self::$dic = new ILIAS60DIC($DIC);
+                    self::$dic = new ILIAS54DIC($DIC);
                     break;
 
                 default:
                     global $DIC;
-                    self::$dic = new ILIAS70DIC($DIC);
+                    self::$dic = new ILIAS60DIC($DIC);
                     break;
             }
         }

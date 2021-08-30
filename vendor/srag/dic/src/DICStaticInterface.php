@@ -17,6 +17,14 @@ interface DICStaticInterface
 {
 
     /**
+     * Clear cache. Needed for instance in unit tests
+     *
+     * @deprecated
+     */
+    public static function clearCache()/*: void*/ ;
+
+
+    /**
      * Get DIC interface
      *
      * @return DICInterface DIC interface

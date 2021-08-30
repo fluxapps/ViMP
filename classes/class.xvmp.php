@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmp
  *
@@ -105,7 +107,7 @@ class xvmp {
 		$response = xvmpRequest::loginUser(ConfigAR::getConfig(ConfigAR::F_API_USER), ConfigAR::getConfig(ConfigAR::F_API_PASSWORD))
 			->getResponseArray();
 		$token = $response[self::TOKEN];
-		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, ConfigAR::getConfig(xvmpConf::F_CACHE_TTL_TOKEN));
+		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_TOKEN));
 
 		return $token;
 	}

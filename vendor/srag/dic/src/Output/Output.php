@@ -49,11 +49,7 @@ final class Output implements OutputInterface
 
                 // Component instance
                 case ($value instanceof Component):
-                    if (self::dic()->ctrl()->isAsynch()) {
-                        $html = self::dic()->ui()->renderer()->renderAsync($value);
-                    } else {
-                        $html = self::dic()->ui()->renderer()->render($value);
-                    }
+                    $html = self::dic()->ui()->renderer()->render($value);
                     break;
 
                 // ilTable2GUI instance
@@ -90,7 +86,7 @@ final class Output implements OutputInterface
     /**
      * @inheritDoc
      */
-    public function output($value, bool $show = false, bool $main_template = true) : void
+    public function output($value, bool $show = false, bool $main_template = true)/*: void*/
     {
         $html = $this->getHTML($value);
 
@@ -100,7 +96,11 @@ final class Output implements OutputInterface
             exit;
         } else {
             if ($main_template) {
-                self::dic()->ui()->mainTemplate()->loadStandardTemplate();
+                if (self::version()->is6()) {
+                    self::dic()->ui()->mainTemplate()->loadStandardTemplate();
+                } else {
+                    self::dic()->ui()->mainTemplate()->getStandardTemplate();
+                }
             }
 
             self::dic()->ui()->mainTemplate()->setLocator();
@@ -110,7 +110,11 @@ final class Output implements OutputInterface
             }
 
             if ($show) {
-                self::dic()->ui()->mainTemplate()->printToStdout();
+                if (self::version()->is6()) {
+                    self::dic()->ui()->mainTemplate()->printToStdout();
+                } else {
+                    self::dic()->ui()->mainTemplate()->show();
+                }
             }
         }
     }
@@ -119,7 +123,7 @@ final class Output implements OutputInterface
     /**
      * @inheritDoc
      */
-    public function outputJSON($value) : void
+    public function outputJSON($value)/*: void*/
     {
         switch (true) {
             case (is_string($value)):

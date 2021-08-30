@@ -20,6 +20,7 @@ use ilDBInterface;
 use ilErrorHandling;
 use ilExerciseFactory;
 use ilFavouritesDBRepository;
+use ilGlobalTemplateInterface;
 use ilHelpGUI;
 use ILIAS;
 use ILIAS\Data\Factory as DataFactory;
@@ -33,9 +34,6 @@ use ILIAS\Filesystem\Filesystems;
 use ILIAS\FileUpload\FileUpload;
 use ILIAS\GlobalScreen\Services as GlobalScreenService;
 use ILIAS\Refinery\Factory as RefineryFactory;
-use ILIAS\ResourceStorage\Services as ResourceStorageServices;
-use ILIAS\Skill\Service\SkillService;
-use ILIAS\UI\Implementation\Render\ImagePathResolver;
 use ILIAS\UI\Implementation\Render\JavaScriptBinding;
 use ILIAS\UI\Implementation\Render\Loader;
 use ILIAS\UI\Implementation\Render\ResourceRegistry;
@@ -57,6 +55,9 @@ use ilObjectService;
 use ilObjUseBookDBRepository;
 use ilObjUser;
 use ilPluginAdmin;
+use ilRbacAdmin;
+use ilRbacReview;
+use ilRbacSystem;
 use ilSetting;
 use ilStyleDefinition;
 use ilTabsGUI;
@@ -66,7 +67,6 @@ use ilTree;
 use ilUIService;
 use Session;
 use srag\DIC\ViMP\DIC\AbstractDIC;
-use srag\DIC\ViMP\Exception\DICException;
 
 /**
  * Class ILIAS60DIC
@@ -337,15 +337,6 @@ final class ILIAS60DIC extends AbstractDIC
     /**
      * @inheritDoc
      */
-    public function imagePathResolver() : ImagePathResolver
-    {
-        throw new DICException("ImagePathResolver not exists in ILIAS 6 or below!");
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function javaScriptBinding() : JavaScriptBinding
     {
         return $this->dic["ui.javascript_binding"];
@@ -448,6 +439,17 @@ final class ILIAS60DIC extends AbstractDIC
 
     /**
      * @inheritDoc
+     *
+     * @deprecated Please use `self::dic()->ui()->mainTemplate()`
+     */
+    public function mainTemplate() : ilGlobalTemplateInterface
+    {
+        return $this->dic->ui()->mainTemplate();
+    }
+
+
+    /**
+     * @inheritDoc
      */
     public function news() : ilNewsService
     {
@@ -511,6 +513,39 @@ final class ILIAS60DIC extends AbstractDIC
 
     /**
      * @inheritDoc
+     *
+     * @deprecated Please use `self::dic()->rba()->admin()`
+     */
+    public function rbacadmin() : ilRbacAdmin
+    {
+        return $this->rbac()->admin();
+    }
+
+
+    /**
+     * @inheritDoc
+     *
+     * @deprecated Please use `self::dic()->rba()->review()`
+     */
+    public function rbacreview() : ilRbacReview
+    {
+        return $this->rbac()->review();
+    }
+
+
+    /**
+     * @inheritDoc
+     *
+     * @deprecated Please use `self::dic()->rba()->system()`
+     */
+    public function rbacsystem() : ilRbacSystem
+    {
+        return $this->rbac()->system();
+    }
+
+
+    /**
+     * @inheritDoc
      */
     public function refinery() : RefineryFactory
     {
@@ -548,15 +583,6 @@ final class ILIAS60DIC extends AbstractDIC
     /**
      * @inheritDoc
      */
-    public function resourceStorage() : ResourceStorageServices
-    {
-        throw new DICException("ResourceStorageServices not exists in ILIAS 6 or below!");
-    }
-
-
-    /**
-     * @inheritDoc
-     */
     public function session() : Session
     {
         return $this->dic["sess"];
@@ -569,15 +595,6 @@ final class ILIAS60DIC extends AbstractDIC
     public function settings() : ilSetting
     {
         return $this->dic->settings();
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function skills() : SkillService
-    {
-        throw new DICException("SkillService not exists in ILIAS 6 or below!");
     }
 
 
@@ -623,6 +640,17 @@ final class ILIAS60DIC extends AbstractDIC
     public function toolbar() : ilToolbarGUI
     {
         return $this->dic->toolbar();
+    }
+
+
+    /**
+     * @inheritDoc
+     *
+     * @deprecated Please use `self::dic()->repositoryTree()`
+     */
+    public function tree() : ilTree
+    {
+        return $this->repositoryTree();
     }
 
 

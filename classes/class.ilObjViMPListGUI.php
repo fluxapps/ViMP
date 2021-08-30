@@ -2,6 +2,8 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use ILIAS\UI\Component\Card\RepositoryObject;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

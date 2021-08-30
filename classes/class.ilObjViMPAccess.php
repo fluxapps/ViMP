@@ -1,5 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**

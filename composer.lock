@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a35d50c6b24e82e58deba697c8db62a9",
+    "content-hash": "d5c70555c139dd3862db76bbbe751866",
     "packages": [
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -102,20 +102,20 @@
         },
         {
             "name": "srag/dic",
-            "version": "0.33.2",
+            "version": "0.32.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fluxapps/DIC.git",
-                "reference": "a3b217ecba4964b7dc71ed332c503d35edfc78fe"
+                "reference": "92b966978ca7327502a65fc9ede718b2f3126bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fluxapps/DIC/zipball/a3b217ecba4964b7dc71ed332c503d35edfc78fe",
-                "reference": "a3b217ecba4964b7dc71ed332c503d35edfc78fe",
+                "url": "https://api.github.com/repos/fluxapps/DIC/zipball/92b966978ca7327502a65fc9ede718b2f3126bda",
+                "reference": "92b966978ca7327502a65fc9ede718b2f3126bda",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=7.0"
             },
             "require-dev": {
                 "srag/generateplugininfoshelper": ">=0.1.0"
@@ -123,9 +123,11 @@
             "type": "library",
             "extra": {
                 "ilias_plugin": {
-                    "ilias_min_version": "6.0",
-                    "ilias_max_version": "7.999"
-                }
+                    "ilias_min_version": "5.4.0",
+                    "ilias_max_version": "6.999"
+                },
+                "generate_plugin_readme_template": "ILIAS_LIBRARY",
+                "long_description_template": "src/LONG_DESCRIPTION.md"
             },
             "autoload": {
                 "psr-4": {
@@ -152,7 +154,7 @@
                 "globals",
                 "trait"
             ],
-            "time": "2021-07-20T11:49:07+00:00"
+            "time": "2021-06-28T07:03:18+00:00"
         },
         {
             "name": "srag/librariesnamespacechanger",

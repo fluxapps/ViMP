@@ -250,7 +250,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		$input->addOption($option);
 		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_TILES . '.png')),SettingsAR::LAYOUT_TYPE_TILES);
 		$input->addOption($option);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(SettingsARFormGUI::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_PLAYER . '.png')),SettingsAR::LAYOUT_TYPE_PLAYER);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_PLAYER . '.png')),SettingsAR::LAYOUT_TYPE_PLAYER);
 		$input->addOption($option);
 		$input->setValue(SettingsAR::LAYOUT_TYPE_LIST);
 		$form->addItem($input);
