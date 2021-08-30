@@ -2,11 +2,11 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 /**
- * Class xvmpSettingsGUI
+ * Class SettingsARGUI
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  *
- * @ilCtrl_isCalledBy xvmpSettingsGUI: ilObjViMPGUI
+ * @ilCtrl_isCalledBy SettingsARGUI: ilObjViMPGUI
  */
 class xvmpSettingsGUI extends xvmpGUI {
 
@@ -31,7 +31,7 @@ class xvmpSettingsGUI extends xvmpGUI {
 	 */
 	protected function index() {
 		$this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/xvmp_settings.css'));
-		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
+        $xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
 		$this->dic->ui()->mainTemplate()->setContent($xvmpSettingsFormGUI->getHTML());
 	}
 

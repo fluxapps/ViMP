@@ -7,7 +7,7 @@ use ActiveRecord;
 use xvmp;
 
 /**
- * Class xvmpSettings
+ * Class SettingsAR
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */

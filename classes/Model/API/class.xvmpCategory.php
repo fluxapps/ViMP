@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpCategory
  *
@@ -60,7 +62,7 @@ class xvmpCategory extends xvmpObject {
 
 
 	public static function cache($identifier, $object, $ttl = NULL) {
-		parent::cache($identifier, $object, ($ttl ? $ttl : xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_CATEGORIES)));
+		parent::cache($identifier, $object, ($ttl ? $ttl : ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_CATEGORIES)));
 	}
 
 

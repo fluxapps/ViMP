@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpCurl
  *
@@ -19,12 +21,12 @@ class xvmpCurl {
 	public function __construct($url = '') {
 		global $DIC;
 		$lng = $DIC['lng'];
-		self::$api_key = xvmpConf::getConfig(xvmpConf::F_API_KEY);
+		self::$api_key = ConfigAR::getConfig(ConfigAR::F_API_KEY);
 		if (strpos($url, 'http') === false) {
-			$url = rtrim(xvmpConf::getConfig(xvmpConf::F_API_URL), '/') . '/' . ltrim($url, '/');
+			$url = rtrim(ConfigAR::getConfig(ConfigAR::F_API_URL), '/') . '/' . ltrim($url, '/');
 		}
 		$this->url = $url;
-		$this->addPostField('apikey', xvmpConf::getConfig(xvmpConf::F_API_KEY));
+		$this->addPostField('apikey', ConfigAR::getConfig(ConfigAR::F_API_KEY));
 		$this->addPostField('format', self::FORMAT_JSON);
 		$this->addPostField('language', $lng->getLangKey());
 	}
@@ -34,7 +36,7 @@ class xvmpCurl {
 	 * init password and username from config
 	 */
 	public static function init() {
-		self::$api_key = xvmpConf::getConfig(xvmpConf::F_API_KEY);
+		self::$api_key = ConfigAR::getConfig(ConfigAR::F_API_KEY);
 	}
 
     /**
@@ -606,7 +608,7 @@ class xvmpCurl {
 	 * @return bool
 	 */
 	public static function isVerifyPeer() {
-		return !xvmpConf::getConfig(xvmpConf::F_DISABLE_VERIFY_PEER);
+		return !ConfigAR::getConfig(ConfigAR::F_DISABLE_VERIFY_PEER);
 	}
 
 

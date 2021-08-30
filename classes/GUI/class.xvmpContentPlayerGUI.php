@@ -7,6 +7,10 @@ use srag\Plugins\ViMP\UIComponents\Renderer\PlayerInSiteRenderer;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use ILIAS\DI\Container;
 use srag\Plugins\ViMP\Content\MediumMetadataParser;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\UserProgress\UserProgressAR;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
 
 /**
  * Class xvmpContentPlayerGUI
@@ -56,7 +60,7 @@ class xvmpContentPlayerGUI
      */
     public function getHTML()
     {
-        $selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(),
+        $selected_media = SelectedMediaAR::where(array('obj_id' => $this->parent_gui->getObjId(),
                                                          'visible' => 1
         ))->orderBy('sort');
         if (!$selected_media->hasSets()) {
@@ -84,7 +88,7 @@ class xvmpContentPlayerGUI
 
         $tiles_tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
         $json_array = array();
-        /** @var xvmpSelectedMedia $media */
+        /** @var SelectedMediaAR $media */
         foreach ($selected_media->get() as $media) {
             if ($media->getMid() == $mid) {
                 continue;
@@ -99,16 +103,16 @@ class xvmpContentPlayerGUI
 
         $player_tpl->setVariable('VIDEO_LIST', $tiles_tpl->get());
 
-        $progress = xvmpUserProgress::where(array('usr_id' => $this->dic->user()->getId(), 'mid' => $mid))->first();
+        $progress = UserProgressAR::where(array('usr_id' => $this->dic->user()->getId(), 'mid' => $mid))->first();
         if ($progress) {
             $time_ranges = $progress->getRanges();
         } else {
             $time_ranges = '[]';
         }
 
-        /** @var xvmpSettings $settings */
-        $settings = xvmpSettings::find($this->parent_gui->getObjId());
-        if ($settings->getLpActive() && !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
+        /** @var SettingsAR $settings */
+        $settings = SettingsAR::find($this->parent_gui->getObjId());
+        if ($settings->getLpActive() && !ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER)) {
             $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpObserver.init(' . $mid . ', ' . $time_ranges . ');');
         }
         $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpContent.selected_media = ' . json_encode($json_array) . ';');

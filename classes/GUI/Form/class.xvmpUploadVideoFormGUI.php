@@ -1,6 +1,9 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+
 /**
  * Class xvmpUploadVideoFormGUI
  *
@@ -92,17 +95,17 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 
     protected function addCustomInputs()
     {
-        foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-            if (!$field[xvmpConf::F_FORM_FIELD_ID]) {
+        foreach (ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS) as $field) {
+            if (!$field[ConfigAR::F_FORM_FIELD_ID]) {
                 continue;
             }
-            if ($field[xvmpConf::F_FORM_FIELD_TYPE]) {
-                $input = new ilCheckboxInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+            if ($field[ConfigAR::F_FORM_FIELD_TYPE]) {
+                $input = new ilCheckboxInputGUI($field[ConfigAR::F_FORM_FIELD_TITLE], $field[ConfigAR::F_FORM_FIELD_ID]);
             } else {
-                $input = new ilTextInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+                $input = new ilTextInputGUI($field[ConfigAR::F_FORM_FIELD_TITLE], $field[ConfigAR::F_FORM_FIELD_ID]);
             }
-            $input->setRequired($field[xvmpConf::F_FORM_FIELD_REQUIRED]);
-            if ($field[xvmpConf::F_FORM_FIELD_FILL_USER_DATA]) {
+            $input->setRequired($field[ConfigAR::F_FORM_FIELD_REQUIRED]);
+            if ($field[ConfigAR::F_FORM_FIELD_FILL_USER_DATA]) {
                 $input->setValue($this->user->getFirstname() . ' ' . $this->user->getLastname());
             }
             $this->addItem($input);
@@ -115,7 +118,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
             // the object has to be loaded again, since the response from "upload" has another format for the categories
             // also, this adds it to the cache
             $video = xvmpMedium::getObjectAsArray($this->data[xvmpMedium::F_MID]);
-            xvmpEventLog::logEvent(xvmpEventLog::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
+            EventlogAR::logEvent(EventlogAR::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
             return true;
         }
 
@@ -137,9 +140,9 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
     {
         parent::fillVideoByPost();
         if (!xvmp::isAllowedToSetPublic()) {
-            if (in_array(xvmpConf::getConfig(xvmpConf::F_DEFAULT_PUBLICATION),
+            if (in_array(ConfigAR::getConfig(ConfigAR::F_DEFAULT_PUBLICATION),
                 array_values(xvmpMedium::$published_id_mapping))) {
-                $this->data[xvmpMedium::PUBLISHED_HIDDEN] = xvmpConf::getConfig(xvmpConf::F_DEFAULT_PUBLICATION);
+                $this->data[xvmpMedium::PUBLISHED_HIDDEN] = ConfigAR::getConfig(ConfigAR::F_DEFAULT_PUBLICATION);
             } else {
                 $this->data[xvmpMedium::PUBLISHED_HIDDEN] = xvmpMedium::$published_id_mapping[xvmpMedium::PUBLISHED_HIDDEN];
             }
@@ -150,13 +153,13 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
     public function fillForm()
     {
         $array = array();
-        if (in_array(xvmpConf::getConfig(xvmpConf::F_DEFAULT_PUBLICATION),
+        if (in_array(ConfigAR::getConfig(ConfigAR::F_DEFAULT_PUBLICATION),
             array_values(xvmpMedium::$published_id_mapping))) {
-            $array[xvmpMedium::F_PUBLISHED] = array_keys(xvmpMedium::$published_id_mapping)[xvmpConf::getConfig(xvmpConf::F_DEFAULT_PUBLICATION)];
+            $array[xvmpMedium::F_PUBLISHED] = array_keys(xvmpMedium::$published_id_mapping)[ConfigAR::getConfig(ConfigAR::F_DEFAULT_PUBLICATION)];
         }
 
-        if (xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED)) {
-            $selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
+        if (ConfigAR::getConfig(ConfigAR::F_MEDIA_PERMISSIONS_PRESELECTED)) {
+            $selectable_roles = ConfigAR::getConfig(ConfigAR::F_MEDIA_PERMISSIONS_SELECTION);
             $array[xvmpMedium::F_MEDIAPERMISSIONS . '[]'] = $selectable_roles;
         }
 

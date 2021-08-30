@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+
 /**
  * Class xvmpSelectedVideosTableGUI
  *
@@ -54,7 +56,7 @@ class xvmpSelectedVideosTableGUI extends xvmpTableGUI {
 		$this->setTitle($this->pl->txt('selected_videos'));
 
 		$description = $this->pl->txt('selected_videos_description');
-		if ($repository_preview = xvmpSettings::find($this->parent_obj->getObjId())->getRepositoryPreview()) {
+		if ($repository_preview = SettingsAR::find($this->parent_obj->getObjId())->getRepositoryPreview()) {
 			$this->addRepositoryPreviewCss($repository_preview);
 			$description .= ' ' . $this->pl->txt('selected_videos_description_preview');
 		}

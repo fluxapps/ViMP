@@ -102,10 +102,10 @@ class xvmp {
 
 		xvmpCurlLog::getInstance()->write('CACHE: cached not used: ' . self::TOKEN, xvmpCurlLog::DEBUG_LEVEL_2);
 
-		$response = xvmpRequest::loginUser(xvmpConf::getConfig(xvmpConf::F_API_USER), xvmpConf::getConfig(xvmpConf::F_API_PASSWORD))
+		$response = xvmpRequest::loginUser(ConfigAR::getConfig(ConfigAR::F_API_USER), ConfigAR::getConfig(ConfigAR::F_API_PASSWORD))
 			->getResponseArray();
 		$token = $response[self::TOKEN];
-		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_TOKEN));
+		xvmpCacheFactory::getInstance()->set(self::TOKEN, $token, ConfigAR::getConfig(xvmpConf::F_CACHE_TTL_TOKEN));
 
 		return $token;
 	}
@@ -153,7 +153,7 @@ class xvmp {
 	 */
 	public static function isUseEmbeddedPlayer($obj_id, $video) : bool
     {
-		return (!xvmpSettings::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER))
+		return (!SettingsAR::find($obj_id)->getLpActive() && xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER))
 			|| xvmpMedium::isVimeoOrYoutube($video);
 	}
 

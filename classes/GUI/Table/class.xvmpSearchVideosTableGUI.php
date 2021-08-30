@@ -1,5 +1,9 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+
 /**
  * Class xvmpSearchVideosTableGUI
  *
@@ -190,11 +194,11 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 		$this->addAndReadFilterItem($filter_item);
 
 		// custom filters
-		foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $field) {
-			if (!$field[xvmpConf::F_FILTER_FIELD_ID]) {
+		foreach (ConfigAR::getConfig(ConfigAR::F_FILTER_FIELDS) as $field) {
+			if (!$field[ConfigAR::F_FILTER_FIELD_ID]) {
 				continue;
 			}
-			$filter_item = new ilTextInputGUI($field[xvmpConf::F_FILTER_FIELD_TITLE], $field[xvmpConf::F_FILTER_FIELD_ID]);
+			$filter_item = new ilTextInputGUI($field[ConfigAR::F_FILTER_FIELD_TITLE], $field[ConfigAR::F_FILTER_FIELD_ID]);
 			$this->addAndReadFilterItem($filter_item);
 		}
 	}
@@ -220,7 +224,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
         $this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
-        $checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
+        $checked = SelectedMediaAR::isSelected($a_set['mid'], $this->parent_obj->getObjId());
 		if ($checked) {
 			$this->tpl->setVariable('VAL_CHECKED', 'checked');
 		}
@@ -257,10 +261,10 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
                 'txt' => $this->pl->txt('categories')
             )
         );
-        foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $filter_field) {
-            $selectable_columns[$filter_field[xvmpConf::F_FILTER_FIELD_ID]] = array(
-                'sort_field' => $filter_field[xvmpConf::F_FILTER_FIELD_ID],
-                'txt' => $filter_field[xvmpConf::F_FILTER_FIELD_TITLE]
+        foreach (ConfigAR::getConfig(ConfigAR::F_FILTER_FIELDS) as $filter_field) {
+            $selectable_columns[$filter_field[ConfigAR::F_FILTER_FIELD_ID]] = array(
+                'sort_field' => $filter_field[ConfigAR::F_FILTER_FIELD_ID],
+                'txt' => $filter_field[ConfigAR::F_FILTER_FIELD_TITLE]
             );
         }
         return $selectable_columns;

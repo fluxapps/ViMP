@@ -12,7 +12,7 @@ use xvmp;
 use ilObject2;
 
 /**
- * Class xvmpUserLPStatus
+ * Class UserLPStatusAR
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
@@ -256,13 +256,13 @@ class UserLPStatusAR extends ActiveRecord {
 	 * @return ActiveRecord|UserLPStatusAR
 	 */
 	public static function getInstance($user_id, $obj_id) {
-		$xvmpUserLPStatus = UserLPStatusAR::where(array('user_id' => $user_id, 'obj_id' => $obj_id))->first();
-		if (!$xvmpUserLPStatus) {
-			$xvmpUserLPStatus = new self();
-			$xvmpUserLPStatus->setUserId($user_id);
-			$xvmpUserLPStatus->setObjId($obj_id);
+		$UserLPStatusAR = UserLPStatusAR::where(array('user_id' => $user_id, 'obj_id' => $obj_id))->first();
+		if (!$UserLPStatusAR) {
+			$UserLPStatusAR = new self();
+			$UserLPStatusAR->setUserId($user_id);
+			$UserLPStatusAR->setObjId($obj_id);
 		}
-		return $xvmpUserLPStatus;
+		return $UserLPStatusAR;
 	}
 
 

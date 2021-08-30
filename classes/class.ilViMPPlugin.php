@@ -95,13 +95,13 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	 */
 	protected function uninstallCustom() {
 		global $DIC;
-		$DIC->database()->dropTable(xvmpConf::returnDbTableName());
-		$DIC->database()->dropTable(xvmpEventLog::returnDbTableName());
-		$DIC->database()->dropTable(xvmpSelectedMedia::returnDbTableName());
-		$DIC->database()->dropTable(xvmpSettings::returnDbTableName());
-		$DIC->database()->dropTable(xvmpUploadedMedia::returnDbTableName());
-		$DIC->database()->dropTable(xvmpUserLPStatus::returnDbTableName());
-		$DIC->database()->dropTable(xvmpUserProgress::returnDbTableName());
+		$DIC->database()->dropTable(ConfigAR::returnDbTableName());
+		$DIC->database()->dropTable(EventlogAR::returnDbTableName());
+		$DIC->database()->dropTable(SelectedMediaAR::returnDbTableName());
+		$DIC->database()->dropTable(SettingsAR::returnDbTableName());
+		$DIC->database()->dropTable(UploadedMediaAR::returnDbTableName());
+		$DIC->database()->dropTable(UserLPStatusAR::returnDbTableName());
+		$DIC->database()->dropTable(UserProgressAR::returnDbTableName());
 	}
 
 	/**

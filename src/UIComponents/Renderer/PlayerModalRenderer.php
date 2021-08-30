@@ -7,7 +7,7 @@ use ILIAS\UI\Component\Component;
 use ilTemplate;
 use xvmpException;
 use ilTemplateException;
-use xvmpConf;
+use ConfigAR;
 use ilViMPPlugin;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use srag\Plugins\ViMP\Content\MediumMetadataParser;
@@ -101,7 +101,7 @@ class PlayerModalRenderer
             $tpl->setVariable('INFO_STYLE', 'color:red;');
             $tpl->parseCurrentBlock();
         } elseif ($playerContainerDTO->getMediumMetadata()->isTranscoding()) {
-            $msg = xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER) ? $this->plugin->txt('info_transcoding_full')
+            $msg = ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER) ? $this->plugin->txt('info_transcoding_full')
                 : $this->plugin->txt('info_transcoding_possible_full');
             $tpl->setCurrentBlock('info_paragraph');
             $tpl->setVariable('INFO', $msg);

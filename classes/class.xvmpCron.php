@@ -49,8 +49,8 @@ class xvmpCron {
 	 */
 	public function run() {
 	    // notifications
-		/** @var xvmpUploadedMedia $uploaded_medium */
-		foreach (xvmpUploadedMedia::get() as $uploaded_medium) {
+		/** @var UploadedMediaAR $uploaded_medium */
+		foreach (UploadedMediaAR::get() as $uploaded_medium) {
 			try {
 				$medium = xvmpMedium::find($uploaded_medium->getMid());
                     switch($medium->getStatus()) {
@@ -58,7 +58,7 @@ class xvmpCron {
                             if($uploaded_medium->getNotification()) {
                                     $this->sendNotification($medium, $uploaded_medium, true);
                             }
-                            foreach (xvmpSelectedMedia::where(array('mid' => $medium->getId()))->get() as $selected) {
+                            foreach (SelectedMediaAR::where(array('mid' => $medium->getId()))->get() as $selected) {
                                    $selected->setVisible(1);
                                    $selected->update();
                             }
@@ -103,11 +103,11 @@ class xvmpCron {
 
 	/**
 	 * @param xvmpMedium        $medium
-	 * @param xvmpUploadedMedia $uploaded_medium
+	 * @param UploadedMediaAR $uploaded_medium
 	 */
-	protected function sendNotification(xvmpMedium $medium, xvmpUploadedMedia $uploaded_medium, $transcoding_succeeded) {
-		$subject = xvmpConf::getConfig($transcoding_succeeded ? xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL : xvmpConf::F_NOTIFICATION_SUBJECT_FAILED);
-		$body = xvmpConf::getConfig($transcoding_succeeded ? xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL : xvmpConf::F_NOTIFICATION_BODY_FAILED);
+	protected function sendNotification(xvmpMedium $medium, UploadedMediaAR $uploaded_medium, $transcoding_succeeded) {
+		$subject = ConfigAR::getConfig($transcoding_succeeded ? ConfigAR::F_NOTIFICATION_SUBJECT_SUCCESSFULL : ConfigAR::F_NOTIFICATION_SUBJECT_FAILED);
+		$body = ConfigAR::getConfig($transcoding_succeeded ? ConfigAR::F_NOTIFICATION_BODY_SUCCESSFULL : ConfigAR::F_NOTIFICATION_BODY_FAILED);
 
 		// replace placeholders
 		$ilObjUser = new ilObjUser($uploaded_medium->getUserId());

@@ -2,6 +2,9 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use Detection\MobileDetect;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\UploadedMedia\UploadedMediaAR;
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
 
 /**
  * Class xvmpMedium
@@ -118,7 +121,7 @@ class xvmpMedium extends xvmpObject {
 	 * @throws xvmpException
 	 */
 	public static function getSelectedAsArray($obj_id) {
-		$selected = xvmpSelectedMedia::getSelected($obj_id);
+		$selected = SelectedMediaAR::getSelected($obj_id);
 		$videos = array();
 		foreach ($selected as $rec) {
 			try {
@@ -269,10 +272,10 @@ class xvmpMedium extends xvmpObject {
         $ref_id = array_shift($references);
 
 		if ($add_automatically) {
-			xvmpSelectedMedia::addVideo($medium['mid'], $obj_id, false);
+			SelectedMediaAR::addVideo($medium['mid'], $obj_id, false);
 		}
 
-		$uploaded_media = new xvmpUploadedMedia();
+		$uploaded_media = new UploadedMediaAR();
 		$uploaded_media->setMid($medium['mid']);
 		$uploaded_media->setNotification($notification);
 		$uploaded_media->setEmail($ilUser->getEmail());
@@ -289,8 +292,8 @@ class xvmpMedium extends xvmpObject {
 	 */
 	public static function deleteObject($mid) {
 		xvmpRequest::deleteMedium($mid);
-		xvmpSelectedMedia::deleteVideo($mid);
-		if ($uploaded_media = xvmpUploadedMedia::find($mid)) {
+		SelectedMediaAR::deleteVideo($mid);
+		if ($uploaded_media = UploadedMediaAR::find($mid)) {
 			$uploaded_media->delete();
 		}
 		xvmpCacheFactory::getInstance()->delete(self::class . '-' . $mid);
@@ -340,7 +343,7 @@ class xvmpMedium extends xvmpObject {
 	 * @param null  $ttl
 	 */
 	public static function cache($identifier, $object, $ttl = NULL) {
-		parent::cache($identifier, $object, ($ttl ? $ttl : xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_VIDEOS)));
+		parent::cache($identifier, $object, ($ttl ? $ttl : ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_VIDEOS)));
 	}
 
 	/**

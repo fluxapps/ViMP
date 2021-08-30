@@ -1,5 +1,7 @@
 <?php
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpCache
  *
@@ -86,7 +88,7 @@ class xvmpCache extends ilGlobalCache {
 		return true;
 		try
 		{
-			return (int)xvmpConf::getConfig(xvmpConf::F_ACTIVATE_CACHE);
+			return (int)ConfigAR::getConfig(ConfigAR::F_ACTIVATE_CACHE);
 		}
 		catch (Exception $exceptione) //catch exception while dbupdate is running. (xlvoConf is not ready at that time).
 		{

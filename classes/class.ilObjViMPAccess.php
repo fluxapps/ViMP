@@ -152,7 +152,7 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 					return true;
 				}
 				if ($context == self::CONTEXT_OBJECT
-                    && xvmpSelectedMedia::isSelected($medium->getId(), $GUI->getObjId())
+                    && SelectedMediaAR::isSelected($medium->getId(), $GUI->getObjId())
                     && self::hasReadAccess()) {
 					return true;
 				}
@@ -162,7 +162,7 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
                     return true;
                 }
                 if ($context == self::CONTEXT_OBJECT
-                    && xvmpSelectedMedia::isSelected($medium->getId(), $GUI->getObjId())
+                    && SelectedMediaAR::isSelected($medium->getId(), $GUI->getObjId())
                     && self::hasReadAccess()
                     && $medium->isDownloadAllowed()) {
                     return true;
@@ -193,7 +193,7 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 	 * @return mixed
 	 */
 	public function checkOnline($obj_id) {
-		return xvmpSettings::find($obj_id)->getIsOnline();
+		return SettingsAR::find($obj_id)->getIsOnline();
 	}
 
 }

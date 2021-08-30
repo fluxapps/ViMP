@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpUser
  *
@@ -26,14 +28,14 @@ class xvmpUser extends xvmpObject {
 
 		xvmpCurlLog::getInstance()->write('CACHE: cache not used: ' . $key, xvmpCurlLog::DEBUG_LEVEL_2);
 
-		switch (xvmpConf::getConfig(xvmpConf::F_MAPPING_PRIORITY)) {
-			case xvmpConf::PRIORITIZE_EMAIL:
+		switch (ConfigAR::getConfig(ConfigAR::F_MAPPING_PRIORITY)) {
+			case ConfigAR::PRIORITIZE_EMAIL:
 				$xvmpUser = self::getVimpUserByEmail($ilObjUser);
 				if (!$xvmpUser) {
 					$xvmpUser = self::getVimpUserByMapping($ilObjUser);
 				}
 				break;
-			case xvmpConf::PRIORITIZE_MAPPING:
+			case ConfigAR::PRIORITIZE_MAPPING:
 				$xvmpUser = self::getVimpUserByMapping($ilObjUser);
 				if (!$xvmpUser) {
 					$xvmpUser = self::getVimpUserByEmail($ilObjUser);
@@ -42,7 +44,7 @@ class xvmpUser extends xvmpObject {
 		}
 
 		if ($xvmpUser) {
-			self::cache($key, $xvmpUser, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_USERS));
+			self::cache($key, $xvmpUser, ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_USERS));
 		}
 
 		return $xvmpUser;
@@ -188,9 +190,9 @@ class xvmpUser extends xvmpObject {
 		$mapping = is_array($mapping) ? $mapping : [];
 
 		if ($ilObjUser->getAuthMode(true) != AUTH_LOCAL) {
-			$mapping[$ilObjUser->getId()] = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_EXTERNAL);
+			$mapping[$ilObjUser->getId()] = ConfigAR::getConfig(ConfigAR::F_USER_MAPPING_EXTERNAL);
 		} else {
-			$mapping[$ilObjUser->getId()] = xvmpConf::getConfig(xvmpConf::F_USER_MAPPING_LOCAL);
+			$mapping[$ilObjUser->getId()] = ConfigAR::getConfig(ConfigAR::F_USER_MAPPING_LOCAL);
 		}
 
 		$mapping[$ilObjUser->getId()] = str_replace('{EXT_ID}', $ilObjUser->getExternalAccount(), $mapping[$ilObjUser->getId()]);

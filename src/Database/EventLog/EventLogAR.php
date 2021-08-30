@@ -6,7 +6,7 @@ namespace srag\Plugins\ViMP\Database\EventLog;
 use ActiveRecord;
 
 /**
- * Class xvmpEventLog
+ * Class EventlogAR
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class EventLogAR extends ActiveRecord {

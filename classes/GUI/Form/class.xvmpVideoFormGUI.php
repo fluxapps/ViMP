@@ -3,6 +3,7 @@
 use ILIAS\DI\Container;
 use ILIAS\Filesystem\Exception\IOException;
 use ILIAS\FileUpload\Exception\IllegalStateException;
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
 
 /**
  * Class xvmpVideoFormGUI
@@ -170,8 +171,8 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
                 return $post_var;
             default:
                 if (in_array($post_var, array_map(function(array $field) {
-                    return $field[xvmpConf::F_FORM_FIELD_ID];
-                }, xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS)))) {
+                    return $field[ConfigAR::F_FORM_FIELD_ID];
+                }, ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS)))) {
                     return $post_var;
                 }
                 return null;
@@ -274,7 +275,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
         if ($config !== null) {
             $max_filesize_vimp = trim($config, "'");
         }
-        $max_filesize_plugin = xvmpConf::getConfig(xvmpConf::F_UPLOAD_LIMIT);
+        $max_filesize_plugin = ConfigAR::getConfig(ConfigAR::F_UPLOAD_LIMIT);
         if ($max_filesize_vimp || $max_filesize_plugin) {
             $max_filesize_vimp = $this->getSizeInMB($max_filesize_vimp);
             if (!$max_filesize_vimp || !$max_filesize_plugin) {
@@ -342,17 +343,17 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 
     protected function addCustomInputs()
     {
-        foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-            if (!$field[xvmpConf::F_FORM_FIELD_ID]) {
+        foreach (ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS) as $field) {
+            if (!$field[ConfigAR::F_FORM_FIELD_ID]) {
                 continue;
             }
-            if ($field[xvmpConf::F_FORM_FIELD_TYPE]) {
-                $input = new ilCheckboxInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE],
-                    $field[xvmpConf::F_FORM_FIELD_ID]);
+            if ($field[ConfigAR::F_FORM_FIELD_TYPE]) {
+                $input = new ilCheckboxInputGUI($field[ConfigAR::F_FORM_FIELD_TITLE],
+                    $field[ConfigAR::F_FORM_FIELD_ID]);
             } else {
-                $input = new ilTextInputGUI($field[xvmpConf::F_FORM_FIELD_TITLE], $field[xvmpConf::F_FORM_FIELD_ID]);
+                $input = new ilTextInputGUI($field[ConfigAR::F_FORM_FIELD_TITLE], $field[ConfigAR::F_FORM_FIELD_ID]);
             }
-            $input->setRequired($field[xvmpConf::F_FORM_FIELD_REQUIRED]);
+            $input->setRequired($field[ConfigAR::F_FORM_FIELD_REQUIRED]);
             $this->addItem($input);
         }
     }
@@ -378,7 +379,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 
     protected function addMediaPermissionsInput()
     {
-        $media_permissions = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS);
+        $media_permissions = ConfigAR::getConfig(ConfigAR::F_MEDIA_PERMISSIONS);
         if ($media_permissions) {
             $input = $this->getMediaPermissionsInput($media_permissions);
             if (!empty($input->getOptions())) {
@@ -389,13 +390,13 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 
     protected function getMediaPermissionsInput(int $media_permissions) : ilMultiSelectSearchInputGUI
     {
-        $input = new ilMultiSelectSearchInputGUI($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS),
+        $input = new ilMultiSelectSearchInputGUI($this->pl->txt(ConfigAR::F_MEDIA_PERMISSIONS),
             xvmpMedium::F_MEDIAPERMISSIONS);
-        $input->setInfo($this->pl->txt(xvmpConf::F_MEDIA_PERMISSIONS . '_info'));
+        $input->setInfo($this->pl->txt(ConfigAR::F_MEDIA_PERMISSIONS . '_info'));
         $input->setRequired(true);
         $options = array();
-        if ($media_permissions == xvmpConf::MEDIA_PERMISSION_SELECTION) {
-            $selectable_roles = xvmpConf::getConfig(xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
+        if ($media_permissions == ConfigAR::MEDIA_PERMISSION_SELECTION) {
+            $selectable_roles = ConfigAR::getConfig(ConfigAR::F_MEDIA_PERMISSIONS_SELECTION);
         }
         foreach (xvmpUserRoles::getAll() as $role) {
             if (!$role->getField('visible') || ($selectable_roles && !in_array($role->getId(),

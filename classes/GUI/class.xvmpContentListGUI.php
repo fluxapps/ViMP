@@ -2,6 +2,7 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use ILIAS\DI\Container;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
 
 /**
  * Class xvmpContentListGUI
@@ -41,7 +42,7 @@ class xvmpContentListGUI {
      * @throws ilTemplateException
      */
 	public function getHTML() {
-		$selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
+		$selected_media = SelectedMediaAR::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
 		if (!$selected_media->hasSets()) {
 			ilUtil::sendInfo($this->pl->txt('msg_no_videos'));
 			return;
@@ -50,7 +51,7 @@ class xvmpContentListGUI {
 		$tpl = new ilTemplate('tpl.content_tiles_waiting.html', true, true, $this->pl->getDirectory());
 
 		$json_array = array();
-		/** @var xvmpSelectedMedia $media */
+		/** @var SelectedMediaAR $media */
 		foreach ($selected_media->get() as $media) {
 			$json_array[] = $media->getMid();
 			$tpl->setCurrentBlock('block_box');

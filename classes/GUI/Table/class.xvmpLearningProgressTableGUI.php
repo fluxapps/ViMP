@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+
 /**
  * Class xvmpLearningProgressTableGUI
  *
@@ -98,8 +100,8 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
-		/** @var xvmpSelectedMedia $selected_medium */
-		$selected_medium = xvmpSelectedMedia::where(array('obj_id' => $this->parent_obj->getObjId(), 'mid' => $a_set['mid']))->first();
+		/** @var SelectedMediaAR $selected_medium */
+		$selected_medium = SelectedMediaAR::where(array('obj_id' => $this->parent_obj->getObjId(), 'mid' => $a_set['mid']))->first();
 
 
 		foreach ($this->available_columns as $title => $props)

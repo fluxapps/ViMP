@@ -2,6 +2,8 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\UserLPStatus\UserLPStatusAR;
 
 /**
  * Class xvmpLearningProgressGUI
@@ -37,13 +39,13 @@ class xvmpLearningProgressGUI extends xvmpGUI {
 
 	protected function save() {
 		foreach (filter_input(INPUT_POST, 'lp_required_percentage', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY) as $mid => $percentage) {
-			/** @var xvmpSelectedMedia $selected_medium */
-			$selected_medium = xvmpSelectedMedia::where(array('mid' => $mid, 'obj_id' => $this->getObjId()))->first();
+			/** @var SelectedMediaAR $selected_medium */
+			$selected_medium = SelectedMediaAR::where(array('mid' => $mid, 'obj_id' => $this->getObjId()))->first();
 			$selected_medium->setLpReqPercentage($percentage);
 			$selected_medium->setLpIsRequired((int) isset($_POST['lp_required'][$mid]));
 			$selected_medium->update();
 		}
-		xvmpUserLPStatus::updateLPStatuses($this->getObjId(), false);
+		UserLPStatusAR::updateLPStatuses($this->getObjId(), false);
 		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
 		$this->dic->ctrl()->redirect($this,self::CMD_STANDARD);
 	}

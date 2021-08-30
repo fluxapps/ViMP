@@ -1,6 +1,10 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+use srag\Plugins\ViMP\Database\UploadedMedia\UploadedMediaAR;
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpOwnVideosGUI
  *
@@ -123,10 +127,10 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 		$xvmpUser = xvmpUser::getOrCreateVimpUser(new ilObjUser(ilObjUser::getUserIdByLogin($login)));
 		$medium['uid'] = $xvmpUser->getUid();
 		$edit_fields = ['uid' => $xvmpUser->getUid(), 'mediapermissions' => implode(',', $medium['mediapermissions'])];
-		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $form_field) {
+		foreach (ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS) as $form_field) {
 			// workaround for vimp bug (see PLVIMP-53)
-			if ($form_field[xvmpConf::F_FORM_FIELD_REQUIRED] == 1 && $form_field[xvmpConf::F_FORM_FIELD_TYPE] == 1) {
-				$edit_fields[$form_field[xvmpConf::F_FORM_FIELD_ID]] = 1;
+			if ($form_field[ConfigAR::F_FORM_FIELD_REQUIRED] == 1 && $form_field[ConfigAR::F_FORM_FIELD_TYPE] == 1) {
+				$edit_fields[$form_field[ConfigAR::F_FORM_FIELD_ID]] = 1;
 			}
 		}
 		$response = xvmpRequest::editMedium($mid, $edit_fields)->getResponseBody();
@@ -134,17 +138,17 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 			ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
 			xvmpMedium::cache(xvmpMedium::class . '-' . $mid, $medium);
-			xvmpEventLog::logEvent(xvmpEventLog::ACTION_CHANGE_OWNER, $this->getObjId(), array(
+			EventLogAR::logEvent(EventLogAR::ACTION_CHANGE_OWNER, $this->getObjId(), array(
 				'owner' => $login,
 				'mid' => $mid,
 				'title' => $medium['title']
 			));
-			/** @var xvmpUploadedMedia $xvmpUploadedMedia */
-			foreach (xvmpUploadedMedia::where(['mid' => $mid, 'user_id' => $this->dic->user()->getId()])->get() as $xvmpUploadedMedia) {
+			/** @var UploadedMediaAR $UploadedMediaAR */
+			foreach (UploadedMediaAR::where(['mid' => $mid, 'user_id' => $this->dic->user()->getId()])->get() as $UploadedMediaAR) {
 				$new_user_id = ilObjUser::_lookupId($login);
-				$xvmpUploadedMedia->setUserId($new_user_id);
-				$xvmpUploadedMedia->setEmail(ilObjUser::_lookupEmail($new_user_id));
-				$xvmpUploadedMedia->update();
+				$UploadedMediaAR->setUserId($new_user_id);
+				$UploadedMediaAR->setEmail(ilObjUser::_lookupEmail($new_user_id));
+				$UploadedMediaAR->update();
 			}
 		} else {
 			ilUtil::sendFailure($this->pl->txt('failure'));
@@ -221,7 +225,7 @@ class xvmpOwnVideosGUI extends xvmpVideosGUI {
 
 		xvmpMedium::deleteObject($mid);
 
-		xvmpEventLog::logEvent(xvmpEventLog::ACTION_DELETE, $this->getObjId(), $video);
+		EventLogAR::logEvent(EventLogAR::ACTION_DELETE, $this->getObjId(), $video);
 
 		ilUtil::sendSuccess($this->pl->txt('video_deleted'), true);
 		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);

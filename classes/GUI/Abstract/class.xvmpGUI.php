@@ -6,6 +6,10 @@ use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
 use srag\Plugins\ViMP\UIComponents\Renderer\Factory;
 use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\UserProgress\UserProgressAR;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
 
 /**
  * Class xvmpGUI
@@ -147,7 +151,7 @@ abstract class xvmpGUI {
             })
         ];
 
-        if (!xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER)) {
+        if (!ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER)) {
             $items[] = $this->dic->ui()->factory()->button()->shy($this->pl->txt('btn_copy_link_w_time'),
                 '')->withOnClick($popover_2->getShowSignal())->withOnLoadCode(function ($id) use ($link_tpl) {
                 return "document.getElementById('{$id}').addEventListener('click', () => VimpContent.copyDirectLinkWithTime('{$link_tpl}'));";
@@ -211,7 +215,7 @@ abstract class xvmpGUI {
 	 */
 	public function flushCache() {
 //		xvmpCacheFactory::getInstance()->flush();
-		foreach (xvmpSelectedMedia::getSelected($this->getObjId()) as $selected) {
+		foreach (SelectedMediaAR::getSelected($this->getObjId()) as $selected) {
 			xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $selected->getMid());
 		}
 		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
@@ -278,19 +282,19 @@ abstract class xvmpGUI {
      */
     public function getFilledModalPlayer($video_mid) : ilModalGUI
     {
-        $selected_medium = xvmpSelectedMedia::where(array('obj_id' => $this->getObjId(), 'mid' => $video_mid));
+        $selected_medium = SelectedMediaAR::where(array('obj_id' => $this->getObjId(), 'mid' => $video_mid));
         if (!ilObjViMPAccess::hasWriteAccess()) {
             $selected_medium = $selected_medium->where(['visible' => 1]);
         }
-        /** @var xvmpSelectedMedia $selected_medium */
+        /** @var SelectedMediaAR $selected_medium */
         $selected_medium = $selected_medium->first();
         if (!$selected_medium) {
             return $this->getAccessDeniedModal();
         }
         $this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/modal.css'));
         $modal_content = $this->fillModalPlayer($video_mid, false);
-        /** @var xvmpSettings $settings */
-        $settings = xvmpSettings::find($this->getObjId());
+        /** @var SettingsAR $settings */
+        $settings = SettingsAR::find($this->getObjId());
         if ($settings->getLpActive()) {
             $this->dic->ui()->mainTemplate()->addOnLoadCode('VimpObserver.init(' . $video_mid . ', ' . json_encode($modal_content->time_ranges) . ');');
         }
@@ -320,8 +324,8 @@ abstract class xvmpGUI {
         $response = new stdClass();
 		$response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async, ($this instanceof xvmpVideosGUI)); // TODO: change!
 		$response->video_title = $video->getTitle();
-		/** @var xvmpUserProgress $progress */
-		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->dic->user()->getId(), xvmpMedium::F_MID => $mid))->first();
+		/** @var UserProgressAR $progress */
+		$progress = UserProgressAR::where(array(UserProgressAR::F_USR_ID => $this->dic->user()->getId(), xvmpMedium::F_MID => $mid))->first();
 		if ($progress) {
 			$response->time_ranges = json_decode($progress->getRanges());
 		} else {
@@ -349,8 +353,8 @@ abstract class xvmpGUI {
 	 */
 	public function updateProgress() {
 		$mid = $_POST[xvmpMedium::F_MID];
-		$ranges = $_POST[xvmpUserProgress::F_RANGES];
-		xvmpUserProgress::storeProgress($this->dic->user()->getid(), $mid, $ranges);
+		$ranges = $_POST[UserProgressAR::F_RANGES];
+		UserProgressAR::storeProgress($this->dic->user()->getid(), $mid, $ranges);
 		echo "ok";
 		exit;
 	}

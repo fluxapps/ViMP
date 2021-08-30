@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+
 /**
  * Class xvmpEventLogTableGUI
  *
@@ -53,9 +55,9 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 		}
 
 		if (empty($where)) {
-			$this->setData(xvmpEventLog::orderBy('timestamp', 'DESC')->getArray());
+			$this->setData(EventLogAR::orderBy('timestamp', 'DESC')->getArray());
 		} else {
-			$this->setData(xvmpEventLog::where($where, $operators)->orderBy('timestamp', 'DESC')->getArray());
+			$this->setData(EventLogAR::where($where, $operators)->orderBy('timestamp', 'DESC')->getArray());
 		}
 	}
 
@@ -99,22 +101,22 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 	protected function formatData($action, $data) {
 		$string = '';
 		switch ($action) {
-			case xvmpEventLog::ACTION_ADD:
-			case xvmpEventLog::ACTION_REMOVE:
-			case xvmpEventLog::ACTION_DELETE:
-			case xvmpEventLog::ACTION_UPLOAD:
+			case EventLogAR::ACTION_ADD:
+			case EventLogAR::ACTION_REMOVE:
+			case EventLogAR::ACTION_DELETE:
+			case EventLogAR::ACTION_UPLOAD:
 				foreach ($data as $key => $value) {
 					$string .= $this->pl->txt($key) . ': "' . (is_array($value) ? implode(', ', $value) : $value) . '"<br>';
 				}
 				break;
-			case xvmpEventLog::ACTION_EDIT:
+			case EventLogAR::ACTION_EDIT:
 				foreach ($data as $key => $value) {
 					$old = array_shift($value);
 					$new = array_shift($value);
 					$string .= $this->pl->txt($key) . ': "' . (is_array($old) ? implode(', ', $old) : $old) . '" -> "' . (is_array($new) ? implode(', ', $new) : $new) . '"<br>';
 				}
 				break;
-			case xvmpEventLog::ACTION_CHANGE_OWNER:
+			case EventLogAR::ACTION_CHANGE_OWNER:
 				$new_owner = $data['owner'];
 				$string .= $this->pl->txt('new_owner') . ': ' . $new_owner;
 		}
@@ -130,7 +132,7 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 	{
 		$item = new ilMultiSelectInputGUI($this->pl->txt('action'), 'action');
 		$options = array();
-		foreach (array(xvmpEventLog::ACTION_UPLOAD, xvmpEventLog::ACTION_EDIT, xvmpEventLog::ACTION_DELETE, xvmpEventLog::ACTION_ADD, xvmpEventLog::ACTION_REMOVE, xvmpEventLog::ACTION_CHANGE_OWNER)
+		foreach (array(EventLogAR::ACTION_UPLOAD, EventLogAR::ACTION_EDIT, EventLogAR::ACTION_DELETE, EventLogAR::ACTION_ADD, EventLogAR::ACTION_REMOVE, EventLogAR::ACTION_CHANGE_OWNER)
 		         as $action_id) {
 			$options[$action_id] = $this->pl->txt('log_action_' . $action_id);
 		}

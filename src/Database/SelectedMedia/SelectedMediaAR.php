@@ -9,7 +9,7 @@ use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
 use xvmpCacheFactory;
 
 /**
- * Class xvmpSelectedMedia
+ * Class SelectedMediaAR
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */

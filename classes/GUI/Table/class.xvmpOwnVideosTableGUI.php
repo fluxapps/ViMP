@@ -1,6 +1,10 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\UploadedMedia\UploadedMediaAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+
 /**
  * Class xvmpOwnVideosTableGUI
  *
@@ -112,11 +116,11 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 		$this->addAndReadFilterItem($filter_item);
 
 		// custom filters
-		foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $field) {
-			if (!$field[xvmpConf::F_FILTER_FIELD_ID]) {
+		foreach (ConfigAR::getConfig(ConfigAR::F_FILTER_FIELDS) as $field) {
+			if (!$field[ConfigAR::F_FILTER_FIELD_ID]) {
 				continue;
 			}
-			$filter_item = new ilTextInputGUI($field[xvmpConf::F_FILTER_FIELD_TITLE], $field[xvmpConf::F_FILTER_FIELD_ID]);
+			$filter_item = new ilTextInputGUI($field[ConfigAR::F_FILTER_FIELD_TITLE], $field[ConfigAR::F_FILTER_FIELD_ID]);
 			$this->addAndReadFilterItem($filter_item);
 		}
 	}
@@ -163,7 +167,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 			$data[$video['mid']] = xvmpMedium::formatResponse($video);
 		}
 
-		foreach (xvmpUploadedMedia::where(array('email' => $this->user->getEmail()))->get() as $uploaded_media) {
+		foreach (UploadedMediaAR::where(array('email' => $this->user->getEmail()))->get() as $uploaded_media) {
 			if (!in_array($uploaded_media->getMid(), array_keys($data))) {
 				try {
 					$data[$uploaded_media->getMid()] = xvmpMedium::getObjectAsArray($uploaded_media->getMid());
@@ -208,7 +212,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 
 		$this->tpl->setVariable('VAL_MID', $a_set['mid']);
 
-		$checked = xvmpSelectedMedia::isSelected($a_set['mid'], $this->parent_obj->getObjId());
+		$checked = SelectedMediaAR::isSelected($a_set['mid'], $this->parent_obj->getObjId());
 		if ($checked) {
 			$this->tpl->setVariable('VAL_CHECKED', 'checked');
 		}
@@ -249,10 +253,10 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
                 'txt' => $this->pl->txt('categories')
             )
         );
-        foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $filter_field) {
-            $selectable_columns[$filter_field[xvmpConf::F_FILTER_FIELD_ID]] = array(
-                'sort_field' => $filter_field[xvmpConf::F_FILTER_FIELD_ID],
-                'txt' => $filter_field[xvmpConf::F_FILTER_FIELD_TITLE]
+        foreach (ConfigAR::getConfig(ConfigAR::F_FILTER_FIELDS) as $filter_field) {
+            $selectable_columns[$filter_field[ConfigAR::F_FILTER_FIELD_ID]] = array(
+                'sort_field' => $filter_field[ConfigAR::F_FILTER_FIELD_ID],
+                'txt' => $filter_field[ConfigAR::F_FILTER_FIELD_TITLE]
             );
         }
         return $selectable_columns;
@@ -313,8 +317,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
             });
         }
 
-        foreach (xvmpConf::getConfig(xvmpConf::F_FILTER_FIELDS) as $custom_filter_field) {
-            $field_id = $custom_filter_field[xvmpConf::F_FILTER_FIELD_ID];
+        foreach (ConfigAR::getConfig(ConfigAR::F_FILTER_FIELDS) as $custom_filter_field) {
+            $field_id = $custom_filter_field[ConfigAR::F_FILTER_FIELD_ID];
             if ($post_filter[$field_id]) {
                 $data = array_filter($data, function ($video) use ($post_filter, $field_id) {
                     return strpos(strtolower($video[$field_id]), strtolower($post_filter[$field_id])) !== false;

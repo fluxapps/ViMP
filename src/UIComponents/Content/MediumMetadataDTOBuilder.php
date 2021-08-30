@@ -5,8 +5,8 @@ namespace srag\Plugins\ViMP\Content;
 use ilViMPPlugin;
 use xvmpMedium;
 use srag\Plugins\ViMP\UIComponents\PlayerModal\MediumAttribute;
-use xvmpConf;
-use xvmpUserProgress;
+use ConfigAR;
+use UserProgressAR;
 use ILIAS\DI\Container;
 
 /**
@@ -69,17 +69,17 @@ class MediumMetadataDTOBuilder
             $this->plugin->txt(xvmpMedium::F_CREATED_AT));
 
         if (!$short) {
-            foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
-                if ($field[xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER]
-                    && ($value = $medium->getField($field[xvmpConf::F_FORM_FIELD_ID]))) {
-                    $medium_infos[] = new MediumAttribute($value, $field[xvmpConf::F_FORM_FIELD_TITLE]);
+            foreach (ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS) as $field) {
+                if ($field[ConfigAR::F_FORM_FIELD_SHOW_IN_PLAYER]
+                    && ($value = $medium->getField($field[ConfigAR::F_FORM_FIELD_ID]))) {
+                    $medium_infos[] = new MediumAttribute($value, $field[ConfigAR::F_FORM_FIELD_TITLE]);
                 }
             }
         }
 
         if ($show_watched) {
             $medium_infos[] = new MediumAttribute(
-                xvmpUserProgress::calcPercentage($this->dic->user()->getId(), $medium->getMid()) . '%',
+                UserProgressAR::calcPercentage($this->dic->user()->getId(), $medium->getMid()) . '%',
                 $this->plugin->txt('watched'));
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpConfig
  *
@@ -35,7 +37,7 @@ class xvmpConfig extends xvmpObject {
 	 * @param null  $ttl
 	 */
 	public static function cache($identifier, $object, $ttl = null) {
-		parent::cache($identifier, $object, xvmpConf::getConfig(xvmpConf::F_CACHE_TTL_CONFIG));
+		parent::cache($identifier, $object, ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_CONFIG));
 	}
 
 

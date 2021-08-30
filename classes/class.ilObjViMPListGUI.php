@@ -81,7 +81,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 	public function getCustomProperties($a_prop) {
 		$props = parent::getCustomProperties(array());
 
-		$settings = xvmpSettings::find($this->obj_id);
+		$settings = SettingsAR::find($this->obj_id);
 		if (!$settings->getIsOnline()) {
 			$props[] = array(
 				'alert' => true,
@@ -107,7 +107,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 
 
 	protected function getVideoPreview($count) {
-		$selected_videos = xvmpSelectedMedia::where(['obj_id' => $this->obj_id, 'visible' => 1])->orderBy('sort')->limit(0, $count)->get();
+		$selected_videos = SelectedMediaAR::where(['obj_id' => $this->obj_id, 'visible' => 1])->orderBy('sort')->limit(0, $count)->get();
 		$preview = '';
 		foreach ($selected_videos as $selected) {
 			try {

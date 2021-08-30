@@ -2,6 +2,9 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
 
 /**
  * Class xvmpContentGUI
@@ -26,19 +29,19 @@ class xvmpContentGUI extends xvmpGUI {
 	 *
 	 */
 	protected function index($play_video_id = null) {
-        /** @var xvmpSettings $settings */
-        $settings = xvmpSettings::find($this->getObjId());
-		VideoPlayer::loadVideoJSAndCSS($settings->getLpActive() && !xvmpConf::getConfig(xvmpConf::F_EMBED_PLAYER));
+        /** @var SettingsAR $settings */
+        $settings = SettingsAR::find($this->getObjId());
+		VideoPlayer::loadVideoJSAndCSS($settings->getLpActive() && !ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER));
         $this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/content.css'));
 
         if (!$this->dic->ctrl()->isAsynch() && ilObjViMPAccess::hasWriteAccess()) {
 			$this->addFlushCacheButton();
 		}
 
-		$layout_type = xvmpSettings::find($this->getObjId())->getLayoutType();
+		$layout_type = SettingsAR::find($this->getObjId())->getLayoutType();
 
 		switch ($layout_type) {
-			case xvmpSettings::LAYOUT_TYPE_LIST:
+			case SettingsAR::LAYOUT_TYPE_LIST:
 				$xvmpContentListGUI = new xvmpContentListGUI($this);
 				if (!is_null($play_video_id)) {
                     $this->dic->ui()->mainTemplate()->setContent($xvmpContentListGUI->getHTML() . $this->getFilledModalPlayer($play_video_id)->getHTML());
@@ -46,7 +49,7 @@ class xvmpContentGUI extends xvmpGUI {
                     $this->dic->ui()->mainTemplate()->setContent($xvmpContentListGUI->getHTML() . self::getModalPlayer()->getHTML());
                 }
 				break;
-			case xvmpSettings::LAYOUT_TYPE_TILES:
+			case SettingsAR::LAYOUT_TYPE_TILES:
 				$xvmpContentTilesGUI = new xvmpContentTilesGUI($this);
                 if (!is_null($play_video_id)) {
                     $this->dic->ui()->mainTemplate()->setContent($xvmpContentTilesGUI->getHTML() . $this->getFilledModalPlayer($play_video_id)->getHTML());
@@ -54,7 +57,7 @@ class xvmpContentGUI extends xvmpGUI {
                     $this->dic->ui()->mainTemplate()->setContent($xvmpContentTilesGUI->getHTML() . self::getModalPlayer()->getHTML());
                 }
                 break;
-			case xvmpSettings::LAYOUT_TYPE_PLAYER:
+			case SettingsAR::LAYOUT_TYPE_PLAYER:
 				$xvmpContentPlayerGUI = new xvmpContentPlayerGUI($this);
                 $this->dic->ui()->mainTemplate()->setContent($xvmpContentPlayerGUI->getHTML());
                 break;
@@ -68,7 +71,7 @@ class xvmpContentGUI extends xvmpGUI {
 			case self::CMD_RENDER_TILE:
 			case self::CMD_RENDER_TILE_SMALL:
 				$mid = $_GET['mid'];
-				if (!$mid || !xvmpSelectedMedia::isSelected($mid, $this->getObjId())) {
+				if (!$mid || !SelectedMediaAR::isSelected($mid, $this->getObjId())) {
 					$this->accessDenied();
 				}
 				break;

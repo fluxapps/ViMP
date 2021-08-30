@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+
 /**
  * Class xvmpEditVideoFormGUI
  *
@@ -81,7 +83,7 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
             xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $this->medium['mid']);
             $new = xvmpMedium::getObjectAsArray($this->medium['mid']);
 
-            xvmpEventLog::logEvent(xvmpEventLog::ACTION_EDIT, $this->parent_gui->getObjId(), $new, $this->medium);
+            EventlogAR::logEvent(EventlogAR::ACTION_EDIT, $this->parent_gui->getObjId(), $new, $this->medium);
             return true;
         }
 

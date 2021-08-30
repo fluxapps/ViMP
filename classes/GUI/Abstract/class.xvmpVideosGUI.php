@@ -2,6 +2,7 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
 
 /**
  * Class xvmpVideosGUI
@@ -135,11 +136,11 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	public function toggleVideo() {
 		$mid = $_GET[xvmpMedium::F_MID];
 		$checked = $_GET['checked'];
-		$visible = $_GET[xvmpSelectedMedia::F_VISIBLE];
+		$visible = $_GET[SelectedMediaAR::F_VISIBLE];
 		if ($checked) {
-			xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
+			SelectedMediaAR::addVideo($mid, $this->getObjId(), $visible);
 		} else {
-			xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
+			SelectedMediaAR::removeVideo($mid, $this->getObjId());
 		}
 		echo "{\"success\": true}";
 		exit;
@@ -150,8 +151,8 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 */
 	public function addVideo() {
 		$mid = $_GET[xvmpMedium::F_MID];
-		$visible = $_GET[xvmpSelectedMedia::F_VISIBLE];
-		xvmpSelectedMedia::addVideo($mid, $this->getObjId(), $visible);
+		$visible = $_GET[SelectedMediaAR::F_VISIBLE];
+		SelectedMediaAR::addVideo($mid, $this->getObjId(), $visible);
 		echo "{\"success\": true}";
 		exit;
 	}
@@ -161,7 +162,7 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 */
 	public function removeVideo() {
 		$mid = $_GET[xvmpMedium::F_MID];
-		xvmpSelectedMedia::removeVideo($mid, $this->getObjId());
+		SelectedMediaAR::removeVideo($mid, $this->getObjId());
 		echo "{\"success\": true}";
 		exit;
 	}

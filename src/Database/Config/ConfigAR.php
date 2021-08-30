@@ -7,7 +7,7 @@ use ActiveRecord;
 use Matrix\Exception; // ToDo: Is that right?
 
 /**
- * Class xvmpConf
+ * Class ConfigAR
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class ConfigAR extends ActiveRecord {

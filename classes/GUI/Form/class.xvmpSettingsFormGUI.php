@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+
 /**
  * Class xvmpSettingsFormGUI
  *
@@ -20,7 +22,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 	 */
 	protected $object;
 	/**
-	 * @var xvmpSettings
+	 * @var SettingsAR
 	 */
 	protected $settings;
 
@@ -34,7 +36,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
         $this->object = $parent_gui->getObject();
         parent::__construct($parent_gui);
         $this->setTitle($this->lng->txt('settings'));
-		$this->settings = xvmpSettings::find($this->parent_gui->getObjId());
+		$this->settings = SettingsAR::find($this->parent_gui->getObjId());
 		$this->fillForm();
 	}
 
@@ -58,11 +60,11 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 
 		// LAYOUT
 		$input = new ilRadioGroupInputGUI($this->pl->txt(self::F_LAYOUT), self::F_LAYOUT);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_LIST . '.png')),xvmpSettings::LAYOUT_TYPE_LIST);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_LIST . '.png')),SettingsAR::LAYOUT_TYPE_LIST);
 		$input->addOption($option);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_TILES . '.png')),xvmpSettings::LAYOUT_TYPE_TILES);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_TILES . '.png')),SettingsAR::LAYOUT_TYPE_TILES);
 		$input->addOption($option);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_PLAYER . '.png')),xvmpSettings::LAYOUT_TYPE_PLAYER);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(self::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_PLAYER . '.png')),SettingsAR::LAYOUT_TYPE_PLAYER);
 		$input->addOption($option);
 		$this->addItem($input);
 

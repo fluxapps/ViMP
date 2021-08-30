@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+
 /**
  * Class xvmpSelectedVideosGUI
  *
@@ -39,9 +41,9 @@ class xvmpSelectedVideosGUI extends xvmpVideosGUI {
 		$ids = $_POST['ids'];
 		$sort = 10;
 		foreach ($ids as $id) {
-			$xvmpSelectedMedia = xvmpSelectedMedia::where(array('mid' => $id, 'obj_id' => $this->getObjId()))->first();
-			$xvmpSelectedMedia->setSort($sort);
-			$xvmpSelectedMedia->update();
+			$SelectedMediaAR = SelectedMediaAR::where(array('mid' => $id, 'obj_id' => $this->getObjId()))->first();
+			$SelectedMediaAR->setSort($sort);
+			$SelectedMediaAR->update();
 			$sort += 10;
 		}
 		echo "{\"success\": true}";
@@ -54,7 +56,7 @@ class xvmpSelectedVideosGUI extends xvmpVideosGUI {
 	 */
 	public function moveUp() {
 		$mid = $_GET['mid'];
-		xvmpSelectedMedia::moveUp($mid, $this->getObjId());
+		SelectedMediaAR::moveUp($mid, $this->getObjId());
 		exit;
 	}
 
@@ -63,7 +65,7 @@ class xvmpSelectedVideosGUI extends xvmpVideosGUI {
 	 */
 	public function moveDown() {
 		$mid = $_GET['mid'];
-		xvmpSelectedMedia::moveDown($mid, $this->getObjId());
+		SelectedMediaAR::moveDown($mid, $this->getObjId());
 		exit;
 	}
 
@@ -74,8 +76,8 @@ class xvmpSelectedVideosGUI extends xvmpVideosGUI {
 	public function setVisibility() {
 		$mid = $_GET['mid'];
 		$visible = $_GET['visible'];
-		/** @var xvmpSelectedMedia $video */
-		$video = xvmpSelectedMedia::where(array('mid' => $mid, 'obj_id' => $this->getObjId()))->first();
+		/** @var SelectedMediaAR $video */
+		$video = SelectedMediaAR::where(array('mid' => $mid, 'obj_id' => $this->getObjId()))->first();
 		$video->setVisible($visible);
 		$video->update();
 		exit;

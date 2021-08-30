@@ -8,7 +8,7 @@ use xvmpMedium;
 use srag\Plugins\ViMP\Database\UserLPStatus\UserLPStatusAR;
 
 /**
- * Class xvmpUserProgress
+ * Class UserProgressAR
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */

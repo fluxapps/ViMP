@@ -1,6 +1,8 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
+use srag\Plugins\ViMP\Database\Config\ConfigAR;
+
 /**
  * Class xvmpConfFormGUI
  *
@@ -43,26 +45,26 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($header);
 
 		// API User
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_USER), xvmpConf::F_API_USER);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_USER . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_API_USER), ConfigAR::F_API_USER);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_API_USER . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// API Password
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_PASSWORD), xvmpConf::F_API_PASSWORD);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_PASSWORD . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_API_PASSWORD), ConfigAR::F_API_PASSWORD);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_API_PASSWORD . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// API Key
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_KEY), xvmpConf::F_API_KEY);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_KEY . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_API_KEY), ConfigAR::F_API_KEY);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_API_KEY . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// API Url
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_API_URL), xvmpConf::F_API_URL);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_API_URL . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_API_URL), ConfigAR::F_API_URL);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_API_URL . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
@@ -75,28 +77,28 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($input);
 
 		// ignore ssl
-	    $input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_DISABLE_VERIFY_PEER), xvmpConf::F_DISABLE_VERIFY_PEER);
-	    $input->setInfo($this->pl->confTxt(xvmpConf::F_DISABLE_VERIFY_PEER . '_info'));
+	    $input = new ilCheckboxInputGUI($this->pl->confTxt(ConfigAR::F_DISABLE_VERIFY_PEER), ConfigAR::F_DISABLE_VERIFY_PEER);
+	    $input->setInfo($this->pl->confTxt(ConfigAR::F_DISABLE_VERIFY_PEER . '_info'));
 	    $this->addItem($input);
 
 		// External User Mapping
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL), xvmpConf::F_USER_MAPPING_EXTERNAL);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_USER_MAPPING_EXTERNAL . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_USER_MAPPING_EXTERNAL), ConfigAR::F_USER_MAPPING_EXTERNAL);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_USER_MAPPING_EXTERNAL . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Local User Mapping
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_USER_MAPPING_LOCAL), xvmpConf::F_USER_MAPPING_LOCAL);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_USER_MAPPING_LOCAL . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_USER_MAPPING_LOCAL), ConfigAR::F_USER_MAPPING_LOCAL);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_USER_MAPPING_LOCAL . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Mapping Priority
-		$input = new ilRadioGroupInputGUI($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY), xvmpConf::F_MAPPING_PRIORITY);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY . '_info'));
-		$opt = new ilRadioOption($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY . '_' . xvmpConf::PRIORITIZE_EMAIL), xvmpConf::PRIORITIZE_EMAIL);
+		$input = new ilRadioGroupInputGUI($this->pl->confTxt(ConfigAR::F_MAPPING_PRIORITY), ConfigAR::F_MAPPING_PRIORITY);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_MAPPING_PRIORITY . '_info'));
+		$opt = new ilRadioOption($this->pl->confTxt(ConfigAR::F_MAPPING_PRIORITY . '_' . ConfigAR::PRIORITIZE_EMAIL), ConfigAR::PRIORITIZE_EMAIL);
 		$input->addOption($opt);
-		$opt = new ilRadioOption($this->pl->confTxt(xvmpConf::F_MAPPING_PRIORITY . '_' . xvmpConf::PRIORITIZE_MAPPING), xvmpConf::PRIORITIZE_MAPPING);
+		$opt = new ilRadioOption($this->pl->confTxt(ConfigAR::F_MAPPING_PRIORITY . '_' . ConfigAR::PRIORITIZE_MAPPING), ConfigAR::PRIORITIZE_MAPPING);
 		$input->addOption($opt);
 		$this->addItem($input);
 
@@ -106,93 +108,93 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($header);
 
 		// Upload Limit
-        $input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_UPLOAD_LIMIT), xvmpConf::F_UPLOAD_LIMIT);
-        $input->setInfo($this->pl->confTxt(xvmpConf::F_UPLOAD_LIMIT . '_info'));
+        $input = new ilNumberInputGUI($this->pl->confTxt(ConfigAR::F_UPLOAD_LIMIT), ConfigAR::F_UPLOAD_LIMIT);
+        $input->setInfo($this->pl->confTxt(ConfigAR::F_UPLOAD_LIMIT . '_info'));
         $this->addItem($input);
 
 		// Object Title
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_OBJECT_TITLE), xvmpConf::F_OBJECT_TITLE);
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_OBJECT_TITLE), ConfigAR::F_OBJECT_TITLE);
 		$input->setRequired(true);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_OBJECT_TITLE . '_info'));
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_OBJECT_TITLE . '_info'));
 		$this->addItem($input);
 
 		// Default Publication
-                $input = new ilSelectInputGUI($this->pl->confTxt(xvmpConf::F_DEFAULT_PUBLICATION), xvmpConf::F_DEFAULT_PUBLICATION);
+                $input = new ilSelectInputGUI($this->pl->confTxt(ConfigAR::F_DEFAULT_PUBLICATION), ConfigAR::F_DEFAULT_PUBLICATION);
                 $input->setOptions(array(
                         0 => $this->pl->txt('public'),
                         1 => $this->pl->txt('private'),
                         2 => $this->pl->txt('hidden'),
                 ));
 
-                $input->setInfo($this->pl->confTxt(xvmpConf::F_DEFAULT_PUBLICATION . '_info'));
+                $input->setInfo($this->pl->confTxt(ConfigAR::F_DEFAULT_PUBLICATION . '_info'));
                 $this->addItem($input);
 
 		// Allow Public Upload
-		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC), xvmpConf::F_ALLOW_PUBLIC);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC . '_info'));
+		$input = new ilCheckboxInputGUI($this->pl->confTxt(ConfigAR::F_ALLOW_PUBLIC), ConfigAR::F_ALLOW_PUBLIC);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_ALLOW_PUBLIC . '_info'));
 
-        $input2 = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD), xvmpConf::F_ALLOW_PUBLIC_UPLOAD);
-        $input2->setInfo($this->pl->confTxt(xvmpConf::F_ALLOW_PUBLIC_UPLOAD . '_info'));
+        $input2 = new ilCheckboxInputGUI($this->pl->confTxt(ConfigAR::F_ALLOW_PUBLIC_UPLOAD), ConfigAR::F_ALLOW_PUBLIC_UPLOAD);
+        $input2->setInfo($this->pl->confTxt(ConfigAR::F_ALLOW_PUBLIC_UPLOAD . '_info'));
         $input->addSubItem($input2);
 
         $this->addItem($input);
 
 
         // Form Fields
-		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FORM_FIELDS), xvmpConf::F_FORM_FIELDS);
+		$input = new srGenericMultiInputGUI($this->pl->confTxt(ConfigAR::F_FORM_FIELDS), ConfigAR::F_FORM_FIELDS);
 		$input->setAllowEmptyFields(true);
 		$input->setRequired(false);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_FORM_FIELDS . '_info'));
-		$subinput = new ilTextInputGUI('', xvmpConf::F_FORM_FIELD_ID);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_FORM_FIELDS . '_info'));
+		$subinput = new ilTextInputGUI('', ConfigAR::F_FORM_FIELD_ID);
 		$input->addInput($subinput);
-		$subinput = new ilTextInputGUI('', xvmpConf::F_FORM_FIELD_TITLE);
+		$subinput = new ilTextInputGUI('', ConfigAR::F_FORM_FIELD_TITLE);
 		$input->addInput($subinput);
-		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_REQUIRED);
+		$subinput = new ilCheckboxInputGUI('', ConfigAR::F_FORM_FIELD_REQUIRED);
 		$input->addInput($subinput);
-		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_FILL_USER_DATA);
+		$subinput = new ilCheckboxInputGUI('', ConfigAR::F_FORM_FIELD_FILL_USER_DATA);
 		$input->addInput($subinput);
-		$subinput = new ilCheckboxInputGUI('', xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER);
+		$subinput = new ilCheckboxInputGUI('', ConfigAR::F_FORM_FIELD_SHOW_IN_PLAYER);
 		$input->addInput($subinput);
-		$subinput = new ilSelectInputGUI('', xvmpConf::F_FORM_FIELD_TYPE);
+		$subinput = new ilSelectInputGUI('', ConfigAR::F_FORM_FIELD_TYPE);
 		$subinput->setOptions(array(
-		    0 => $this->pl->confTxt('form_field_type_' . xvmpConf::F_FORM_FIELD_TYPE_TEXT),
-		    1 => $this->pl->confTxt('form_field_type_' . xvmpConf::F_FORM_FIELD_TYPE_CHECKBOX)
+		    0 => $this->pl->confTxt('form_field_type_' . ConfigAR::F_FORM_FIELD_TYPE_TEXT),
+		    1 => $this->pl->confTxt('form_field_type_' . ConfigAR::F_FORM_FIELD_TYPE_CHECKBOX)
         ));
 		$input->addInput($subinput);
 		$this->addItem($input);
 
 		// Filter Fields
-		$input = new srGenericMultiInputGUI($this->pl->confTxt(xvmpConf::F_FILTER_FIELDS), xvmpConf::F_FILTER_FIELDS);
+		$input = new srGenericMultiInputGUI($this->pl->confTxt(ConfigAR::F_FILTER_FIELDS), ConfigAR::F_FILTER_FIELDS);
 		$input->setRequired(false);
 		$input->setAllowEmptyFields(true);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_FILTER_FIELDS . '_info'));
-		$subinput = new ilTextInputGUI('', xvmpConf::F_FILTER_FIELD_ID);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_FILTER_FIELDS . '_info'));
+		$subinput = new ilTextInputGUI('', ConfigAR::F_FILTER_FIELD_ID);
 		$input->addInput($subinput);
-		$subinput = new ilTextInputGUI('', xvmpConf::F_FILTER_FIELD_TITLE);
+		$subinput = new ilTextInputGUI('', ConfigAR::F_FILTER_FIELD_TITLE);
 		$input->addInput($subinput);
 		$this->addItem($input);
 
 
 		// Media Permission
-		$input = new ilRadioGroupInputGUI($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS), xvmpConf::F_MEDIA_PERMISSIONS);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS . '_info'));
+		$input = new ilRadioGroupInputGUI($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS), ConfigAR::F_MEDIA_PERMISSIONS);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS . '_info'));
 
-		$radio_option = new ilRadioOption($this->lng->txt('no'), xvmpConf::MEDIA_PERMISSION_OFF);
+		$radio_option = new ilRadioOption($this->lng->txt('no'), ConfigAR::MEDIA_PERMISSION_OFF);
 		$input->addOption($radio_option);
 
-		$radio_option = new ilRadioOption($this->pl->txt('all'), xvmpConf::MEDIA_PERMISSION_ON);
+		$radio_option = new ilRadioOption($this->pl->txt('all'), ConfigAR::MEDIA_PERMISSION_ON);
 		$input->addOption($radio_option);
 
-		$radio_option = new ilRadioOption($this->pl->txt('selection'), xvmpConf::MEDIA_PERMISSION_SELECTION);
-		$sub_selection = new ilMultiSelectSearchInputGUI('', xvmpConf::F_MEDIA_PERMISSIONS_SELECTION);
+		$radio_option = new ilRadioOption($this->pl->txt('selection'), ConfigAR::MEDIA_PERMISSION_SELECTION);
+		$sub_selection = new ilMultiSelectSearchInputGUI('', ConfigAR::F_MEDIA_PERMISSIONS_SELECTION);
 		$options = $this->getMediaPermissionOptions();
 		$sub_selection->setOptions($options);
 		$sub_selection->setDisabled(empty($options));
 		$radio_option->addSubItem($sub_selection);
 
         // Media Permission Preselection
-        $sub_input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED), xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED);
-        $sub_input->setInfo($this->pl->confTxt(xvmpConf::F_MEDIA_PERMISSIONS_PRESELECTED . '_info'));
+        $sub_input = new ilCheckboxInputGUI($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS_PRESELECTED), ConfigAR::F_MEDIA_PERMISSIONS_PRESELECTED);
+        $sub_input->setInfo($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS_PRESELECTED . '_info'));
         $radio_option->addSubItem($sub_input);
 
         $input->addOption($radio_option);
@@ -200,8 +202,8 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 
 
         // Embedded Player
-		$input = new ilCheckboxInputGUI($this->pl->confTxt(xvmpConf::F_EMBED_PLAYER), xvmpConf::F_EMBED_PLAYER);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_EMBED_PLAYER . '_info'));
+		$input = new ilCheckboxInputGUI($this->pl->confTxt(ConfigAR::F_EMBED_PLAYER), ConfigAR::F_EMBED_PLAYER);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_EMBED_PLAYER . '_info'));
 		$this->addItem($input);
 
 
@@ -211,26 +213,26 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($header);
 
 		// Noticiation Subject
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL), xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_SUCCESSFULL . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_NOTIFICATION_SUBJECT_SUCCESSFULL), ConfigAR::F_NOTIFICATION_SUBJECT_SUCCESSFULL);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_NOTIFICATION_SUBJECT_SUCCESSFULL . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Noticiation Body
-		$input = new ilTextAreaInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL), xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_SUCCESSFULL . '_info'));
+		$input = new ilTextAreaInputGUI($this->pl->confTxt(ConfigAR::F_NOTIFICATION_BODY_SUCCESSFULL), ConfigAR::F_NOTIFICATION_BODY_SUCCESSFULL);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_NOTIFICATION_BODY_SUCCESSFULL . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Noticiation Subject
-		$input = new ilTextInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED), xvmpConf::F_NOTIFICATION_SUBJECT_FAILED);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_SUBJECT_FAILED . '_info'));
+		$input = new ilTextInputGUI($this->pl->confTxt(ConfigAR::F_NOTIFICATION_SUBJECT_FAILED), ConfigAR::F_NOTIFICATION_SUBJECT_FAILED);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_NOTIFICATION_SUBJECT_FAILED . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
 		// Noticiation Body
-		$input = new ilTextAreaInputGUI($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_FAILED), xvmpConf::F_NOTIFICATION_BODY_FAILED);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_NOTIFICATION_BODY_FAILED . '_info'));
+		$input = new ilTextAreaInputGUI($this->pl->confTxt(ConfigAR::F_NOTIFICATION_BODY_FAILED), ConfigAR::F_NOTIFICATION_BODY_FAILED);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_NOTIFICATION_BODY_FAILED . '_info'));
 		$input->setRequired(true);
 		$this->addItem($input);
 
@@ -242,28 +244,28 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$this->addItem($header);
 
 		// Video Cache TTL
-		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_VIDEOS), xvmpConf::F_CACHE_TTL_VIDEOS);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_VIDEOS . '_info'));
+		$input = new ilNumberInputGUI($this->pl->confTxt(ConfigAR::F_CACHE_TTL_VIDEOS), ConfigAR::F_CACHE_TTL_VIDEOS);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_CACHE_TTL_VIDEOS . '_info'));
 		$this->addItem($input);
 
 		// User Cache TTL
-		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_USERS), xvmpConf::F_CACHE_TTL_USERS);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_USERS . '_info'));
+		$input = new ilNumberInputGUI($this->pl->confTxt(ConfigAR::F_CACHE_TTL_USERS), ConfigAR::F_CACHE_TTL_USERS);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_CACHE_TTL_USERS . '_info'));
 		$this->addItem($input);
 
 		// Category Cache TTL
-		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CATEGORIES), xvmpConf::F_CACHE_TTL_CATEGORIES);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CATEGORIES . '_info'));
+		$input = new ilNumberInputGUI($this->pl->confTxt(ConfigAR::F_CACHE_TTL_CATEGORIES), ConfigAR::F_CACHE_TTL_CATEGORIES);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_CACHE_TTL_CATEGORIES . '_info'));
 		$this->addItem($input);
 
 		// Token Cache TTL
-		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_TOKEN), xvmpConf::F_CACHE_TTL_TOKEN);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_TOKEN . '_info'));
+		$input = new ilNumberInputGUI($this->pl->confTxt(ConfigAR::F_CACHE_TTL_TOKEN), ConfigAR::F_CACHE_TTL_TOKEN);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_CACHE_TTL_TOKEN . '_info'));
 		$this->addItem($input);
 
 		// Config TTL
-		$input = new ilNumberInputGUI($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CONFIG), xvmpConf::F_CACHE_TTL_CONFIG);
-		$input->setInfo($this->pl->confTxt(xvmpConf::F_CACHE_TTL_CONFIG . '_info'));
+		$input = new ilNumberInputGUI($this->pl->confTxt(ConfigAR::F_CACHE_TTL_CONFIG), ConfigAR::F_CACHE_TTL_CONFIG);
+		$input->setInfo($this->pl->confTxt(ConfigAR::F_CACHE_TTL_CONFIG . '_info'));
 		$this->addItem($input);
 
 
@@ -308,11 +310,11 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 	private function getValuesForItem($item, &$array) {
 		if (self::checkItem($item)) {
 			$key = rtrim($item->getPostVar(), '[]');
-			if ($key == xvmpConf::F_OBJECT_TITLE) {
+			if ($key == ConfigAR::F_OBJECT_TITLE) {
 				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
 				$value = $this->db->fetchObject($sql)->value;
 			} else {
-				$value = xvmpConf::getConfig($key);
+				$value = ConfigAR::getConfig($key);
 			}
 			$array[$key] = $value;
 			if (self::checkForSubItem($item)) {
@@ -340,7 +342,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 			$value = $this->getInput($key);
 
 			// exception: object title is stored in lng_data, not in config table
-			if ($key == xvmpConf::F_OBJECT_TITLE) {
+			if ($key == ConfigAR::F_OBJECT_TITLE) {
 				// obj
 				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
 				$existing = $this->db->fetchObject($sql);
@@ -396,15 +398,15 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 			}
 
 			// remove empty value for multi input gui
-			if ($key == xvmpConf::F_FORM_FIELDS || $key == xvmpConf::F_FILTER_FIELDS) {
+			if ($key == ConfigAR::F_FORM_FIELDS || $key == ConfigAR::F_FILTER_FIELDS) {
 				foreach ($value as $k => $v) {
-					if (!$v[xvmpConf::F_FORM_FIELD_ID] && !$v[xvmpConf::F_FILTER_FIELD_ID]) {
+					if (!$v[ConfigAR::F_FORM_FIELD_ID] && !$v[ConfigAR::F_FILTER_FIELD_ID]) {
 						unset($value[$k]);
 					}
 				}
 			}
 
-			xvmpConf::set($key, $value);
+			ConfigAR::set($key, $value);
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {
 					$this->saveValueForItem($subitem);
@@ -430,7 +432,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		foreach ($this->getItems() as $item) {
 			$this->saveValueForItem($item);
 		}
-		xvmpConf::set(xvmpConf::F_CONFIG_VERSION, xvmpConf::CONFIG_VERSION);
+		ConfigAR::set(ConfigAR::F_CONFIG_VERSION, ConfigAR::CONFIG_VERSION);
 
 		return true;
 	}

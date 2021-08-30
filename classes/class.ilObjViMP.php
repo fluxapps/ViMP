@@ -1,5 +1,11 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
+use srag\Plugins\ViMP\Database\SelectedMedia\SelectedMediaAR;
+use srag\Plugins\ViMP\Database\UserLPStatus\UserLPStatusAR;
+use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 /**
  * Class ilObjViMP
@@ -15,28 +21,28 @@ class ilObjViMP extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
 
 	protected function doCreate() {
-		$xvmpSettings = new xvmpSettings();
-		$xvmpSettings->setObjId($this->getId());
-		$xvmpSettings->create();
+		$SettingsAR = new SettingsAR();
+		$SettingsAR->setObjId($this->getId());
+		$SettingsAR->create();
 	}
 
 
 	protected function doDelete() {
-		xvmpSettings::find($this->getId())->delete();
-		foreach (xvmpSelectedMedia::where(array('obj_id' => $this->getId()))->get() as $selected_media) {
+		SettingsAR::find($this->getId())->delete();
+		foreach (SelectedMediaAR::where(array('obj_id' => $this->getId()))->get() as $selected_media) {
 			$selected_media->delete();
 		}
-		foreach (xvmpUserLPStatus::where(array('obj_id' => $this->getId()))->get() as $user_status) {
+		foreach (UserLPStatusAR::where(array('obj_id' => $this->getId()))->get() as $user_status) {
 			$user_status->delete();
 		}
-		foreach (xvmpEventLog::where(array('obj_id' => $this->getId()))->get() as $event_log) {
+		foreach (EventLogAR::where(array('obj_id' => $this->getId()))->get() as $event_log) {
 			$event_log->delete();
 		}
 	}
 
 
 	public function getLPCompleted() {
-		return xvmpUserLPStatus::where(array(
+		return UserLPStatusAR::where(array(
 			'status' => ilLPStatus::LP_STATUS_COMPLETED_NUM,
 			'obj_id' => $this->getId()
 		))->getArray(null, 'user_id');
@@ -48,7 +54,7 @@ class ilObjViMP extends ilObjectPlugin implements ilLPStatusPluginInterface {
 			'status' => '!=',
 			'obj_id' => '='
 		);
-		$other_than_not_attempted = xvmpUserLPStatus::where(array(
+		$other_than_not_attempted = UserLPStatusAR::where(array(
 			'status' => ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM,
 			'obj_id' => $this->getId()
 		), $operators)->getArray(null, 'user_id');
@@ -64,7 +70,7 @@ class ilObjViMP extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
 
 	public function getLPInProgress() {
-		return xvmpUserLPStatus::where(array(
+		return UserLPStatusAR::where(array(
 			'status' => ilLPStatus::LP_STATUS_IN_PROGRESS_NUM,
 			'obj_id' => $this->getId()
 		))->getArray(null, 'user_id');
@@ -72,7 +78,7 @@ class ilObjViMP extends ilObjectPlugin implements ilLPStatusPluginInterface {
 
 
 	public function getLPStatusForUser($a_user_id) {
-		$user_status = xvmpUserLPStatus::where(array(
+		$user_status = UserLPStatusAR::where(array(
 			'user_id' => $a_user_id,
 			'obj_id' => $this->getId()
 		))->first();

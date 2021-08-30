@@ -3,6 +3,7 @@
 
 use ILIAS\DI\Container;
 use srag\DIC\ViMP\DICTrait;
+use srag\Plugins\ViMP\Database\Settings\SettingsAR;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -245,13 +246,13 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 
 		// LAYOUT
 		$input = new ilRadioGroupInputGUI($this->pl->txt(xvmpSettingsFormGUI::F_LAYOUT), xvmpSettingsFormGUI::F_LAYOUT);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_LIST . '.png')),xvmpSettings::LAYOUT_TYPE_LIST);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_LIST . '.png')),SettingsAR::LAYOUT_TYPE_LIST);
 		$input->addOption($option);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_TILES . '.png')),xvmpSettings::LAYOUT_TYPE_TILES);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_TILES . '.png')),SettingsAR::LAYOUT_TYPE_TILES);
 		$input->addOption($option);
-		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(xvmpSettingsFormGUI::F_LAYOUT . '_' . xvmpSettings::LAYOUT_TYPE_PLAYER . '.png')),xvmpSettings::LAYOUT_TYPE_PLAYER);
+		$option = new ilRadioOption(ilUtil::img($this->pl->getImagePath(SettingsARFormGUI::F_LAYOUT . '_' . SettingsAR::LAYOUT_TYPE_PLAYER . '.png')),SettingsAR::LAYOUT_TYPE_PLAYER);
 		$input->addOption($option);
-		$input->setValue(xvmpSettings::LAYOUT_TYPE_LIST);
+		$input->setValue(SettingsAR::LAYOUT_TYPE_LIST);
 		$form->addItem($input);
 
 		return $form;
@@ -259,8 +260,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 
 	function afterSave(ilObject $newObj) {
 		if ($_POST[xvmpSettingsFormGUI::F_ONLINE] || $_POST[xvmpSettingsFormGUI::F_LAYOUT]) {
-			/** @var xvmpSettings $settings */
-			$settings = xvmpSettings::find($newObj->getId());
+			/** @var SettingsAR $settings */
+			$settings = SettingsAR::find($newObj->getId());
 			$settings->setIsOnline($_POST[xvmpSettingsFormGUI::F_ONLINE]);
 			$settings->setLayoutType($_POST[xvmpSettingsFormGUI::F_LAYOUT]);
 			$settings->update();
@@ -282,7 +283,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		$this->tpl->setTitle($this->object->getTitle());
 		$this->tpl->setDescription($this->object->getDescription());
 
-		if (!xvmpSettings::find($this->obj_id)->getIsOnline()) {
+		if (!SettingsAR::find($this->obj_id)->getIsOnline()) {
 			require_once('./Services/Object/classes/class.ilObjectListGUIFactory.php');
 			/**
 			 * @var $list_gui ilObjViMPListGUI
@@ -308,7 +309,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			$this->tabs_gui->addTab(self::TAB_VIDEOS, $this->pl->txt(self::TAB_VIDEOS), $this->ctrl->getLinkTargetByClass(xvmpOwnVideosGUI::class, xvmpOwnVideosGUI::CMD_STANDARD));
 		}
 
-		if (ilLearningProgressAccess::checkAccess($this->object->getRefId()) && xvmpSettings::find($this->obj_id)->getLPActive()) {
+		if (ilLearningProgressAccess::checkAccess($this->object->getRefId()) && SettingsAR::find($this->obj_id)->getLPActive()) {
 			$this->tabs_gui->addTab(self::TAB_LEARNING_PROGRESS, $this->lng->txt(self::TAB_LEARNING_PROGRESS), $this->ctrl->getLinkTargetByClass(xvmpLearningProgressGUI::class, xvmpLearningProgressGUI::CMD_STANDARD));
 
 		}

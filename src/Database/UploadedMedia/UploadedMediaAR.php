@@ -6,7 +6,7 @@ namespace srag\Plugins\ViMP\Database\UploadedMedia;
 use ActiveRecord;
 
 /**
- * Class xvmpUploadedMedia
+ * Class UploadedMediaAR
  *
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
