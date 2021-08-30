@@ -22,10 +22,9 @@ $xvmp_type_id = ilDBUpdateNewObjectType::addNewType('xvmp', 'Plugin ViMP');
 
 //Adding a new Permission rep_robj_xvmp_upload ("Upload")
 $offering_admin = ilDBUpdateNewObjectType::addCustomRBACOperation( //$a_id, $a_title, $a_class, $a_pos
-	'rep_robj_xvmp_perm_upload', 'upload', 'object', 2010);
-if($offering_admin)
-{
-	ilDBUpdateNewObjectType::addRBACOperation($xvmp_type_id, $offering_admin);
+    'rep_robj_xvmp_perm_upload', 'upload', 'object', 2010);
+if ($offering_admin) {
+    ilDBUpdateNewObjectType::addRBACOperation($xvmp_type_id, $offering_admin);
 }
 
 ?>
@@ -33,7 +32,7 @@ if($offering_admin)
 <?php
 $transfer_dir = ilUtil::getWebspaceDir() . '/vimp';
 if (!is_dir($transfer_dir)) {
-	ilUtil::makeDir($transfer_dir);
+    ilUtil::makeDir($transfer_dir);
 }
 ?>
 <#4>
@@ -41,33 +40,33 @@ if (!is_dir($transfer_dir)) {
 global $DIC;
 $query = $DIC->database()->query('select * from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
 if (!$query->numRows()) {
-	$DIC->database()->insert('lng_data', array(
-		'module' => array('text', 'rep_robj_xvmp'),
-		'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
-		'lang_key' => array('text', 'de'),
-		'value' => array('text', 'ViMP Video Container')
-	));
-	$DIC->database()->insert('lng_data', array(
-		'module' => array('text', 'rep_robj_xvmp'),
-		'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
-		'lang_key' => array('text', 'en'),
-		'value' => array('text', 'ViMP Video Container')
-	));
+    $DIC->database()->insert('lng_data', array(
+        'module' => array('text', 'rep_robj_xvmp'),
+        'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
+        'lang_key' => array('text', 'de'),
+        'value' => array('text', 'ViMP Video Container')
+    ));
+    $DIC->database()->insert('lng_data', array(
+        'module' => array('text', 'rep_robj_xvmp'),
+        'identifier' => array('text', 'rep_robj_xvmp_obj_xvmp'),
+        'lang_key' => array('text', 'en'),
+        'value' => array('text', 'ViMP Video Container')
+    ));
 }
 $query = $DIC->database()->query('select * from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_objs_xvmp"');
 if (!$query->numRows()) {
-	$DIC->database()->insert('lng_data', array(
-		'module' => array('text', 'rep_robj_xvmp'),
-		'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
-		'lang_key' => array('text', 'de'),
-		'value' => array('text', 'ViMP Video Containers')
-	));
-	$DIC->database()->insert('lng_data', array(
-		'module' => array('text', 'rep_robj_xvmp'),
-		'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
-		'lang_key' => array('text', 'en'),
-		'value' => array('text', 'ViMP Video Containers')
-	));
+    $DIC->database()->insert('lng_data', array(
+        'module' => array('text', 'rep_robj_xvmp'),
+        'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
+        'lang_key' => array('text', 'de'),
+        'value' => array('text', 'ViMP Video Containers')
+    ));
+    $DIC->database()->insert('lng_data', array(
+        'module' => array('text', 'rep_robj_xvmp'),
+        'identifier' => array('text', 'rep_robj_xvmp_objs_xvmp'),
+        'lang_key' => array('text', 'en'),
+        'value' => array('text', 'ViMP Video Containers')
+    ));
 }
 ?>
 <#5>
