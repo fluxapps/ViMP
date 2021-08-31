@@ -1,10 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Plugins\ViMP\UIComponents\Player\VideoPlayer;
-use srag\Plugins\ViMP\Content\MediumMetadataDTOBuilder;
 use srag\Plugins\ViMP\UIComponents\Renderer\PlayerInSiteRenderer;
-use srag\Plugins\ViMP\UIComponents\PlayerModal\PlayerContainerDTO;
 use ILIAS\DI\Container;
 use srag\Plugins\ViMP\Content\MediumMetadataParser;
 
@@ -72,7 +69,6 @@ class xvmpContentPlayerGUI
             if ($e->getCode() != 404) {
                 throw $e;
             }
-
         }
 
         $player_tpl = new ilTemplate('tpl.content_player.html', true, true, $this->pl->getDirectory());

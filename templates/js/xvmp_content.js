@@ -1,21 +1,21 @@
 var VimpContent = {
 
-	selected_media: [],
+  selected_media: [],
 
-	ajax_base_url: '',
+  ajax_base_url: '',
 
-	template: '',
+  template: '',
 
-	copy_link_template: '<input type=\'text\' id=\'xvmp_direct_link_tpl\' value=\'\' hidden>',
+  copy_link_template: '<input type=\'text\' id=\'xvmp_direct_link_tpl\' value=\'\' hidden>',
 
-	init: function () {
-		addEventListener('xvmp_copy_direct_link', function (event) {
-			this.copyDirectLink();
-		});
-		addEventListener('xvmp_copy_direct_link_with_time', function (event) {
-			this.copyDirectLinkWithTime();
-		});
-	},
+  init: function () {
+    addEventListener('xvmp_copy_direct_link', function (event) {
+      this.copyDirectLink();
+    });
+    addEventListener('xvmp_copy_direct_link_with_time', function (event) {
+      this.copyDirectLinkWithTime();
+    });
+  },
 
 	loadTiles: function () {
 		$(VimpContent.selected_media).each(function(key, mid) {
@@ -77,47 +77,61 @@ var VimpContent = {
 				VimpObserver.init(mid, response_object.time_ranges);
 			}
 
-			$modal.on('hidden', function() { // bootstrap 2.3.2
-				$video = $('video')[0];
-				if(typeof $video != 'undefined') {
-					$video.pause();
-				}
-				$iframe = $('iframe');
-				if (typeof $iframe != 'undefined') {
-					$iframe.attr('src', '');
-				}
-			});
+      $modal.on('hidden', function () { // bootstrap 2.3.2
+        $video = $('video')[0];
+        if (typeof $video != 'undefined') {
+          $video.pause();
+        }
+        $iframe = $('iframe');
+        if (typeof $iframe != 'undefined') {
+          $iframe.attr('src', '');
+        }
+      });
 
-			$modal.on('hidden.bs.modal', function() {  // bootstrap 3
-				$video = $('video')[0];
-				if(typeof $video != 'undefined') {
-					$video.pause();
-				}
-				$iframe = $('iframe');
-				if (typeof $iframe != 'undefined') {
-					$iframe.attr('src', '');
-				}
-			});
-		});
-	},
+      $modal.on('hidden.bs.modal', function () {  // bootstrap 3
+        $video = $('video')[0];
+        if (typeof $video != 'undefined') {
+          $video.pause();
+        }
+        $iframe = $('iframe');
+        if (typeof $iframe != 'undefined') {
+          $iframe.attr('src', '');
+        }
+      });
+    });
+  },
 
-	copyDirectLink: function(link_tpl) {
-		const el = document.createElement('textarea');
-		el.value = link_tpl.replace('_TIME_', '');
-		document.body.appendChild(el);
-		el.select();
-		document.execCommand('copy');
-		document.body.removeChild(el);
-	},
+  copyDirectLink: function (link_tpl) {
+    this.copyToClipboard(link_tpl);
+  },
 
-	copyDirectLinkWithTime: function(link_tpl) {
-		const el = document.createElement('textarea');
-		el.value = link_tpl.replace('_TIME_', '_' + Math.floor(player.currentTime()));
-		document.body.appendChild(el);
-		el.select();
-		document.execCommand('copy');
-		document.body.removeChild(el);
-	}
+  copyDirectLinkWithTime: function (link_tpl) {
+    this.copyToClipboard(link_tpl.replace('_0.', '_' + Math.floor(player.currentTime()) + '.'));
+  },
+
+  copyToClipboard: function (textToCopy) {
+    // navigator clipboard api needs a secure context (https)
+    if (navigator.clipboard && window.isSecureContext) {
+      // navigator clipboard api method'
+      return navigator.clipboard.writeText(textToCopy);
+    } else {
+      // text area method
+      let textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+      // make the textarea out of viewport
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise((res, rej) => {
+        // here the magic happens
+        document.execCommand('copy') ? res() : rej();
+        textArea.remove();
+      });
+    }
+  }
 
 }
 

@@ -196,7 +196,7 @@ form_header_notification#:#Benachrichtigung
 thumbnail#:#Miniaturbild
 subtitles_checkbox#:#Untertitel
 subtitles_remove_checkbox#:#Existierende Dateien löschen
-subtitles#:#Sprachdateien
+subtitles#:#Untertitel
 direct_link_dropdown#:#Link zum Video
 btn_copy_link#:#Link kopieren
 btn_copy_link_w_time#:#Link mit Zeitangabe kopieren

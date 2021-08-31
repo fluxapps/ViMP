@@ -1,6 +1,9 @@
 .video-js .vjs-current-time {
 	display: block;
 }
+.video-js .vjs-control-bar {
+	display: flex !important;
+}
 div.xvmp_embed_wrapper iframe {
 	width: 100%;
 	height: 100%;

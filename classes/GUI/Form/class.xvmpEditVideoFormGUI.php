@@ -61,7 +61,10 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
 	public function fillForm() {
 		$array = $this->medium;
 		$array[xvmpMedium::F_CATEGORIES] = array_keys($this->medium[xvmpMedium::F_CATEGORIES]);
-        $array[xvmpMedium::F_SUBTITLES] = [];
+        $subtitles = $this->medium[xvmpMedium::F_SUBTITLES] ?? [];
+        foreach ($subtitles as $lang_key => $subtitle_url) {
+            $array[xvmpMedium::F_SUBTITLES . '_' . $lang_key] = substr($subtitle_url, strrpos($subtitle_url, '/') + 1);
+        }
 		$this->setValuesByArray($array);
 
 		// fill thumbnail
