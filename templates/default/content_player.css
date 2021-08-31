@@ -1,6 +1,7 @@
 div#xvmp_video_infos .ilPermalinkContainer {
 	width: inherit;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 div#xvmp_video_container {
@@ -198,10 +199,6 @@ div.xvmp_image_container img.xvmp_play_icon {
 
 .waiting {
 	background: url('../images/spinner.gif') no-repeat center center !important;
-}
-
-.xvmp_player_toolbar {
-	width: 100%;
 }
 
 .xvmp_player_toolbar button, .xvmp_player_toolbar .dropdown {
