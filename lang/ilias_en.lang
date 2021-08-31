@@ -194,7 +194,7 @@ form_header_additional_options#:#Additional Options
 form_header_notification#:#Notification
 thumbnail#:#Thumbnail
 subtitles_checkbox#:#Subtitles
-subtitles#:#Language files
+subtitles#:#Subtitles
 subtitles_remove_checkbox#:#Delete existing files
 direct_link_dropdown#:#Video Link
 btn_copy_link#:#Copy Link

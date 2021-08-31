@@ -48,7 +48,9 @@ class xvmpUploadService
     {
         $dir = '/vimp/' . $tmp_id;
         $this->createDirIfNotExists($dir);
-        $this->file_upload->process();
+        if (!$this->file_upload->hasBeenProcessed()) {
+            $this->file_upload->process();
+        }
         $uploadResult = $this->file_upload->getResults()[$tmp_name];
         $this->file_upload->moveOneFileTo(
             $uploadResult,
