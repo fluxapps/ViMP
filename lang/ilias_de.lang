@@ -24,6 +24,7 @@ conf_media_permissions#:#Medienberechtigungen nutzen
 conf_media_permissions_info#:#Definiert, ob und welche Medienberechtigungen beim Upload und beim Editieren von Videos gesetzt werden dürfen.
 conf_media_permissions_preselected#:#Vorauswahl
 conf_media_permissions_preselected_info#:#Angegebene Medienberechtigungen im Upload-Dialog vorauswählen.
+conf_media_permissions_0_info#:#Achtung: Kann zu Fehler führen, falls in ViMP keine Standardmedienrechte aktiv sind (siehe ViMP Backend > Konfiguration > Medien > Medienrecht)
 conf_mapping_priority#:#Priorität Mapping
 conf_mapping_priority_info#:#Definiert, auf welche Art zuerst nach dem Benutzer in ViMP gesucht wird. Wird dabei kein Benutzer gefunden, wird nach dem anderen Feld gesucht. Wird erneut nichts gefunden, wird ein entsprechender Benutzer erstellt.
 conf_mapping_priority_0#:#Email
@@ -196,7 +197,7 @@ form_header_notification#:#Benachrichtigung
 thumbnail#:#Miniaturbild
 subtitles_checkbox#:#Untertitel
 subtitles_remove_checkbox#:#Existierende Dateien löschen
-subtitles#:#Sprachdateien
+subtitles#:#Untertitel
 direct_link_dropdown#:#Link zum Video
 btn_copy_link#:#Link kopieren
 btn_copy_link_w_time#:#Link mit Zeitangabe kopieren

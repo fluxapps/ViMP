@@ -31,10 +31,6 @@ h4.modal-title {
 	background: url('../images/spinner.gif') no-repeat center center !important;
 }
 
-.xvmp_player_toolbar {
-	width: 100%;
-}
-
 .xvmp_player_toolbar button, .xvmp_player_toolbar .dropdown {
 	display: inline-block;
 }
