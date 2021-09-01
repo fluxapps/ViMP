@@ -2,14 +2,20 @@
 
 namespace srag\Plugins\ViMP\Database\Settings;
 
-use ILIAS\DI\Container;
 
 class SettingsRepository
 {
     /**
-     * @var Container
+     * @var self
      */
-    protected $dic;
+    protected static $instance = null;
+
+    public static function getInstance(): self {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
 
 }

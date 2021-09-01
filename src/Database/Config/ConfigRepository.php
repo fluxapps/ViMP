@@ -7,8 +7,19 @@ use ILIAS\DI\Container;
 
 class ConfigRepository
 {
+    /**
+     * @var self
+     */
+    protected static $instance = null;
 
-    public static function getEmbedPlayerConfig()
+    public static function getInstance(): self {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public static function embedPlayer()
     {
         return ConfigAR::getConfig(ConfigAR::F_EMBED_PLAYER);
     }
@@ -48,10 +59,9 @@ class ConfigRepository
         return ConfigAR::getConfig(ConfigAR::F_ALLOW_PUBLIC_UPLOAD);
     }
 
-    public static function cacheActivated()
-    {
-        return ConfigAR::getConfig(ConfigAR::F_ACTIVATE_CACHE); // ToDo: Does not exist!
 
+    public static function isCacheEnabled() {
+    //    return ConfigAR::getConfig(F_ACTIVATE_CACHE); ToDo: Does not exist
     }
 
 }

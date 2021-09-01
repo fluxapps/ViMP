@@ -53,7 +53,7 @@ class SelectedMediaAR extends ActiveRecord {
 	 */
 	protected $mid;
 	/**
-	 * @var int
+	 * @var bool
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        integer
@@ -62,7 +62,7 @@ class SelectedMediaAR extends ActiveRecord {
 	protected $visible = 1;
 
 	/**
-	 * @var int
+	 * @var bool
 	 *
 	 * @db_has_field        true
 	 * @db_fieldtype        integer
@@ -96,36 +96,6 @@ class SelectedMediaAR extends ActiveRecord {
 	 */
 	public static function isSelected($mid, $obj_id) {
 		return self::where(array('mid' => $mid, 'obj_id' => $obj_id))->hasSets();
-	}
-
-
-	/**
-	 * @param $mid
-	 * @param $obj_id
-	 *
-	 * @return bool
-	 */
-	public static function addVideo($mid, $obj_id, $visible = true) {
-		$set = self::where(array('mid' => $mid, 'obj_id' => $obj_id))->first();
-		if ($set) {
-			return false; // already added
-		}
-
-		$set = new self();
-		$set->setMid($mid);
-		$set->setObjId($obj_id);
-		$set->setVisible($visible);
-		$sort = self::where(array('obj_id' => $obj_id))->count() + 1;
-		$set->setSort($sort * 10);
-		$set->create();
-
-		// this will add the video to the cache
-		$video = xvmpMedium::getObjectAsArray($mid);
-
-		// log event
-		EventLogAR::logEvent(EventLogAR::ACTION_ADD, $obj_id, $video);
-
-		return true;
 	}
 
 	/**
@@ -320,5 +290,30 @@ class SelectedMediaAR extends ActiveRecord {
 		$this->lp_req_percentage = $lp_req_percentage;
 	}
 
+    public function sleep($field_name) {
+
+        $field_value = $this->{$field_name};
+
+        switch ($field_name) {
+            case "lp_is_required":
+            case "visible":
+                return ($field_value ? 1 : 0);
+            default:
+                return null;
+        }
+
+    }
+
+    public function wakeUp($field_name, $field_value)
+    {
+        switch($field_name) {
+            case "lp_is_required":
+            case "visible":
+                return boolval($field_value);
+            default:
+                return null;
+        }
+
+    }
 
 }

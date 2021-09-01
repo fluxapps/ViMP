@@ -1,6 +1,6 @@
 <?php
 
-use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Service\Utils\ViMPTrait;
 
 /**
  * Class xvmpCache
@@ -9,6 +9,8 @@ use srag\Plugins\ViMP\Database\Config\ConfigAR;
  * @version 1.0.0
  */
 class xvmpCache extends ilGlobalCache {
+
+	use ViMPTrait;
 
 	const COMP_PREFIX = 'xvmp';
 	/**
@@ -88,7 +90,7 @@ class xvmpCache extends ilGlobalCache {
 		return true;
 		try
 		{
-			return (int)ConfigAR::getConfig(ConfigAR::F_ACTIVATE_CACHE); //ToDo: Constant does not exist
+			return (int)self::viMP()->config()->isCacheEnabled();
 		}
 		catch (Exception $exceptione) //catch exception while dbupdate is running. (xlvoConf is not ready at that time).
 		{

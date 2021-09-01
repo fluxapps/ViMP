@@ -138,9 +138,9 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 		$checked = $_GET['checked'];
 		$visible = $_GET[SelectedMediaAR::F_VISIBLE];
 		if ($checked) {
-			SelectedMediaAR::addVideo($mid, $this->getObjId(), $visible);
+            $this->db_service->addVideoToSelected($this->getObjId(), $mid, $visible);
 		} else {
-			SelectedMediaAR::removeVideo($mid, $this->getObjId());
+            $this->db_service->removeVideoFromSelected($this->getObjId(), $mid);
 		}
 		echo "{\"success\": true}";
 		exit;
@@ -152,9 +152,14 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	public function addVideo() {
 		$mid = $_GET[xvmpMedium::F_MID];
 		$visible = $_GET[SelectedMediaAR::F_VISIBLE];
-		SelectedMediaAR::addVideo($mid, $this->getObjId(), $visible);
-		echo "{\"success\": true}";
-		exit;
+        try {
+            $this->db_service->addVideoToSelected($this->getObjId(), $mid, $visible);
+            echo "{\"success\": true}";
+            exit;
+        } catch (Exception $e) {
+            //ToDo
+        }
+
 	}
 
 	/**
@@ -162,9 +167,13 @@ abstract class xvmpVideosGUI extends xvmpGUI {
 	 */
 	public function removeVideo() {
 		$mid = $_GET[xvmpMedium::F_MID];
-		SelectedMediaAR::removeVideo($mid, $this->getObjId());
-		echo "{\"success\": true}";
-		exit;
+		try {
+            $this->db_service->removeVideoFromSelected($this->getObjId(), $mid);
+            echo "{\"success\": true}";
+            exit;
+        } catch (Exception $e) {
+            // ToDo
+        }
 	}
 
 

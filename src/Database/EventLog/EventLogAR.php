@@ -267,6 +267,10 @@ class EventLogAR extends ActiveRecord {
 		parent::create();
 	}
 
+    public static function getFields() {
+        return self::$logged_media_fields;
+    }
+
 
 	public function sleep($field_name) {
 		switch ($field_name) {
