@@ -24,6 +24,7 @@ conf_media_permissions#:#Use Media Permissions
 conf_media_permissions_info#:#Defines if and which media permissions can be set when uploading or editing a video.
 conf_media_permissions_preselected#:#Preselection
 conf_media_permissions_preselected_info#:#Preselect these permissions in the upload dialog.
+conf_media_permissions_0_info#:#Warning: can lead to errors if no default media permissions are selected in ViMP (see ViMP Backend > Configuration > Media > Media Permission)
 conf_mapping_priority#:#Mapping Priority
 conf_mapping_priority_info#:#Defines which way the plugin tries to find a user first. If no user is found this way, the plugin will search for the other field. If again nothing is found, a user will be created.
 conf_mapping_priority_0#:#Email
@@ -195,7 +196,7 @@ form_header_additional_options#:#Additional Options
 form_header_notification#:#Notification
 thumbnail#:#Thumbnail
 subtitles_checkbox#:#Subtitles
-subtitles#:#Language files
+subtitles#:#Subtitles
 subtitles_remove_checkbox#:#Delete existing files
 direct_link_dropdown#:#Video Link
 btn_copy_link#:#Copy Link

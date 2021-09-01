@@ -13,7 +13,6 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 {
 
     const F_SOURCE_URL = 'source_url';
-    const F_SUBTITLES_CHECKBOX = 'subtitles_checkbox';
     const F_SUBTITLES_REMOVE_CHECKBOX = 'subtitles_remove_checkbox';
     const F_SUBTITLE_LANGUAGE = 'subtitle_language';
     const F_SUBTITLE_FILE = 'subtitle_file';
@@ -59,9 +58,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
      */
     protected function afterStoreVideo(int $mid)
     {
-        if ($this->getInput(self::F_SUBTITLES_CHECKBOX)) {
-            $this->processSubtitles($mid);
-        }
+        $this->processSubtitles($mid);
     }
 
     /**
@@ -73,21 +70,25 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function processSubtitles(int $mid)
     {
         $tmp_id = filter_input(INPUT_GET, 'tmp_id', FILTER_SANITIZE_STRING);
-        $tmp_names = $_FILES[xvmpMedium::F_SUBTITLES]['tmp_name'] ?? [];
-        if ($this->getInput(self::F_SUBTITLES_REMOVE_CHECKBOX)) {
-            try {
-                xvmpRequest::removeSubtitles($mid);
-            } catch (xvmpException $e) {
-                // vimp throws an error if no subtitles are present
-                xvmpCurlLog::getInstance()->writeWarning('error removing subtitles: ' . $e->getMessage());
+        foreach (self::$subtitle_languages as $lang_key) {
+            $input = $this->getInput(xvmpMedium::F_SUBTITLES . '_' . $lang_key);
+            if (is_array($input) && $input['error'] === 0) {
+                if (isset($this->medium) && isset($this->medium[xvmpMedium::F_SUBTITLES][$lang_key])) {
+                    // always remove subtitle first, because vimp doesn't correctly replace it
+                    $this->removeSubtitle($lang_key);
+                }
+                $this->uploadSubtitle($mid, $lang_key, $input['tmp_name'], $tmp_id);
+            } elseif (filter_input(INPUT_POST, xvmpMedium::F_SUBTITLES . '_' . $lang_key . '_delete') == 1) {
+                $this->removeSubtitle($lang_key);
             }
         }
-        foreach ($tmp_names as $id => $name_arr) {
-            $lang_code = $this->getInput(xvmpMedium::F_SUBTITLES)[$id][self::F_SUBTITLE_LANGUAGE];
-            if ($name_arr[self::F_SUBTITLE_FILE]) {
-                $this->uploadSubtitle($mid, $lang_code, $name_arr[self::F_SUBTITLE_FILE], $tmp_id);
-            }
-        }
+    }
+
+    protected function removeSubtitle($lang_key)
+    {
+        $subtitle_url = $this->medium[xvmpMedium::F_SUBTITLES][$lang_key];
+        $subtitle_filename = substr($subtitle_url, strrpos($subtitle_url, '/') + 1);
+        xvmpRequest::removeSubtitle($this->medium[xvmpMedium::F_MID], $lang_key, $subtitle_filename);
     }
 
     /**
@@ -147,6 +148,10 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
             case xvmpMedium::F_PUBLISHED:
                 return xvmpMedium::$published_id_mapping[$value];
             default:
+                if (strpos($post_var, xvmpMedium::F_SUBTITLES) === 0) {
+                    // subtitles are processed separately (different api endpoint)
+                    return null;
+                }
                 return is_array($value) ? implode(',', $value) : $value;
         }
     }
@@ -184,8 +189,6 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
      */
     public function saveForm() : bool
     {
-        unset($_FILES['empty']);
-        unset($_FILES[self::F_SUBTITLE_FILE]);
         if (!$this->checkInput()) {
             return false;
         }
@@ -418,27 +421,12 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 
     protected function addSubtitleInput()
     {
-        $checkbox = new ilCheckboxInputGUI($this->pl->txt(self::F_SUBTITLES_CHECKBOX), self::F_SUBTITLES_CHECKBOX);
-
-        $checkbox_remove = new ilCheckboxInputGUI($this->pl->txt(self::F_SUBTITLES_REMOVE_CHECKBOX), self::F_SUBTITLES_REMOVE_CHECKBOX);
-        $checkbox->addSubItem($checkbox_remove);
-
-        $input = new srGenericMultiInputGUI($this->pl->txt(xvmpMedium::F_SUBTITLES), xvmpMedium::F_SUBTITLES);
-        $input->setAllowEmptyFields(true);
-        $input->setLimit(count(self::$subtitle_languages));
-        $input->addInput($this->getLanguageSelectInput());
-        $input->addInput($this->getSubtitleFileInput());
-        $checkbox->addSubItem($input);
-
-        $this->addItem($checkbox);
-    }
-
-    protected function getLanguageSelectInput() : ilSelectInputGUI
-    {
-        $lang_select = new ilSelectInputGUI('', self::F_SUBTITLE_LANGUAGE);
-        $lang_select->setOptions($this->getLanguageOptions());
-        $lang_select->setRequired(true);
-        return $lang_select;
+        foreach ($this->getLanguageOptions() as $lang_key => $text) {
+            $input = new ilFileInputGUI($this->pl->txt(xvmpMedium::F_SUBTITLES) . ' ' . $text,
+                xvmpMedium::F_SUBTITLES . '_' . $lang_key);
+            $input->setALlowDeletion(isset($this->medium[xvmpMedium::F_SUBTITLES][$lang_key]));
+            $this->addItem($input);
+        }
     }
 
     protected function getLanguageOptions() : array
@@ -449,14 +437,6 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
             $options[$lang_code] = $this->dic->language()->txt('meta_l_' . $lang_code);
         }
         return $options;
-    }
-
-    protected function getSubtitleFileInput() : ilFileInputGUI
-    {
-        $input = new ilFileInputGUI('', self::F_SUBTITLE_FILE);
-//        $input->setRequired(true);
-        $input->setSuffixes(['vtt']);
-        return $input;
     }
 
     /**

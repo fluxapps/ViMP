@@ -118,7 +118,7 @@ Bitte versuchen Sie es erneut oder kontaktieren Sie einen Administrator.');
 $form_fields = [];
 if (!empty(\srag\Plugins\ViMP\Database\Config\ConfigAR::getConfig(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_FORM_FIELDS))) {
     foreach (\srag\Plugins\ViMP\Database\Config\ConfigAR::getConfig(\srag\Plugins\ViMP\Database\Config\ConfigAR::F_FORM_FIELDS) as $field) {
-        $field[\srag\Plugins\ViMP\Database\Config\ConfigAR::F_FORM_FIELD_SHOW_IN_PLAYER] = 1;
+        $field[xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER] = 1;
         $form_fields[] = $field;
     }
     if (!empty($form_fields)) {

@@ -179,10 +179,11 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		$input = new ilRadioGroupInputGUI($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS), ConfigAR::F_MEDIA_PERMISSIONS);
 		$input->setInfo($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS . '_info'));
 
-		$radio_option = new ilRadioOption($this->lng->txt('no'), ConfigAR::MEDIA_PERMISSION_OFF);
-		$input->addOption($radio_option);
+        $radio_option = new ilRadioOption($this->lng->txt('no'), ConfigAR::MEDIA_PERMISSION_OFF);
+        $radio_option->setInfo($this->pl->confTxt(ConfigAR::F_MEDIA_PERMISSIONS . '_' . ConfigAR::MEDIA_PERMISSION_OFF . '_info'));
+        $input->addOption($radio_option);
 
-		$radio_option = new ilRadioOption($this->pl->txt('all'), ConfigAR::MEDIA_PERMISSION_ON);
+        $radio_option = new ilRadioOption($this->pl->txt('all'), ConfigAR::MEDIA_PERMISSION_ON);
 		$input->addOption($radio_option);
 
 		$radio_option = new ilRadioOption($this->pl->txt('selection'), ConfigAR::MEDIA_PERMISSION_SELECTION);
