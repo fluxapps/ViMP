@@ -1,7 +1,7 @@
 <?php
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
-use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+use srag\Plugins\ViMP\Service\ViMPDBService;
 
 /**
  * Class xvmpEditVideoFormGUI
@@ -19,8 +19,13 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
      */
 	protected $medium;
 
+    /** @var ViMPDBService */
+    protected $db_service;
+
 
 	public function __construct($parent_gui, $mid) {
+        global $DIC;
+        $this->db_service = new ViMPDBService($DIC);
 		// load the video from the api, not from the cache
 		xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $mid);
 		$this->medium = xvmpMedium::getObjectAsArray($mid);
@@ -84,9 +89,7 @@ class xvmpEditVideoFormGUI extends xvmpVideoFormGUI {
 		if (parent::saveForm()) {
             // changelog entry
             xvmpCacheFactory::getInstance()->delete(xvmpMedium::class . '-' . $this->medium['mid']);
-            $new = xvmpMedium::getObjectAsArray($this->medium['mid']);
-
-            EventlogAR::logEvent(EventlogAR::ACTION_EDIT, $this->parent_gui->getObjId(), $new, $this->medium);
+            $this->db_service->logUpdate($this->parent_gui->getObjId(), $this->medium);
             return true;
         }
 

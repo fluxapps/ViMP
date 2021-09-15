@@ -2,6 +2,7 @@
 /* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 use srag\Plugins\ViMP\Database\Config\ConfigAR;
+use srag\Plugins\ViMP\Service\Utils\ViMPTrait;
 
 /**
  * Class xvmpConfFormGUI
@@ -10,6 +11,7 @@ use srag\Plugins\ViMP\Database\Config\ConfigAR;
  */
 class xvmpConfFormGUI extends xvmpFormGUI {
 
+    use ViMPTrait;
 	/**
 	 * @var ilViMPConfigGUI
 	 */
@@ -315,7 +317,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 				$sql = $this->db->query('select value from lng_data where module = "rep_robj_xvmp" and identifier = "rep_robj_xvmp_obj_xvmp"');
 				$value = $this->db->fetchObject($sql)->value;
 			} else {
-				$value = ConfigAR::getConfig($key);
+				$value = self::viMP()->config()->getValueByKey($key);
 			}
 			$array[$key] = $value;
 			if (self::checkForSubItem($item)) {
@@ -407,7 +409,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 				}
 			}
 
-			ConfigAR::set($key, $value);
+			self::viMP()->config()->setValue($key, $value);
 			if (self::checkForSubItem($item)) {
 				foreach ($item->getSubItems() as $subitem) {
 					$this->saveValueForItem($subitem);
@@ -433,7 +435,7 @@ class xvmpConfFormGUI extends xvmpFormGUI {
 		foreach ($this->getItems() as $item) {
 			$this->saveValueForItem($item);
 		}
-		ConfigAR::set(ConfigAR::F_CONFIG_VERSION, ConfigAR::CONFIG_VERSION);
+		self::viMP()->config()->setValue(ConfigAR::F_CONFIG_VERSION, ConfigAR::CONFIG_VERSION);
 
 		return true;
 	}

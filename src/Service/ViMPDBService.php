@@ -48,6 +48,9 @@ class ViMPDBService
 
     }
 
+
+    /* --- SelectedMedia --- */
+
     /**
      * called to fetch several SelectedMedium objects from the database
      * @param array $params
@@ -75,28 +78,26 @@ class ViMPDBService
         return $this->buildSelectedMediumFromAR($selected_medium_ar);
     }
 
-    public function addVideoToSelected(int $obj_id, int $mid, bool $visible)
+    public function addToSelectedMedia(int $obj_id, int $mid, bool $visible)
     {
         try {
             $this->selected_media->addVideo($mid, $obj_id, $visible);
-            $video = xvmpMedium::getObjectAsArray($mid);
-            $this->event_log->logAdd($obj_id, $video);
+            $medium = xvmpMedium::getObjectAsArray($mid);
+            $this->logAddEntry($obj_id, $medium);
         } catch (Exception $e) {
             // ToDo
         }
 
     }
 
-    public function removeVideoFromSelected(int $obj_id, int $mid) {
+    public function removeFromSelectedMedia(int $obj_id, int $mid) {
         try {
             $this->selected_media->removeVideo($obj_id, $mid);
-            $video = xvmpMedium::getObjectAsArray($mid);
-            $this->event_log->logRemove($obj_id, $video);
+            $medium = xvmpMedium::getObjectAsArray($mid);
+            $this->logRemoveEvent($obj_id, $medium);
         } catch (Exception $e) {
             //ToDo
         }
-
-
     }
 
     protected function buildSelectedMediumFromAR(SelectedMediaAR $ar) : SelectedMedium
@@ -110,6 +111,30 @@ class ViMPDBService
         $sort = $ar->getSort();
 
         return new SelectedMedium($id, $obj_id, $mid, $visible, $lp_is_required, $lp_req_percentage, $sort);
+    }
+
+
+    /* --- EventLog --- */
+    public function logAddEntry(int $obj_id, array $medium) {
+        $this->event_log->addEntry($obj_id, $medium, $this->event_log::ACTION_ADD);
+    }
+
+    public function logUpdate(int $obj_id, array $medium) {
+        try {
+            $data = xvmpMedium::getObjectAsArray($medium['mid']);
+            $this->event_log->logEdit($obj_id, $data, $medium);
+        } catch (Exception $e) {
+            //ToDo
+        }
+    }
+
+    public function logRemoveEvent(int $obj_id, array $medium) {
+        $this->event_log->addEntry($obj_id, $medium, $this->event_log::ACTION_REMOVE);
+    }
+
+    public function logUpload(int $obj_id, array $data) {
+        $video = xvmpMedium::getObjectAsArray($data[xvmpMedium::F_MID]);
+        $this->event_log->addEntry($obj_id, $video, $this->event_log::ACTION_UPLOAD);
     }
 
 }

@@ -44,6 +44,10 @@ class ConfigRepository
         return ConfigAR::getConfig(ConfigAR::F_API_URL);
     }
 
+    public static function getFormFields() {
+        return ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS);
+    }
+
     public static function getCacheTokenConfig()
     {
         return ConfigAR::getConfig(ConfigAR::F_CACHE_TTL_TOKEN);
@@ -59,6 +63,14 @@ class ConfigRepository
         return ConfigAR::getConfig(ConfigAR::F_ALLOW_PUBLIC_UPLOAD);
     }
 
+    public static function getValueByKey($key) {
+        return ConfigAR::getConfig($key);
+    }
+
+    public static function setValue($key, $value) {
+        ConfigAR::set($key, $value);
+
+    }
 
     public static function isCacheEnabled() {
     //    return ConfigAR::getConfig(F_ACTIVATE_CACHE); ToDo: Does not exist

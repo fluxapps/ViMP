@@ -3,6 +3,8 @@
 
 use srag\Plugins\ViMP\Database\Config\ConfigAR;
 use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
+use srag\Plugins\ViMP\Service\Utils\ViMPTrait;
+use srag\Plugins\ViMP\Service\ViMPDBService;
 
 /**
  * Class xvmpUploadVideoFormGUI
@@ -10,6 +12,8 @@ use srag\Plugins\ViMP\Database\EventLog\EventLogAR;
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
+
+    use ViMPTrait;
 
 	const F_ADD_AUTOMATICALLY = 'add_automatically';
 	const F_NOTIFICATION = 'notification';
@@ -30,6 +34,9 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 	 * @var ilObjUser
 	 */
 	protected $user;
+
+    /** @var  */
+    protected $db_service;
 
 
 	/**
@@ -95,7 +102,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 
     protected function addCustomInputs()
     {
-        foreach (ConfigAR::getConfig(ConfigAR::F_FORM_FIELDS) as $field) {
+        foreach (self::viMP()->config()->getFormFields() as $field) {
             if (!$field[ConfigAR::F_FORM_FIELD_ID]) {
                 continue;
             }
@@ -117,8 +124,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
         if (parent::saveForm()) {
             // the object has to be loaded again, since the response from "upload" has another format for the categories
             // also, this adds it to the cache
-            $video = xvmpMedium::getObjectAsArray($this->data[xvmpMedium::F_MID]);
-            EventlogAR::logEvent(EventlogAR::ACTION_UPLOAD, $this->parent_gui->getObjId(), $video);
+            $this->db_service->logUpload($this->data);
             return true;
         }
 
