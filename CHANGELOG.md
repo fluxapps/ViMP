@@ -8,6 +8,7 @@
 - Feature: replace video (file upload in edit form)
 - Feature: upload image for repository tile view
 - Feature: outlined logo for repository tile view (ILIAS 6+ only)
+- Fix: do not show repository preview when tile view is configured
 
 ## [1.5.3]
 - Fix: catch exception when loading chapters fails (fix for internal player)
