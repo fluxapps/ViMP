@@ -54,9 +54,17 @@ class xvmpFileInputGUI extends ilFileInputGUI
                 $f_tpl->setCurrentBlock('prop_file_propval');
                 /** BEGIN PATCH */
 //                $f_tpl->setVariable('FILE_VAL', $this->getValue());
-                $value = $this->download_url ?
-                    '<a href="' . $this->download_url . '" target="blank" download>' . $this->getValue() . '<a>' :
-                    $this->getValue();
+                try {
+                    $value = $this->download_url ?
+                        '<a href="data:text/vtt;base64,'
+                        . base64_encode(xvmpRequest::get($this->download_url)->getResponseBody())
+                        . '" target="blank" download="' . $this->getValue() . '">' . $this->getValue() . '<a>' :
+                        $this->getValue();
+                } catch (xvmpException $e) {
+                    xvmpCurlLog::getInstance()->writeWarning('could not download subtitle file from '
+                        . $this->download_url . ', message: ' . $e->getMessage());
+                    $value = $this->getValue();
+                }
                 $f_tpl->setVariable('FILE_VAL', $value);
                 /** END PATCH */
                 $f_tpl->parseCurrentBlock();
