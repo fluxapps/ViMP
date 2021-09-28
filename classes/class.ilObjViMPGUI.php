@@ -89,7 +89,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
                     if (self::version()->is6()) {
                         $this->tpl->printToStdout();
                     } else {
-					$this->tpl->show();
+					    $this->tpl->show();
 					}
 					break;
 				case 'xvmpsearchvideosgui':

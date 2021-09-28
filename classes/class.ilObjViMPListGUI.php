@@ -92,7 +92,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 			);
 		}
 
-		if (($count = $settings->getRepositoryPreview()) && ($preview = $this->getVideoPreview($count))) {
+		if (($count = $settings->getRepositoryPreview()) && ($preview = $this->getVideoPreview($count)) && !$this->isTileView()) {
 			$props[] = array(
 				'alert' => true,
 				'newline' => true,
@@ -136,7 +136,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
         string $type,
         string $title,
         string $description
-    ) : ?\ILIAS\UI\Component\Card\Card {
+    )/* : ?\ILIAS\UI\Component\Card\Card*/ {
 	    /** @var RepositoryObject $card */
         $card = parent::getAsCard($ref_id, $obj_id, $type, $title, $description);
         return $card->withObjectIcon(
@@ -145,6 +145,13 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
                 $this->plugin->txt('xvmp_obj')
             )
         );
+    }
+
+    private function isTileView() : bool
+    {
+        global $DIC;
+        $parent_ref_id = $DIC->repositoryTree()->getParentId($this->ref_id);
+        return $parent_ref_id && ilContainer::_lookupContainerSetting(ilContainer::_lookupObjectId($parent_ref_id), "list_presentation") === 'tile';
     }
 
 }
