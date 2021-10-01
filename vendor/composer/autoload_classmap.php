@@ -85,6 +85,7 @@ return array(
     'xvmpEventLogGUI' => $baseDir . '/classes/GUI/class.xvmpEventLogGUI.php',
     'xvmpEventLogTableGUI' => $baseDir . '/classes/GUI/Table/class.xvmpEventLogTableGUI.php',
     'xvmpException' => $baseDir . '/classes/Exception/class.xvmpException.php',
+    'xvmpFileInputGUI' => $baseDir . '/classes/GUI/Form/Input/xvmpFileInputGUI.php',
     'xvmpFileUploadInputGUI' => $baseDir . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',
     'xvmpFormGUI' => $baseDir . '/classes/GUI/Form/class.xvmpFormGUI.php',
     'xvmpGUI' => $baseDir . '/classes/GUI/Abstract/class.xvmpGUI.php',

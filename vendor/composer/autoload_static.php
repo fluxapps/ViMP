@@ -120,6 +120,7 @@ class ComposerStaticInit64f7216efcdcf8ddae98e6499b2ca798
         'xvmpEventLogGUI' => __DIR__ . '/../..' . '/classes/GUI/class.xvmpEventLogGUI.php',
         'xvmpEventLogTableGUI' => __DIR__ . '/../..' . '/classes/GUI/Table/class.xvmpEventLogTableGUI.php',
         'xvmpException' => __DIR__ . '/../..' . '/classes/Exception/class.xvmpException.php',
+        'xvmpFileInputGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/Input/xvmpFileInputGUI.php',
         'xvmpFileUploadInputGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/Input/class.xvmpFileUploadInputGUI.php',
         'xvmpFormGUI' => __DIR__ . '/../..' . '/classes/GUI/Form/class.xvmpFormGUI.php',
         'xvmpGUI' => __DIR__ . '/../..' . '/classes/GUI/Abstract/class.xvmpGUI.php',

@@ -96,7 +96,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 			$props[] = array(
 				'alert' => true,
 				'newline' => true,
-				'property' => 'API',
+				'property' => '',
 				'value' => $preview,
 				'propertyNameVisible' => false
 			);
@@ -119,7 +119,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
                     '_' . $video['mid']
                 );
 				$preview .= '<a href="' . $deep_link . '">';
-				$preview .= '<img style="margin-right:10px;" height=108px width=170px src="' . $video['thumbnail'] . "&size=170x108" . '">';
+				$preview .= '<img style="margin-right:10px;margin-bottom:10px;" height=108px width=170px src="' . $video['thumbnail'] . "&size=170x108" . '">';
 				$preview .= '</a>';
 			} catch (xvmpException $e) {
 //				if ($e->getCode() == 404) {

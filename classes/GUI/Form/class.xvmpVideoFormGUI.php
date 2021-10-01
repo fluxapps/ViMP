@@ -421,9 +421,12 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function addSubtitleInput()
     {
         foreach ($this->getLanguageOptions() as $lang_key => $text) {
-            $input = new ilFileInputGUI($this->pl->txt(xvmpMedium::F_SUBTITLES) . ' ' . $text,
+            $input = new xvmpFileInputGUI($this->pl->txt(xvmpMedium::F_SUBTITLES) . ' ' . $text,
                 xvmpMedium::F_SUBTITLES . '_' . $lang_key);
-            $input->setALlowDeletion(isset($this->medium[xvmpMedium::F_SUBTITLES][$lang_key]));
+            if (isset($this->medium[xvmpMedium::F_SUBTITLES][$lang_key])) {
+                $input->setALlowDeletion(true);
+                $input->setDownloadUrl($this->medium[xvmpMedium::F_SUBTITLES][$lang_key]);
+            }
             $this->addItem($input);
         }
     }
