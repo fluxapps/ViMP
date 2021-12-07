@@ -102,7 +102,7 @@ class xvmpRequest
     public static function getMedia($params = array())
     {
         $xvmpCurl = new xvmpCurl(self::GET_MEDIA);
-        $params['filterbytype'] = 'video';         // only fetch videos
+        $params['filterbytype'] = 0;         // only fetch videos
         foreach ($params as $name => $value) {
             $xvmpCurl->addPostField($name, $value);
         }
@@ -280,7 +280,7 @@ class xvmpRequest
     {
         $xvmpCurl = new xvmpCurl(self::GET_USER_MEDIA);
         $xvmpCurl->addPostField('userid', $user_id);
-        $xvmpCurl->addPostField('filterbytype', 'video');
+        $xvmpCurl->addPostField('filterbytype', 0);
         foreach ($params as $name => $value) {
             $xvmpCurl->addPostField($name, $value);
         }
