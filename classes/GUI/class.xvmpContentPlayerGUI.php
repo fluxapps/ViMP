@@ -100,7 +100,10 @@ class xvmpContentPlayerGUI {
 					continue;
 				}
 				$player_tpl->setCurrentBlock('video_info');
-				$player_tpl->setVariable('VALUE', $custom_field[xvmpConf::F_FORM_FIELD_TITLE] . ': ' . $value);
+				$lng_title = $this->lng->exists($this->pl->getPrefix() . "_" . $custom_field[xvmpConf::F_FORM_FIELD_ID])
+					? $this->lng->txt($this->pl->getPrefix() . "_" . $custom_field[xvmpConf::F_FORM_FIELD_ID])
+					: $custom_field[xvmpConf::F_FORM_FIELD_TITLE];
+				$player_tpl->setVariable('VALUE', $lng_title . ': ' . $value);
 				$player_tpl->parseCurrentBlock();
 			}
 

@@ -297,7 +297,10 @@ abstract class xvmpGUI {
 		";
 		foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
 			if ($value = $video->getField($field[xvmpConf::F_FORM_FIELD_ID])) {
-				$video_infos .= "<p>{$field[xvmpConf::F_FORM_FIELD_TITLE]}: {$value}</p>";
+                               $lng_title = $this->lng->exists($this->pl->getPrefix() . "_" . $field[xvmpConf::F_FORM_FIELD_ID])
+                                   ? $this->lng->txt($this->pl->getPrefix() . "_" . $field[xvmpConf::F_FORM_FIELD_ID])
+                                   : $field[xvmpConf::F_FORM_FIELD_TITLE];
+                               $video_infos .= "<p>{$lng_title}: {$value}</p>";
 			}
 		}
 		$video_infos .= "<div class='xvmp_ellipsis'>{$this->pl->txt(xvmpMedium::F_DESCRIPTION)}: " . nl2br($video->getDescription(), false) . "</div>";
