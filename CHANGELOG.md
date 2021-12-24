@@ -1,6 +1,6 @@
 # Changelog
 
-## [x.x.x]
+## [1.6.0]
 - Feature: upload thumbnails for videos
 - Feature: video deep links with time marker
 - Feature/Improvement: restructured video upload/edit forms
