@@ -92,7 +92,7 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 			);
 		}
 
-		if (($count = $settings->getRepositoryPreview()) && ($preview = $this->getVideoPreview($count))) {
+		if (($count = $settings->getRepositoryPreview()) && ($preview = $this->getVideoPreview($count)) && !$this->isTileView()) {
 			$props[] = array(
 				'alert' => true,
 				'newline' => true,
@@ -145,6 +145,13 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
                 $this->plugin->txt('xvmp_obj')
             )
         );
+    }
+
+    private function isTileView() : bool
+    {
+        global $DIC;
+        $parent_ref_id = $DIC->repositoryTree()->getParentId($this->ref_id);
+        return $parent_ref_id && ilContainer::_lookupContainerSetting(ilContainer::_lookupObjectId($parent_ref_id), "list_presentation") === 'tile';
     }
 
 }

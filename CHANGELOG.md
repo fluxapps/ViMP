@@ -10,6 +10,7 @@
 - Feature: outlined logo for repository tile view (ILIAS 6+ only)
 - Feature: increase medium view count when opening video in Content tab
 - Feature: offer download button if download is enabled in ViMP
+- Fix: do not show repository preview when tile view is configured
 
 ## [1.5.3]
 - Fix: catch exception when loading chapters fails (fix for internal player)
