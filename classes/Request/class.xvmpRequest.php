@@ -476,4 +476,5 @@ class xvmpRequest
         }
         return round((float) $response['progress'], $decimals);
     }
+
 }

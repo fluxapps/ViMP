@@ -69,7 +69,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function processSubtitles(int $mid)
     {
         $tmp_id = filter_input(INPUT_GET, 'tmp_id', FILTER_SANITIZE_STRING);
-        foreach (self::$subtitle_languages as $lang_key) {
+        foreach ($this->getSubtitleLanguages() as $lang_key) {
             $input = $this->getInput(xvmpMedium::F_SUBTITLES . '_' . $lang_key);
             if (is_array($input) && $input['error'] === 0) {
                 if (isset($this->medium) && isset($this->medium[xvmpMedium::F_SUBTITLES][$lang_key])) {
@@ -435,7 +435,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     {
         $options = [];
         $this->dic->language()->loadLanguageModule('meta');
-        foreach (self::$subtitle_languages as $lang_code) {
+        foreach ($this->getSubtitleLanguages() as $lang_code) {
             $options[$lang_code] = $this->dic->language()->txt('meta_l_' . $lang_code);
         }
         return $options;
@@ -456,6 +456,11 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
             default:
                 return 0;
         }
+    }
+
+    private function getSubtitleLanguages() : array
+    {
+        return $this->dic->language()->getInstalledLanguages();
     }
 
     /**
