@@ -12,13 +12,8 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 {
 
     const F_SOURCE_URL = 'source_url';
-    const F_SUBTITLES_REMOVE_CHECKBOX = 'subtitles_remove_checkbox';
     const F_SUBTITLE_LANGUAGE = 'subtitle_language';
     const F_SUBTITLE_FILE = 'subtitle_file';
-    private static $subtitle_languages = [
-        'de',
-        'en'
-    ];
 
     /**
      * @var xvmpOwnVideosGUI | ilVimpPageComponentPluginGUI
