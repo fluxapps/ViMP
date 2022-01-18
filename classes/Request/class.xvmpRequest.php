@@ -127,7 +127,7 @@ class xvmpRequest
     {
         $xvmpCurl = new xvmpCurl(self::GET_MEDIUM);
         $params['mediumid'] = $mediumid;
-//        $params['token'] = xvmp::getToken();
+        $params['token'] = xvmp::getToken();
 //		$params['reponsive'] = 'true';
         foreach ($params as $name => $value) {
             $xvmpCurl->addPostField($name, $value);
