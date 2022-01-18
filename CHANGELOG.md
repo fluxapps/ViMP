@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.7.0]
+- ILIAS 7 supported
+- dropped ILIAS 5.4 support
+
 ## [1.6.1]
 - Fix: representation of existing subtitles was buggy
 - Fix: removing and replacing existing subtitles didn't work properly
