@@ -5,6 +5,7 @@
 - Fix: removing and replacing existing subtitles didn't work properly
 - Fix: upload of assets containing whitespaces led to an error
 - Fix: avoid error with ViMP version >=5.0.0
+- Fix: fixed bug in progress bar
 - Improvement: load available subtitle languages from ILIAS' installed languages
 
 ## [1.6.0]
