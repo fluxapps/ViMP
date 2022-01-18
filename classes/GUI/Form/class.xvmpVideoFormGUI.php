@@ -81,7 +81,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function removeSubtitle($lang_key)
     {
         $subtitle_url = $this->medium[xvmpMedium::F_SUBTITLES][$lang_key];
-        $subtitle_filename = substr($subtitle_url, strrpos($subtitle_url, '/') + 1);
+        $subtitle_filename = urldecode(substr($subtitle_url, strrpos($subtitle_url, '/') + 1));
         xvmpRequest::removeSubtitle($this->medium[xvmpMedium::F_MID], $lang_key, $subtitle_filename);
     }
 
