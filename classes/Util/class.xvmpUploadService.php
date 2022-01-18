@@ -70,7 +70,7 @@ class xvmpUploadService
     public function getSignedUrl(string $tmp_name, string $tmp_id) : string
     {
         $dir = '/vimp/' . $tmp_id;
-        $path = $dir . '/' . $tmp_name;
+        $path = $dir . '/' . rawurlencode($tmp_name);
         $this->temp_directories[] = $dir;
         $path = $this->signWithWAC($path);
         return ILIAS_HTTP_PATH . ltrim($path, '.');

@@ -127,8 +127,8 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
                 if (!$_FILES[$post_var]['tmp_name']) {
                     return null;
                 }
-                $this->upload_service->moveUploadToWebDir($_FILES[$post_var]['tmp_name'], $tmp_id);
-                return $this->upload_service->getSignedUrl($_FILES[$post_var]['name'], $tmp_id);
+                $name = $this->upload_service->moveUploadToWebDir($_FILES[$post_var]['tmp_name'], $tmp_id);
+                return $this->upload_service->getSignedUrl($name, $tmp_id);
             case xvmpMedium::F_MEDIAPERMISSIONS:
                 /** @var array $media_permissions */
                 $media_permissions = $value;
