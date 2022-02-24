@@ -58,7 +58,7 @@ class xvmpFileInputGUI extends ilFileInputGUI
                     $value = $this->download_url ?
                         '<a href="data:text/vtt;base64,'
                         . base64_encode(xvmpRequest::get($this->download_url)->getResponseBody())
-                        . '" target="blank" download="' . $this->getValue() . '">' . $this->getValue() . '<a>' :
+                        . '" target="blank" download="' . $this->getValue() . '">' . $this->getValue() . '</a>' :
                         $this->getValue();
                 } catch (xvmpException $e) {
                     xvmpCurlLog::getInstance()->writeWarning('could not download subtitle file from '

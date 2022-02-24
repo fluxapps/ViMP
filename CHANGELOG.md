@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0]
+- ILIAS 7 supported
+- dropped ILIAS 5.4 support
+
+## [1.6.1]
+- Fix: representation of existing subtitles was buggy
+- Fix: removing and replacing existing subtitles didn't work properly
+- Fix: upload of assets containing whitespaces led to an error
+- Fix: avoid error with ViMP version >=5.0.0
+- Fix: fixed bug in progress bar
+- Improvement: load available subtitle languages from ILIAS' installed languages
+
 ## [1.6.0]
 - Feature: upload thumbnails for videos
 - Feature: video deep links with time marker

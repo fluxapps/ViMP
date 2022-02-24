@@ -12,13 +12,8 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
 {
 
     const F_SOURCE_URL = 'source_url';
-    const F_SUBTITLES_REMOVE_CHECKBOX = 'subtitles_remove_checkbox';
     const F_SUBTITLE_LANGUAGE = 'subtitle_language';
     const F_SUBTITLE_FILE = 'subtitle_file';
-    private static $subtitle_languages = [
-        'de',
-        'en'
-    ];
 
     /**
      * @var xvmpOwnVideosGUI | ilVimpPageComponentPluginGUI
@@ -69,7 +64,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function processSubtitles(int $mid)
     {
         $tmp_id = filter_input(INPUT_GET, 'tmp_id', FILTER_SANITIZE_STRING);
-        foreach (self::$subtitle_languages as $lang_key) {
+        foreach ($this->getSubtitleLanguages() as $lang_key) {
             $input = $this->getInput(xvmpMedium::F_SUBTITLES . '_' . $lang_key);
             if (is_array($input) && $input['error'] === 0) {
                 if (isset($this->medium) && isset($this->medium[xvmpMedium::F_SUBTITLES][$lang_key])) {
@@ -86,7 +81,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     protected function removeSubtitle($lang_key)
     {
         $subtitle_url = $this->medium[xvmpMedium::F_SUBTITLES][$lang_key];
-        $subtitle_filename = substr($subtitle_url, strrpos($subtitle_url, '/') + 1);
+        $subtitle_filename = urldecode(substr($subtitle_url, strrpos($subtitle_url, '/') + 1));
         xvmpRequest::removeSubtitle($this->medium[xvmpMedium::F_MID], $lang_key, $subtitle_filename);
     }
 
@@ -132,8 +127,8 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
                 if (!$_FILES[$post_var]['tmp_name']) {
                     return null;
                 }
-                $this->upload_service->moveUploadToWebDir($_FILES[$post_var]['tmp_name'], $tmp_id);
-                return $this->upload_service->getSignedUrl($_FILES[$post_var]['name'], $tmp_id);
+                $name = $this->upload_service->moveUploadToWebDir($_FILES[$post_var]['tmp_name'], $tmp_id);
+                return $this->upload_service->getSignedUrl($name, $tmp_id);
             case xvmpMedium::F_MEDIAPERMISSIONS:
                 /** @var array $media_permissions */
                 $media_permissions = $value;
@@ -435,7 +430,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
     {
         $options = [];
         $this->dic->language()->loadLanguageModule('meta');
-        foreach (self::$subtitle_languages as $lang_code) {
+        foreach ($this->getSubtitleLanguages() as $lang_code) {
             $options[$lang_code] = $this->dic->language()->txt('meta_l_' . $lang_code);
         }
         return $options;
@@ -456,6 +451,11 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
             default:
                 return 0;
         }
+    }
+
+    private function getSubtitleLanguages() : array
+    {
+        return $this->dic->language()->getInstalledLanguages();
     }
 
     /**

@@ -7,6 +7,7 @@
  */
 class xvmpRequest
 {
+    const TYPE_VIDEO = '0';
 
     // API ENDPOINTS
     const VERSION = 'version';
@@ -103,7 +104,7 @@ class xvmpRequest
     public static function getMedia($params = array())
     {
         $xvmpCurl = new xvmpCurl(self::GET_MEDIA);
-        $params['filterbytype'] = 'video';         // only fetch videos
+        $params['filterbytype'] = self::TYPE_VIDEO;
         foreach ($params as $name => $value) {
             $xvmpCurl->addPostField($name, $value);
         }
@@ -295,7 +296,7 @@ class xvmpRequest
     {
         $xvmpCurl = new xvmpCurl(self::GET_USER_MEDIA);
         $xvmpCurl->addPostField('userid', $user_id);
-        $xvmpCurl->addPostField('filterbytype', 'video');
+        $xvmpCurl->addPostField('filterbytype', self::TYPE_VIDEO);
         foreach ($params as $name => $value) {
             $xvmpCurl->addPostField($name, $value);
         }
@@ -476,4 +477,5 @@ class xvmpRequest
         }
         return round((float) $response['progress'], $decimals);
     }
+
 }
