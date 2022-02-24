@@ -15,7 +15,7 @@
   },
   "private": true,
   "dependencies": {
-    "video.js": "^7.5.5",
+    "video.js": "^7.14.3",
     "videojs-contrib-quality-levels": "^2.0.9",
     "videojs-http-source-selector": "^1.1.5",
     "videojs-vr": "^1.7.1"
