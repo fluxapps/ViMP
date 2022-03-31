@@ -71,12 +71,9 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
 			$this->ctrl->returnToParent($this);
 		}
-		if (self::version()->is6()) {
-            $this->tpl->loadStandardTemplate();
-        } else {
-		$this->tpl->getStandardTemplate();
-		}
 
+        $this->tpl->loadStandardTemplate();
+        
 		try {
 			switch ($next_class) {
 				case 'xvmpcontentgui':
