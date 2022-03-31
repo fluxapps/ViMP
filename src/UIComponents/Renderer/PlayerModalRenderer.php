@@ -95,7 +95,7 @@ class PlayerModalRenderer
      */
     protected function renderInfoMessage(PlayerContainerDTO $playerContainerDTO, ilTemplate $tpl, bool $available)
     {
-        if ($available) {
+        if ($available === false) {
             $tpl->setCurrentBlock('info_paragraph');
             $tpl->setVariable('INFO', $this->plugin->txt('info_not_available'));
             $tpl->setVariable('INFO_STYLE', 'color:red;');
