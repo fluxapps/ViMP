@@ -23,6 +23,7 @@ class MediumMetadataDTOBuilder
      */
     private $dic;
 
+    private $lng;
     /**
      * VideoMetadataDTOBuilder constructor.
      * @param ilViMPPlugin $plugin
@@ -31,6 +32,7 @@ class MediumMetadataDTOBuilder
     {
         $this->plugin = $plugin;
         $this->dic = $dic;
+        $this->lng = $dic->language();
     }
 
     /**
@@ -72,7 +74,10 @@ class MediumMetadataDTOBuilder
             foreach (xvmpConf::getConfig(xvmpConf::F_FORM_FIELDS) as $field) {
                 if ($field[xvmpConf::F_FORM_FIELD_SHOW_IN_PLAYER]
                     && ($value = $medium->getField($field[xvmpConf::F_FORM_FIELD_ID]))) {
-                    $medium_infos[] = new MediumAttribute($value, $field[xvmpConf::F_FORM_FIELD_TITLE]);
+                    $title = $this->lng->exists($this->plugin->getPrefix() . "_" . $field[xvmpConf::F_FORM_FIELD_ID])
+                        ? $this->lng->txt($this->plugin->getPrefix() . "_" . $field[xvmpConf::F_FORM_FIELD_ID])
+                        : $field[xvmpConf::F_FORM_FIELD_TITLE];
+                    $medium_infos[] = new MediumAttribute($value, $title);
                 }
             }
         }
