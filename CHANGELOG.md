@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.8.1]
+- fix: time link in modal: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/2
+- fix: wrong not available hint: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/1
+
 ## [1.8.0]
 - Ability to use language variables for custom container fields obtained from ViMP. Contributed by <3 Ilja Lukin
 - Added flux-publish-utils
