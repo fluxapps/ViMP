@@ -73,7 +73,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		}
 
         $this->tpl->loadStandardTemplate();
-        
+
 		try {
 			switch ($next_class) {
 				case 'xvmpcontentgui':
