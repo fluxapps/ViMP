@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.8.0]
+- Ability to use language variables for custom container fields obtained from ViMP. Contributed by <3 Ilja Lukin
+- Added flux-publish-utils
+
 ## [1.7.0]
 - ILIAS 7 supported
 - dropped ILIAS 5.4 support
