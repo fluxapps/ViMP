@@ -1,18 +1,23 @@
 {
-  "name": "studer-raimann.ch/vimp",
-  "description": "ILIAS 5.x ViMP plugin",
-  "type": "project",
+  "name": "fluxapps/vimp",
+  "description": "ILIAS ViMP Plugin",
+  "type": "plugin",
   "license": "GPL-3.0+",
+  "keywords": [
+    "ilias",
+    "fluxlabs",
+    "vimp"
+  ],
   "authors": [
     {
-      "name": "Theodor Truffer",
-      "email": "tt@studer-raimann.ch",
-      "homepage": "https://studer-raimann.ch",
-      "role": "Project Manager, Software Engineer"
+      "name": "fluxlabs ag",
+      "email": "support@fluxlabs.ch",
+      "homepage": "https://fluxlabs.ch",
+      "role": "Maintainer, Developer"
     }
   ],
  "support": {
-    "issues": "https://plugins.studer-raimann.ch/goto.php?target=uihk_srsu_PLVIMP"
+    "issues": "https://git.fluxlabs.ch"
   },
   "minimum-stability": "beta",
   "prefer-stable": true,
