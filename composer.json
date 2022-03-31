@@ -1,5 +1,6 @@
 {
   "name": "fluxapps/vimp",
+  "version": "1.8.0",
   "description": "ILIAS ViMP Plugin",
   "type": "plugin",
   "license": "GPL-3.0+",
