@@ -72,12 +72,7 @@ abstract class xvmpGUI {
         $modal = ilModalGUI::getInstance();
         $modal->setId('xvmp_modal_player');
         $modal->setType(ilModalGUI::TYPE_LARGE);
-        if (xvmp::is54()) {
-            $modal->setBody($this->dic->ui()->renderer()->render($this->dic->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
-        } else {
-            $modal->setBody($this->dic->ui()->mainTemplate()->getMessageHTML($this->pl->txt('access_denied'),
-                "failure"));
-        }
+        $modal->setBody($this->dic->ui()->renderer()->render($this->dic->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
         return $modal;
     }
 
