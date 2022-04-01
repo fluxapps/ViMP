@@ -72,12 +72,7 @@ abstract class xvmpGUI {
         $modal = ilModalGUI::getInstance();
         $modal->setId('xvmp_modal_player');
         $modal->setType(ilModalGUI::TYPE_LARGE);
-        if (xvmp::is54()) {
-            $modal->setBody($this->dic->ui()->renderer()->render($this->dic->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
-        } else {
-            $modal->setBody($this->dic->ui()->mainTemplate()->getMessageHTML($this->pl->txt('access_denied'),
-                "failure"));
-        }
+        $modal->setBody($this->dic->ui()->renderer()->render($this->dic->ui()->factory()->messageBox()->failure($this->pl->txt('access_denied'))));
         return $modal;
     }
 
@@ -311,8 +306,12 @@ abstract class xvmpGUI {
         $playModalDto = $this->buildPlayerContainerDTO($video);
 
         $response = new stdClass();
-		$response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async, ($this instanceof xvmpVideosGUI)); // TODO: change!
-		$response->video_title = $video->getTitle();
+        // TODO: Abstract classes MUST NOT know their children. this is a cognitive overload
+        // Refactoring Issue: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/3
+        $show_unavailable = ($this instanceof xvmpVideosGUI) || ($this instanceof xvmpContentGUI);
+        $response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async, $show_unavailable);
+
+        $response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->dic->user()->getId(), xvmpMedium::F_MID => $mid))->first();
 		if ($progress) {
