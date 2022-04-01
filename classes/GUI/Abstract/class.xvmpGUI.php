@@ -310,7 +310,7 @@ abstract class xvmpGUI {
         // Refactoring Issue: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/3
         $show_unavailable = ($this instanceof xvmpVideosGUI) || ($this instanceof xvmpContentGUI);
         $response->html = $this->renderer_factory->playerModal()->render($playModalDto, $async, $show_unavailable);
-        
+
         $response->video_title = $video->getTitle();
 		/** @var xvmpUserProgress $progress */
 		$progress = xvmpUserProgress::where(array(xvmpUserProgress::F_USR_ID => $this->dic->user()->getId(), xvmpMedium::F_MID => $mid))->first();

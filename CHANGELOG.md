@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.8.2]
+- fix: time link in modal - additional fix: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/2
+- fix: wrong not available hint - additional fix: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/1
+
 ## [1.8.1]
 - fix: time link in modal: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/2
 - fix: wrong not available hint: https://git.fluxlabs.ch/fluxlabs/ilias/plugins/RepositoryObjects/ViMP/-/issues/1
