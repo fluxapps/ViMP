@@ -106,7 +106,9 @@ var VimpContent = {
   },
 
   copyDirectLinkWithTime: function (link_tpl) {
-    this.copyToClipboard(link_tpl.replace('_0.', '_' + Math.floor(player.currentTime()) + '.'));
+    let currentTime = '_' + Math.floor(player.currentTime());
+    let link = link_tpl.replace('_0.', currentTime + '.').replace('_0&', currentTime + '&');
+    this.copyToClipboard(link);
   },
 
   copyToClipboard: function (textToCopy) {
