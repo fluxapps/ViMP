@@ -47,3 +47,26 @@ h4.modal-title {
 	width: 100%;
 	max-width: 100%;
 }
+/*Copy link*/
+div.form-horizontal.video-url{
+	padding: 0 10px 10px 0;
+	width: 50%;
+}
+input#video_url {
+	background-color: white;
+	font-size: 90%;
+}
+
+.ilPermalinkContainer #video_url {
+	background-color: white;
+	min-width: 300px;
+	width: 50%;
+	font-size: 15px;
+	height: auto;
+	line-height: 24px;
+	text-indent: 5px;
+	border: 1px solid #555555;
+}
+div#xvmp_video_container div#link_container{
+	margin-top: 5px;
+}
