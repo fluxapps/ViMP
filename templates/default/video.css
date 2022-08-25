@@ -21,3 +21,7 @@ div#xvmp_video_container div.ilPermalinkContainer {
 .xvmp_default_cursor {
 	cursor: default;
 }
+
+.vjs-default-skin .vjs-menu-button ul li {
+	text-transform: none;
+}
