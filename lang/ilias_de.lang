@@ -110,6 +110,7 @@ flush_video_cache_tooltip#:#Die Videodaten werden in ILIAS zwischengespeichert, 
 repository_preview#:#Vorschau im Magazin
 no_preview#:#Keine Vorschau
 perm_upload#:#Upload
+perm_readlink#:#Link zum ViMP-Video
 access_denied#:#Zugriff verweigert.
 status_legal#:#Transkodierung abgeschlossen
 status_converting#:#Transkodierung läuft
@@ -172,6 +173,7 @@ root_create_xvmp#:#ViMP Erstellen
 xvmp_visible#:#Anzeigen: ViMP ist sichtbar
 xvmp_read#:#Lesezugriff: Videos können angezeigt werden
 xvmp_rep_robj_xvmp_perm_upload#:#Upload: Videos können hochgeladen werden
+rep_robj_xvmp_perm_readlink#:#Link zum Video kann angezeigt und kopiert werden
 xvmp_write#:#Einstellungen bearbeiten: Einstellungen und Inhalte können bearbeitet werden
 xvmp_delete#:#Löschen: Objekt kann gelöscht werden
 xvmp_edit_permission#:#Rechteeinstellungen ändern: Rechteeinstellungen ändern
