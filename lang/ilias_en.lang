@@ -212,3 +212,4 @@ availability_between_short#:#%s - %s
 availability_from_short#:#%s
 availability_to_short#:#Until %s
 available#:#Available
+obj_xvmp#:#ViMP
