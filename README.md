@@ -26,9 +26,3 @@ Please also install and enable [ViMPCron](https://github.com/fluxapps/ViMPCron).
 
 ## Maintainer
 fluxlabs ag, support@fluxlabs.ch
-
-## Contributors
-* Theo, fluxlabs
-* Martin, fluxlabs
-* Johannes Heim, Albert-Ludwigs-Universität Freiburg
-* Ilja Lukin, Fachhochschule Dortmund
