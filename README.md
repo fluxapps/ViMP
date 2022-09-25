@@ -1,5 +1,11 @@
 ViMP
 ============
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/fluxapps/vimp?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/vimp/issues)
+[![GitHub forks](https://img.shields.io/github/forks/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/vimp/network)
+[![GitHub stars](https://img.shields.io/github/stars/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/vimp/stargazers)
+[![GitHub license](https://img.shields.io/github/license/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/ViMP/blob/main/LICENSE.md)
+
 ## Description
 This is an open source project by fluxlabs ag (https://fluxlabs.ch)
 
