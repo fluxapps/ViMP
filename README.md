@@ -1,9 +1,12 @@
 ViMP
 ============
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/fluxapps/vimp?style=flat-square)
-[![GitHub issues](https://img.shields.io/github/issues/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/vimp/issues)
-[![GitHub forks](https://img.shields.io/github/forks/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/vimp/network)
-[![GitHub stars](https://img.shields.io/github/stars/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/vimp/stargazers)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/fluxapps/vimp?style=flat-square&color=success)
+[![GitHub issues](https://img.shields.io/github/issues/fluxapps/vimp?style=flat-square&color=yellow)](https://github.com/fluxapps/vimp/issues)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/fluxapps/vimp?style=flat-square&color=success)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/fluxapps/vimp?style=flat-square&color=yellow)
+[![GitHub forks](https://img.shields.io/github/forks/fluxapps/vimp?style=flat-square&color=blueviolet)](https://github.com/fluxapps/vimp/network)
+[![GitHub stars](https://img.shields.io/github/stars/fluxapps/vimp?style=flat-square&color=blueviolet)](https://github.com/fluxapps/vimp/stargazers)
 [![GitHub license](https://img.shields.io/github/license/fluxapps/vimp?style=flat-square)](https://github.com/fluxapps/ViMP/blob/main/LICENSE.md)
 
 ## Description
