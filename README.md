@@ -12,6 +12,9 @@ ViMP
 ## Description
 This is an open source project by fluxlabs ag (https://fluxlabs.ch)
 
+## Try it
+https://ilias.fluxapps.ch/
+
 ## Installation
 ```bash
 mkdir -p Customizing/global/plugins/Services/Repository/RepositoryObject
