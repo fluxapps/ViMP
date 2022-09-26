@@ -29,5 +29,5 @@ fluxlabs ag, support@fluxlabs.ch
 
 This project is maintained by fluxlabs. Have a look to the possibility of maintenance and our other key projects:
 
+![Factsheet_Maintenance_Plugins](https://user-images.githubusercontent.com/111508273/192233247-b9d75a6e-f390-4d30-9780-e5d7553f9f44.png)
 
-![Factsheet_Plugins](https://user-images.githubusercontent.com/111508273/192232310-49689a98-ae97-49dd-a435-c7e28663e16a.png)
