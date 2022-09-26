@@ -24,5 +24,10 @@ git clone https://github.com/fluxapps/ViMP.git
 
 Please also install and enable [ViMPCron](https://github.com/fluxapps/ViMPCron).
 
-## Maintainer
+## Maintenance
 fluxlabs ag, support@fluxlabs.ch
+
+This project is maintained by fluxlabs. Have a look to the possibility of maintenance and our other key projects:
+
+
+![Factsheet_Plugins](https://user-images.githubusercontent.com/111508273/192232310-49689a98-ae97-49dd-a435-c7e28663e16a.png)
