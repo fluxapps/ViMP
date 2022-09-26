@@ -27,7 +27,5 @@ Please also install and enable [ViMPCron](https://github.com/fluxapps/ViMPCron).
 ## Maintenance
 fluxlabs ag, support@fluxlabs.ch
 
-This project is maintained by fluxlabs. Have a look to the possibility of maintenance and our other key projects:
-
-![Factsheet_Maintenance_Plugins](https://user-images.githubusercontent.com/111508273/192233247-b9d75a6e-f390-4d30-9780-e5d7553f9f44.png)
+This project is maintained by fluxlabs. 
 
