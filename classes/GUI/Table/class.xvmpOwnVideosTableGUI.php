@@ -38,7 +38,7 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	/**
 	 * @var xvmpOwnVideosGUI
 	 */
-	protected $parent_obj;
+	protected ?object $parent_obj;
 
 
 	/**
@@ -88,7 +88,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	}
 
 
-	public function initFilter() {
+	public function initFilter(): void
+    {
 		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$this->addAndReadFilterItem($filter_item);
 
@@ -187,7 +188,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
 	/**
 	 * @param xvmpObject $a_set
 	 */
-	protected function fillRow($a_set) {
+	protected function fillRow($a_set): void
+    {
         $transcoded = ($a_set['status'] === 'legal');
         $transcoding = ($a_set['status'] === 'converting');
 
@@ -242,7 +244,8 @@ class xvmpOwnVideosTableGUI extends xvmpTableGUI {
     /**
      * @return array
      */
-    function getSelectableColumns() {
+    function getSelectableColumns(): array
+    {
         $selectable_columns = array(
             'categories' => array(
                 'sort_field' => 'categories',

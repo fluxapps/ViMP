@@ -47,7 +47,7 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 	/**
 	 * @var xvmpSelectedVideosGUI
 	 */
-	protected $parent_obj;
+	protected ?object $parent_obj;
 
 	/**
 	 * xvmpSelectedVideosTableGUI constructor.
@@ -88,7 +88,8 @@ class xvmpLearningProgressTableGUI extends xvmpTableGUI {
 	/**
 	 * @param xvmpObject $a_set
 	 */
-	protected function fillRow($a_set) {
+	protected function fillRow($a_set): void
+    {
 		$transcoded = ($a_set['status'] == 'legal');
 		if ($transcoded) {
 			$this->tpl->setCurrentBlock('transcoded');

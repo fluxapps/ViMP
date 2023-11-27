@@ -168,7 +168,8 @@ class xvmpFileUploadInputGUI extends ilSubEnabledFormPropertyGUI {
 	 *
 	 * @return    boolean        Input ok, true/false
 	 */
-	function checkInput() {
+	function checkInput(): bool
+    {
 		return true;
 	}
 

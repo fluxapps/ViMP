@@ -22,7 +22,7 @@ class xvmpSettingsFormGUI extends xvmpFormGUI {
 	/**
 	 * @var xvmpSettings
 	 */
-	protected $settings;
+	protected ?ilSetting $settings;
 
 
 	/**

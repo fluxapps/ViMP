@@ -60,7 +60,8 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 	}
 
 
-	protected function fillRow($a_set) {
+	protected function fillRow($a_set): void
+    {
 		foreach ($a_set as $key => $value)
 		{
 			switch ($key) {
@@ -82,7 +83,8 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 						$this->tpl->setCurrentBlock('block_object_title');
 						$this->tpl->setVariable('VAL_OBJECT_TITLE', ilObject2::_lookupTitle($value));
 
-						$this->ctrl->setParameterByClass(ilObjViMPGUI::class, 'ref_id',array_shift(ilObject2::_getAllReferences($value)));
+                        $allReferences = ilObject2::_getAllReferences($value);
+                        $this->ctrl->setParameterByClass(ilObjViMPGUI::class, 'ref_id',array_shift($allReferences));
 						$link = $this->ctrl->getLinkTargetByClass(array(ilObjPluginDispatchGUI::class, ilObjViMPGUI::class), ilObjViMPGUI::CMD_SHOW_CONTENT);
 						$this->tpl->setVariable('VAL_OBJECT_LINK', $link);
 
@@ -126,8 +128,8 @@ class xvmpEventLogTableGUI extends xvmpTableGUI {
 	 * Init filter items
 	 *
 	 */
-	public function initFilter()
-	{
+	public function initFilter(): void
+    {
 		$item = new ilMultiSelectInputGUI($this->pl->txt('action'), 'action');
 		$options = array();
 		foreach (array(xvmpEventLog::ACTION_UPLOAD, xvmpEventLog::ACTION_EDIT, xvmpEventLog::ACTION_DELETE, xvmpEventLog::ACTION_ADD, xvmpEventLog::ACTION_REMOVE, xvmpEventLog::ACTION_CHANGE_OWNER)

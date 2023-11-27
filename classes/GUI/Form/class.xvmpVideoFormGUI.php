@@ -195,7 +195,7 @@ abstract class xvmpVideoFormGUI extends xvmpFormGUI
             $this->upload_service->cleanUp();
         } catch (Exception $e) {
             $this->dic->logger()->root()->logStack(ilLogLevel::ERROR, $e->getMessage());
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->tpl->setOnScreenMessage("failure", $e->getMessage(), true);
             $this->upload_service->cleanUp();
             return false;
         }

@@ -43,10 +43,10 @@ class xvmpSettingsGUI extends xvmpGUI {
 		$xvmpSettingsFormGUI = new xvmpSettingsFormGUI($this);
 		$xvmpSettingsFormGUI->setValuesByPost();
 		if (!$xvmpSettingsFormGUI->saveForm()) {
-			ilUtil::sendFailure($this->pl->txt('msg_incomplete'));
+            $this->tpl->setOnScreenMessage("failure", $this->pl->txt('msg_incomplete'), true);
 			$this->dic->ui()->mainTemplate()->setContent($xvmpSettingsFormGUI->getHTML());
 		}
-		ilUtil::sendSuccess($this->pl->txt('form_saved'), true);
+        $this->tpl->setOnScreenMessage("success", $this->pl->txt('form_saved'), true);
 		$this->dic->ctrl()->redirect($this, self::CMD_STANDARD);
 	}
 

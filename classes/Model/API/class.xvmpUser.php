@@ -156,10 +156,14 @@ class xvmpUser extends xvmpObject {
 	 * @return integer $user_id
 	 */
 	public static function createShadowUser(ilObjUser $ilObjUser) {
+
+        $random = new \ilRandom();
+
+        //'password' => substr(ilUtil::randomhash(),0, 10),
 		$params = array(
 			'username' => self::getMappedUsername($ilObjUser),
 			'email' => $ilObjUser->getEmail(),
-			'password' => substr(ilUtil::randomhash(),0, 10),
+			'password' => substr($random->int(1, 9999999) + str_replace(" ", "", (string) microtime()),0, 10),
 		);
 		if ($firstname = $ilObjUser->getFirstname()) {
 			$params['firstname'] = $firstname;

@@ -92,7 +92,8 @@ class xvmpConf extends ActiveRecord {
 	protected $value;
 
 
-	public static function returnDbTableName() {
+	public static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -102,7 +103,7 @@ class xvmpConf extends ActiveRecord {
 	 * @return mixed
 	 */
 	public static function getConfig($name) {
-		if (!self::$cache_loaded[$name]) {
+		if (!key_exists($name, self::$cache_loaded) || !self::$cache_loaded[$name]) {
 			try {
 				$obj = new self($name);
 			} catch (Exception $e) {

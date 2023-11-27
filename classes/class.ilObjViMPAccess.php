@@ -30,7 +30,8 @@ class ilObjViMPAccess extends ilObjectPluginAccess {
 	 *
 	 * @return bool
 	 */
-	public function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id = NULL, $a_user_id = '') {
+	public function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id = NULL, $a_user_id = ''): bool
+    {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 		$ilAccess = $DIC['ilAccess'];

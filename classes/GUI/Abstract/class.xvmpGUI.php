@@ -41,9 +41,10 @@ abstract class xvmpGUI {
      * @var MediumMetadataDTOBuilder
      */
 	protected $metadata_builder;
+    protected ilGlobalTemplateInterface $tpl;
 
 
-	/**
+    /**
 	 * xvmpGUI constructor.
 	 *
 	 * @param ilObjViMPGUI $parent_gui
@@ -55,6 +56,7 @@ abstract class xvmpGUI {
 		$this->parent_gui = $parent_gui;
 		$this->metadata_builder = new MediumMetadataDTOBuilder($DIC, $this->pl);
 		$this->renderer_factory = new Factory($DIC, $this->pl);
+        $this->tpl = $DIC->ui()->mainTemplate();
 		$this->addJavaScript();
 	}
 
@@ -123,7 +125,7 @@ abstract class xvmpGUI {
     public function buildPermLinkUI(xvmpMedium $video) : array
     {
         $link_tpl = ilLink::_getStaticLink(
-            $this->parent_gui->ref_id,
+            $this->parent_gui->getRefId(),
             $this->parent_gui->getType(),
             true,
             '_' . $video->getMid() . '_0'
@@ -256,14 +258,14 @@ abstract class xvmpGUI {
 	 * @return ilObjViMP
 	 */
 	public function getObject() {
-		return $this->parent_gui->object;
+		return $this->parent_gui->getObject();
 	}
 
 	/**
 	 * @return int
 	 */
 	public function getObjId() {
-		return $this->parent_gui->obj_id;
+		return $this->parent_gui->getObject()->getId();
 	}
 
 
@@ -271,8 +273,8 @@ abstract class xvmpGUI {
 	 * called by ilObjViMPAccess
 	 */
 	public function accessDenied() {
-		ilUtil::sendFailure($this->pl->txt('access_denied'), true);
-		$this->dic->ctrl()->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
+        $this->tpl->setOnScreenMessage("failure", $this->pl->txt('access_denied'), true);
+        $this->dic->ctrl()->redirect($this->parent_gui, ilObjViMPGUI::CMD_SHOW_CONTENT);
 	}
 
 		/**

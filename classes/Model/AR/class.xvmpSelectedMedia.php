@@ -13,7 +13,8 @@ class xvmpSelectedMedia extends ActiveRecord {
 	const F_VISIBLE = 'visible';
 
 
-	public static function returnDbTableName() {
+	public static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 

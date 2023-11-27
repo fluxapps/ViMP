@@ -14,7 +14,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 	/**
 	 * @var ilLanguage
 	 */
-	protected $lng;
+	protected ilLanguage $lng;
 	/**
 	 * @var ilViMPPlugin
 	 */
@@ -26,7 +26,7 @@ class xvmpUploadVideoFormGUI extends xvmpVideoFormGUI {
 	/**
 	 * @var ilObjUser
 	 */
-	protected $user;
+	protected ?ilObjUser $user;
 
 
 	/**

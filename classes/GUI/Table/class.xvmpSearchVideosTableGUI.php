@@ -38,7 +38,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	/**
 	 * @var xvmpSearchVideosGUI|ilVimpPageComponentPluginGUI
 	 */
-	protected $parent_obj;
+	protected ?object $parent_obj;
 
 
 	/**
@@ -103,7 +103,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 						}
 						$filter['userid'] = $xvmpUser->getId();
 					} else {
-						ilUtil::sendInfo($this->pl->txt('msg_username_not_found'), true);
+                        $this->tpl->setOnScreenMessage("info", $this->pl->txt('msg_username_not_found'), true);
 						$this->setData(array());
 						return;
 					}
@@ -129,7 +129,7 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 
 		$filter = array_filter($filter);
 		if (empty($filter)) {
-			ilUtil::sendQuestion($this->pl->txt('msg_please_enter_filter'), true);
+            $this->tpl->setOnScreenMessage("question", $this->pl->txt('msg_please_enter_filter'), true);
 			$this->redirectToParent();
 		}
 		
@@ -143,7 +143,8 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	}
 
 
-	public function initFilter() {
+	public function initFilter(): void
+    {
 		$filter_item = new ilTextInputGUI($this->pl->txt('title'), 'title');
 		$this->addAndReadFilterItem($filter_item);
 
@@ -203,7 +204,8 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
 	/**
 	 * @param xvmpObject $a_set
 	 */
-	protected function fillRow($a_set) {
+	protected function fillRow($a_set): void
+    {
         $transcoded = ($a_set['status'] === 'legal');
         $transcoding = ($a_set['status'] === 'converting');
 
@@ -250,7 +252,8 @@ class xvmpSearchVideosTableGUI extends xvmpTableGUI {
     /**
      * @return array
      */
-    function getSelectableColumns() {
+    function getSelectableColumns(): array
+    {
         $selectable_columns = array(
             'categories' => array(
                 'sort_field' => 'categories',

@@ -10,7 +10,8 @@ class xvmpUploadedMedia extends ActiveRecord {
 	const DB_TABLE_NAME = 'xvmp_uploaded_media';
 
 
-	public static function returnDbTableName() {
+	public static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 

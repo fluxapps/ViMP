@@ -15,7 +15,8 @@ class xvmpEventLog extends ActiveRecord {
 	);
 
 
-	public static function returnDbTableName() {
+	public static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -256,7 +257,8 @@ class xvmpEventLog extends ActiveRecord {
 		$eventLog->create();
 	}
 
-	public function create() {
+	public function create(): void
+    {
 		global $DIC;
 		$ilUser = $DIC['ilUser'];
 		$this->setTimestamp(time());

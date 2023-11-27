@@ -95,7 +95,7 @@ class xvmpUploadService
     protected function signWithWAC(string $path) : string
     {
         ilWACSignedPath::setTokenMaxLifetimeInSeconds(ilWACSignedPath::MAX_LIFETIME);
-        $thumbnail_path = ilWACSignedPath::signFile(ilUtil::getWebspaceDir() . $path);
+        $thumbnail_path = ilWACSignedPath::signFile(ilFileUtils::getWebspaceDir() . $path);
         $thumbnail_path .= '&' . ilWebAccessChecker::DISPOSITION . '=' . ilFileDelivery::DISP_ATTACHMENT;
         return $thumbnail_path;
     }
@@ -103,7 +103,7 @@ class xvmpUploadService
     public function cleanUp()
     {
         foreach ($this->temp_directories as $temp_directory) {
-            ilUtil::delDir(ilUtil::getWebspaceDir() . $temp_directory);
+            ilFileUtils::delDir(ilFileUtils::getWebspaceDir() . $temp_directory);
         }
     }
 

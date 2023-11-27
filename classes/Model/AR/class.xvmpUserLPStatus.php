@@ -13,7 +13,8 @@ class xvmpUserLPStatus extends ActiveRecord {
 	/**
 	 * @return string
 	 */
-	static function returnDbTableName() {
+	static function returnDbTableName(): string
+    {
 		return self::TABLE_NAME;
 	}
 
@@ -219,8 +220,8 @@ class xvmpUserLPStatus extends ActiveRecord {
 	/**
 	 *
 	 */
-	public function create()
-	{
+	public function create(): void
+    {
 		$this->created_at = date('Y-m-d H:i:s');
 		$this->updated_at = date('Y-m-d H:i:s');
 		parent::create();

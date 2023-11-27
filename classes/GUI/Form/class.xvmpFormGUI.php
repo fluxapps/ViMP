@@ -21,11 +21,11 @@ abstract class xvmpFormGUI extends ilPropertyFormGUI {
 	/**
 	 * @var ilCtrl
 	 */
-	protected $ctrl;
+	protected ilCtrl $ctrl;
 	/**
 	 * @var ilLanguage
 	 */
-	protected $lng;
+	protected ilLanguage $lng;
     /**
      * @var Container
      */

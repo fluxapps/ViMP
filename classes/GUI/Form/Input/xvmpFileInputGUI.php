@@ -13,7 +13,7 @@ class xvmpFileInputGUI extends ilFileInputGUI
     /**
      * Render html
      */
-    public function render($a_mode = "")
+    public function render($a_mode = ""): string
     {
         $lng = $this->lng;
 

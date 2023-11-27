@@ -26,7 +26,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
 	/**
 	 * @var ilCtrl
 	 */
-	protected $ctrl;
+	protected ilCtrl $ctrl;
 	/**
 	 * @var ilObjUser
 	 */
@@ -38,7 +38,7 @@ abstract class xvmpTableGUI extends ilTable2GUI {
     /**
      * @var array
      */
-	protected $selectable_columns = array();
+	protected array $selectable_columns = array();
 	/**
 	 * @var array
 	 */
@@ -98,7 +98,8 @@ abstract class xvmpTableGUI extends ilTable2GUI {
         }
 	}
 
-	public function initFilter() {
+	public function initFilter(): void
+    {
 		foreach ($this->available_filters as $title => $props){
 			$filter_item = new $props['input_gui']($this->pl->txt($title), $props['post_var'] ? $props['post_var'] : $title);
 			$this->addAndReadFilterItem($filter_item);
@@ -138,7 +139,8 @@ abstract class xvmpTableGUI extends ilTable2GUI {
      *
      * @return bool
      */
-    public function isColumnSelected($column) {
+    public function isColumnSelected($column): bool
+    {
         if (!array_key_exists($column, $this->getSelectableColumns())) {
             return true;
         }

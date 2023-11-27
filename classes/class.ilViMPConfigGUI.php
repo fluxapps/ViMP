@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 /**
  * Class ilViMPConfigGUI
  *
- * @author  Theodor Truffer <tt@studer-raimann.ch>
+ * @ilCtrl_IsCalledBy  ilViMPConfigGUI: ilObjComponentSettingsGUI
  */
 class ilViMPConfigGUI extends ilPluginConfigGUI {
 
@@ -57,7 +57,8 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 	/**
 	 * @param $cmd
 	 */
-	function performCommand($cmd) {
+	function performCommand($cmd): void
+    {
 		$this->addSubTabs();
 		switch ($cmd) {
 			default:
@@ -127,7 +128,7 @@ class ilViMPConfigGUI extends ilPluginConfigGUI {
 		$xvmpConfFormGUI = new xvmpConfFormGUI($this);
 		$xvmpConfFormGUI->setValuesByPost();
 		if ($xvmpConfFormGUI->saveObject()) {
-			ilUtil::sendSuccess($this->pl->txt('msg_success'), true);
+            $this->tpl->setOnScreenMessage("success", $this->pl->txt('msg_success'), true);
 			$this->ctrl->redirect($this, self::CMD_STANDARD);
 		}
 		$this->tpl->setContent($xvmpConfFormGUI->getHTML());

@@ -13,10 +13,7 @@ class xvmpCache extends ilGlobalCache {
 	 * @var bool
 	 */
 	protected static $override_active = false;
-	/**
-	 * @var array
-	 */
-	protected static $active_components = array(
+	protected static array $active_components = array(
 		self::COMP_PREFIX,
 	);
 
@@ -24,7 +21,8 @@ class xvmpCache extends ilGlobalCache {
 	/**
 	 * @return xvmpCache
 	 */
-	public static function getInstance($component) {
+	public static function getInstance($component): ilGlobalCache
+	{
 		$service_type = self::getSettings()->getService();
 		$xvmpCache = new self($service_type);
 
@@ -51,7 +49,8 @@ class xvmpCache extends ilGlobalCache {
 		self::setOverrideActive(true);
 	}
 
-	protected function initCachingService() {
+	protected function initCachingService(): void
+	{
 		/**
 		 * @var $ilGlobalCacheService ilGlobalCacheService
 		 */
@@ -99,16 +98,14 @@ class xvmpCache extends ilGlobalCache {
 	 *
 	 * @return string
 	 */
-	public static function lookupServiceClassName($service_type) {
+	public static function lookupServiceClassName($service_type): string
+	{
 		switch ($service_type) {
 			case self::TYPE_APC:
 				return 'ilApc';
 				break;
 			case self::TYPE_MEMCACHED:
 				return 'ilMemcache';
-				break;
-			case self::TYPE_XCACHE:
-				return 'ilXcache';
 				break;
 			case self::TYPE_STATIC:
 				return 'ilStaticCache';
@@ -123,7 +120,8 @@ class xvmpCache extends ilGlobalCache {
 	/**
 	 * @return array
 	 */
-	public static function getActiveComponents() {
+	public static function getActiveComponents(): array
+	{
 		return self::$active_components;
 	}
 
@@ -134,7 +132,8 @@ class xvmpCache extends ilGlobalCache {
 	 * @return bool
 	 * @throws RuntimeException
 	 */
-	public function flush($complete = false) {
+	public function flush($complete = false): bool
+	{
 		if (!$this->global_cache instanceof ilGlobalCacheService || !$this->isActive()) {
 			return false;
 		}
@@ -149,7 +148,8 @@ class xvmpCache extends ilGlobalCache {
 	 * @throws RuntimeException
 	 * @return bool
 	 */
-	public function delete($key) {
+	public function delete($key): bool
+	{
 		if (!$this->global_cache instanceof ilGlobalCacheService || !$this->isActive()) {
 			return false;
 		}
@@ -161,7 +161,8 @@ class xvmpCache extends ilGlobalCache {
 	/**
 	 * @return bool
 	 */
-	public function isActive() {
+	public function isActive(): bool
+	{
 		return self::isOverrideActive();
 	}
 
@@ -189,7 +190,8 @@ class xvmpCache extends ilGlobalCache {
 	 *
 	 * @return bool
 	 */
-	public function set($key, $value, $ttl = null) {
+	public function set($key, $value, $ttl = null): bool
+	{
 		//		$ttl = $ttl ? $ttl : 480;
 		if (!$this->global_cache instanceof ilGlobalCacheService || !$this->isActive()) {
 			return false;

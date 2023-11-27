@@ -139,7 +139,8 @@ class xvmpSettings extends ActiveRecord {
 	}
 
 
-	public static function returnDbTableName() {
+	public static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 

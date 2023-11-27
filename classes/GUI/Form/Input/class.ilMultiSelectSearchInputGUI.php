@@ -11,35 +11,12 @@ require_once("./Services/User/classes/class.ilObjUser.php");
  */
 class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 {
-	/**
-	 * @var string
-	 */
-	protected $width;
-
-	/**
-	 * @var string
-	 */
-	protected $height;
-
-	/**
-	 * @var string
-	 */
-	protected $css_class;
-
-	/**
-	 * @var int
-	 */
-	protected $minimum_input_length = 0;
-
-	/**
-	 * @var string
-	 */
-	protected $ajax_link;
-
-	/**
-	 * @var ilTemplate
-	 */
-	protected $input_template;
+	protected string $width;
+	protected int $height = 0;
+	protected string $css_class = "";
+	protected int $minimum_input_length = 0;
+	protected string $ajax_link;
+	protected ilTemplate $input_template;
 
 	public function __construct($title, $post_var){
 		global $DIC;
@@ -56,7 +33,7 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 		$tpl->addJavaScript("./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/form/select2/select2_locale_".$ilUser->getCurrentLanguage().".js");
 		$tpl->addCss("./Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP/templates/default/form/select2/select2.css");
 		$this->setInputTemplate(new ilTemplate("tpl.multiple_select.html", true, true,"Customizing/global/plugins/Services/Repository/RepositoryObject/ViMP"));
-		$this->setWidth("308px");
+		$this->setWidth(308);
 	}
 
 	/**
@@ -64,8 +41,8 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 	 *
 	 * @return	boolean		Input ok, true/false
 	 */
-	function checkInput()
-	{
+	function checkInput(): bool
+    {
 		global $DIC;
 		$lng = $DIC['lng'];
 
@@ -83,7 +60,8 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 		return array();
 	}
 
-	public function render(){
+	public function render(): string
+    {
 		$tpl = $this->getInputTemplate();
 		$values = $this->getValue();
 		$options = $this->getOptions();
@@ -143,34 +121,34 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 	 * @deprecated setting inline style items from the controller is bad practice. please use the setClass together with an appropriate css class.
 	 * @param string $height
 	 */
-	public function setHeight($height)
-	{
+	public function setHeight($height): void
+    {
 		$this->height = $height;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getHeight()
-	{
+	public function getHeight(): int
+    {
 		return $this->height;
 
 	}
 
 	/**
 	 * @deprecated setting inline style items from the controller is bad practice. please use the setClass together with an appropriate css class.
-	 * @param string $width
+	 * @param int $width
 	 */
-	public function setWidth($width)
-	{
+	public function setWidth(int $width): void
+    {
 		$this->width = $width;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getWidth()
-	{
+	public function getWidth(): int
+    {
 		return $this->width;
 	}
 
@@ -264,8 +242,13 @@ class ilMultiSelectSearchInputGUI extends ilMultiSelectInputGUI
 			return $this->getPostVar();
 	}
 
-	public function setValueByArray($array){
+	public function setValueByArray($array): void
+    {
 //		print_r($array);
+        if(!key_exists($this->getPostVar(), $array)) {
+            $this->setValue("");
+            return;
+        }
 
 		$val = $array[$this->searchPostVar()] ?? $array[$this->getPostVar()];
 		if(is_array($val))

@@ -10,7 +10,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * @author  Theodor Truffer <tt@studer-raimann.ch>
  */
 class ilViMPPlugin extends ilRepositoryObjectPlugin {
-
+    const PLUGIN_ID = 'xvmp';
 	const PLUGIN_NAME = 'ViMP';
 	const XVMP = 'xvmp';
 
@@ -28,12 +28,43 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	 * @return ilViMPPlugin
 	 */
 	public static function getInstance() {
-		if (!isset(self::$instance)) {
-			self::$instance = new self();
-		}
 
-		return self::$instance;
+
+        if (!isset(self::$instance)) {
+            global $DIC;
+
+            /** @var $component_factory ilComponentFactory */
+            $component_factory = $DIC['component.factory'];
+            /** @var $plugin ilViMPPlugin */
+            $plugin  = $component_factory->getPlugin(ilViMPPlugin::PLUGIN_ID);
+
+            self::$instance = $plugin;
+        }
+
+        return self::$instance;
 	}
+
+    /**
+     * Get image path
+     */
+    public function getImagePath(string $a_img) : string
+    {
+        global $DIC;
+
+        /** @var $component_factory ilComponentFactory */
+        $component_factory = $DIC['component.factory'];
+        /** @var $plugin ilViMPPlugin */
+        $plugin  = $component_factory->getPlugin(ilViMPPlugin::PLUGIN_ID);
+
+        return self::_getImagePath(
+            $plugin->getComponentInfo()->getType(),
+            $plugin->getComponentInfo()->getName(),
+            "robj",
+            $this->getPluginName(),
+            $a_img
+        );
+    }
+
 
 	/**
 	 *
@@ -85,7 +116,8 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	/**
 	 * @return string
 	 */
-	function getPluginName() {
+	function getPluginName(): string
+    {
 		return self::PLUGIN_NAME;
 	}
 
@@ -93,7 +125,8 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
 	/**
 	 *
 	 */
-	protected function uninstallCustom() {
+	protected function uninstallCustom(): void
+    {
 		global $DIC;
 		$DIC->database()->dropTable(xvmpConf::returnDbTableName());
 		$DIC->database()->dropTable(xvmpEventLog::returnDbTableName());
@@ -131,7 +164,7 @@ class ilViMPPlugin extends ilRepositoryObjectPlugin {
     /**
      * Before activation processing
      */
-    protected function beforeActivation()
+    protected function beforeActivation(): bool
     {
         global $DIC;
         parent::beforeActivation();

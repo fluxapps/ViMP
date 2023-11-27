@@ -179,7 +179,8 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 	/**
 	 * @param bool $a_multi
 	 */
-	public function setMulti($a_multi, $a_sortable = false, $a_addremove = true) {
+	public function setMulti($a_multi, $a_sortable = false, $a_addremove = true): void
+    {
 		$this->multi = $a_multi;
 		$this->multi_sortable = $a_sortable;
 	}
@@ -239,7 +240,8 @@ class srGenericMultiInputGUI extends ilFormPropertyGUI {
 	 *
 	 * @return    boolean        Input ok, true/false
 	 */
-	public function checkInput() {
+	public function checkInput(): bool
+    {
 		global $DIC;
 		$lng = $DIC['lng'];
 

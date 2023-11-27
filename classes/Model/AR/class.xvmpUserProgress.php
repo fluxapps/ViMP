@@ -19,7 +19,8 @@ class xvmpUserProgress extends ActiveRecord {
     /**
      * @return string|void
      */
-    public static function returnDbTableName() {
+    public static function returnDbTableName(): string
+    {
 		return self::DB_TABLE_NAME;
 	}
 
@@ -192,7 +193,8 @@ class xvmpUserProgress extends ActiveRecord {
     /**
      *
      */
-    public function store() {
+    public function store(): void
+    {
 		$this->calcTotalWatched();
 		parent::store();
 

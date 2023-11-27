@@ -12,12 +12,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 class ilObjViMPListGUI extends ilObjectPluginListGUI {
 
-	function getGuiClass() {
+	function getGuiClass(): string
+    {
 		return ilObjViMPGUI::class;
 	}
 
 
-	function initCommands() {
+	function initCommands(): array
+    {
 		// Always set
 		$this->timings_enabled = true;
 		$this->subscribe_enabled = true;
@@ -58,7 +60,8 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 	 *
 	 * @return array
 	 */
-	public function getAlertProperties() {
+	public function getAlertProperties(): array
+    {
 		$alert = array();
 		foreach ((array)$this->getCustomProperties(array()) as $prop) {
 			if ($prop['alert'] == true) {
@@ -78,7 +81,8 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
 	 *                        'property' (string) => property name
 	 *                        'value' (string) => property value
 	 */
-	public function getCustomProperties($a_prop) {
+	public function getCustomProperties($a_prop): array
+    {
 		$props = parent::getCustomProperties(array());
 
 		$settings = xvmpSettings::find($this->obj_id);
@@ -136,7 +140,8 @@ class ilObjViMPListGUI extends ilObjectPluginListGUI {
         string $type,
         string $title,
         string $description
-    ) : ?\ILIAS\UI\Component\Card\Card {
+    ) : ?RepositoryObject
+    {
 	    /** @var RepositoryObject $card */
         $card = parent::getAsCard($ref_id, $obj_id, $type, $title, $description);
         return $card->withObjectIcon(

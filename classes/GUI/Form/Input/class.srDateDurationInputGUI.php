@@ -8,7 +8,8 @@
  */
 class srDateDurationInputGUI extends ilDateDurationInputGUI {
 
-	public function getValue() {
+	public function getValue(): array
+    {
 		$start = $this->getStart() ? $this->getStart()->get(IL_CAL_UNIX) : 0;
 		$end = $this->getEnd() ? $this->getEnd()->get(IL_CAL_UNIX) : 0;
 
@@ -23,8 +24,8 @@ class srDateDurationInputGUI extends ilDateDurationInputGUI {
 	 *
 	 * @return	boolean		Input ok, true/false
 	 */
-	public function checkInput()
-	{
+	public function checkInput(): bool
+    {
 		global $lng;
 
 		if($this->getDisabled())

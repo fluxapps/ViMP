@@ -30,9 +30,9 @@ if ($offering_admin) {
 ?>
 <#3>
 <?php
-$transfer_dir = ilUtil::getWebspaceDir() . '/vimp';
+$transfer_dir = ilFileUtils::getWebspaceDir() . '/vimp';
 if (!is_dir($transfer_dir)) {
-    ilUtil::makeDir($transfer_dir);
+    ilFileUtils::makeDir($transfer_dir);
 }
 ?>
 <#4>

@@ -88,12 +88,12 @@ class xvmpCron {
 		}
 
 		// delete abandoned uploads (older than 24 hours)
-        $path = ilUtil::getWebspaceDir() . '/vimp';
+        $path = ilFileUtils::getWebspaceDir() . '/vimp';
         if (is_dir($path)) {
             foreach (new DirectoryIterator($path) as $directory) {
                 if (!$directory->isDot()) {
                     if ((time() - $directory->getCTime()) > (24 * 60 * 60)) {
-                        ilUtil::delDir($directory->getPathname());
+                        ilFileUtils::delDir($directory->getPathname());
                     }
                 }
             }

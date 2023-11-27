@@ -64,11 +64,12 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 *
 	 */
-	public function executeCommand() {
+	public function executeCommand(): void
+    {
 		$next_class = $this->ctrl->getNextClass();
 		$cmd = $this->ctrl->getCmd();
 		if (!ilObjViMPAccess::hasReadAccess() && $next_class != "ilinfoscreengui" && $cmd != "infoScreen" && $cmd != xvmpGUI::CMD_FILL_MODAL) {
-			ilUtil::sendFailure($this->pl->txt('access_denied'), true);
+			$this->tpl->setOnScreenMessage("failure", $this->pl->txt('access_denied'), true);
 			$this->ctrl->returnToParent($this);
 		}
 
@@ -195,7 +196,7 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 			}
 		} catch (Exception $e) {
 		    self::dic()->logger()->root()->logStack(ilLogLevel::ERROR, $e->getMessage());
-			ilUtil::sendFailure($e->getMessage());
+            $this->tpl->setOnScreenMessage("failure", $e->getMessage(), true);
             if (self::version()->is6()) {
                 $this->tpl->printToStdout();
             } else {
@@ -209,7 +210,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 * @param $cmd
 	 */
-	public function performCommand($cmd) {
+	public function performCommand($cmd): void
+    {
 		switch ($cmd) {
 			default:
 				$this->$cmd();
@@ -221,7 +223,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 * @return bool
 	 */
-	protected function supportsCloning() {
+	protected function supportsCloning(): bool
+    {
 		return false;
 	}
 
@@ -231,7 +234,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	 *
 	 * @return ilPropertyFormGUI
 	 */
-	public function initCreateForm($a_new_type) {
+	public function initCreateForm($a_new_type): ilPropertyFormGUI
+    {
 		$this->tpl->addCss($this->pl->getAssetURL('default/xvmp_settings.css'));
 
 		$form = parent::initCreateForm($a_new_type);
@@ -254,7 +258,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 		return $form;
 	}
 
-	function afterSave(ilObject $newObj) {
+	function afterSave(ilObject $newObj): void
+    {
 		if ($_POST[xvmpSettingsFormGUI::F_ONLINE] || $_POST[xvmpSettingsFormGUI::F_LAYOUT]) {
 			/** @var xvmpSettings $settings */
 			$settings = xvmpSettings::find($newObj->getId());
@@ -295,7 +300,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 * @return bool
 	 */
-	protected function setTabs() {
+	protected function setTabs(): void
+    {
 		$this->tabs_gui->addTab(self::TAB_CONTENT, $this->pl->txt(self::TAB_CONTENT), $this->ctrl->getLinkTargetByClass(xvmpContentGUI::class, xvmpContentGUI::CMD_STANDARD));
 		$this->tabs_gui->addTab(self::TAB_INFO, $this->pl->txt(self::TAB_INFO), $this->ctrl->getLinkTargetByClass(ilInfoScreenGUI::class));
 
@@ -325,15 +331,13 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 				"ilpermissiongui",
 			), "perm"));
 		}
-
-		return true;
 	}
 
 
     /**
      * @param $a_target
      */
-    public static function _goto($a_target)
+    public static function _goto($a_target): void
     {
         global $DIC;
         $DIC->ctrl()->setTargetScript('ilias.php');
@@ -389,7 +393,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 * @return string
 	 */
-	public function getType() {
+	public function getType(): string
+    {
 		return ilViMPPlugin::XVMP;
 	}
 
@@ -397,7 +402,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 * @return string
 	 */
-	public function getAfterCreationCmd() {
+	public function getAfterCreationCmd(): string
+    {
 		return self::CMD_SHOW_CONTENT;
 	}
 
@@ -405,7 +411,8 @@ class ilObjViMPGUI extends ilObjectPluginGUI {
 	/**
 	 * @return string
 	 */
-	public function getStandardCmd() {
+	public function getStandardCmd(): string
+    {
 		return self::CMD_SHOW_CONTENT;
 	}
 

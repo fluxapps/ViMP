@@ -18,8 +18,9 @@ class xvmpContentListGUI {
      * @var Container
      */
 	protected $dic;
+    private ilGlobalTemplateInterface $tpl;
 
-	/**
+    /**
 	 * xvmpContentTilesGUI constructor.
 	 */
 	public function __construct($parent_gui) {
@@ -27,6 +28,7 @@ class xvmpContentListGUI {
 		$this->dic = $DIC;
 		$this->pl = ilViMPPlugin::getInstance();
 		$this->parent_gui = $parent_gui;
+        $this->tpl = $DIC->ui()->mainTemplate();
 
 		$this->dic->ui()->mainTemplate()->addCss($this->pl->getAssetURL('default/content_list.css'));
 		$this->dic->ui()->mainTemplate()->addJavaScript($this->pl->getAssetURL('js/xvmp_content.js'));
@@ -43,7 +45,7 @@ class xvmpContentListGUI {
 	public function getHTML() {
 		$selected_media = xvmpSelectedMedia::where(array('obj_id' => $this->parent_gui->getObjId(), 'visible' => 1))->orderBy('sort');
 		if (!$selected_media->hasSets()) {
-			ilUtil::sendInfo($this->pl->txt('msg_no_videos'));
+            $this->tpl->setOnScreenMessage("info", $this->pl->txt('msg_no_videos'));
 			return;
 		}
 
